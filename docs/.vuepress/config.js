@@ -24,6 +24,10 @@ module.exports = {
         link: '/repository/'
       },
       {
+        text: 'HTML&CSS',
+        link: '/css/'
+      },
+      {
         text: 'Notes',
         link: '/notes/'
       }
@@ -34,7 +38,8 @@ module.exports = {
     editLinks: true,
     docsDir: 'docs',
     editLinkText: '在 GitHub 上编辑此页',
-    sidebarDepth: 3
+    sidebarDepth: 2,
+    search: false
   },
   configureWebpack: {
     resolve: {
