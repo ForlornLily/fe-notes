@@ -67,4 +67,4 @@ hello world
 # 复选框
 
 - [ ] github 显示为复选框
-- [x] VScode ctrl+v 显示不正常
+- [x] VScode ctrl+v 显示
