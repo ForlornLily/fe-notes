@@ -52,7 +52,7 @@ webpack.base.conf.js
 
 ![default](../images/b58fac5ed68d19606a2cd149a2bb4367.png)
 
-### 特殊变量\#{\$variables}
+### 特殊变量#{\$variables}
 
 变量作为属性
 
