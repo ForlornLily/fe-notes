@@ -7,9 +7,9 @@ const headerMd = 'scripts/README-base.md'
 
 async function generate() {
   var content = []
-  for (const file of files) {
+  /* for (const file of files) {
     content.push(await readFile(file))
-  }
+  } */
 
   const header = await readFile(headerMd)
 
