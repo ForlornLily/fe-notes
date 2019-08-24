@@ -28,8 +28,8 @@ module.exports = {
         link: '/css/'
       },
       {
-        text: 'Notes',
-        link: '/notes/'
+        text: 'JS',
+        link: '/js/'
       }
     ],
     sidebar: utils.inferSiderbars(),

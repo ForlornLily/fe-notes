@@ -1,5 +1,5 @@
 const sidebarMap = [
-  { title: 'Notes', dirname: 'notes' },
+  { title: 'JS', dirname: 'js' },
   { title: 'HTML&CSS', dirname: 'css' }
 ]
 

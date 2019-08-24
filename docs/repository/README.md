@@ -94,7 +94,7 @@ sidebar: auto
 ## markdown
 
 - [markdown 语法](http://markdown.tw/)
-- [个人笔记](../notes/markdown.md)
+- [个人笔记](./markdown.md)
 
 ## 博客
 
@@ -138,7 +138,7 @@ sidebar: auto
 ## VPS
 
 - [村网通](https://zoomyale.com/2016/vultr_and_ss/)
-- [个人笔记](../notes/vps.md)
+- [个人笔记](./vps.md)
 
 ## TypeScript
 

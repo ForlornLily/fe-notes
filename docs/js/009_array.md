@@ -1,0 +1,379 @@
+# Array
+
+- 数组的每一项都可以保存任何类型的数据
+
+- length 属性可以被手动修改
+
+![](../images/ad6ef3625f63b4f5ce7987d7fe0c2dba.png)
+
+## Array.isArray()
+
+判断值是不是数组
+
+![](../images/a45743c014b55b40e8b1be16e88d80c5.png)
+
+## Array 的 toString()和 valueOf()
+
+- toString 实际上调用的是数组里面每一项值的 toSting()方法，再用`,`拼接起来，返回一串字符串
+
+- valueOf 调用每一项的 valueOf()
+
+![](../images/92c5594abc5340e3375f930bcb6a9e2f.png)
+![](../images/8ad6218930c2b40db85af7b1b67bde6e.png)
+
+## 类数组
+
+拥有 length 属性和索引，但不能使用数组的方法。常见的有
+
+arguments, DOM 相关的对象
+
+## 修改原本数组的方法
+
+### 栈方法 pop/push
+
+栈：后进先出
+
+`pop`返回被删除的最后一项
+
+`push`返回数组长度
+
+![](../images/fc19609e232b860bbcf3423c72785cfc.png)
+![](../images/a605f342410643d17c88ebe17765a50e.png)
+
+### 队列方法 shift/unshift
+
+队列：先进先出
+
+`shift`删除数组第一项并返回被删除的项
+
+`unshift` 数组前端添加项，返回数组的长度
+
+![](../images/9b346b80e417bb2d2fffca54583a9741.png)
+
+### 重排序 reverse/sort
+
+`reverse`翻转数组顺序
+
+`sort`不传参，把每一项都调用 toString()方法，根据字符串编码排序。最小的在最前面
+
+![](../images/63fcd8ae061e3d4bb94ac8fa06e2722c.png)
+![](../images/264e0b6ed0ff28510c7084e85d345465.png)
+![](../images/3b76dc777cb0251330a7557e151e417e.png)
+
+传参的情况下：必须是一个函数。函数接受两个参数，分别是相邻的值。
+
+返回负数，表示第一个参数要在第二个参数的前面。返回 0，不变。返回正数第一个在第二个后面
+
+### splice(index, amount, item1,..itemN)
+
+默认删除，有第三个参数以后变成增加
+
+index 指定从哪开始
+
+amount 为 0，不删除。大于 0，删除
+
+返回被删除的数组。
+
+如果 amount 是 0，也就是删除的是`[]`，返回`[]`
+
+### fill
+
+用特定值填充数组中的一个或多个元素
+
+- 只有一个参数：改变数组所有值为这个参数
+
+![](../images/0ca459d47511b7e1038ca488159a6a0a.png)
+
+- fill(params, start, end)
+
+不包括 end，不写 end 一直到数组最后一项
+
+![](../images/c4455e33726b0a163e4e0125fad2bb94.png)
+![](../images/62f294dd7caa20b3b4401a741dac230f.png)
+
+### copyWithin(start, index, end)
+
+用数组内的值填充
+
+赋值从 index 开始的整个数组，依次填充 start 到 end 的位置
+
+不包括 end, end 可以省略，省略后包括最后一项
+
+比如下面复制的是[2,3,4,5,6], 从索引是 2（也就是值是 3 的地方开始）
+
+![](../images/120efb604a222098444fd3101b2b789c.png)
+
+## 不修改数组的方法
+
+### concat
+
+参数是数组，把每一项都复制到新数组。不是数组，就只是单纯 push
+
+尽可能少用
+
+![](../images/73c9c84f9bd02c1cef80392b8949e55e.png)
+![](../images/2b3e982ea429c0c27062ff5389b62871.png)
+
+### slice(start, end)：将类数组转成数组
+
+不包括 end
+
+不传 end，包括最后一项
+
+### 位置方法 indexOf, lastIndexOf
+
+查找是全等的，不会有类型转换。
+
+查找 NaN 始终返回-1，认为 NaN 不等于 NaN。+0 等于-0
+
+indexOf 从开头找起，lastIndexOf 从末尾
+
+![](../images/3cb93a83ab36a4c5203d9eef128300ec.png)
+![](../images/a2a03fc53b6b650ebe252a6b56a4fc7f.png)
+
+### 检索方法 find, findIndex
+
+indexOf 只能查找特定的单个值，ES6 新增的属性可以进行检索，比如返回大于某个数的值
+
+- 本质上也是遍历，find 返回值，findIndex 返回索引。
+
+- 可以传递两个参数，第一个参数是函数，函数内有三个参数（值，索引，数组本身）；第二个是指定函数内部的 this
+
+- 只返回第一个匹配的值
+
+```js
+const arr = [3, 6, 7, 9]
+let obj = {
+  getNum(value) {
+    return value > 5
+  }
+}
+let temp = arr.find((value, index, arr) => {
+  return obj.getNum(value)
+}, obj)
+console.log(temp) //6
+```
+
+### 迭代: every, filter, forEach, map, some
+
+- every: 每项内返回 true 才是 true,。遇到 false 就停止循环
+
+`break`只能在循环里面用，不能在迭代里
+
+```js
+const arr = [1, 2, 3, 4]
+function every() {
+  let i = 0
+  const result = arr.every((item, index, arr) => {
+    i++
+    return item > 1
+  })
+  console.log({
+    i,
+    result
+  })
+}
+```
+
+![](../images/17496d5428a033454e2a0b693436c53e.png)
+
+- some: 有一项返回 true 就是 true。有一项是 true 就停止循环
+
+- filter: 把返回 true 的项组成一个数组
+
+```js
+const arr = [
+  {
+    id: 1,
+    name: 'Saber'
+  },
+  {
+    id: 2,
+    name: 'Archer'
+  },
+  {
+    id: 3,
+    name: 'Rider'
+  },
+  {
+    id: 4,
+    name: 'Lancer'
+  }
+]
+function filter() {
+  let i = 0
+  const result = arr.filter((item, index, arr) => {
+    i++
+    return item.id > 1
+  })
+  console.log({
+    i,
+    result
+  })
+}
+```
+
+![](../images/867eab1912fbbf4f43c227265cdd1c1e.png)
+
+- map: 所有返回值组成一个数组
+
+![](../images/8421e42be8033ae8a1b890d70a716e6c.png)
+
+- forEach: 没有返回值
+
+### 缩小方法: reduce, reduceRight
+
+一般用来四则运算。
+
+reduceRight 和 reduce 反向相反，从最后一项开始。
+
+prev 是上一个 return 的值
+
+```js
+const arr = [1, 2, 3, 4]
+function reduce() {
+  const result = arr.reduce((prev, cur, index, arr) => {
+    console.log(prev)
+    return prev + cur
+  })
+  console.log({
+    result
+  })
+}
+```
+
+![](../images/5e7b33cedaa1adb1cad56be56687678e.png)
+
+### 比较 includes
+
+与 String 的 includes 类似
+
+采用全等，但 NaN 等于 NaN, +0 等于-0
+
+### join(连接符)
+
+![](../images/3a8aaf185723129562d1afe220b784c2.png)
+![](../images/284f1396cb76f484177c9ea5def40bf1.png)
+:::tip  
+尽可能用 join 代替+
+:::
+
+```js
+var str = 'sth.',
+  newStr,
+  append = 100
+while (append--) {
+  newStr += str
+}
+//改用join
+var arr = []
+while (append--) {
+  arr[append] = str
+}
+newStr = arr.join()
+```
+
+## 数组解构
+
+类似对象解构
+
+```js
+let servantClass = ['saber', 'lancer']
+let [first, second, third = 'rider'] = servantClass
+console.log(first) //"saber"
+console.log(second) // "lancer"
+console.log(third) //"rider"
+```
+
+## new Array 和 Array.of
+
+- new 的时候如果传入的值只有一个，是 Number 类型，会认为是 length
+
+```js
+let items = new Array(2)
+console.log(items.length) // 2
+console.log(items[0]) // undefined
+console.log(items[1]) // undefined
+```
+
+- 传入其他认为是数组项
+
+```js
+let items = new Array('2')
+console.log(items.length) // 1
+console.log(items[0]) // "2"
+console.log(items[1]) // undefined
+```
+
+- 传入多个值不论什么类型都认为是数组项
+
+```js
+let items = new Array(1, 3)
+console.log(items.length) // 2
+console.log(items[0]) // 1
+console.log(items[1]) // 3
+```
+
+::: tip
+Array.of 则不论是什么都认为是数组项
+:::
+
+```js
+let items = Array.of(2)
+console.log(items.length) // 1
+console.log(items[0]) // 2
+```
+
+## Array.from(): 可迭代对象或者类数组对象转为数组
+
+原本用`slice`
+
+只要具有`Symbole.iterator`属性的值，也就是可迭代对象都可以转为数组
+
+### 映射
+
+传入第二个参数，值是函数。决定返回的内容
+
+```js
+function translate() {
+  return Array.from(arguments, value => value + 1)
+}
+let numbers = translate(1, 2, 3)
+console.log(numbers) // 2,3,4
+```
+
+### 传入 this
+
+第三个值做为`this`
+
+```js
+let helper = {
+  diff: 1,
+  add(value) {
+    return value + this.diff
+  }
+}
+function translate() {
+  return Array.from(arguments, helper.add, helper)
+}
+let numbers = translate(1, 2, 3)
+console.log(numbers) // 2,3,4
+```
+
+## ArrayBuffer
+
+[参考](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_10.html)
+
+## 数组去重
+
+需要考虑 NaN，正负 0 的情况
+
+- 两个 for/forEach
+
+- 一个 for/forEach 配合 indexOf
+
+- 先排序再一个 for，调用 sort()方法，比较相邻两个数
+
+- filter 配合 indexOf
+
+- Set 数据结构
