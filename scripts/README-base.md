@@ -9,7 +9,7 @@ Base on `vuepress`
 计划包括
 
 - [x] HTML&CSS
-- [ ] JS
+- [x] JS
 - [ ] Vue
 - [ ] NodeJS
 - [ ] typescript
