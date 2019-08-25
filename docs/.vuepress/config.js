@@ -30,6 +30,10 @@ module.exports = {
       {
         text: 'JS',
         link: '/js/'
+      },
+      {
+        text: 'Vue',
+        link: '/vue/'
       }
     ],
     sidebar: utils.inferSiderbars(),

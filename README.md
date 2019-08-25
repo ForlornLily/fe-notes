@@ -10,7 +10,7 @@ Base on `vuepress`
 
 - [x] HTML&CSS
 - [x] JS
-- [ ] Vue
+- [x] Vue
 - [ ] NodeJS
 - [ ] typescript
 - [ ] webpack
