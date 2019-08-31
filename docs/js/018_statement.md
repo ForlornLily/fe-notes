@@ -13,11 +13,11 @@
 ![](../images/37ebafff5d29e40e92e7fdb4c5a71265.png)
 ![](../images/3e2e909066290ad56ba2ded7a355e543.png)
 
-## if\*\*
+## if
 
 if 内条件会根据 Boolean()方法进行转换
 
-### 优化\*\*
+### 优化
 
 if else 的时候判断顺序最好从最大概率开始
 
@@ -38,7 +38,7 @@ if () {
 } else {}
 ```
 
-## switch\*\*
+## switch
 
 switch 不会发生类型转换，用的全等===
 
@@ -46,7 +46,7 @@ switch 不会发生类型转换，用的全等===
 
 如果条件语句内执行的操作一样，只是参数不同，那么可以用数组存起来，不用条件语句
 
-## 循环\*\*
+## 循环
 
 for, while, do while（至少会执行一次，即使条件是 false）
 
@@ -68,14 +68,31 @@ for (var i = item.length; i--; ) {
 
 while 和 do-while 同理
 
-### break 和 continue\*\*
+### break 和 continue
 
 break 退出 for；continue 继续下一个 for
 ::: warning
 只能在循环内使用，forEach 等数组迭代方法不可以
 :::
 
-### 性能\*\*
+### for 和 while 适用情景
+
+见[stackoverflow](https://stackoverflow.com/questions/39969145/while-loops-vs-for-loops-in-javascript/39969215)
+
+while 适合迭代次数未知的情况。
+例:
+
+```js
+var servant = 'Lancer'
+while (servant !== 'Saber') {
+  if (seihai()) {
+  } else {
+    servant = 'Saber'
+  }
+}
+```
+
+### 性能
 
 - 尽可能减值迭代，从最大值开始
 
@@ -115,7 +132,7 @@ return results[value]
 
 - 多用原生方法，比如 Math 自带的
 
-## 递归，迭代和缓存\*\*
+## 递归，迭代和缓存
 
 - 递归是自己调用自己
 

@@ -119,3 +119,8 @@ border: 0;
   background-repeat: repeat-x;
 }
 ```
+
+## 让输入法的 enter 显示为搜索
+
+input `type`设为"search"
+并将它包裹在 form 内
