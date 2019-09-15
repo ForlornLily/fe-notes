@@ -181,3 +181,27 @@ str.replace(/(ab)c/g, '$1d')
 - 只能输入不超过两位小数的正实数（不包括 0）：
 
 `/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test(value)`
+
+- 删除'?x-oss-process=image/format,webp'
+
+value.replace(/\?x-oss.\*?(webp)/, "");
+
+- 获取 img 的 src
+
+```js
+const imgReg = /<img.*?(?:>|\/>)/gi
+const arr = txt.match(imgReg)
+if (arr == null) {
+  return false
+}
+const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i,
+  length = arr.length
+for (let i = 0; i < length; i++) {
+  let src = arr[i].match(srcReg)
+  if (src[0]) {
+    let url = src[0].substr(4)
+    const reg = new RegExp('"', 'g')
+    return url.replace(reg, '')
+  }
+}
+```

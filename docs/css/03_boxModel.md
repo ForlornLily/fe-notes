@@ -408,6 +408,10 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 
 参见[移动端 web 页面使用 position:fixed 问题总结](https://github.com/maxzhang/maxzhang.github.com/issues/2)
 
+比如:  
+`user-select: auto` Safari 下长按复制会闪现;  
+点击穿透，导致错位等等
+
 ## float
 
 浮动元素 A 旁边如果是正常的文档流元素 B，B 的盒子会当 A 不存在，但 B 内的文本会记住浮动元素的大小，留出相应的空间。
