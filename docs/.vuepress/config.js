@@ -34,15 +34,15 @@ module.exports = {
       {
         text: 'Vue',
         link: '/vue/'
-      }
+      },
       /* {
         text: 'NodeJS',
         link: '/nodejs/'
-      },
+      },*/
       {
-        text: 'LeetCode',
+        text: '算法',
         link: '/leetcode/'
-      } */
+      }
     ],
     sidebar: utils.inferSiderbars(),
     lastUpdated: '上次更新',
