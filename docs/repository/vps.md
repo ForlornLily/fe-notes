@@ -2,6 +2,12 @@
 
 ## 村网通
 
+修改密码:
+
+```
+passwd
+```
+
 ```
 wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
 chmod +x shadowsocks.sh
