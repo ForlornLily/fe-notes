@@ -2,6 +2,12 @@
 
 ## 村网通
 
+切换到 root 身份
+
+```
+su root
+```
+
 修改密码:
 
 ```
@@ -33,7 +39,7 @@ wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
 #### 修改防火墙
 
 【网络】 –> 【防火墙规则】 –> 【创建防火墙规则】  
-IP 地址范围：0.0.0.0/0
+IP 地址范围：0.0.0.0/0（设置为全部流量）
 
 #### 获取静态 IP
 

@@ -110,3 +110,7 @@ window.addEventListener('scroll', () => {
 ## MD5 判断文件类型
 
 并不安全，[参考](http://www.izhuyue.com/644.html);
+
+## 监听滚动条
+
+要监听撑出滚动条的 DOM，如果 body 本身没有撑出滚动条，`window.onscroll`不会触发
