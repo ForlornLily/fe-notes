@@ -2,6 +2,12 @@
 
 ## 村网通
 
+创建 root 的密码:
+
+```
+sudo passwd root
+```
+
 切换到 root 身份
 
 ```

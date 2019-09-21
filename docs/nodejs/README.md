@@ -29,6 +29,18 @@ npm config set cache "D:\\project\\node\\node_cache"
 
 `npm config set tmp`
 
+### CentOS 下安装
+
+```
+# wget https://nodejs.org/dist/v10.9.0/node-v10.9.0-linux-x64.tar.xz    // 下载
+# tar xf  node-v10.9.0-linux-x64.tar.xz       // 解压
+# cd node-v10.9.0-linux-x64/                  // 进入解压目录
+# ./bin/node -v                               // 执行node命令 查看版本
+```
+
+重命名
+`mv oldname newname`
+
 ## 用处
 
 JS 是脚本语言，脚本语言都需要一个解析器才能运行。对于写在 HTML 页面里的 JS，浏览器充当了解析器的角色。而对于需要独立运行的 JS，NodeJS 就是一个解析器。
