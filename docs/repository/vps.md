@@ -31,6 +31,7 @@ chmod +x shadowsocks.sh
 - 重启：`/etc/init.d/shadowsocks restart`
 - 状态：`/etc/init.d/shadowsocks status`
 - 编辑（编辑后需重启）: `nano /etc/shadowsocks-libev/config.json`
+  AWS 下默认用户 ec2-user 所在路径为`/home/ec2-user`
 
 ### BBR
 

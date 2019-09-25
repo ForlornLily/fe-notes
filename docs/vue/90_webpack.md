@@ -84,3 +84,19 @@ module.exports = {
 ### 关于静态文件：
 
 放在`public`目录下即可，类似 vue-cli 2.x 的 static 文件夹
+
+### public 文件夹
+
+参考[官网](https://cli.vuejs.org/zh/guide/html-and-static-assets.html#public-%E6%96%87%E4%BB%B6%E5%A4%B9)
+
+```html
+<img :src="`${publicPath}my-image.png`" />
+```
+
+```js
+data () {
+  return {
+    publicPath: process.env.BASE_URL
+  }
+}
+```

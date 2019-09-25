@@ -4,6 +4,7 @@ module.exports = {
   title: 'fe-notes',
   description: '个人前端笔记',
   base: '/fe-notes/',
+  port: 1001,
   head: [
     [
       'link',
