@@ -52,7 +52,7 @@ module.exports = {
     docsDir: 'docs',
     editLinkText: '在 GitHub 上编辑此页',
     sidebarDepth: 2,
-    search: false
+    search: true
   },
   configureWebpack: {
     resolve: {

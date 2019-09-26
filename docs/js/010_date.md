@@ -12,19 +12,34 @@ new Date(yyyy, MM, dd, HH, mm, ss) //月份要减1。比如设3月，MM是2
 
 ## 常用方法
 
-getTime() //返回毫秒数
-
-getYear
-
-getMonth :0 表示 1 月
-
-getDate
-
-getHours
-
-getMinutes
-
-getSeconds
+```js
+var d = new Date(time)
+return {
+  time: d.getTime(),
+  year: d
+    .getFullYear()
+    .toString()
+    .padStart(2, '0'),
+  month: (d.getMonth() + 1).toString().padStart(2, '0'),
+  day: d
+    .getDate()
+    .toString()
+    .padStart(2, '0'),
+  hour: d
+    .getHours()
+    .toString()
+    .padStart(2, '0'),
+  minute: d
+    .getMinutes()
+    .toString()
+    .padStart(2, '0'),
+  second: d
+    .getSeconds()
+    .toString()
+    .padStart(2, '0'),
+  week: '周' + '日一二三四五六'.charAt(d.getDay())
+}
+```
 
 ## 兼容性
 
