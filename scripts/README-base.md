@@ -16,4 +16,4 @@ Base on `vuepress`
 - [ ] webpack
 - [ ] 网络
 - [ ] git
-- [ ] 数据结构与算法
+- [x] 数据结构与算法
