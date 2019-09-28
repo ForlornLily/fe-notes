@@ -3,7 +3,7 @@
 ## 场景
 
 比如登录:  
-cookie+session 的做法
+cookie+session 的做法  
 session 的目的就是为了解决 cookie 暴露隐私，本质上就是在服务器定义一个对象，和 cookie 存在关系  
 cookie 要避免暴露用户信息，可以用一些加密算法保存 userId  
 服务端定义一个对象  
