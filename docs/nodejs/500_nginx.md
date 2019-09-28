@@ -1,5 +1,19 @@
 # nginx
 
+- 一般用来放静态资源直接返回，负载均衡（让集群的负载量达到比较高的状态，主要在运维方面）
+
+- 反向代理
+
+## 反向代理
+
+localhost 端口是 8080，访问 nginx，如果访问的是接口 api，代理到 nodejs（比如端口是 3000）
+
+对客户端不可见
+
+相对的正向代理，客户端能控制的代理，比如本机安装 VPN 访问公司内网
+
+![](../images/8f7fa971c178f87dc0f259a86c1d3766.png)
+
 ## CentOS 下的安装
 
 [参考](https://www.cnblogs.com/hafiz/p/6891458.html?utm_source=itdadao&utm_medium=referral)  
@@ -85,3 +99,24 @@ linux: `./nginx`
 windows: `start nginx`  
 退出：`nginx -s quit`  
 重新加载配置文件: `nginx -s reload`
+
+## 配置文件 nginx.conf
+
+- worker_processes 启动实例的个数
+
+- server
+
+```
+listen 端口号
+location 代理
+#如果访问的url地址是/api/下的内容，代理端口到localhost:3000
+#proxy_set_header: 将客户端的请求头转发给服务端
+location /api/ {
+    proxy_pass   http://localhost:3000;
+    proxy_set_header Host $host;
+}
+#如果访问的url地址是根/的内容，代理端口到localhost:8080，比如静态资源
+location / {
+    proxy_pass   http://localhost:8080;
+}
+```

@@ -36,10 +36,10 @@ module.exports = {
         text: 'Vue',
         link: '/vue/'
       },
-      /* {
+      {
         text: 'NodeJS',
         link: '/nodejs/'
-      },*/
+      },
       {
         text: '算法',
         link: '/leetcode/'
