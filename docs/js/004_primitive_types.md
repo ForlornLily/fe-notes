@@ -184,6 +184,15 @@ lang = lang + 'Script'
 
 先创建一个可以容纳 10 个字符的新字符串，然后填充 Java 和 Script，最后销毁原本的 Java 和 Script 两个字符串
 
+### 转义
+
+如果不是特殊含义的[转义字符](./011_regexp.md#常用的转义（非打印字符）)，比如`\#`, 和"#"是等价的;  
+因为`\`不算字符串本身的内容
+
+```js
+var test = 'hello  ' // "hello  "
+```
+
 ### toString(基数)
 
 `Number`、`Boolean`、`Object`、`String`、`Symbol`都有该方法。null 和 undefined 没有
