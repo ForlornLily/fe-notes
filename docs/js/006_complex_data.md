@@ -1,21 +1,44 @@
 # 复杂类型/引用类型
 
 complex data  
+可以把对象看作是从字符串到值的映射。类似的数据结构还有很多叫法，比如"散列(hash)", "散列表(hash table)","字典(dictionary)"
+
 对象是引用类型的一个实例。都是通过构造函数（new）创造出来的
 
 构造函数本身也是一个函数
 
 ## Object
 
+对象不能存在同名的属性名(key);
+
 ```js
 var foo = new Object() //通过构造函数创建
 
 var test = {} //通过对象字面量创建（推荐）
+
+//等价于
+var test = Object.create(Object.prototype)
 ```
 
 优先用点表示法
 
 点或者方括号的层次越多，也就是嵌套的内容越多，寻找的时候消耗性能越大
+
+除了名字和值外，每个属性还有一些与之相关的特性(attribute)：可写 writable, 可枚举 enumerable, 可配置 configurable，见[面向对象](./021_oop.md)
+
+### 原型
+
+原型的应用见[函数](./012_function.md)和[面向对象](./021_oop.md)
+
+每一个对象（除了`null`）都会和另一个对象关联。  
+"另一个对象"就是原型，每个对象从原型继承属性
+
+通过对象字面量创建的对象都具有同一个原型对象;
+
+通过`new`关键字创建的对象，原型对象就是对应构造函数的 prototype, 比如 new Array()的原型对象是 Array.prototype;
+
+构造函数本身都具有一个继承自`Object.prototype`的原型。所以 new Array()创造的对象，同时继承自 Array.prototype 和 Object.prototype。  
+这就是原型链
 
 ## 对象共有的属性/方法
 
@@ -25,11 +48,30 @@ var test = {} //通过对象字面量创建（推荐）
 
 创建当前对象的函数, foo 的 constructor 是 Object()
 
+### in 关键字
+
+in 关键字会包含继承的属性，同样"!=="也会包含继承的属性
+
+```js
+var foo2 = {}
+
+foo2.bar2 = 'hello'
+'bar2' in foo2 //true
+
+foo2.toString !== undefined // true
+```
+
 ### hasOwnproperty(key)
 
-key 是个字符串，判断 key 是否存在当前实例，不包括继承
+key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 ![](../images/ee1ec4d6729a2da177dcd885e239f9a8.png)
+
+### propertyIsEnumerable(key)
+
+可以看成是 hasOwnproperty 的增强版:  
+只有是自有属性并且可枚举，才会返回 true  
+![](../images/e6ecbfc88790b262e9884918b5586fc6.png)
 
 ### isPrototypeOf(object)
 
@@ -42,12 +84,6 @@ key 是个字符串，判断 key 是否存在当前实例，不包括继承
 构造函数的 prototype 指向原型对象
 
 ![](../images/545095584a70c94bd5ba3eb7bd03d7ad.png)
-
-### propertyIsEnumerable(key)
-
-是否可枚举（即可以用在 key-in）
-
-![](../images/e6ecbfc88790b262e9884918b5586fc6.png)
 
 ### toLocaleString()/toString()/valueOf()
 
@@ -182,7 +218,8 @@ console.log(saber) //报错: saber is not defined
 
 ## 防止篡改对象
 
-严格模式下，设置防篡改后再修改都会报错
+严格模式下，设置防篡改后再修改都会报错  
+都只针对自有属性，如果新增对象的原型属性，那么原型上的新属性仍然可以继承
 
 ### 不可扩展 Object.preventExtensions
 
@@ -231,3 +268,26 @@ key 和 value 变量名一样时，可以省略简写
 省略冒号和 function 关键字
 
 方法简写能使用`super` ，而非简写的方法则不能
+
+## 序列化对象
+
+对象序列化(serialization)是指把对象的转态转成字符串，可以把字符串转对象  
+其实就是`JSON.stringify()`和`JSON.parse()`
+
+### 限制
+
+JSON 并不能序列化所有值。
+
+- `NaN`, `Infinity`和`-Infinity`序列化结果是`null`
+- Date 类型,JSON.parse() 仍然是字符串，不会还原成原本的日期对象
+
+```js
+var date = new Date()
+JSON.stringify(date) // "2019-09-29T08:42:13.409Z"
+JSON.parse(JSON.stringify(date)) //"2019-09-29T08:42:13.409Z"
+```
+
+- 函数、RegExp、Error 对象和 undefined 不能序列化和还原
+- JSON.stringify 只能序列化**可枚举的自有属性**
+
+此处涉及到[深浅拷贝](./020_scope.md#变量复制)

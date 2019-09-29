@@ -132,6 +132,23 @@ return results[value]
 
 - 多用原生方法，比如 Math 自带的
 
+## throw 和 try catch
+
+throw 用来抛出异常，try/catch 捕获异常
+
+```js
+function jude(x) {
+  if (x < 0) {
+    throw new Error('x不能小于0') //Uncaught Error: x不能小于0
+  }
+  try {
+    console.log(x)
+  } catch (e) {
+    console.log(e)
+  }
+}
+```
+
 ## 递归，迭代和缓存
 
 - 递归是自己调用自己
