@@ -35,7 +35,7 @@ var test = Object.create(Object.prototype)
 
 通过对象字面量创建的对象都具有同一个原型对象;
 
-通过`new`关键字创建的对象，原型对象就是对应构造函数的 prototype, 比如 new Array()的原型对象是 Array.prototype;
+通过`new`关键字创建的对象，原型对象就是对应构造函数的 prototype, 比如 new Array()的原型对象是 Array.prototype, 也就是该对象继承 Array.prototype 的属性;
 
 构造函数本身都具有一个继承自`Object.prototype`的原型。所以 new Array()创造的对象，同时继承自 Array.prototype 和 Object.prototype。  
 这就是原型链

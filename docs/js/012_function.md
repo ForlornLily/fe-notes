@@ -1,6 +1,6 @@
 # Function
 
-每个函数都是 Function 的实例。Function 本质上也是 Object
+每个函数都是 `Function` 的实例。Function 本质上也是 Object
 
 ```js
 console.log(sum2)
@@ -25,11 +25,15 @@ var num3 = function(num1, num2) {
 
 ## 函数内部的两个特殊对象: arguments, this
 
+函数调用会为形参提供实参的值。  
+除了实参之外，还有一个值——本次调用的上下文——也就是`this`关键字的值
+
 ### arguments
 
-ECMAScript 的参数在内部是用一个数组来表示的。通过`arguments`对象来访问
+ECMAScript 的参数在内部是用一个数组来表示的。通过`arguments`对象来访问  
+`arguments`是指向**实参**的引用
 
-但是`arguments`不是 Array 的实例，可以用 length 获取长度
+arguments 不是 Array 的实例，是一个类数组对象，可以用 length 获取长度
 
 顺序和形参一致，并且可以改变形参，但是形参无法改变对应的 arguments
 
@@ -64,7 +68,7 @@ let person1 = new FactoryPerson()
 
 只要创建一个新函数，该函数就会包含一个 prototype，指向该函数的原型对象
 
-`FactoryPerson.prototype = 原型对象`
+`FactoryPerson.prototype = 原型对象(prototype object)`
 
 原型对象默认只会获得一个[constructor](#construcor)属性，其他方法都继承自 Object
 
@@ -161,9 +165,30 @@ for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先�
 
 比如"name" in person1
 
+## 自定义函数属性
+
+函数既然是对象，同样可以拥有自定义属性。  
+那么有时候就可以用属性来代替全局变量。最典型的应用就是阶乘
+
+```js
+function factorial(n) {
+  if (n < 0) {
+    return false
+  }
+  if (n < 2) {
+    factorial[n] = n
+    return n
+  }
+  if (!factorial[n]) {
+    factorial[n] = factorial[n - 1] * n //存储到属性内
+  }
+  return factorial[n]
+}
+```
+
 ## 函数都有的方法: apply, call, bind
 
-apply 两个参数，第一个指定`this`,第二个是所有参数集合
+apply 两个参数，第一个指定`this`,第二个是所有参数集合。参数可以是类数组
 
 call 多个参数，第一个指定`this`, 第二...第 N 个是分开的一个个参数
 

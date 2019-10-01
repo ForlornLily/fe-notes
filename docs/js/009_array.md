@@ -7,6 +7,27 @@
 ![](../images/ad6ef3625f63b4f5ce7987d7fe0c2dba.png)
 
 - 通常数组的实现是经过优化的，用数字索引访问数组的属性，比访问常规对象的属性快很多
+- 数组继承`Array.prototype`中的属性，定义了一套丰富的数组操作方法。这些方法对"类数组对象"同样有效  
+  所以不能用`for/in`方法，会遍历继承的属性
+- 数组是对象的一种，访问索引(索引的值是 0~2^32 - 1 范围内的非负整数)可以认为是特殊的属性名，那么访问不存在的值也只是返回`undefined`
+
+```js
+var a = ['hello']
+a[-1] // undefined, 不会报错
+```
+
+## length
+
+数组内肯定找不出一个值的索引会>=length。这个规则会出现两种特殊行为：
+
+1. length 属性未指明时，随着数组的更新，length 会自动更新;
+2. 明确指定 length 属性<当前长度，数组项会被删除
+
+```js
+var arr = [1, 2, 3, 4, 5]
+arr.length = 3
+console.log(arr) // [1,2,3]
+```
 
 ## Array.isArray()
 
@@ -30,6 +51,16 @@
 arguments, DOM 相关的对象
 
 ## 修改原本数组的方法
+
+### delete
+
+不会改变数组的长度，只不过对应索引的值变成了`undefined`
+
+```js
+var arr = [1, 2, 3, 4, 5]
+delete arr[2]
+console.log(arr[2]) // undefined
+```
 
 ### 栈方法 pop/push
 
@@ -365,6 +396,7 @@ console.log(numbers) // 2,3,4
 ## ArrayBuffer
 
 [参考](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_10.html)
+ArrayBuffer 是 canvas 绘图的重要部分
 
 ## 数组去重
 
