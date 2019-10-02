@@ -3,7 +3,7 @@ const sidebarMap = [
   { title: 'HTML&CSS', dirname: 'css' },
   { title: 'Vue', dirname: 'vue' },
   { title: 'NodeJS', dirname: 'nodejs' },
-  { title: '算法', dirname: 'leetcode' }
+  { title: '算法', dirname: 'algorithm' }
 ]
 
 module.exports = sidebarMap

@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         text: '算法',
-        link: '/leetcode/'
+        link: '/algorithm/'
       }
     ],
     sidebar: utils.inferSiderbars(),

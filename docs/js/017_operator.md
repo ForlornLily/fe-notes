@@ -77,7 +77,9 @@ ECMAScript 内所有数字都根据 IEEE-754 64 位格式存储
 
 ![](../images/e50ba6191d503e3d4f76b0a8cfafff89.png)
 
-相同为 0，不同位 1
+相同为 0，不同位 1  
+0 异或其他值，值为本身，也就是异或同一个数两次，值不变
+异或的应用: leetcode [136. 只出现一次的数字](../algorithm/leetcode/136.md)
 
 ### 左移&lt;&lt; 有符号右移&gt;&gt; 无符号右移&gt;&gt;&gt;
 
