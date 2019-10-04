@@ -59,6 +59,17 @@ computed: {
 </script>
 ```
 
+### 缓存
+
+计算属性具有缓存。  
+只有在它的相关依赖发生改变时才会重新求值  
+更多内容见[响应式](./20_responsive.md)
+
+- 初始化 data，使用 Object.defineProperty 把这些属性全部转 getter/setter。
+- 初始化 computed, 遍历 computed 里的每个属性，每个 computed 属性都是一个 Watcher 实例。每个属性提供的函数作为属性的 getter，使用 Object.defineProperty 转化。
+- Object.defineProperty getter 依赖收集。用于依赖发生变化时，触发属性重新计算。
+- 若出现当前 computed 计算属性嵌套其他 computed 计算属性时，先进行其他的依赖收集。
+
 ## watch
 
 执行异步或开销较大的操作。
