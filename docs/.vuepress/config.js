@@ -32,9 +32,10 @@ module.exports = {
         ]
       },
       {
-        text: 'Vue',
+        text: '库',
         items: [
           { text: 'Vue2.x', link: '/vue/' },
+          { text: 'webpack4.x', link: '/webpack4/' },
           { text: 'TypeScript', link: '/typescript/' },
           { text: 'Vue3.x', link: '/vue-3.x/' }
         ]
@@ -51,6 +52,13 @@ module.exports = {
         items: [
           { text: '数据结构', link: '/algorithm/' },
           { text: 'LeetCode', link: '/leetcode/' }
+        ]
+      },
+      {
+        text: '网络',
+        items: [
+          { text: 'TCP/IP', link: '/tcp/' },
+          { text: 'HTTP(S)', link: '/http/' }
         ]
       }
     ],
