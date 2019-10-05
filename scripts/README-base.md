@@ -12,7 +12,7 @@ Base on `vuepress`
 - [x] JS
 - [x] Vue
 - [x] NodeJS
-- [ ] typescript
+- [x] typescript
 - [ ] webpack
 - [ ] 网络
 - [ ] git

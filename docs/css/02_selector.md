@@ -129,7 +129,7 @@ body#god div.dad span.son {
   width: 200px;
 }
 
-body\#god span\#test {
+body#god span#test {
   width: 250px;
 }
 ```
@@ -152,6 +152,8 @@ body\#god span\#test {
 
 推荐 link
 
-`<link href=”xxx.css” rel=”stylesheet”>`
+`<link href="xxx.css" rel="stylesheet">`
+或者`<style>`标签内`@import url("xx/xxx.css")`
 
-或者`<style>`标签内`@import url(“xx/xxx.css”)`
+- `rel` 属性规定当前文档与被链接文档之间的关系  
+  rel 有很多值，但只有 stylesheet 兼容所有浏览器

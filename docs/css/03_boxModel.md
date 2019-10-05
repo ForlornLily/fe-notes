@@ -60,7 +60,7 @@ width 和 height 默认都是 auto
 
 ```html
 <div class="parent">
-  <div class="auto">auto\</div>
+  <div class="auto">auto</div>
 </div>
 
 <div class="parent">

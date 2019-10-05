@@ -25,24 +25,33 @@ module.exports = {
         link: '/repository/'
       },
       {
-        text: 'HTML&CSS',
-        link: '/css/'
-      },
-      {
-        text: 'JS',
-        link: '/js/'
+        text: '基础',
+        items: [
+          { text: 'HTML&CSS', link: '/css/' },
+          { text: 'JS', link: '/js/' }
+        ]
       },
       {
         text: 'Vue',
-        link: '/vue/'
+        items: [
+          { text: 'Vue2.x', link: '/vue/' },
+          { text: 'TypeScript', link: '/typescript/' },
+          { text: 'Vue3.x', link: '/vue-3.x/' }
+        ]
       },
       {
-        text: 'NodeJS',
-        link: '/nodejs/'
+        text: '后台',
+        items: [
+          { text: 'NodeJS', link: '/nodejs/' },
+          { text: 'Linux', link: '/linux/' }
+        ]
       },
       {
         text: '算法',
-        link: '/algorithm/'
+        items: [
+          { text: '数据结构', link: '/algorithm/' },
+          { text: 'LeetCode', link: '/leetcode/' }
+        ]
       }
     ],
     sidebar: utils.inferSiderbars(),
