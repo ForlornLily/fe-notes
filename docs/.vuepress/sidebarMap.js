@@ -11,7 +11,8 @@ const sidebarMap = [
   { title: 'HTTP(S)', dirname: 'http' },
   { title: 'TCP/IP', dirname: 'tcp' },
   { title: 'webpack4.x', dirname: 'webpack4' },
-  { title: 'Git', dirname: 'git' }
+  { title: 'Git', dirname: 'git' },
+  { title: 'Yarn', dirname: 'yarn' }
 ]
 
 module.exports = sidebarMap

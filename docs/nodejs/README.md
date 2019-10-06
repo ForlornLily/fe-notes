@@ -13,7 +13,7 @@ npx 启动路径不能带空格，Program Files 要全部替换掉，暂时改�
 
 修改全局安装路径，还要修改环境变量
 
-```shell
+```bash
 npm config set prefix "D:\\project\\node\\node_global"
 npm config set cache "D:\\project\\node\\node_cache"
 ```
@@ -32,7 +32,7 @@ npm config set cache "D:\\project\\node\\node_cache"
 
 ### CentOS 下安装
 
-```shell
+```bash
 #下载
 wget https://nodejs.org/dist/v10.9.0/node-v10.9.0-linux-x64.tar.xz
 #解压

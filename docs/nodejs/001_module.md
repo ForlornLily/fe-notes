@@ -168,12 +168,12 @@ package.json，会发现多了一个 dependencies 字段
 
 在当前文件夹的 node_modules 寻找模块
 
-```shell
+```bash
 #全局安装下的webpack
 webpack –v
 ```
 
-```shell
+```bash
 #运行当前目录的webpack
 npx webpack –v
 ```

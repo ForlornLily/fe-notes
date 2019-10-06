@@ -21,13 +21,13 @@ localhost 端口是 8080，访问 nginx，如果访问的是接口 api，代理�
 
 - 切换到 root
 
-```shell
+```bash
 su root
 ```
 
 - `yum`安装依赖
 
-```shell
+```bash
 # 编译
 yum install gcc-c++
 # 正则
@@ -40,20 +40,20 @@ yum install -y openssl openssl-devel
 
 下载包
 
-```shell
+```bash
 wget https://nginx.org/download/nginx-1.16.1.tar.gz
 ```
 
 查看 nginx 在哪: `where is nginx`  
 解压
 
-```shell
+```bash
 tar -zxvf nginx-1.16.1.tar.gz
 ```
 
 进入压缩包以后，配置+编译
 
-```shell
+```bash
 # 创建配置涉及的文件夹(`mkdir`)： /var/temp、/var/temp/nginx、/var/run/nginx/
 mkdir /var/temp
 # 配置

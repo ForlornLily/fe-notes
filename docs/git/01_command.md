@@ -8,7 +8,7 @@
 
 ## git clone url myProjectname
 
-```shell
+```bash
 git clone https://github.com/libgit2/libgit2
 ```
 
@@ -18,7 +18,7 @@ git clone https://github.com/libgit2/libgit2
 
 重命名 libgit2
 
-```shell
+```bash
 git clone https://github.com/libgit2/libgit2 mylibgit
 ```
 
@@ -87,7 +87,7 @@ git mv README.md README
 
 等价于下面三条命令
 
-```shell
+```bash
 $ mv README.md README
 $ git rm README.md
 $ git add README
@@ -97,7 +97,7 @@ $ git add README
 
 撤销操作，变成 unstaged
 
-```shell
+```bash
 git reset HEAD CONTRIBUTING.md
 ```
 
@@ -105,7 +105,7 @@ git reset HEAD CONTRIBUTING.md
 
 ### git checkout branchname
 
-```shell
+```bash
 git checkout testing
 ```
 
@@ -115,19 +115,19 @@ git checkout testing
 
 撤掉操作并还原到之前的 staged 状态，也就是 revert
 
-```shell
+```bash
 git checkout -- CONTRIBUTING.md
 ```
 
 ### git checkout -b branchname
 
-```shell
+```bash
 git checkout -b iss53
 ```
 
 相当于两条命令
 
-```shell
+```bash
 $ git branch iss53
 $ git checkout iss53
 ```
@@ -162,7 +162,7 @@ merge 一般只需要解决一次冲突，rebase 把分支推到最前面，可�
 
 ### git remote add name url
 
-```shell
+```bash
 git remote add pb https://github.com/paulboone/ticgit
 ```
 
@@ -172,7 +172,7 @@ git remote add pb https://github.com/paulboone/ticgit
 
 重命名远程分支
 
-```shell
+```bash
 git remote rename pb paul
 ```
 
@@ -182,13 +182,13 @@ pb 重命名为 paul
 
 删除远程分支
 
-```shell
+```bash
 git remote rm paul
 ```
 
 ## git fetch
 
-```shell
+```bash
 git fetch pb
 ```
 
@@ -200,7 +200,7 @@ pull 表示获取到远程仓库全部内容并和本地进行合并
 
 ## git push remote-name branch-name
 
-```shell
+```bash
 git push origin master
 ```
 
@@ -208,7 +208,7 @@ git push origin master
 
 ### git push --delete
 
-```shell
+```bash
 git push origin --delete serverfix
 ```
 
@@ -224,7 +224,7 @@ git push origin --delete serverfix
 
 ### git branch newbranchname
 
-```shell
+```bash
 git branch testing
 ```
 
@@ -278,13 +278,13 @@ M 表示 modified
 
 所有
 
-```shell
+```bash
 git config –list
 ```
 
 单个
 
-```shell
+```bash
 git config user.name
 ```
 
@@ -292,7 +292,7 @@ git config user.name
 
 #### 全局
 
-```shell
+```bash
 git config --global user.name "John Doe"
 git config --global user.email johndoe@example.com
 ```
@@ -303,7 +303,7 @@ git config --global user.email johndoe@example.com
 
 ### 命令别名
 
-```shell
+```bash
 git config --global alias.ci commit
 ```
 

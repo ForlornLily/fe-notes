@@ -22,7 +22,7 @@ git 里面会包含：
 
 创建分支的时候，git 会创建一个可移动的指针，比如
 
-```shell
+```bash
 git branch testing
 ```
 

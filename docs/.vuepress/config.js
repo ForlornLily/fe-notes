@@ -62,8 +62,11 @@ module.exports = {
         ]
       },
       {
-        text: '版本管理',
-        items: [{ text: 'Git', link: '/git/' }]
+        text: '管理工具',
+        items: [
+          { text: 'Git', link: '/git/' },
+          { text: 'Yarn', link: '/yarn/' }
+        ]
       }
     ],
     sidebar: utils.inferSiderbars(),
