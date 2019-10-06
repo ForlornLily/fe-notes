@@ -60,6 +60,10 @@ module.exports = {
           { text: 'TCP/IP', link: '/tcp/' },
           { text: 'HTTP(S)', link: '/http/' }
         ]
+      },
+      {
+        text: '版本管理',
+        items: [{ text: 'Git', link: '/git/' }]
       }
     ],
     sidebar: utils.inferSiderbars(),

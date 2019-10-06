@@ -15,5 +15,5 @@ Base on `vuepress`
 - [x] typescript
 - [x] webpack
 - [x] 网络
-- [ ] git
+- [x] git
 - [x] 数据结构与算法
