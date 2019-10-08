@@ -152,7 +152,7 @@ body#god span#test {
 
 推荐 link
 
-`<link href="xxx.css" rel="stylesheet">`
+`<link type="text/css" href="xxx.css" rel="stylesheet">`
 或者`<style>`标签内`@import url("xx/xxx.css")`
 
 - `rel` 属性规定当前文档与被链接文档之间的关系  

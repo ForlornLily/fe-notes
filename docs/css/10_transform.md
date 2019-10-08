@@ -6,7 +6,9 @@
 transform: translate(0, 100px) rotate(45deg);
 ```
 
+::: warning
 只能作用在块级元素内
+:::
 
 ## 原点 transform-origin
 
@@ -66,7 +68,7 @@ transform 本质上都是操作变换矩阵
 
 尽可能用 transform 代替，因为他不影响周围元素，所以性能较好
 
-但会产生[堆叠上下文](#stacking-context)，影响 fixed, z-index
+但会产生[堆叠上下文](./03_boxModel.md#fixed)，影响 fixed, z-index
 
 ## 三维变换
 

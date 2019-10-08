@@ -4,33 +4,71 @@
 
 以后缀为 scss 的文件为主。有括号包裹
 
-## 在 vue 中
+## 在库中
 
-vue-cli 生成的项目结构：
+webpack4.x
 
-webpack.base.conf.js
+```js
+module: {
+  rules: [
+    {
+      test: /\.css$/,
+      use: [
+        {
+          loader: 'style-loader'
+        },
+        {
+          loader: 'css-loader'
+        },
+        {
+          loader: 'postcss-loader'
+        }
+      ]
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        {
+          loader: 'style-loader'
+        },
+        {
+          loader: 'css-loader'
+        },
+        {
+          loader: 'postcss-loader'
+        },
+        {
+          loader: 'sass-loader'
+        }
+      ]
+    }
+  ]
+}
+```
 
-![webpack](../images/267f103fa9ee81a78f17bdb7c33dccfd.png)
+单文件 `*.vue` 中：
 
-单文件 vue 中：
-
-![vue](../images/7d5a005f0ccac065b9f3cbc52d4a34c9.png)
+```html
+<style lang="scss">
+  /* 此处写sass */
+</style>
+```
 
 ## 导入和编译（import）
 
-- 只导入普通文件，\@import “normal.css”，编译时不做合并
+- 只导入普通文件，\@import "normal.css"，编译时不做合并
 
 - 导入后缀是 scss 的文件，可以省略后缀
 
-`@imort “base”`
+`@imort "base"`
 
 编译后合并所有 scss（比如 all.scss 导入其他 scss，最终只生产 all.css）
 
-- 导入后缀是 scss 的文件时，如果文件名开头是”\_”，比如”\_basic.scss”
+- 导入后缀是 scss 的文件时，如果文件名开头是"\_"，比如"\_basic.scss"
 
 导入的时候也可以省略
 
-`@imort “basic”`
+`@imort "basic"`
 
 ## 注释和编译
 
@@ -48,9 +86,21 @@ webpack.base.conf.js
 
 若设定了，那么就用重新设定的变量值
 
-值后面加!default
+值后面加`!default`
 
-![default](../images/b58fac5ed68d19606a2cd149a2bb4367.png)
+```scss
+$color: #66ccff !default; //定义全局变量
+.block {
+  color: $color; //#66ccff
+}
+.part-block {
+  $color: #ee0000; //定义局部变量
+  color: $color; //#ee0000
+}
+.danger {
+  color: $color; //#66ccff
+}
+```
 
 ### 特殊变量#{\$variables}
 
@@ -58,9 +108,23 @@ webpack.base.conf.js
 
 \#{\$variables}
 
-![$variables](../images/794df2086d04ef6a5652f968f8dc7cd6.png)
+```scss
+$color: #66ccff !default;
+$borderTop: top;
+$borderBottom: bottom;
+.split {
+  border-#{$borderTop}-color: $color;
+  border-#{$borderBottom}-color: $color;
+}
+```
 
-![效果图](../images/b9c55c2d074b4ece3b479740feff374e.png)
+```css
+/* 编译结果 */
+.split {
+  border-top-color: #66ccff;
+  border-bottom-color: #66ccff;
+}
+```
 
 ### 多值变量
 
@@ -68,15 +132,51 @@ webpack.base.conf.js
 
 list: 可以用逗号或者空格或者括号分隔，nth(\$var, \$index)取值
 
-![list](../images/effd9c918e8090f17bc31d279ab8e89e.png)
+```scss
+$color: #66ccff #ee0000;
+.block {
+  color: nth($color, 1);
+}
+.part-block {
+  color: nth($color, 2);
+}
+```
 
-![效果图](../images/47640dbc477b0299fa66603b778402f3.png)
+```css
+.block {
+  color: #66ccff;
+}
+.part-block {
+  color: #ee0000;
+}
+```
 
 map：以对象的形式存在。{key: value}
 
-![map](../images/e1386824ddc88e1aeea55b1c5fba865a.png)
+```scss
+$headings: (
+  h1: 2em,
+  h2: 1.5em,
+  h3: 1em
+);
+@each $key, $value in $headings {
+  #{$key} {
+    font-size: $value;
+  }
+}
+```
 
-![效果图](../images/fdea804b2ab8b9bba793fd109566cd9a.png)
+```css
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1em;
+}
+```
 
 ### 全局变量!global
 
@@ -96,40 +196,227 @@ map：以对象的形式存在。{key: value}
 
 但他不会跳出[\@media](#media冒泡)和\@support
 
-![单个](../images/108ca064a8f7889c7f72107ca817e688.png)
+```scss
+.parent {
+  color: #66ccff;
+  @at-root .child {
+    width: 100px;
+  }
+}
 
-![多个](../images/8b8db2f9a3b502327f36d0af205fc5c2.png)
+// 编译结果
+.parent {
+  color: #66ccff;
+}
+.child {
+  width: 100px;
+}
+```
 
-![多个效果](../images/a111854d75f11b6d2eecdab9109905bd.png)
+```scss
+//多个
+.parent {
+  color: #66ccff;
+  @at-root {
+    .child {
+      width: 100px;
+    }
+    .child-second {
+      width: 200px;
+    }
+  }
+}
+//编译结果
+.parent {
+  color: #66ccff;
+}
+.child {
+  width: 100px;
+}
+.child-second {
+  width: 200px;
+}
+```
+
+```scss
+//@media
+@media print {
+  .parent {
+    color: #66ccff;
+    @at-root {
+      .child {
+        width: 100px;
+      }
+      .child-second {
+        width: 200px;
+      }
+    }
+  }
+}
+//编译结果
+@media print {
+  .parent {
+    color: #66ccff;
+  }
+  .child {
+    width: 100px;
+  }
+
+  .child-second {
+    width: 200px;
+  }
+}
+```
 
 ### without
 
 值：`all`/`media`/`support`/`rule`
 
-![](../images/14748f5eccaac31401920ef46c9a5268.png)
+```scss
+@media print {
+  .parent {
+    color: #66ccff;
+    @at-root (without: media) {
+      .child {
+        width: 100px;
+      }
+    }
+  }
+}
+```
+
+```css
+@media print {
+  .parent {
+    color: #66ccff;
+  }
+}
+.parent .child {
+  width: 100px;
+}
+```
 
 ## @media 冒泡
 
-![@media](../images/e21e71e7c4008c9073b6a115455e5b0e.png)
+```scss
+.sidebar {
+  width: 200px;
+  @media screen and (max-width: 768px) {
+    width: 100px;
+  }
+}
+//编译结果
+.sidebar {
+  width: 200px;
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100px;
+  }
+}
+```
 
-![效果](../images/89599450e8099c918afec7240d295f53.png)
+```scss
+@media screen {
+  .sidebar {
+    width: 200px;
+    @media (max-width: 768px) {
+      width: 100px;
+    }
+  }
+}
+//编译结果
+@media screen {
+  .sidebar {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 100px;
+  }
+}
+```
 
 ## @mixin 和@include
 
 类似 ES6 的 function
 
-![mixin](../images/f25ee35b3ac992a4166281a18b5c4277.png)
+```scss
+@mixin center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.center {
+  width: 200px;
+  @include center;
+}
+//编译结果
+.center {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+```
 
 可以事先赋好默认值
 
-![默认值](../images/b134776748de2fa711075588a2985e48.png)
+```scss
+@mixin line($border: 1px solid #ee0000, $padding: 1em) {
+  border-bottom: $border;
+  padding-top: $padding;
+}
+.center {
+  width: 200px;
+  @include line();
+}
+.right {
+  width: 200px;
+  @include line(2px solid #66ccff, 2em);
+}
+//编译结果
+.center {
+  width: 200px;
+  border-bottom: 1px solid #ee0000;
+  padding-top: 1em;
+}
+.right {
+  width: 200px;
+  border-bottom: 2px solid #66ccff;
+  padding-top: 2em;
+}
+```
 
 ## 自定义方法@function
 
-![@function](../images/76c027914eb0e1b1fd9c6db4f065e5ae.png)
-![效果](../images/62e4dcbd257b5af7ac45f372ab869e4f.png)
+```scss
+@function pixToRem($fontSize) {
+  $baseSize: 14px;
+  @return $fontSize / $baseSize * 1rem;
+}
+.center {
+  font-size: pixToRem(12px);
+}
+//编译结果
+.center {
+  font-size: 0.8571428571rem;
+}
+```
+
+### 内置函数
 
 darken, lighten 属于 sass 内置函数
+
+```scss
+$linkColor: #00a1d6;
+.register-txt {
+  color: lighten($linkColor, 2%);
+}
+//编译结果
+.register-txt {
+  color: #00a9e0;
+}
+```
 
 ## if else
 
@@ -137,7 +424,35 @@ if 不要小括号
 
 可以在 function 内用，也可以单独用
 
-![if](../images/13e852184f53c8cfc8eb2e84f89788af.png)
+```scss
+$linkColor: #00a1d6;
+$type: red;
+.register-txt {
+  @if $type == red {
+    color: #ee0000;
+  } @else {
+    color: $linkColor;
+  }
+}
+//编译结果
+.register-txt {
+  color: #ee0000;
+}
+```
+
+```scss
+//三元运算: 条件，条件为真的值，条件为假的值
+//if($condition, $if_true, $if_false)
+$linkColor: #00a1d6;
+$type: link;
+.register-txt {
+  color: if($type == link, $linkColor, #66ccff);
+}
+//编译结果
+.register-txt {
+  color: #00a1d6;
+}
+```
 
 ## 循环
 
@@ -149,7 +464,20 @@ if 不要小括号
 
 to 不包括 end, through 包括 end
 
-![for](../images/7f1ab396097f4041c9b46bbdb8a3bf78.png)
+```scss
+@for $i from 1 to 3 {
+  h#{$i} {
+    font-size: 2em / $i;
+  }
+}
+//编译结果
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1em;
+}
+```
 
 ### @each
 
@@ -157,15 +485,60 @@ to 不包括 end, through 包括 end
 
 list:
 
-![list](../images/b5beaca5125aff8138020b52c10e3d78.png)
+```scss
+$animals: dog, cat, monkey;
+@each $value in $animals {
+  .#{$value}-img {
+    background: url('./images/#{$value}.jpg');
+  }
+}
+//编译结果
+.dog-img {
+  background: url('./images/dog.jpg');
+}
+.cat-img {
+  background: url('./images/cat.jpg');
+}
+.monkey-img {
+  background: url('./images/monkey.jpg');
+}
+```
 
 list:
 
-![list](../images/c4435eeba4eae64600d62a14064bcdbc.png)
+```scss
+$animals: (dog, #66ccff), (cat, #ee0000);
+@each $name, $color in $animals {
+  .#{$name}-img {
+    background: url('./images/#{$name}.jpg');
+    color: $color;
+  }
+}
+//编译结果
+.dog-img {
+  background: url('./images/dog.jpg');
+  color: #66ccff;
+}
+.cat-img {
+  background: url('./images/cat.jpg');
+  color: #ee0000;
+}
+```
 
 map:
 
-![map](../images/94557d126c20a9647d75c694b1878260.png)
+```scss
+$headings: (
+  h1: 2em,
+  h2: 1.5em,
+  h3: 1em
+);
+@each $key, $value in $headings {
+  #{$key} {
+    font-size: $value;
+  }
+}
+```
 
 ## 编译
 
@@ -184,4 +557,4 @@ sass xxx.scss css/xxx.css
 sass 也可以多文件编译。
 
 sass
-sass/:css/（表示“sass”文件夹中所有的".scss"文件编译成".css"文件，并且将这些 css 文件放到“css”文件夹中）
+sass/:css/（表示"sass"文件夹中所有的".scss"文件编译成".css"文件，并且将这些 css 文件放到"css"文件夹中）

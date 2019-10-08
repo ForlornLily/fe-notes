@@ -446,7 +446,7 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 
 ![margin](../images/272c99cd5f1b24e5ed85ac7010e4d9b8.png)
 
-##### 伪类:after 上加 clear
+##### 伪元素::after 上加 clear
 
 子元素全都浮动，父元素高度就会是 0
 
@@ -466,7 +466,7 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
   width: 20px;
   border: 1px solid black;
 }
-.wrapper:after {
+.wrapper::after {
   display: block;
   content: ' ';
   clear: both;
@@ -476,7 +476,7 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 ```
 
 ::: tip
-:after 设置成不在页面上占据高度(即 height 为 0)，不可见(visibility)，但是需要占据空间，所以 display
+::after 设置成不在页面上占据高度(即 height 为 0)，不可见(visibility)，但是需要占据空间，所以 display
 :::
 
 #### Formatting Contexts

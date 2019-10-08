@@ -22,7 +22,7 @@ don't repeat yourself
 | Chrome    | Blink                                                  | V8                |
 
 国产浏览器/手机浏览器都基于 Webkit
-KHTML 引擎，苹果在他基础上改成 WebKit，谷歌在 WebKit 基础上改成 Blink
+KHTML 引擎，苹果在他基础上改成 WebKit，谷歌在 WebKit 基础上改成 Blink  
 对应的 css 前缀
 
 - -webkit- WebKit based browser

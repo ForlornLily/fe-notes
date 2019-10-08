@@ -76,7 +76,7 @@ letter 控制字母和字母之间
 
 ## white-space
 
-pre 可能会导致:after 伪类变形
+pre 可能会导致`::after`变形
 
 ## Web 字体
 
