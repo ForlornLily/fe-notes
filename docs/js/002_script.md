@@ -25,13 +25,63 @@
 
 只适用于 src，本地代码会被无视。
 
+```html
+<script src="./1.js"></script>
+<script src="./2.js" defer></script>
+<script src="./3.js" async></script>
+```
+
+```js
+//1.js
+console.log('1')
+debugger
+
+//2.js
+console.log('defer')
+
+//3.js
+console.log('async')
+```
+
+当 1.js 处于断点的时候表现为
+![](../images/src1.jpg)  
+console.log 输出顺序:
+
+```
+1
+defer
+async
+```
+
+```html
+<script src="./2.js" defer></script>
+<script src="./3.js" async></script>
+<script src="./1.js"></script>
+```
+
+当 1.js 处于断点的时候表现为  
+![](../images/src2.jpg)  
+console.log 输出顺序:
+
+```
+async
+1
+defer
+```
+
 和浏览器渲染是并行的
 
-- defer:先下载，等浏览器解析到`</html>`标签后执行。理论上早于[DOMContentLoaded](#DOMContentLoaded)，defer 也按照顺序执行。但实际上不一定早于 DOM
+- defer:先下载，等浏览器解析到`</html>`标签后执行。理论上早于[DOMContentLoaded](#DOMContentLoaded)，但实际上不一定早于 DOM。defer 也按照顺序执行。
 
 - async: 加载后就执行。执行顺序不定，谁先加载好谁就先执行
 
-#### DOMContentLoaded
+### DOMContentLoaded
+
+```js
+document.addEventListener('DOMContentLoaded', e => {
+  console.log('DOMContentLoaded')
+})
+```
 
 HTML document 加载和解析后触发。不会等待 style, img 加载
 
@@ -39,13 +89,31 @@ HTML document 加载和解析后触发。不会等待 style, img 加载
 
 加了 defer/async 的 script 可能在 DOMContentLoaded 之前或者之后
 
-#### load
+### load
 
 完全加载。script 不论是 defer 还是 async，肯定都在 load 之前执行。
 
+### 踩坑
+
+`document.body`无法触发`load`事件；但可以触发`DOMContentLoaded`  
+原因见 stackoverflow: [Why doesn't document.addEventListener('load', function) work in a greasemonkey script?](https://stackoverflow.com/questions/16404380/why-doesnt-document-addeventlistenerload-function-work-in-a-greasemonkey-s)  
+简而言之就是绑定事件的时机不对(WHEN the event is added and EXECUTED)  
+需要改用`window`
+
+```js
+//不触发
+document.body.addEventListener('load', function() {
+  console.log('load')
+})
+//触发
+window.addEventListener('load', function() {
+  console.log('load')
+})
+```
+
 ### src 跨域
 
-即 src 不受同源策略的限制
+即 src 不受[同源策略](./027_async.md#同源策略)的限制
 
 ## doctype
 

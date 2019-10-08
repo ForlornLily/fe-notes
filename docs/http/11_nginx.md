@@ -7,3 +7,5 @@ nginx 把 http 请求转发到另一个或者一些服务器
 Brower =\> host =\> nginx =\> 目标地址
 
 服务器数据 =\> nginx =\> Brower
+
+扩展阅读：[Nginx 配置之完整篇](https://imququ.com/post/my-nginx-conf.html)
