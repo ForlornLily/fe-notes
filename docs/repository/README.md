@@ -135,10 +135,11 @@ sidebar: auto
 - [pm2](https://github.com/Unitech/pm2): 进程管理工具
 - [cli-highlight](https://github.com/felixfbecker/cli-highlight): 控制台代码高亮
 
-## VPS
+<!-- ## VPS
 
 - [村网通](https://zoomyale.com/2016/vultr_and_ss/)
 - [个人笔记](./vps.md)
+ -->
 
 ## TypeScript
 
