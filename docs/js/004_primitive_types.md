@@ -35,9 +35,13 @@ false, null, undefined, 0（+0，-0）, "", NaN
 
 用 Boolean()的情况下（不是用==等操作符）
 
-![空](../images/b7eaf8e4c50db5750bdf68098b559ae7.png)
-![空格字符串](../images/f7bf5bd9094ab444afcff89ae4868cb0.png)
-![其他](../images/0711b53bcbc0b94847cd582a7a65e489.png)
+```js
+Boolean('') //false
+Boolean(' ') //true
+Boolean(NaN) //false
+Boolean(0) //false
+Boolean(1) //true
+```
 
 - string 类，除了""其他都是 true
 - number 类，除了 0、-0 和 NaN 其他都是 true
@@ -51,7 +55,9 @@ IEEE-754–based numbers
 
 所有数字都表示为 64 位的浮点数，实际操作基于 32 位整数
 
-![1 = 1.0](../images/86b4b6d23f623aec30ca2f87ac679a30.png)
+```js
+1 === 1.0 //true
+```
 
 ### 浮点数
 
@@ -71,18 +77,24 @@ IEEE-754–based numbers
 
 312e-7 也就是小数点后面 7 位数
 
-![](../images/1afd605f5e1cda8d12a7e189d61cc8fc.png)
-![](../images/62213528d9a42f9df9d4e2e67a341d97.png)
+```js
+3.12e7 //31200000
+312e-7 //0.0000312
+```
 
 ### 范围
 
 通过 MIN_VALUE, MAX_VALUE 查看
 
-![范围](../images/f3b9d5699d76140c8c05fd042c841b04.png)
+```js
+Number.MIN_VALUE //5e-324
+```
 
 大于 max，显示为 Infinity。小于 min，显示为-Infinity
 
-![Infinity](../images/859aa2e56437992614b0d4d0f9a94b58.png)
+```js
+Number.MAX_VALUE + Number.MAX_VALUE //Infinity
+```
 
 通过`isFinite()`判断，为 false 是 Infinity
 
@@ -90,7 +102,10 @@ IEEE-754–based numbers
 
 对 NaN 进行任何加减乘除都返回 NaN
 
-![NaN](../images/9f6f2d5530326d8fb72dfd4c15a29210.png)
+```js
+NaN == NaN //false
+NaN === NaN //false
+```
 
 通过`isNaN()`判断数据是不是 NaN，可以是任意数据类型
 
@@ -110,15 +125,31 @@ IEEE-754–based numbers
 
 - string
 
-      - 只有数字: 变数字，开头的0会被忽略。开头是"+"或者"-"看做符号位
+  - 只有数字: 变数字，开头的 0 会被忽略。开头是"+"或者"-"看做符号位
 
-  ![数字0](../images/7a1b978c47608ea3a3ec721a743e3336.png)
-  ![数字0](../images/9f274b9903ab43be5bd73924af658c6b.png)
-  ![数字0](../images/1470e5e8a54237d5f3d47bab17b82bca.png) - 十六进制也转为对应的十进制。十六进制开头有加减号变成 NaN  
-  ![十六进制](../images/27e4f58ae2438e13446f3ab94287a890.png)
-  ![十六进制](../images/d7bfa207df4ebb2552e51da12257ea14.png) - 空字符串变 0, ""和" "都是  
-  ![空字符串](../images/22923cd05dba527fa51f82cbf98e8c40.png) - 其他都是 NaN  
-  ![NaN](../images/7d3b018cd007709e7ebbdff320b8f12a.png)
+  ```js
+  Number('012') //12
+  Number('012.66') //12.66
+  Number('.66') //0.66
+  ```
+
+  - 十六进制也转为对应的十进制。十六进制开头有加减号变成 NaN
+
+  ```js
+  Number('0xf') //15
+  Number('-1') //-1
+  Number('-0x2') //NaN
+  ```
+
+  - 空字符串变 0, ""和" "都是
+
+  ```js
+  Number('') //0
+  Number(' ') //0
+  Number('hello') //NaN
+  ```
+
+  - 其他都是 NaN
 
 - object: 根据 valueOf，进行上面规则转换。如果返回 NaN，再调 toString，进行上面规则转换
 
@@ -132,17 +163,16 @@ IEEE-754–based numbers
 
 如果第一个字符串不是数字或者+或者-，返回 NaN
 
-否则截取一直到后面不是数字的字符串为止，小数点也算
-
-![+](../images/2359bf7054137eefbb03307d3c542962.png)
-![-](../images/fcf65168c7abc476525c514f1f264b4a.png)
-![字符串](../images/1c883a38ad44b5cada8b9d2954093177.png)
-![带负号](../images/fdc9be5896ccc61ff7fcae1b90f43bc4.png)
-![其他进制](../images/b6fa96f6a31590dc6f48c915005ca088.png)
-
+否则截取一直到后面不是数字的字符串为止，小数点也算  
 可以传入第 2 个参数，指定转换的进制
 
-![指定进制](../images/234043d003d38cb199e922b7df472699.png)
+```js
+parseInt('+123') //123
+parseInt('-123') //-123
+parseInt('-1.2.4') //-1
+parseInt('0xf') //15
+parseInt('AF', 16) //175
+```
 
 #### parseFloat()
 
@@ -150,9 +180,14 @@ IEEE-754–based numbers
 
 忽略第 2 个小数点
 
-![parseFloat](../images/35f926e924ef196e82493b904f1f95b7.png)
-![parseFloat](../images/48d951a64984cc82867e582eeea5da99.png)
-![parseFloat](../images/db1754688350537b7b9e05e44db279e2.png)
+```js
+parseInt('1.2.1') //1
+parseFloat('.233') //0.233
+parseFloat('.23.3') //0.23
+parseFloat('16.a') //16
+parseFloat('16.2a') //16.2
+parseFloat('a16') //NaN
+```
 
 ### Number.isInteger
 
@@ -170,8 +205,11 @@ Number.isInteger(25.1) //false
 
 0 或者多个 16 位 Unicode 字符组成
 
-![](../images/9e0cc6d72b007f7e615c16146577d0b4.png)
-![](../images/42b6e779513a62259d0a1b398fc18ad5.png)
+```js
+var txt = 'a \u03a3' //"a Σ"
+txt.length //3
+'我'.length //1
+```
 
 字符串是不可变的。
 
@@ -211,9 +249,7 @@ var test = 'hello  ' // "hello  "
 
 将所有类型转成字符串。如果类型本身有 toString()方法，返回 toString 的值。
 
-null 返回"nulll", undefined 返回"undefined"
-
-![undefined](../images/e3932f006e9934819f0649bc27612aa3.png)
+null 返回`"nulll"`, undefined 返回`"undefined"`
 
 ### 识别子字符串
 
@@ -221,7 +257,13 @@ null 返回"nulll", undefined 返回"undefined"
 
 第二个参数设置索引。
 
-#### includes
+#### includes(string, position)
+
+position 不写默认是 0;
+
+```js
+'hello world'.includes('world', 4) //true
+```
 
 - ES5 实现
 
@@ -276,7 +318,9 @@ endsWidth.apply('hello world', ['world'])
 
 将字符串重复指定次数。比如格式化的时候重复空格
 
-![](../images/ff34f34f5d8d1c5664f96bedd07e72aa.png)
+```js
+var test = 'hello'.repeat(2) //"hellohello"
+```
 
 ### 模板字面量: 反引号`
 

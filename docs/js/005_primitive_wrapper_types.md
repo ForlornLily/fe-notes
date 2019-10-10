@@ -9,16 +9,23 @@ primitive wrapper types
 
 比如
 
-![substring](../images/14336513193af0045620d40dea5a9a0f.png)
+```js
+var s1 = 'emma'
+var s2 = s1.substring(2)
+```
 
 实际上调用`s1.substring`的后台会经过以下步骤
 
 1. 创建 String 的一个实例
 2. 调用方法
 3. 销毁该实例。  
-   上面的 substring 等价于
+   上面的 `substring` 等价于
 
-![等价](../images/311caa2c4be2b13f466120d4d5050c6c.png)
+```js
+var s3 = new String('emma')
+var s2 = s1.substring(2)
+s3 = null
+```
 
 ## Number 包装类型的方法
 
@@ -26,8 +33,12 @@ primitive wrapper types
 
 返回指定小数位的字符串
 
-![](../images/46f0838b838f56e5a463f0e8a7a53bb8.png)
-![](../images/9d94ce816ed98c0ac77f68ad2d137dd0.png)
+```js
+var num = 10
+num.toFixed(2) //"10.00"
+var num2 = 10.103
+num2.toFixed(2) //"10.10"
+```
 
 ### 返回指数
 
@@ -44,9 +55,12 @@ primitive wrapper types
 
 返回指定位置的字符，或者编码
 
-![](../images/387bdf3f70748c6e028d2a60f258bba3.png)
-![](../images/6c8989faec5a8c50e84ca0a1e7784f1a.png)
-![](../images/7050e9bb66db016ba265274beec489cf.png)
+```js
+var test = 'hello'
+test.charAt(2) //"l"
+test.charCodeAt(2) //108
+test[4] //"o"
+```
 
 ### 字符操作：concat
 
@@ -74,11 +88,16 @@ concat 拼接字符串。更多的时候还是用`+`比较方便
 
 `substring(start, end)`
 
-`substr(start. amount)`
+`substr(start, amount)`
 
 传负数的时候,slice 和 substring 会不同
 
-![](../images/c5be36b2cfdf3f54d15e8ba6efd8db0c.png)
+```js
+var test = 'hello'
+test.slice(1, 3) //"el"
+test.substring(1, 3) //"el"
+test.substr(1, 3) //"ell"
+```
 
 ### 位置 indexOf, lasetIndexOf
 
@@ -96,10 +115,12 @@ toLocaleLowerCase/ toLocaleUpperCase
 
 match 和 exec()一样, search 返回的是第一个匹配的索引
 
-`test = "hello"`
+```js
+var test = 'hello'
+test.search(/l/) //2
+```
 
 ![](../images/b57dd2c0331cfb00e45609a42986fd04.png)
-![](../images/19345615b61b5a6b54fbb21c337368ac.png)
 
 replace 用于替换，默认只替换第一个匹配。第二个参数可以是一个函数
 
@@ -114,14 +135,14 @@ function htmlEscape(text) {
       case '"':
         return '&quot;'
       default:
-        return originText
+        return originText[pos]
     }
   })
 }
 let result = htmlEscape('<p class="greeting">Hello world!</p>')
+/* 结果：
+"&lt;p class=&quot;greeting&quot;>Hello world!&lt;/p>" */
 ```
-
-![结果](../images/fd65e143dfa338b1b52f55cb49250188.png)
 
 ::: tip
 split 参数也可以是正则

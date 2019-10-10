@@ -46,11 +46,18 @@ var test = Object.create(Object.prototype)
 
 ### constructor
 
-创建当前对象的函数, foo 的 constructor 是 Object()
+创建当前对象的函数
+
+```js
+var foo = new Object()
+foo.constructor === Object //true
+var test = {}
+test.constructor === Object //true
+```
 
 ### in 关键字
 
-in 关键字会包含继承的属性，同样"!=="也会包含继承的属性
+in 关键字会包含继承的属性，同样`!==`也会包含继承的属性
 
 ```js
 var foo2 = {}
@@ -65,13 +72,20 @@ foo2.toString !== undefined // true
 
 key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
-![](../images/ee1ec4d6729a2da177dcd885e239f9a8.png)
+```js
+var test = {}
+test.hello = 'word'
+test.hasOwnProperty('hello') //true
+```
 
 ### propertyIsEnumerable(key)
 
 可以看成是 hasOwnproperty 的增强版:  
-只有是自有属性并且可枚举，才会返回 true  
-![](../images/e6ecbfc88790b262e9884918b5586fc6.png)
+只有是自有属性并且可枚举，才会返回 true
+
+```js
+test.propertyIsEnumerable('hello')
+```
 
 ### isPrototypeOf(object)
 
@@ -83,7 +97,11 @@ key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 构造函数的 prototype 指向原型对象
 
-![](../images/545095584a70c94bd5ba3eb7bd03d7ad.png)
+```js
+var test = {}
+Object.isPrototypeOf(test) //false
+Object.prototype.isPrototypeOf(test) //true
+```
 
 ### toLocaleString()/toString()/valueOf()
 
@@ -93,8 +111,16 @@ key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 - valueOf 返回原本对应的 string, number, boolean
 
-![](../images/c6513efdf45928f0f434777840470fd2.png)
-![](../images/227d86dc20fdb0968f439b760e2bc9e9.png)
+```js
+var str = '123'
+str.toString() //"123"
+str.toLocaleString() //"123"
+str.valueOf() //"123"
+var date = new Date()
+date.toString() //"Thu Oct 10 2019 15:10:43 GMT+0800 (中国标准时间)"
+date.toLocaleString() //"2019/10/10 下午3:10:43"
+date.valueOf() //1570691443220
+```
 
 ## 对象转原始类型规则
 
@@ -127,13 +153,20 @@ let a = {
 
 ### toString
 
-- 单纯的一个对象返回的是"[object object]"  
-  ![](../images/48fb021b1dc251d1c8bb222f22e9f88a.png)
+- 单纯的一个对象返回的是"[object object]"
 
-- 数组：将每一项调用 toString()，然后用逗号分隔拼接  
-  ![](../images/f0998664f5f32360d40e2c6e84966d9e.png)
-  ![](../images/30f9632acc7b0a3860e48f25a9a3fac0.png)
+  ```js
+  var x = { hello: 'world' }
+  x.toString() //"[object Object]"
+  ```
 
+- 数组：将每一项调用 toString()，然后用逗号分隔拼接
+  ```js
+  var y = [1, 2, 3]
+  y.toString() //"1,2,3"
+  var z = [{ a: 1 }, 2]
+  z.toString() //"[object Object],2"
+  ```
 - 函数：返回定义函数的表达式
 - Date/RegExp: 返回字符串
 
@@ -143,8 +176,10 @@ let a = {
 
 Date 返回毫秒数
 
-![](../images/773689a099420b1cd88811bc09925fb4.png)
-![](../images/07f5f89901216b93e28b021132ff97b0.png)
+```js
+var arr = [1, 2]
+arr.valueOf() //[1, 2]
+```
 
 ## 遍历
 
@@ -196,7 +231,7 @@ let servant = {
   saber: 'Altria',
   lancer: ''
 }
-let { saber, archer = 'emiya' } = servant
+let { saber, archer = 'Emiya' } = servant
 console.log(saber) //"Altria"
 console.log(archer) //"Emiya"
 ```
@@ -214,7 +249,11 @@ console.log(saber) //报错: saber is not defined
 
 基本类型都会返回 false,因为他们都不是对象
 
-![](../images/4f12df5cb57eb98f3149b2bd6c8a0436.png)
+```js
+1 instanceof Number //false
+var test = {}
+test instanceof Object //true
+```
 
 ## 防止篡改对象
 

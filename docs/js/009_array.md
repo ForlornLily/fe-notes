@@ -4,11 +4,9 @@
 
 - length 属性可以被手动修改
 
-![](../images/ad6ef3625f63b4f5ce7987d7fe0c2dba.png)
-
 - 通常数组的实现是经过优化的，用数字索引访问数组的属性，比访问常规对象的属性快很多
 - 数组继承`Array.prototype`中的属性，定义了一套丰富的数组操作方法。这些方法对"类数组对象"同样有效  
-  所以不能用`for/in`方法，会遍历继承的属性
+  所以不要用`in`关键字，会遍历继承的属性
 - 数组是对象的一种，访问索引(索引的值是 0~2^32 - 1 范围内的非负整数)可以认为是特殊的属性名，那么访问不存在的值也只是返回`undefined`
 
 ```js
@@ -33,16 +31,23 @@ console.log(arr) // [1,2,3]
 
 判断值是不是数组
 
-![](../images/a45743c014b55b40e8b1be16e88d80c5.png)
+```js
+var arr = [1, 2]
+arr instanceof Array //true
+Array.isArray(arr) //true
+```
 
 ## Array 的 toString()和 valueOf()
 
 - toString 实际上调用的是数组里面每一项值的 toSting()方法，再用`,`拼接起来，返回一串字符串
 
-- valueOf 调用每一项的 valueOf()
+```js
+var arr = [5, '2', { x: 1 }]
+arr.toString() //"5,2,[object Object]"
+```
 
-![](../images/92c5594abc5340e3375f930bcb6a9e2f.png)
-![](../images/8ad6218930c2b40db85af7b1b67bde6e.png)
+- valueOf 调用每一项的 valueOf()  
+  ![](../images/8ad6218930c2b40db85af7b1b67bde6e.png)
 
 ## 类数组
 
@@ -70,8 +75,11 @@ console.log(arr[2]) // undefined
 
 `push`返回数组长度
 
-![](../images/fc19609e232b860bbcf3423c72785cfc.png)
-![](../images/a605f342410643d17c88ebe17765a50e.png)
+```js
+var tmp = []
+tmp.push('hello') //1
+tmp.pop() //"hello"
+```
 
 ### 队列方法 shift/unshift
 
@@ -81,7 +89,11 @@ console.log(arr[2]) // undefined
 
 `unshift` 数组前端添加项，返回数组的长度
 
-![](../images/9b346b80e417bb2d2fffca54583a9741.png)
+```js
+var servant = ['Saber', 'Archer']
+servant.shift() //"Saber"
+servant.unshift('Lancer', 'Rider') //3
+```
 
 ### 重排序 reverse/sort
 
@@ -89,7 +101,10 @@ console.log(arr[2]) // undefined
 
 `sort`不传参，把每一项都调用 toString()方法，根据字符串编码排序。最小的在最前面
 
-![](../images/63fcd8ae061e3d4bb94ac8fa06e2722c.png)
+```js
+;[2, 11, 3].sort() //[11, 2, 3]
+```
+
 ![](../images/264e0b6ed0ff28510c7084e85d345465.png)
 ![](../images/3b76dc777cb0251330a7557e151e417e.png)
 
@@ -115,26 +130,37 @@ amount 为 0，不删除。大于 0，删除
 
 - 只有一个参数：改变数组所有值为这个参数
 
-![](../images/0ca459d47511b7e1038ca488159a6a0a.png)
+```js
+var arr = [2, 3, 4]
+arr.fill(1) // arr变成[1, 1, 1]
+```
 
 - fill(params, start, end)
 
-不包括 end，不写 end 一直到数组最后一项
+不包括 end(end**大于**start 才有效)，不写 end 一直到数组最后一项
 
-![](../images/c4455e33726b0a163e4e0125fad2bb94.png)
-![](../images/62f294dd7caa20b3b4401a741dac230f.png)
+```js
+var arr = [4, 5, 6, 7]
+arr.fill(666, 2) //arr变成[4, 5, 666, 666]
+
+var arr2 = [4, 5, 6, 7]
+arr2.fill(666, 2, 3) //arr变成[4, 5, 666, 7]
+```
 
 ### copyWithin(start, index, end)
 
 用数组内的值填充
 
-赋值从 index 开始的整个数组，依次填充 start 到 end 的位置
+复制从 index 开始的整个数组，依次填充 start 到 end 的位置
 
 不包括 end, end 可以省略，省略后包括最后一项
 
 比如下面复制的是[2,3,4,5,6], 从索引是 2（也就是值是 3 的地方开始）
 
-![](../images/120efb604a222098444fd3101b2b789c.png)
+```js
+var arr = [1, 2, 3, 4, 5, 6]
+arr.copyWithin(2, 1) //arr变成[1, 2, 2, 3, 4, 5]
+```
 
 ## 不修改数组的方法
 
@@ -161,8 +187,11 @@ amount 为 0，不删除。大于 0，删除
 
 indexOf 从开头找起，lastIndexOf 从末尾
 
-![](../images/3cb93a83ab36a4c5203d9eef128300ec.png)
-![](../images/a2a03fc53b6b650ebe252a6b56a4fc7f.png)
+```js
+var arr = [1, 2, 3]
+arr.indexOf(2) //1
+arr.indexOf('2') //-1
+```
 
 ### 检索方法 find, findIndex
 

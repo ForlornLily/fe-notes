@@ -6,7 +6,11 @@
 
 所以基本类型上加属性是获取不到的
 
-![](../images/1b7110398ba998f7a12d545dbbba3323.png)
+```js
+var s1 = 'hello'
+s1.color = 'red'
+alert(s1.color) //undefined
+```
 
 过程：
 
@@ -18,4 +22,10 @@
 
 不建议显式地 new 基本包装类型
 
-![](../images/4d7fdf682d975ba59fd07df6c7968172.png)
+```js
+var value = '16'
+var number = Number(value)
+typeof number //"number"
+var obj = new Number(value)
+typeof obj //"object"
+```

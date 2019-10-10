@@ -318,11 +318,9 @@ position 是 absolute 或者 fixed，float 无效
 .child {
   width: 100px;
   height: 50px;
-  margin-top: 10%;
+  margin-top: 10%; /* 20px */
 }
 ```
-
-此处的 margin-top 值是 20px
 
 设置 postion 不是 static 之后分情况
 
@@ -330,8 +328,39 @@ position 是 absolute 或者 fixed，float 无效
 
 只占据原本的空间，会出现遮住其他元素的情况
 
-![代码](../images/2cf8f8ac13dfbb86365adb2e9ef3e6df.png)
-![效果图](../images/29040943d6a1a19371bbb75b062ece57.png)
+```css
+/* 正常流 */
+.sibling {
+  width: 200px;
+  height: 100px;
+  border: 1px solid #000;
+}
+
+.child {
+  width: 100px;
+  height: 50px;
+}
+```
+
+```html
+<div class="child">child</div>
+<div class="sibling">sibling</div>
+```
+
+![正常流](../images/normal_layout.jpg)
+
+```css
+/* relative */
+.child {
+  width: 100px;
+  height: 50px;
+  position: relative;
+  left: 100px;
+  top: 100px;
+}
+```
+
+![正常流](../images/relative.jpg)
 
 ### absolute
 
@@ -341,9 +370,8 @@ position 是 absolute 或者 fixed，float 无效
 
 如果往上都没有，那就以 body 为准
 
+绝对定位参考位置同理，也是相对于已定位的父元素。  
 如果不给 top、left 等偏移量，默认位置在原来的地方
-
-绝对定位参考位置同理，也是相对于已定位的父元素。
 
 ### fixed
 
