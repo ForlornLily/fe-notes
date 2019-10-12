@@ -30,8 +30,11 @@ chmod +x shadowsocks.sh
 - 停止：`/etc/init.d/shadowsocks stop`
 - 重启：`/etc/init.d/shadowsocks restart`
 - 状态：`/etc/init.d/shadowsocks status`
-- 编辑（编辑后需重启）: `nano /etc/shadowsocks-libev/config.json`
+- 编辑（编辑后需重启）: `vi /etc/shadowsocks.json`
+- 卸载: `./shadowsocks.sh uninstall`
+  ::: tip
   AWS 下默认用户 ec2-user 所在路径为`/home/ec2-user`
+  :::
 
 ### BBR
 
@@ -57,7 +60,10 @@ IP 地址范围：0.0.0.0/0（设置为全部流量）
 
 #### 修改安全组
 
-实例——更多——网络和安全组——安全组配置——配置规则——添加安全组规则——增加 SS 创建时的 IP
+实例——更多——网络和安全组——安全组配置——配置规则——添加安全组规则——增加 SS 创建时的 IP  
+::: tip
+TCP/UDP 都要加上端口号
+:::
 
 ## putty
 
