@@ -139,31 +139,9 @@ FactoryPerson.prototype = {
 
 ![](../images/8e12902b990c6133978903365a1c954c.png)
 
-### 对象.isPrototypeOf(实例)
-
-如果实例内部的`[[Prototype]]`指向调用 isPrototypeOf 的对象，那么为 true
-
-实例的`[[Prototype]]`指向原型对象
-
-构造函数的 prototype 指向原型对象
-
-![](../images/545095584a70c94bd5ba3eb7bd03d7ad.png)
-
 ### 读取对象的属性
 
 先在从实例本身找，找不到就去原型对象上找
-
-### in 操作符
-
-和读取对象属性一样，会找实例和原型对象
-
-可以和`for`一起,`for key in object`，不包括`enumerable`为 false（不可枚举）
-
-for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先自己写个 key 的数组
-
-也可以单独使用 `key in object`，包括 enumerable 为 false
-
-比如"name" in person1
 
 ## 自定义函数属性
 

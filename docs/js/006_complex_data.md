@@ -40,11 +40,7 @@ var test = Object.create(Object.prototype)
 构造函数本身都具有一个继承自`Object.prototype`的原型。所以 new Array()创造的对象，同时继承自 Array.prototype 和 Object.prototype。  
 这就是原型链
 
-## 对象共有的属性/方法
-
-每个 Object 实例都拥有的属性/方法：
-
-### constructor
+## constructor
 
 创建当前对象的函数
 
@@ -55,7 +51,7 @@ var test = {}
 test.constructor === Object //true
 ```
 
-### in 关键字
+## in 关键字
 
 in 关键字会包含继承的属性，同样`!==`也会包含继承的属性
 
@@ -68,7 +64,15 @@ foo2.bar2 = 'hello'
 foo2.toString !== undefined // true
 ```
 
-### hasOwnproperty(key)
+### for...in
+
+`for key in object`，不包括`enumerable`为 false（不可枚举）
+
+for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先自己写个 key 的数组
+
+也可以单独使用 `key in object`，包括 enumerable 为 false
+
+## hasOwnproperty(key)
 
 key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
@@ -78,7 +82,7 @@ test.hello = 'word'
 test.hasOwnProperty('hello') //true
 ```
 
-### propertyIsEnumerable(key)
+## propertyIsEnumerable(key)
 
 可以看成是 hasOwnproperty 的增强版:  
 只有是自有属性并且可枚举，才会返回 true
@@ -87,7 +91,7 @@ test.hasOwnProperty('hello') //true
 test.propertyIsEnumerable('hello')
 ```
 
-### isPrototypeOf(object)
+## isPrototypeOf(object)
 
 对象是否存在于另一个对象的原型链上
 
@@ -103,7 +107,7 @@ Object.isPrototypeOf(test) //false
 Object.prototype.isPrototypeOf(test) //true
 ```
 
-### toLocaleString()/toString()/valueOf()
+## toLocaleString()/toString()/valueOf()
 
 - toLocaleString 会做一些本地化处理，比如国家不同显示不同的日期
 
