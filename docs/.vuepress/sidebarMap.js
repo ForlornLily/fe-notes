@@ -12,7 +12,10 @@ const sidebarMap = [
   { title: 'TCP/IP', dirname: 'tcp' },
   { title: 'webpack4.x', dirname: 'webpack4' },
   { title: 'Git', dirname: 'git' },
-  { title: 'Yarn', dirname: 'yarn' }
+  { title: 'Yarn', dirname: 'yarn' },
+  { title: 'Vue Router', dirname: 'vue-router' },
+  { title: 'Vuex', dirname: 'vuex' },
+  { title: 'Express', dirname: 'express' }
 ]
 
 module.exports = sidebarMap

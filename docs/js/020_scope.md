@@ -171,7 +171,7 @@ var a = 2
 
 - 不会有变量提升；（暂时性死区 The Temporal Dead Zone，简称 TDZ）
 
-块级中：会把变量放进这个区域，直到执行声明变量的语句，才会从 TDZ 移除。
+**块级**中：会把变量放进这个区域，直到执行声明变量的语句，才会从 TDZ 移除。
 
 在这之前任何访问这个变量都会变成 runtime error（也就是访问 TDZ 里面的变量都会报错）
 
@@ -271,7 +271,8 @@ const p1 = {
   name: 'xxx',
   age: 25
 }
-const p2 = test(p1)
+const p2 = test(p1) // {name: 'yyy', age: 30}
+console.log(p1) //{name: 'xxx', age: 26}
 ```
 
 ![https://user-gold-cdn.xitu.io/2018/11/14/16712ce155afef8c?imageslim](../images/ff3d7e13ddcf58cc80688cde4a5485c1.png)
@@ -325,10 +326,8 @@ b = { ...a }
 
 缺点：
 
-- 对于正则表达式类型、函数类型等无法进行深拷贝(而且会直接丢失相应的值)。
-
-- 会忽略 undefined 和 symbol
-
+- 函数、RegExp、Error 对象、undefined、symbol 不能序列化和还原。
+- JSON.stringify 只能序列化**可枚举的自有属性**
 - 会抛弃对象的 constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成 Object
 
 - 不能解决循环引用
@@ -345,6 +344,7 @@ const deepCopy = {
     'Boolean',
     'Null',
     'Undefined',
+    'Symbol',
     'Object',
     'Array',
     'Function',
@@ -414,9 +414,9 @@ const deepCopy = {
 有名为 x 的属性，则返回对应的值;  
 没有就继续往下，如果到最后都没有，就认为变量不存在，抛出一个`ReferenceError`
 
-在最顶层代码（也就是不包含任何函数定义的代码），作用域链由一个全局对象组成;  
-在不包含嵌套的函数内，作用域是两个对象组成，第一个是定义函数参数和局部变量的对象，第二个是全局对象;  
-包含嵌套的函数内，作用域链至少是三个对象
+- 在最顶层代码（也就是不包含任何函数定义的代码），作用域链由一个全局对象组成;
+- 在不包含嵌套的函数内，作用域是两个对象组成，第一个是定义函数参数和局部变量的对象，第二个是全局对象;
+- 包含嵌套的函数内，作用域链至少是三个对象
 
 ### 创建规则
 

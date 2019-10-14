@@ -4,15 +4,26 @@
 
 ## 舍入：ceil, floor, round
 
-ceil：向上取整
+- ceil：向上取整
 
-![](../images/fa63d67f6b3b4706a423c7cd2e17b5e8.png)
-![](../images/c382dadfc6c39b95b029350d3e41b221.png)
-![](../images/7c8cf2f08d3609d50831ea9f03625e59.png)
+```js
+Math.ceil(18.9) //19
+Math.ceil(18) //18
+```
 
-floor：向下
+- floor：向下
 
-round：四舍五入
+```js
+Math.floor(18.9) //18
+Math.floor(18) //18
+```
+
+- round：四舍五入
+
+```js
+Math.round('18.5') //19
+Math.round('18.5b') //NaN
+```
 
 包含非数字都会是 NaN
 

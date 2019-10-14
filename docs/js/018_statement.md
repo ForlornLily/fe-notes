@@ -10,8 +10,15 @@
 
 即使拥有相同数量的属性，属性名和属性值相等
 
-![](../images/37ebafff5d29e40e92e7fdb4c5a71265.png)
-![](../images/3e2e909066290ad56ba2ded7a355e543.png)
+```js
+var obj = { servant: 'saber' }
+var obj2 = obj
+obj === obj2 //true
+
+var servant = { servant: 'saber' }
+var fakeServant = { servant: 'saber' }
+servant === fakeServant // false
+```
 
 ## if
 

@@ -35,6 +35,8 @@ module.exports = {
         text: '库',
         items: [
           { text: 'Vue2.x', link: '/vue/' },
+          { text: 'Vue Router', link: '/vue-router/' },
+          { text: 'Vuex', link: '/vuex/' },
           { text: 'webpack4.x', link: '/webpack4/' },
           { text: 'TypeScript', link: '/typescript/' },
           { text: 'Vue3.x', link: '/vue-3.x/' }
@@ -44,6 +46,7 @@ module.exports = {
         text: '后台',
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
+          { text: 'Express', link: '/express/' },
           { text: 'Linux', link: '/linux/' }
         ]
       },

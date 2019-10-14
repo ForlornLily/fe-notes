@@ -51,7 +51,14 @@ arguments 不是 Array 的实例，是一个类数组对象，可以用 length �
 
 ## 函数都包含的属性: length, prototype
 
+### length
+
 length: 形参的个数
+
+```js
+function hello1(a, b, c) {}
+hello1.length //3
+```
 
 ### prototype
 
@@ -75,6 +82,13 @@ let person1 = new FactoryPerson()
 ### constructor
 
 对象的 constructor 指向创建该对象的函数
+
+```js
+var foo = new Object()
+foo.constructor === Object //true
+var test = {}
+test.constructor === Object //true
+```
 
 所有原型对象都会获得一个`constructor`属性，指向 prototype 所在的函数
 

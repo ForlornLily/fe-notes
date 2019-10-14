@@ -49,15 +49,29 @@ exec 结果：
 
 `[]`表示集合，比如`[123]`，表示匹配 123 里面的任意一个数字
 
-![](../images/f41cd690a79c942f0ee5f9bb20ad02d7.png)
+```js
+var reg = /[123]/
+reg.test('1') //true
+reg.test(1) //true
+```
 
 ### 范围-
 
 `-`表示范围，比如`[0-9]`，表示匹配 0\~9 里面的任意一个数字, [a-z]匹配小写字母
 
+```js
+var reg = /[1-3]/
+reg.test(1) //true
+```
+
 ### 任意字符.
 
 `.` 任意字符，除了换行和回车
+
+```js
+var reg = /./
+reg.test(123) //true
+```
 
 ### 数字\d
 
@@ -81,18 +95,33 @@ exec 结果：
 
 同时匹配多个字符，比如 color 和 colour 要同时匹配，可以用?
 
-### ? \* +
+- `?`表示同时匹配 0 或者一个，匹配上面 color 可以用`[colou?r]`
 
-`?`表示同时匹配 0 或者一个，匹配上面 color 可以用`[colou?r]`
+  - `u?`表示 u 要么没有，要么只有 1 个，两个就不通过。
 
-`u?`表示 u 要么没有，要么只有 1 个，两个就不通过
+```js
+var reg = /col(ou?)r/ //等价于reg = /colou?r/
+reg.test('colr') //false
+reg.test('color') //true
+reg.test('colour') //true
+reg.test('colouur') //false
+```
 
-`*`表示 0 或者无数个。u 可以`>=`0 个
+- `*`表示 0 或者无数个。u 可以`>=`0 个
 
-`+`表示至少一个
+```js
+var reg = /colou*r/
+reg.test('color') //true
+reg.test('colouur') //true
+```
 
-![](../images/0d0851648437054a6c7ab619954a76e7.png)
-![](../images/9e3c6191c26136290309bee89263980f.png)
+- `+`表示至少一个
+
+```js
+var reg = /colou+r/
+reg.test('color') //false
+reg.test('colour') //true
+```
 
 ### 指定次数{}
 
@@ -100,13 +129,23 @@ exec 结果：
 
 `{x}`: x 次
 
+```js
+var reg = /r{2}/
+reg.test('Archer') //false
+reg.test('Arrcher') //true
+```
+
 `{min, max}`： 介于 min 次到 max 次之间
 
 `{min, }`: 至少 min 次
 
-`{0, max}`： 至多 max 次
+```js
+var reg = /r{2,}/
+reg.test('Arrcher') //true
+reg.test('Arrrcher') //true
+```
 
-![](../images/89e02aaa5e16a5e2dc9538380db648bb.png)
+`{0, max}`： 至多 max 次
 
 ## 边界
 
@@ -114,9 +153,21 @@ exec 结果：
 
 `^x` 以 x 为开头。注意\^在集合[]的含义是非
 
+```js
+var reg = /(^sa)b?/
+reg.test('sber') //false
+reg.test('saber') //true
+reg.test('saer') //true
+```
+
 `x$` 以 x 结尾
 
-![](../images/bdaece7bab2f7cd7f902d3deab00772d.png)
+```js
+var reg = /(^sa).?(er$)/
+reg.test('saer') //true
+reg.test('saber') //true
+reg.test('sabber') //false
+```
 
 ## 匹配模式 m i g
 
