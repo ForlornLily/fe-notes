@@ -132,7 +132,7 @@ Access-Control-Allow-Methods: GET POST PUT OPTIONS PATCH（运行跨域的请求
 
 Access-Control-Expose-Headers 允许前端发送的额外请求头
 
-比如 NodeJS
+比如 NodeJS， [Express](../express/02_demo.md)
 
 ```js
 require('http')
@@ -365,6 +365,46 @@ send 可以是字符串.send("hello")，也可以是对象{key: value}
 ### 其他
 
 参考[知乎](https://zhuanlan.zhihu.com/p/25778815)
+
+### demo
+
+```js
+let xhr = new XMLHttpRequest()
+export function ajax(options) {
+  let {
+    url,
+    type = 'GET',
+    responseType = 'text',
+    callback,
+    data = null
+  } = options
+  if (!url) {
+    return false
+  }
+  xhr.abort()
+  xhr.responseType = responseType
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      // 4表示整个请求过程已经完毕.
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+        // 200 表示一个成功的请求
+        callback({
+          success: true,
+          data: xhr.response
+        })
+      }
+    }
+  }
+  xhr.onerror = err => {
+    callback({
+      success: false,
+      data: err
+    })
+  }
+  xhr.open(type, url, true) //true为异步，不写默认为true
+  xhr.send(data)
+}
+```
 
 #### postMessage
 

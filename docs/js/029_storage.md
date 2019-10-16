@@ -59,7 +59,7 @@ state code 为 200
 
 2.  下一次再请求这个资源时，浏览器根据上一次请求的时间，这次请求的时间的时间差，去 Cache-control 中设置的时间差比较，如果小于 Cache-Control 中设置的时间差，那么说明未过期，直接从本地缓存中取，请求返回 200（from cache）
 
-Cache-Control:max-age=5184000
+`Cache-Control:max-age=5184000`
 
 2. 协商缓存
 

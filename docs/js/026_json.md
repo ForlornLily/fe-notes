@@ -32,4 +32,5 @@ var result = JSON.stringify(childArr, ['name'])
 
 ## JSON.parse
 
-JSON 字符串转对象
+JSON 字符串转对象  
+[序列化限制](./006_complex_data.md#序列化对象)

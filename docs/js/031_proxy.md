@@ -165,3 +165,106 @@ let proxy = new Proxy(target, {
 ```
 
 ![](../images/1f0a992c676775d6dacf94a491244927.png)
+
+### 数组操作
+
+如果 target 是一个数组，假设值是`[1,2,3]`。实际上 proxy 的值是  
+![](../images/proxy_array.jpg)
+
+```js
+let target = [1, 2, 3]
+function info(obj, key) {
+  console.log(`对象的${key}是${obj[key]}`)
+}
+function change(obj, key, value) {
+  console.log(`${key}的值会被改变成${value}`)
+  obj[key] = value
+}
+let proxy = new Proxy(target, {
+  get(target, key, receiver) {
+    info(target, key)
+    return Reflect.get(target, key, receiver)
+  },
+  set(target, key, value, receiver) {
+    //通过改变proxy来改变target的值
+    change(target, key, value)
+    return Reflect.set(target, key, value, receiver)
+  }
+})
+proxy.push(5)
+```
+
+`proxy.push(5)`会多次触发`get`和`set`陷阱  
+![](../images/proxy_push.jpg)
+
+### 对象嵌套
+
+嵌套不会触发`set`陷阱，但会触发`get`
+
+```js
+let target = {
+  name: 'hello',
+  location: {
+    three: 'west'
+  }
+}
+/* 省略proxy定义 */
+proxy.location.three = 'east'
+```
+
+![](../images/proxy_nest.jpg)
+
+### 更好的响应式
+
+解决两个问题：
+
+1. 多次触发`set`后，反复触发一个事件:  
+   可以用[防抖](./022_bom.md#函数防抖与节流)实现；  
+   在 Vue 中，根据 key 是否是 target 的自有属性(`hasOwnProperty`)：
+   - 不是自有属性，那么应该是新增的 key，走一次逻辑，结束
+   - 是自有属性，判断旧值和新值是否一致：不一致，走逻辑，结束；一致，不需要执行，结束
+2. 对象嵌套：递归的方式  
+   在 Vue 中，用的是`get`会被触发的特性，对 Refelect.get 返回的对象进行 Proxy
+
+```js
+function createReactive(target) {
+  let proxy = new Proxy(target, handlers)
+  return proxy
+}
+const handlers = {
+  get: getters,
+  set: setters
+}
+function getters(target, key, receiver) {
+  const result = Reflect.get(target, key, receiver)
+  if (typeof result === 'object') {
+    //再次调用
+    return createReactive(result, handlers)
+  }
+  return result
+}
+function setters(target, key, value, receiver) {
+  const isOwn = target.hasOwnProperty(key)
+  if (!isOwn) {
+    //新增属性，执行逻辑
+    console.log('not own')
+  } else {
+    //已有属性，判断新值和旧值是否相等
+    const currentValue = target[key]
+    if (value !== currentValue) {
+      console.log('value changed')
+    }
+  }
+  return Reflect.set(target, key, value, receiver)
+}
+let target = {
+  name: 'hello',
+  location: {
+    three: 'west'
+  },
+  arr: [1, 2, 3]
+}
+let proxy = createReactive(target)
+proxy.arr.push(6) // "not own"
+proxy.location.three = 'east' // "value changed"
+```

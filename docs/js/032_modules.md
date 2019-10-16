@@ -2,7 +2,7 @@
 
 - 在模块的顶级作用域创建的变量，不会被自动添加到共享的全局作用域，它们只会在模块顶级作用域的内部存在
 
-- 顶级作用域的 this 是 undefined
+- 顶级作用域的 `this` 是 undefined（自动进入严格模式）
 
 - 只有导出(export)的内容才能被外部访问
 
@@ -20,6 +20,9 @@ export var name = 'Nicholas'
 export function setName(newName) {
   name = newName
 }
+```
+
+```js
 import { name, setName } from './example.js'
 console.log(name) // "Nicholas"
 setName('Greg')
@@ -80,7 +83,7 @@ import * as module from './module.js'
 
 模块内的 export 出的所有值都成为 module 的属性
 
-即使用时变为 module.add
+使用时变为 module.add
 
 ### 重命名导出 as
 
@@ -89,6 +92,9 @@ function sum(num1, num2) {
   return num1 + num2
 }
 export { sum as add }
+```
+
+```js
 import { add } from './example.js'
 //也可以重命名为sum
 import { add as sum } from './example.js'
@@ -141,8 +147,13 @@ Array.prototype.pushAll = function() {}
 设置 type="module"，默认总是异步的（defer）
 
 ```html
+<!-- 跨域 -->
 <script type="module" src="./temp.js"></script>
 ```
+
+::: warning
+纯静态页面在 Chrome 引入`type="module"`会跨域，即使用`src`属性也不行。需要启一个服务器
+:::
 
 ### 顺序
 
@@ -170,7 +181,7 @@ Array.prototype.pushAll = function() {}
 
 6.  递归下载并解析在 module2.js 中使用 import 导入的资源
 
-等到浏览器解析完`</html\>`才会开始执行
+等到浏览器解析完`</html>`才会开始执行
 
 1.  递归执行 module1.js 导入的资源；
 

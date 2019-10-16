@@ -46,19 +46,7 @@ button 设置 type="submit"，放在 form 内才能提交，在 form 内是默�
 
 name 相同的时候只能选一个，比如 radio 来回切换
 
-### placeholoder
-
-只能用兼容写法
-
-```css
-::-webkit-input-placeholder,
-:-ms-input-placeholder,
-::-moz-placeholder {
-  font-style: italic;
-}
-```
-
-#### input
+### input 的 placeholder
 
 input 的 placeholder 会出现文本位置偏上的情况：
 

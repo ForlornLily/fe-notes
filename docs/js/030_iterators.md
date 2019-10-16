@@ -158,11 +158,17 @@ let keys = values.keys()
 for (let key of keys) {
   console.log(key) //依次输出索引0, 1, 2
 }
+```
+
+```js
 let values = new Set([11, 22, 33])
 let keys = values.keys()
 for (let key of keys) {
   console.log(key) //依次11, 22, 33
 }
+```
+
+```js
 let values = new Map([[11, 'hello'], [22, 'world']])
 let keys = values.entries()
 for (let key of keys) {

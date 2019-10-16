@@ -124,22 +124,3 @@ border: 0;
 
 input `type`设为"search"
 并将它包裹在 form 内
-
-## 修改 placeholder
-
-```css
-.info-input::-webkit-input-placeholder {
-  /* WebKit browsers */
-  color: #ccc;
-}
-
-.info-input::-moz-placeholder {
-  /* Mozilla Firefox 19+ */
-  color: #ccc;
-}
-
-.info-input:-ms-input-placeholder {
-  /* Internet Explorer 10+ */
-  color: #ccc;
-}
-```

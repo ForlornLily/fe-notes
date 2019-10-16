@@ -115,6 +115,23 @@ window.addEventListener('load', function() {
 
 即 src 不受[同源策略](./027_async.md#同源策略)的限制
 
+### type="module"
+
+[ES module](./032_modules.md) 在 script 内可以通过`type="module"`直接使用
+
+```html
+<script type="module">
+  import { Router } from "./1.js"
+  const route = new Router;
+</script>
+
+<script type="module" src="./1.js">
+```
+
+::: warning
+纯静态页面在 Chrome 引入`type="module"`会跨域，即使用`src`属性也不行。需要启一个服务器
+:::
+
 ## doctype
 
 分为 quirks mode 和 standands mode  

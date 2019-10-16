@@ -240,7 +240,8 @@ EventTarget.prototype = {
     }
     //事件方法做为数组存在
     const handlers = this.handler[event.type]
-    if (handlers instanceof Array) {
+    //if (handlers instanceof Array) {
+    if (Array.isArray(handlers)) {
       const length = handlers.length
       for (let k = 0; k < length; k++) {
         handlers[k](event)
@@ -250,7 +251,8 @@ EventTarget.prototype = {
   removeHander(type, handler) {
     //删除事件
     const handlers = this.handler[type]
-    if (handlers instanceof Array) {
+    //if (handlers instanceof Array) {
+    if (Array.isArray(handlers)) {
       const length = handlers.length
       for (let k = 0; k < length; k++) {
         if (handlers[k] == handler) {
