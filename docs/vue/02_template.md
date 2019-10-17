@@ -116,13 +116,9 @@ filters: {
 
 不可见的包裹元素
 
-## 指令
+## v-bind
 
-带有 v- 前缀
-
-### v-bind
-
-#### 绑定 class
+### 绑定 class
 
 可以是对象，也可以是数组，可以和原生 class 并存
 
@@ -159,7 +155,7 @@ data: {
 
 ![](../images/9db8e70fed27bc5b7279992c3115a26c.png)
 
-##### 结合 computed
+#### 结合 computed
 
 ```html
 <div id="app">
@@ -184,13 +180,13 @@ let app = new Vue({
 })
 ```
 
-#### 过滤器 filters
+### 过滤器 filters
 
 ```html
 <div :id="rawId | formatId"></div>
 ```
 
-### 动态参数
+## 动态参数
 
 2.6.0 新增，可以用在 v-bind，v-on，v-slot
 
@@ -206,9 +202,9 @@ let app = new Vue({
 
 - 变量名(attributename)不可以是驼峰式，因为 HTML 标签只能全部小写。
 
-### v-on
+## v-on
 
-#### \$event
+### \$event
 
 原生的 event 对象
 
@@ -216,21 +212,21 @@ let app = new Vue({
 <a @click="handleClick('hi', $event)">123</a>
 ```
 
-#### 修饰符
+### 修饰符
 
-.stop
+- .stop
 
-.prevent
+- .prevent
 
-.capture: 对应 addEventListener 的 capture 是 true
+- .capture: 对应 [addEventListener](../js/024_events.md) 的 capture 是 true
 
-.self: 只有点击的元素自身才会触发。子元素冒泡到该元素不会触发
+- .self: 只有点击的元素自身才会触发。子元素冒泡到该元素不会触发
 
-.once: 只触发一次。对应 addEventListener 的 once 是 true
+- .once: 只触发一次。对应 addEventListener 的 once 是 true
 
-.passive: 对应 addEventListener 的 passive 是 true
+- .passive: 对应 addEventListener 的 passive 是 true
 
-.native: 和自定义事件重名时用原生
+- .native: 和自定义事件重名时用原生
 
 可以串联
 
@@ -238,7 +234,7 @@ let app = new Vue({
 <a @click.stop.prevent="handleClick">123</a>
 ```
 
-#### 按键修饰符
+### 按键修饰符
 
 监听键盘事件的时候
 
@@ -249,7 +245,7 @@ Enter: \@keyup.enter
 
 PageDown: \@keyup.page-down
 
-##### 别名
+#### 别名
 
 常用的比如 Backspace, Enter, Esc
 
@@ -283,11 +279,11 @@ PageDown: \@keyup.page-down
 
 比如 Ctrl + Click: \@click.ctrl="doSomething"
 
-### v-if
+## v-if
 
 v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面
 
-#### key 指定不被复用的元素
+### key 指定不被复用的元素
 
 ```html
 <template v-if="loginType === 'username'">
@@ -317,11 +313,11 @@ input 会被复用
 </template>
 ```
 
-### v-show
+## v-show
 
 不支持 `<template>` 元素
 
-### v-for
+## v-for
 
 遍历数组/对象。对象使用 Object.keys()
 
@@ -329,7 +325,7 @@ v-for 具有比 v-if 更高的优先级。不推荐同时使用 v-if 和 v-for
 
 必须要`key`属性
 
-#### 小技巧
+### 小技巧
 
 用计算属性返回 v-for 要用的内容。
 
@@ -339,13 +335,13 @@ v-for 具有比 v-if 更高的优先级。不推荐同时使用 v-if 和 v-for
 ![](../images/bb33a146eed64e6d755de10a43b2773b.png)
 ![](../images/4c7340a36886a67b23f15e46b829b2f8.png)
 
-### v-model
+## v-model
 
 双向数据绑定
 
 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 data 内的值作为数据来源
 
-#### 本质
+### 本质
 
 语法糖：bind 属性+on 监听事件
 
@@ -355,7 +351,7 @@ checkbox 和 radio：checked 属性+ change 事件；
 
 select：value 作为 prop + change 事件
 
-##### 对于 select
+#### 对于 select
 
 ```html
 <select v-model="selected">
@@ -370,19 +366,19 @@ select：value 作为 prop + change 事件
 
 因此提供一个值为空的禁用选项
 
-#### 修饰符
+### 修饰符
 
-##### .lazy
+#### .lazy
 
 input 是触发 input 事件（值改变）
 
 只要加上.lazy 会变成 change 事件（值改变并失焦）
 
-##### .trim
+#### .trim
 
 自动调 trim()方法，去掉首尾空格
 
-### v-slot:slotName
+## v-slot:slotName
 
 原本的`<slot>`和具名插槽已经在 2.6.0+版本被废弃，用 v-slot 取代
 
@@ -420,7 +416,7 @@ input 是触发 input 事件（值改变）
 </script>
 ```
 
-#### 作用域
+### 作用域
 
 父组件是无法访问子组件内部的数据的。
 
@@ -462,7 +458,7 @@ input 是触发 input 事件（值改变）
 </script>
 ```
 
-#### 简写(井号)
+### 简写(井号)
 
 ::: tip
 &lt;slot&gt;有 name 属性才可以
@@ -497,11 +493,11 @@ input 是触发 input 事件（值改变）
 </script>
 ```
 
-### 自定义指令
+## 自定义指令
 
 适用场景：对 DOM 直接操作。比如初始化的时候自动聚焦
 
-#### 全局指令 Vue.directive
+### 全局指令 Vue.directive
 
 ```html
 <div id="app">
@@ -522,7 +518,7 @@ input 是触发 input 事件（值改变）
 </script>
 ```
 
-#### 局部指令 directives 属性
+### 局部指令 directives 属性
 
 ```js
 const app = new Vue({
@@ -538,7 +534,7 @@ const app = new Vue({
 })
 ```
 
-#### 钩子函数
+### 钩子函数
 
 比如上面的 inserted，表示元素插入父节点时调用(仅保证父节点存在，但不一定已被插入文档中)
 
@@ -552,7 +548,7 @@ const app = new Vue({
 
 - unbind：只调用一次，指令与元素解绑时调用
 
-##### 参数
+#### 参数
 
 完整见官网[custom-directive](https://cn.vuejs.org/v2/guide/custom-directive.html)
 
