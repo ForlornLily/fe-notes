@@ -29,7 +29,7 @@ Math.round('18.5b') //NaN
 
 ## random
 
-不包括 0 和 1 的随机数
+包括 0，不包括 1 的随机数
 
 ![](../images/2a677be65674cd728a7b4d0fc395b1b8.png)
 

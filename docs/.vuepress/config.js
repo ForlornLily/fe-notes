@@ -21,10 +21,6 @@ module.exports = {
         link: '/'
       },
       {
-        text: '网站/书籍/库',
-        link: '/repository/'
-      },
-      {
         text: '基础',
         items: [
           { text: 'HTML&CSS', link: '/css/' },
@@ -34,6 +30,7 @@ module.exports = {
       {
         text: '库',
         items: [
+          { text: 'jQuery', link: '/jquery/' },
           { text: 'Vue2.x', link: '/vue/' },
           { text: 'Vue Router', link: '/vue-router/' },
           { text: 'Vuex', link: '/vuex/' },
@@ -70,6 +67,10 @@ module.exports = {
           { text: 'Git', link: '/git/' },
           { text: 'Yarn', link: '/yarn/' }
         ]
+      },
+      {
+        text: '网站/书籍/库',
+        link: '/repository/'
       }
     ],
     sidebar: utils.inferSiderbars(),

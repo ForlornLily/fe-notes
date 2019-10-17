@@ -254,4 +254,49 @@ Universal Module Definition —— 统一模块定义
 AMD 和 CommonJS 的揉和，会先判断当前环境是否支持 CommonJS
 规范，若否则再判断是否支持 AMD 规范
 
-比如[jQuery](https://github.com/Aphasia2015/webLog/issues/12)
+比如[jQuery](https://github.com/Aphasia2015/webLog/issues/12), jQuery 本身用了 IIFEs  
+简单的 IIFEs
+
+```js
+var a = 2
+;(function IIFE(global, param) {
+  //传入window对象，命名为global
+  var a = 3
+  console.log(a) // 3
+  console.log(global.a) // 2
+  console.log(param) //2
+})(window, a)
+console.log(a) // 2
+```
+
+```js
+;(function(global, factory) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
+    //CommonJS
+    module.exports = global.document
+      ? factory(global.document, true)
+      : function(w) {
+          //判断`document`对象是否存在，不存在就报错
+          //...
+        }
+  } else {
+    factory(global)
+  }
+})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+  //window对象不存在，则为this, 比如NodeJS下this应该传入的是全局对象`global`
+  //...
+  if (typeof define === 'function' && define.amd) {
+    //AMD
+    define('jquery', [], function() {
+      return jQuery
+    })
+  }
+  //...
+  // 不支持 CommonJS，也不支持 AMD，则将 jQuery 暴露为全局变量
+  // 由于 factory(global) 没有传入 noGlobal，所以 !noGlobal 为 true
+  if (!noGlobal) {
+    window.jQuery = window.$ = jQuery
+  }
+  return jQuery
+})
+```

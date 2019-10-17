@@ -132,6 +132,11 @@ window.addEventListener('load', function() {
 纯静态页面在 Chrome 引入`type="module"`会跨域，即使用`src`属性也不行。需要启一个服务器
 :::
 
+## src 与 href
+
+src 用于替代这个元素，而 href 用于建立这个标签与外部资源之间的关系  
+src 引用的外部资源不会阻塞渲染。
+
 ## doctype
 
 分为 quirks mode 和 standands mode  
