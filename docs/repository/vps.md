@@ -101,6 +101,8 @@ Saved Sessions 处给此配置起名，然后点 Save
 
 ### 安装
 
+重启： `systemctl restart v2ray`
+
 #### SwitchyOmega
 
 扩展程序地址: [github](https://github.com/FelisCatus/SwitchyOmega/releases)  
