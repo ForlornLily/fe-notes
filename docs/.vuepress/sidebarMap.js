@@ -16,7 +16,8 @@ const sidebarMap = [
   { title: 'Vue Router', dirname: 'vue-router' },
   { title: 'Vuex', dirname: 'vuex' },
   { title: 'Express', dirname: 'express' },
-  { title: 'jQuery', dirname: 'jquery' }
+  { title: 'jQuery', dirname: 'jquery' },
+  { title: '网络', dirname: 'network' }
 ]
 
 module.exports = sidebarMap

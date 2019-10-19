@@ -6,7 +6,7 @@ HTTP 属于它内部的一个子集
 
 比如还有 DNS，FTP
 
-和 HTTP 密切相关的几个协议：[IP](#ip协议)，[TCP](#udp)，[DNS](#http)
+和 HTTP 密切相关的几个协议：[DNS](./02_application_layer.md)，[TCP](./03_transport_layer.md)，[IP](./04_network_layer.md)
 
 ## 分层
 

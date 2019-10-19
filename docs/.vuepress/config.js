@@ -58,7 +58,8 @@ module.exports = {
         text: '网络',
         items: [
           { text: 'TCP/IP', link: '/tcp/' },
-          { text: 'HTTP(S)', link: '/http/' }
+          { text: 'HTTP(S)', link: '/http/' },
+          { text: '其他', link: '/network/' }
         ]
       },
       {

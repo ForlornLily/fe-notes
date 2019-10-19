@@ -12,7 +12,7 @@ Domain Name System：域名和 IP 地址之间的解析
 
 域名 →IP 和 IP→ 域名
 
-基于 [UDP](#udp) 做的查询
+基于 [UDP](./03_transport_layer.md) 做的查询
 
 ## socket
 

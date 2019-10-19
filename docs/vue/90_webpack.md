@@ -100,3 +100,7 @@ data () {
   }
 }
 ```
+
+### 优化
+
+参考[vue-cli3 项目从搭建优化到 docker 部署](https://juejin.im/post/5c4a6fcd518825469414e062#heading-21)

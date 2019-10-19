@@ -1,6 +1,6 @@
 # history 版简易路由
 
-核心: `popstate`事件和`pushState`方法。当前需要需要自己手动调用逻辑
+核心: `popstate`事件和`pushState`方法。当前路由需要自己手动调用逻辑
 ::: warning
 超链接`<a href="/url">`会请求新页面，想要不刷新页面就必须用`pushState`方法  
 只有访问其他页面再返回才会触发 popstate

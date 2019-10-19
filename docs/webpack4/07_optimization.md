@@ -33,6 +33,46 @@ output: {
 
 ![](../images/2a5812e0ebf7da17be16c40fb5ab525a.png)
 
+### 作用
+
+webpack 入口文件有很多依赖的模块。实际情况中，虽然依赖了某个模块，但其实只使用其中的某些功能。  
+通过 tree-shaking，将没有使用的模块摇掉，这样来达到删除无用代码的目的
+
+### 原理
+
+[参考](https://juejin.im/post/5a4dc842518825698e7279a9)  
+利用的是 ES6 module 的依赖关系确定性  
+ES6 module 的特点
+
+- 只能在顶层出现
+- 模块名只能是字符串常量
+- 导入后的模块在当前 js 是不可变的
+  这样就可以进行静态分析，不需要执行引入模块的代码。
+
+### 缺陷
+
+无法消除类的方法。由于`prototype`的继承，分析依赖会比较困难  
+例如下面是一个"senhai.js", 如果删掉整个"senhai.js"，对原生`Array`的自定义`unique`方法也没了，可能引起报错
+
+```js
+function Senhai() {}
+
+Senhai.prototype.servant = function() {}
+
+var a = 'Saber' + 'Alter',
+  b
+if (a == 'QB') {
+  b = Array
+} else {
+  b = Senhai
+}
+b.prototype.unique = function() {
+  // 将 array 中的重复元素去除
+}
+
+export default Senhai
+```
+
 ## Code Spliting: splitChunks
 
 ![](../images/70183b927751d6822eb33f748fb5a7d2.png)

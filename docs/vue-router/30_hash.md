@@ -1,7 +1,7 @@
 # hash 版简易路由
 
 参考[手写一个 router](https://xianyulaodi.github.io/2017/06/18/%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AArouter/)  
-核心: `hashChange`和`load`事件。  
+核心: `hashchange`和`load`事件。  
 简单思路：
 
 1. 创建一个对象，存储路由和进路由后要执行的方法；
