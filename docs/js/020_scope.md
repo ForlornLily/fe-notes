@@ -222,6 +222,20 @@ let value = 'hello' //报错
 
 每次迭代都会创建一个同名变量并初始化
 
+```js
+function a() {
+  for (let i = 0; i < 5; i++) {
+    this.i = i
+    setTimeout(function() {
+      console.log(i)
+    }, 0)
+    console.log(this.i)
+  }
+}
+
+a() // 0 1 2 3 4 0 1 2 3 4
+```
+
 #### const
 
 - 声明的时候必须赋值

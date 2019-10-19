@@ -277,7 +277,6 @@ let iterators = createIteratror()
 适合场景：回调之间存在依赖（回调地狱）。本质上就是 Generator 的一个语法糖
 
 - 在一个函数前加一个 async，函数会返回一个 Promise
-
 - await 只能在 async 函数中使用
 
 - await 会阻塞代码
@@ -285,6 +284,24 @@ let iterators = createIteratror()
 - 多个 await 依次执行
 
 - await 后面跟的是个 Promise 对象，如果不是。await 会把它转成 Promise
+
+```js
+async function async1() {
+  console.log('async1 start')
+  await async2()
+  console.log('async1 end')
+  console.log('a1 end2')
+}
+
+//等价于
+async function async1() {
+  console.log('async1 start')
+  Promise.resolve(async2()).then(() => {
+    console.log('async1 end')
+    console.log('a1 end2')
+  })
+}
+```
 
 - await 执行后的结果就是 resolve 的值
 
@@ -304,4 +321,57 @@ async function secondMethod() {
   console.log(y)
 }
 secondMethod() //"hello"
+```
+
+#### 例子
+
+```js
+async function a1() {
+  console.log('a1 start')
+  await a2()
+  console.log('a1 end')
+}
+async function a2() {
+  console.log('a2')
+}
+
+console.log('script start')
+
+setTimeout(() => {
+  console.log('setTimeout')
+}, 0)
+
+Promise.resolve().then(() => {
+  console.log('promise1')
+})
+
+a1()
+
+let promise2 = new Promise(resolve => {
+  resolve('promise2.then')
+  console.log('promise2')
+})
+
+promise2.then(res => {
+  console.log(res)
+  Promise.resolve().then(() => {
+    console.log('promise3')
+  })
+})
+console.log('script end')
+```
+
+结果
+
+```
+script start
+a1 start
+a2
+promise2
+script end
+promise1
+a1 end
+promise2.then
+promise3
+setTimeout
 ```
