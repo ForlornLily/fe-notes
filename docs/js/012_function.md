@@ -213,7 +213,7 @@ Function.prototype.myCall = function(context) {
   context = context || window
   //这个时候的this指向myMethod
   context.fn = this
-  //处理arguments，此时的arguments是三个，第一个是obj，第二个是"world"，去掉第一个参数
+  //处理arguments，此时的arguments是两个，第一个是obj，第二个是"world"，去掉第一个参数
   let arry = [...arguments].slice(1)
   let result = context.fn(...arry)
   delete context.fn

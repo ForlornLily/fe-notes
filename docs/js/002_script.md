@@ -135,7 +135,7 @@ window.addEventListener('load', function() {
 ## src 与 href
 
 src 用于替代这个元素，而 href 用于建立这个标签与外部资源之间的关系  
-src 引用的外部资源不会阻塞渲染。
+src 引用的外部资源（除了 js）不会阻塞渲染。
 
 ## doctype
 
