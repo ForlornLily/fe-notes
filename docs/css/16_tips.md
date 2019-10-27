@@ -124,3 +124,13 @@ border: 0;
 
 input `type`设为"search"
 并将它包裹在 form 内
+
+## 图片禁用长按复制功能
+
+```css
+img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+```

@@ -24,6 +24,128 @@
 
 一个节点，最多两个子节点。两个子节点的时候必须一个左，一个右
 
+## 遍历
+
+树的遍历（也称为树的搜索）是图的遍历的一种
+
+### 深度遍历
+
+- inOrderTraverse: 中序遍历，LNR。  
+  考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。
+  输出表现为左、根、右
+- preOrderTraverse: 先序遍历，NLR  
+  考察到一个节点后，即刻输出该节点的值，并继续遍历其左右子树。(根左右)
+- postOrderTraverse: 后序遍历，LRN
+
+递归实现: 代码差不多，只不过输出时机（console.log）不一样
+
+```js
+preOrderTraverse() {
+  this.preOrderTraverseNode(this.root)
+}
+preOrderTraverseNode(node) {
+  // 递归
+  if (node != null) {
+    console.log(node.key)
+    this.preOrderTraverseNode(node.left)
+    this.preOrderTraverseNode(node.right)
+  }
+}
+inOrderTraverseNode(node) {
+  // 递归
+  if (node != null) {
+    this.inOrderTraverseNode(node.left)
+    console.log(node.key)
+    this.inOrderTraverseNode(node.right)
+  }
+}
+postOrderTraverseNode(node) {
+  // 递归
+  if (node != null) {
+    this.postOrderTraverseNode(node.left)
+    this.postOrderTraverseNode(node.right)
+    console.log(node.key)
+  }
+}
+```
+
+非递归，用栈实现:
+
+```js
+stackPreOrder() {
+  //非递归的先序遍历，用栈来实现
+  let node = this.root;
+  if(node !== null) {
+    let stack = [];
+    stack.push(node);
+    while(stack.length) {
+      //弹出栈顶元素
+      node = stack.pop();
+      console.log(node.key);
+      //先弹出栈的左节点，再弹右节点，所以先push 右边
+      if(node.right) {
+        stack.push(node.right)
+      }
+      if(node.left) {
+        stack.push(node.left)
+      }
+    }
+  }
+}
+```
+
+```js
+stackInOrder() {
+  //非递归的中序遍历，用栈来实现
+  let node = this.root;
+  if(node !== null) {
+    let stack = [];
+    while(stack.length || node) {
+      //把左节点推到栈里面
+      if(node) {
+        stack.push(node)
+        node = node.left;
+      } else {
+        //没有左节点，拿出栈顶元素，输出节点的值
+        node = stack.pop()
+        console.log(node.key);
+        //左、根结束后访问右节点
+        node = node.right;
+      }
+    }
+  }
+}
+```
+
+```js
+stackPostOrder() {
+  //非递归的后序遍历，用两个栈来实现
+  let node = this.root;
+  if(node !== null) {
+    let tmp = [];
+    tmp.push(node);
+    let stack = [];
+    while(tmp.length) {
+      //输出左、右、根
+      //栈是后进先出，所以stack入栈顺序应该是根、右、左
+      node = tmp.pop();
+      stack.push(node);
+      //stack要右、左
+      //那么tmp.pop的第一个是右，所以先push左
+      if(node.left) {
+        tmp.push(node.left);
+      }
+      if(node.right) {
+        tmp.push(node.right);
+      }
+    }
+    while(stack.length) {
+      console.log(stack.pop().key);
+    }
+  }
+}
+```
+
 ## 二叉搜索树（Binary Search Tree）
 
 二叉树
@@ -47,21 +169,6 @@
 - max: 返回最大，对于 BST 来说就是右下角
 
 - search: 搜索，存在返回 true
-
-  深度遍历：都用递归  
-  代码差不多，只不过输出时机（console.log）不一样
-
-  - inOrderTraverse: 中序遍历，LNR。
-
-  考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。
-
-  输出表现为左、根、右
-
-  - preOrderTraverse: 先序遍历，NLR
-
-  考察到一个节点后，即刻输出该节点的值，并继续遍历其左右子树。(根左右)
-
-  - postOrderTraverse: 后序遍历，LRN
 
 ### 代码
 
