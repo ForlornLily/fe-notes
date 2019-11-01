@@ -8,4 +8,5 @@ Brower =\> host =\> nginx =\> 目标地址
 
 服务器数据 =\> nginx =\> Brower
 
-扩展阅读：[Nginx 配置之完整篇](https://imququ.com/post/my-nginx-conf.html)
+扩展阅读：[Nginx 配置之完整篇](https://imququ.com/post/my-nginx-conf.html)  
+在线自定义配置 nginx: [digitalocean/nginxconfig.io](https://github.com/digitalocean/nginxconfig.io)

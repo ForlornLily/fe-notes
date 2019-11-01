@@ -89,7 +89,8 @@ HTML document 加载和解析后触发。不会等待 style, img 加载
 
 加了 defer/async 的 script 可能在 DOMContentLoaded 之前或者之后
 
-### load
+- 如果页面中同时存在 css 和 js，并且存在 js 在 css 后面，则 DOMContentLoaded 事件会在 css 加载完后才执行。
+- 其他情况下，DOMContentLoaded 都不会等待 css 加载，并且 DOMContentLoaded 事件也不会等待图片、视频等其他资源加载
 
 完全加载。script 不论是 defer 还是 async，肯定都在 load 之前执行。
 
@@ -134,8 +135,13 @@ window.addEventListener('load', function() {
 
 ## src 与 href
 
-src 用于替代这个元素，而 href 用于建立这个标签与外部资源之间的关系  
-src 引用的外部资源（除了 js）不会阻塞渲染。
+src 用于替代这个元素，而 href 用于建立这个标签与外部资源之间的关系
+
+### 值为空的情况
+
+避免使用空的 src 属性可以缩减浏览器首屏渲染的时间，因为浏览器在渲染过程中会把 src 属性中的空内容进行加载，直至加载失败，  
+那么就会影响 DOMContentLoaded 与 Loaded 事件之间的资源准备过程；拉长了首屏渲染所用的时间；
+空的 `href` 属性对首屏渲染也有影响，但比较小
 
 ## doctype
 

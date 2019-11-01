@@ -235,7 +235,7 @@ str.replace(/(ab)c/g, '$1d')
 
 - 删除'?x-oss-process=image/format,webp'
 
-value.replace(/\?x-oss.\*?(webp)/, "");
+`value.replace(/\?x-oss.*?(webp)/, "");`
 
 - 获取 img 的 src
 
@@ -255,4 +255,25 @@ for (let i = 0; i < length; i++) {
     return url.replace(reg, '')
   }
 }
+```
+
+- 替换 img 的 src 为自定义内容  
+  例如替换 src 为 data-url 的值
+
+```html
+<p>
+  <img src="www.baidu.com" data-url="www.google.com" />
+  test test
+  <img src="www.zhihu.com" data-url="www.quora.com" />
+</p>
+```
+
+```js
+value = value.replace(/<img [^>]*data-url=['"]([^'"]+)[^>]*>/gi, function(
+  match,
+  capture
+) {
+  return match.replace(/src=[\'\"]?([^\'\"]*)[\'\"]?/i, `src="${capture}"`) //替换src为data-url里面的值
+})
+return value
 ```

@@ -8,6 +8,10 @@ keep-alive 指持久连接，只要一端没有明确断开，就保持 TCP 的�
 
 HTTP1.1 默认就是持久连接
 
+```http
+Connection:keep-alive
+```
+
 ![](../images/7fc949e2c0bdf0a3de20582e0605569e.png)
 
 Keep-Alive: timeout=秒, max=最大连接数

@@ -1,6 +1,60 @@
-# 最佳实践
+# 优化  
+大致上拆成两块：
+- 网络
+- 页面代码  
 
-## 可维护性
+参考：
+- [PageSpeed Insights](https://developers.google.com/speed/docs/insights/rules)
+## 网络
+常见的有
+- 减少重定向
+- 资源加载
+- 压缩
+- 缓存
+## 重定向
+重定向会触发额外的 HTTP 请求，无法避免的情况下只要一次重定向
+比如百度首页是响应式的，PC/移动域名一样  
+而哔哩哔哩移动端是bilibili.com  → m.bilibili.com
+## 资源加载
+比如
+- css：放头部，使CSS样式表尽早加载，减少@import的使用，因为需要解析完样式表中所有import的资源才会算CSS资源下载完  
+  而CSS是会阻塞浏览器渲染的，因为Render Tree依赖DOM和CSSOM，见[浏览器加载过程](#浏览器加载过程)  
+  如果CSS很小，可以考虑写成内联
+- JS：尽可能用defer/async进行异步
+- 控制单个资源的文件大小(最好小于14.6kb)
+### 资源预加载
+参考[前端性能优化 - 资源预加载](https://bubkoo.com/2015/11/19/prefetching-preloading-prebrowsing/)  
+预加载意味着消耗硬件性能，需要取舍  
+- DNS预解析: DNS-Prefetch
+`<link rel="dns-prefetch" href="//example.com">`  
+通过 DNS 预解析来告诉浏览器未来我们可能从某个特定的 URL 获取资源，当浏览器真正使用到该域中的某个资源时就可以尽快地完成 DNS 解析。  
+也就是从这个URL请求一个资源时，DNS解析已经完成了  
+- 预连接 Preconnect: `<link rel="preconnect" href="http://example.com">`  
+与 DNS 预解析类似，preconnect 不仅完成 DNS 预解析，同时还将进行 TCP 握手和建立传输层协议  
+- 预获取 Prefetching: `<link rel="prefetch" href="image.png">`  
+预获取是真正请求并下载了资源，并储存在缓存中
+## 压缩
+- 减少 HTTP 请求，将代码压缩合并
+- 压缩代码
+  ::: tip
+  去掉属性名的引号，比如{"foo": "123"}改为{foo: "123"}，方便压缩工具压缩变量
+  :::
+- 使用 Gzip 编码，服务器端压缩文件。 Nginx：使用 [ngx_http_gzip_module](http://nginx.org/en/docs/http/ngx_http_gzip_module.html)
+- 图片优化
+### 图片优化
+- 首选矢量图：不会失真
+- 使用`srcset`属性，比如在 2x 显示屏上使用 2x 图像。
+``` html
+<img src="photo.png" srcset="photo@2x.png 2x" src="photo.png">
+```
+- 尽可能用CSS实现
+- 不考虑兼容的情况下可以用WebP 。其次图片格式优先JPEG（如果原图相对高清，可以压缩到85%），如果一定要保留高精度和细节，用PNG，不是动图的情况下不要用GIF
+## 缓存
+- 缓存：使用`Cache-Control`和`Etag`，抽取频繁更新的资源，那么只需要更新这些，其余缓存失效时间可以变长
+![cache](../images/http-cache-decision-tree.png)
+- CDN
+
+## 代码可维护性
 
 ### 可读性：加注释
 
@@ -63,19 +117,17 @@ const Constants = {
 
 - 显示给用户的值，方便国际化
 
-## 性能
+## JS性能
 
 尽可能使用局部变量
 
-减少嵌套
+减少嵌套（对象/函数嵌套）
 
 少操作 DOM
 
 合理的 for 循环
 
-### 复杂度
-
-#### O(1)
+### O(1)
 
 寻找常量是最快的，将常量放在数组里面访问也一样
 
@@ -103,20 +155,6 @@ var name = foo[i++]
 ```
 
 #### 用数组和对象字面量代替构造函数
-
-### 部署
-
-- 减少 HTTP 请求，将代码压缩合并
-
-- 压缩代码
-  ::: tip
-  去掉属性名的引号，比如{"foo": "123"}改为{foo: "123"}，方便压缩工具压缩变量
-  :::
-- 使用 Gzip 编码，服务器端压缩文件
-
-- 缓存
-
-- CDN
 
 ### 浏览器加载过程
 
@@ -182,18 +220,7 @@ var name = foo[i++]
 回流要比重绘消耗性能开支更大。
 
 回流必将引起重绘，重绘不一定会引起回流
-
-#### CSS
-
-CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
-
-也可以通过 Chrome 的 Performance
-
-#### 优化
-
-- :hover
-
-避免使用大量的 hover 伪类
+### DOM操作
 
 - 批量修改 DOM
 
@@ -213,4 +240,12 @@ CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
 
   对于布局信息（scroll, client, offset）可以事先赋值给局部变量。在布局确定，不会修改之后，再去访问
 
+
+## CSS优化
+CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
+
+也可以通过 Chrome 的 Performance 
+- :hover
+
+避免使用大量的 hover 伪类
 - 减少选择器的层级嵌套

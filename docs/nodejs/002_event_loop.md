@@ -1,6 +1,127 @@
 # Event loop
 
-和浏览器不同
+和浏览器相比，多了一个`nextTick`  
+官网[说明](https://github.com/nodejs/nodejs.org/blob/master/locale/zh-cn/docs/guides/event-loop-timers-and-nexttick.md)
+::: warning
+以下示例 node 版本是 10.x(v10.16.3)，其余 node 版本表现可能不同, 11.x 以上表现结果与浏览器一致
+:::
+
+```js
+console.log('1')
+setTimeout(function() {
+  console.log('2')
+  new Promise(function(resolve) {
+    console.log('4')
+    resolve()
+  }).then(function() {
+    console.log('5')
+  })
+})
+new Promise(function(resolve) {
+  console.log('7')
+  resolve()
+}).then(function() {
+  console.log('8')
+})
+
+setTimeout(function() {
+  console.log('9')
+  new Promise(function(resolve) {
+    console.log('11')
+    resolve()
+  }).then(function() {
+    console.log('12')
+  })
+})
+/*
+NodeJS结果  1 7 8 2 4 9 11 5 12
+浏览器结果  1 7 8 2 4 5 9 11 12
+*/
+```
+
+## 执行顺序
+
+如果执行宏任务的时候发现了微任务，不会像浏览器一样执行了，而是将为微任务放到微任务队列中，等待整个宏任务队列执行完毕，下一个阶段开始的时候先执行完微任务队列中的任务  
+Node 中  
+微任务：then 、nextTick 、messageChannel、mutationObersve(微任务中 nextTick 会比 then 先执行)
+宏任务：setTimeout 、setInterval 、setImmediate 、io 文件操作、Promise
+
+```js
+new Promise(function(resolve, reject) {
+  console.log('start')
+  resolve()
+})
+  .then(() => {
+    console.log('promise1')
+  })
+  .then(() => {
+    console.log('promise2')
+  })
+process.nextTick(() => {
+  console.log('nextTick')
+})
+Promise.resolve()
+  .then(() => {
+    console.log('promise3')
+  })
+  .then(() => {
+    console.log('promise4')
+  })
+process.nextTick(() => {
+  console.log('nextTick2')
+})
+setTimeout(() => {
+  console.log('setTimeout')
+  new Promise(function(resolve, reject) {
+    console.log('setTimeout Promise')
+    resolve()
+  })
+    .then(() => {
+      console.log('promise5')
+    })
+    .then(() => {
+      console.log('promise6')
+    })
+})
+setTimeout(() => {
+  console.log('setTimeout2')
+  new Promise(function(resolve, reject) {
+    console.log('setTimeout2 Promise')
+    resolve()
+  })
+    .then(() => {
+      console.log('promise7')
+    })
+    .then(() => {
+      console.log('promise8')
+    })
+})
+process.nextTick(() => {
+  console.log('nextTick3')
+})
+console.log('end')
+/*
+NodeJS顺序
+start
+end
+nextTick
+nextTick2
+nextTick3
+promise1
+promise3
+promise2
+promise4
+setTimeout
+setTimeout Promise
+setTimeout2
+setTimeout2 Promise
+setTimeout nextTick
+promise5
+promise7
+promise6
+promise8
+*/
+```
 
 ## 异步编程
 

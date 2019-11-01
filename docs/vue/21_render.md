@@ -218,6 +218,7 @@ Vue 的源码在[src\core\vdom\vnode.js](https://github.com/vuejs/vue/blob/dev/s
   如果设置了 key，就会用 key 进行比较，在比较的过程中，变量会往中间靠，一旦 StartIdx > EndIdx 表明 oldCh 和 newCh 至少有一个已经遍历完了，就会结束比较。
 
 ```js
+//src\core\vdom\patch.js
 function updateChildren (parentElm, oldCh, newCh) {
   let oldStartIdx = 0;
   let oldEndIdx = oldCh.length - 1;

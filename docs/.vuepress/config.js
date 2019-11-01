@@ -21,7 +21,7 @@ module.exports = {
         link: '/'
       },
       {
-        text: '基础',
+        text: '前端基础',
         items: [
           { text: 'HTML&CSS', link: '/css/' },
           { text: 'JS', link: '/js/' }
@@ -48,29 +48,32 @@ module.exports = {
         ]
       },
       {
-        text: '算法',
+        text: '计算机',
         items: [
           { text: '数据结构', link: '/algorithm/' },
-          { text: 'LeetCode', link: '/leetcode/' }
-        ]
-      },
-      {
-        text: '网络',
-        items: [
+          { text: 'LeetCode', link: '/leetcode/' },
           { text: 'TCP/IP', link: '/tcp/' },
           { text: 'HTTP(S)', link: '/http/' },
-          { text: '其他', link: '/network/' }
+          { text: '网络综合', link: '/network/' }
         ]
       },
       {
-        text: '管理工具',
+        text: '设计',
+        items: [
+          { text: 'Photoshop', link: '/ps/' },
+          { text: '设计模式', link: '/design/' },
+          { text: '综合方案', link: '/case/' }
+        ]
+      },
+      {
+        text: '版本',
         items: [
           { text: 'Git', link: '/git/' },
           { text: 'Yarn', link: '/yarn/' }
         ]
       },
       {
-        text: '网站/书籍/库',
+        text: '网站',
         link: '/repository/'
       }
     ],
@@ -81,7 +84,7 @@ module.exports = {
     docsDir: 'docs',
     editLinkText: '在 GitHub 上编辑此页',
     sidebarDepth: 2,
-    search: false
+    search: true
   },
   configureWebpack: {
     resolve: {

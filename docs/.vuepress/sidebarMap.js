@@ -17,7 +17,10 @@ const sidebarMap = [
   { title: 'Vuex', dirname: 'vuex' },
   { title: 'Express', dirname: 'express' },
   { title: 'jQuery', dirname: 'jquery' },
-  { title: '网络', dirname: 'network' }
+  { title: '网络', dirname: 'network' },
+  { title: '设计模式', dirname: 'design' },
+  { title: '综合方案', dirname: 'case' },
+  { title: 'Photoshop', dirname: 'ps' }
 ]
 
 module.exports = sidebarMap

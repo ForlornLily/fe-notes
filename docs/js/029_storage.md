@@ -6,7 +6,8 @@
 
 传统缓存不能编程
 
-CacheStorage 经常和 service worker()一起用，可以用 JS 进行增删改查
+CacheStorage 经常和 service worker()一起用，可以用 JS 进行增删改查  
+缓存涉及内容较多，详细请查看[缓存](../network/40_cache.md)
 
 ### 缓存读取优先级
 
@@ -24,108 +25,9 @@ CacheStorage 经常和 service worker()一起用，可以用 JS 进行增删改�
 
 5.  网络请求
 
-### 传统的浏览器缓存
+## 应用缓存(application cache)
 
-![http://img.aitter.cn/huancun02.png](../images/873d59a17dfe33e5d18f2c019615bc15.png)
-
-#### 缓存策略
-
-分为强缓存和协商缓存
-
-都是通过设置 HTTP Header 实现
-
-1. 强缓存
-
-state code 为 200
-
-- Expires
-
-绝对时间，GMT 格式
-
-1.  第一次请求时，服务器返回 Expires 在 Header 中，浏览器缓存这个 header 信息
-
-2.  当下次再次请求这个资源时，浏览器以请求的时间与这个 Expires 中的时间比对。如果小于这个时间，说明未过期，直接从本地缓存中获取，请求返回 200（from
-    cache）
-
-因为是绝对时间，可能浏览器和服务器存在时差
-
-- Cache-Control
-
-（优先级高，HTTP/1.1 以上）：相对时间。
-
-1.  第一次请求时，服务器在 response header 中添加头 Cache-Control 的设置
-
-浏览器接收到这个资源后，连同这个 header 和本次请求的时间缓存在浏览器端
-
-2.  下一次再请求这个资源时，浏览器根据上一次请求的时间，这次请求的时间的时间差，去 Cache-control 中设置的时间差比较，如果小于 Cache-Control 中设置的时间差，那么说明未过期，直接从本地缓存中取，请求返回 200（from cache）
-
-`Cache-Control:max-age=5184000`
-
-2. 协商缓存
-
-缓存过期了，就需要发起请求验证资源是否有更新。
-
-- Last-Modified
-
-配合 Cache-Control 使用
-
-![http://img.aitter.cn/jd_cache.png](../images/87bce025ce28039b8179d465399dbc1a.png)
-
-1.  浏览器在第一次访问资源时，服务器返回资源的同时，在 response header 中添加
-    Last-Modified 的 header，值是这个资源在服务器上的最后修改时间，浏览器接收后缓存文件和 header
-
-2.  浏览器下一次请求这个资源，浏览器检测到有
-    Last-Modified 这个 header，于是添加 If-Modified-Since 这个 header，值是 Last-Modified 中的值
-
-3.  服务器再次收到这个资源请求，根据 If-Modified-Since
-    中的值与服务器中这个资源的最后修改时间对比
-
-    - 如果没有变化，返回 304 和空的响应体
-
-    - 如果 If-Modified-Since 的时间小于服务器中这个资源的最后修改时间，说明文件有更新，于是返回新的资源文件和 200
-
-缺点：
-
-- GMT 格式最多到秒，如果 1 秒内被修改多次的话，不能及时更新；
-
-- 服务器只对比最后修改时间，会出现一种情况：只是文件重新生成，内容其实并没有变化
-
-- ETag
-
-解决 Last-Modified 的问题，配合 Cache-Control 使用
-
-由服务器返回，内容为资源的唯一标识，生成规则由服务器决定
-
-1.  客户端请求一个页面（A）。
-
-2.  服务器返回页面 A，并在给 A 加上一个 ETag，值是这个资源的唯一标识，由服务器端生成。
-
-3.  客户端展现该页面，并将页面连同 ETag 一起缓存。
-
-4.  客户再次请求页面 A，并将上次请求时服务器返回的 ETag 一起传递给服务器。
-
-5.  服务器检查该 ETag，并判断出该页面自上次客户端请求之后还未被修改，直接返回响应 304 和一个空的响应体
-
-#### 用户行为与缓存
-
-- 用户在地址栏回车、页面链接跳转、新开窗口、前进后退时，缓存是有效的
-
-- 用户在点击浏览器刷新或按 F5 时，Last-Modified/Etag
-  是有效的，但 Expires、Cache-Control 重置失效
-
-- 用户在强制刷新按 Ctr+F5 时，缓存全部失效
-
-#### 使用场景
-
-- 频繁变动的资源，设置 Cache-Control: no-cache
-  使浏览器每次都请求服务器，然后配合 ETag 或者 Last-Modified
-  来验证资源是否有效
-
-- 其他，打包时生成哈希值，代码变更才产生新文件，并让新文件进行强缓存 Cache-Control
-
-### 应用缓存(application cache)
-
-#### manifest file
+### manifest file
 
 描述文件中列出的都是需要下载的资源，准备离线时使用
 
@@ -137,11 +39,18 @@ state code 为 200
 
 ## 数据存储
 
-### cookie
+参考[浏览器存储](https://github.com/ljianshu/Blog/issues/25)  
+大致上分为三类，都遵循[同源策略](../js/027_async.md#同源策略)：
+
+- cookie
+- Web Storage
+- IndexedDB
+
+## cookie
 
 Cookie: key1=value1;key2=value2;
 
-一般浏览器长度限制是 4095B
+一般浏览器长度限制是 4095B，这里的长度指单个 key=value 的长度，不是总和
 
 默认关闭浏览器以后失效，也可以自己指定 expires=GMT 时间
 
@@ -151,7 +60,13 @@ Cookie: key1=value1;key2=value2;
 
 ![](../images/1e899661e0bd4f6fca3bdf7e51beeacf.png)
 
-#### 共享
+### 起因
+
+HTTP 是无状态协议，不会记录之前的请求或者响应信息（比如用户获得一张网页之后关闭浏览器，然后再一次启动浏览器，再登录该网站，但是服务器并不知道客户关闭了一次浏览器）
+
+后来为了方便，加入了 cookie。用 cookie 携带相关信息，用于服务器和客户端之间的传递
+
+### 共享
 
 跨域不共享。
 
@@ -159,15 +74,21 @@ Cookie: key1=value1;key2=value2;
 
 一级域名相同，只是二级域名不同，浏览器允许通过设置 document.domain 共享 Cookie
 
-比如 A 网页是http://w1.example.com，B网页是http://w2.example.com
+比如 百度是https://www.baidu.com/，贴吧是https://tieba.baidu.com/
 
-JS 可以设置 document.domain = 'example.com';
+```js
+//hello=world可以在以baidu.com结尾的所有域名下显示
+document.cookie = 'hello=world;domain=.baidu.com'
+```
 
+::: tip
+在知乎(https://www.zhihu.com/)设置上面这段话是没有用的，因为知乎和百度一级域名不同
+:::
 服务端可以返回
 
 Set-Cookie: key=value; domain=.example.com; path=/
 
-#### js 中
+### js 中
 
 document.cookie
 
@@ -183,13 +104,25 @@ key 不区分大小写，key 和 value 需要进行编码。
 
 ![](../images/2abe38c67b312ad7fa0242c32ee963d1.png)
 
-### web storage
+### 缺陷
+
+- cookie 会在每一个请求头中都会被携带，这就导致了包括请求静态资源比如图片、CSS 等都存在，造成浪费
+- 可能不够大，大小只有 4kb
+- HTTP 下是明文（所以登录信息后台都会先加密再给前台），存在安全问题，如 XSS 攻击（可以用 HTTPS 协议，并指定`httpOnly`，禁止 JS 操作）
+
+```http
+Set-Cookie: hello=world; Secure; HttpOnly
+```
+
+服务器指定后，`document.cookie`无法读取到`hello=world`，也不能改写。但其他未指定 HttpOnly 的 key 不受影响
+
+## web storage
 
 只能存字符串。存在硬盘中
 
 各个浏览器支持情况可以看<http://dev-test.nemikor.com/web-storage/support-test/>
 
-#### 共有属性/方法
+### 共有属性/方法
 
 - clear()
 
@@ -209,29 +142,32 @@ key 不区分大小写，key 和 value 需要进行编码。
 
 也可以直接 storage.key 赋值
 
-#### sessionStorage
+### sessionStorage
 
-只保持到浏览器关闭
+只保持到窗口关闭  
+即便是相同域名下的两个页面，只要它们不在同一个浏览器窗口中打开，那么它们的 sessionStorage 内容便无法共享
 
-#### localStorage
+### localStorage
 
 用户清除浏览器缓存后失效
 
 隐私模式下关闭浏览器就被清除
 
-#### 对比
+### 对比
 
 ![](../images/5fd3d8c4beac2d48b213d028d5a35dbb.png)
+localStorage 只要在相同的协议、相同的主机名、相同的端口下，就能读取/修改到同一份 localStorage 数据。
+sessionStorage 除此之外，还要求在同一窗口（也就是浏览器的标签页）下
 
-### IndexedDB
+## IndexedDB
 
-Indexed Database API，事务型对象存储数据库
+Indexed Database API，事务型对象存储数据库，用于客户端存储大量结构化数据
 
 除非手动清理，否则一直存在。没有大小限制
 
 - 事务型：一个事务中，要么操作都成功，要么操作都失败。
 
-例如 A 转账给 B，实际上拆分成两部，A 扣钱，B 加钱。
+例如 A 转账给 B，实际上拆分成两步，A 扣钱，B 加钱。
 
 两个步骤不能拆分，只有都做了才算成功。有一个失败另一个也要失败。
 
@@ -333,7 +269,7 @@ request.onsuccess = function (event) {
 };
 ```
 
-#### 存储对象的方法
+### 存储对象的方法
 
 存储对象指上面的 customerStore
 

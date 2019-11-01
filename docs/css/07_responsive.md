@@ -129,3 +129,14 @@ vw 指视口宽度，vh 为高度, 值 1 代表 1%
 vw 修改 body 的字体大小。同时为了避免视口过小或过大，配合媒体查询给的最大最小值 px
 
 其他都用 rem，继承 body
+
+### dp
+
+[参考](https://segmentfault.com/a/1190000018850370)  
+总体思路：  
+`dp`属于自定义单位，类似 px2rem，在 js 中对 css 内值是`dp`的所有内容全部按照特定规则转成`px`  
+像素密度 PPI：指每英寸包含的像素(Px)个数  
+当屏幕的 PPI 为 160 时，1DP=1PX；例：Iphone4，Iphone5，Iphone6PPI 为 326，在这些屏幕之下 1DP=2PX  
+DP=(PX\*160)/PPI
+
+PX=DP\*(PPI/160)

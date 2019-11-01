@@ -21,11 +21,6 @@
 
 只有火狐和 Chrome 加了前缀以后才支持，否则不支持
 
-### WebP
-
-img src 的后缀'?x-oss-process=image/format,webp'会被转成 WebP 格式, Safari 都不兼容  
-[WebP 参考链接](https://juejin.im/post/5bad996ef265da0ab915d260)
-
 ### placeholder
 
 只能用兼容写法，而且不能分组一起写
@@ -53,3 +48,8 @@ img src 的后缀'?x-oss-process=image/format,webp'会被转成 WebP 格式, Saf
   color: #ccc;
 }
 ```
+
+## WebP
+
+img src 的后缀'?x-oss-process=image/format,webp'会被转成 WebP 格式, Safari 都不兼容  
+[WebP 参考链接](https://juejin.im/post/5bad996ef265da0ab915d260)

@@ -34,10 +34,10 @@ cd D:\\Program Files\\MongoDB\\Server\\4.0\\bin
 
 - roles 用 root 有时候会有权限问题，不能用
 
-db.createUser({user: "Forlorn",pwd: "199427hao",roles:[{role: "readWrite",db:
+db.createUser({user: "Forlorn",pwd: "123",roles:[{role: "readWrite",db:
 "later"}]})
 
-db.auth("Forlorn", "199427hao")
+db.auth("Forlorn", "123")
 
 ## 增删改查
 
@@ -89,7 +89,7 @@ User.find((err, res) => {
   console.log(res)
 })
 //不写{ useNewUrlParser: true } 的话会报警告
-mongoose.connect('mongodb://Forlorn:199427hao@localhost/later', {
+mongoose.connect('mongodb://Forlorn:123@localhost/later', {
   useNewUrlParser: true
 })
 ```

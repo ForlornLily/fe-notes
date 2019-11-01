@@ -2,6 +2,10 @@
 
 ## 任务队列
 
+参考[这一次，彻底弄懂 JavaScript 执行机制](https://juejin.im/post/59e85eebf265da430d571f89)  
+当我们打开网站时，网页的渲染过程就是一大堆同步任务，比如页面骨架和页面元素的渲染。  
+而像加载图片音乐之类占用资源大耗时久的任务，就是异步任务
+
 setTimeout 的第二个参数告诉浏览器要经过多久时间放到任务队列里。
 
 经过这个时间，如果任务队列为空，立刻执行，否则等任务队列的其他代码执行后再执行 setTimeout
@@ -30,6 +34,17 @@ readFile('example.txt', function(err, contents) {
 console.log('Hi!')
 ```
 
+或者以 jQuery 的`$.ajax`为例，\$.ajax 会立刻进入任务队列，后台返回成功之后，`success`才进入任务队列
+
+```js
+$.ajax({
+  url: '',
+  success: function(data) {
+    console.log(data)
+  }
+})
+```
+
 ### macro task 与 micro task
 
 以下事件属于宏任务：
@@ -50,8 +65,46 @@ Promise.then
 
 - 所有 setTimeout()的回调都会进入到 setTimeout 任务队列，所有 then()回调都会进入到 then 队列
 
-![](../images/42cdfc431d2f7426d52dcbb6fcd555c7.png)
-![](../images/08091258229b49b795791c5545b154d3.png)
+```js
+console.log('1')
+setTimeout(function() {
+  console.log('2')
+  new Promise(function(resolve) {
+    console.log('4')
+    resolve()
+  }).then(function() {
+    console.log('5')
+  })
+})
+new Promise(function(resolve) {
+  console.log('7')
+  resolve()
+}).then(function() {
+  console.log('8')
+})
+
+setTimeout(function() {
+  console.log('9')
+  new Promise(function(resolve) {
+    console.log('11')
+    resolve()
+  }).then(function() {
+    console.log('12')
+  })
+})
+/*
+浏览器结果  1 7 8 2 4 5 9 11 12
+解释：
+第一轮宏任务：1 7 
+第一轮微任务：8 
+-----第一轮结束-----
+第二轮宏任务：第一个setTimeout 2 4  
+第二轮微任务：第一个setTimeout内的微任务5 
+-----第二轮结束-----
+第三轮宏任务：第二个setTimeout 9 11  
+第三轮微任务：第二个setTimeout内的微任务 12
+*/
+```
 
 ## 同源策略
 
@@ -81,37 +134,68 @@ Promise.then
 
 跨域是为了阻止用户读取到另一个域名下的内容，Ajax 可以获取响应，浏览器认为这不安全，所以拦截了响应。但是表单并不会获取新的内容，所以可以发起跨域请求
 
-### 安全
+## 安全
 
-#### CSRF(Cross-Site Request Forgery)跨站点请求伪造
+### CSRF
 
+Cross-Site Request Forgery 跨站点请求伪造  
+CSRF 是基于客户端对用户的信任。例如：
+用户登录 A 网站 →A 网站确认身份 →B 网站向 A 网站发送请求（带 A 网站的身份）  
 比如用 get 请求的时候，url 里面是能看到参数的，比如 xxx?id=2
 
 任何人都可以拿到甚至自己修改 id 是 3，服务器需要验证请求者是否有权限这个 url
 
-构造出一个后端请求地址，诱导用户点击或者通过某些途径自动发起请求。如果用户是在登录状态下的话，后端就以为是用户在操作，从而进行相应的逻辑
+构造出一个后端请求地址，诱导用户点击或者通过某些途径自动发起请求。如果用户是在登录状态下的话，后端就以为是用户在操作，从而进行相应的逻辑  
+参考[前端安全系列（二）：如何防止 CSRF 攻击？](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)  
+解决方案：
 
-- 解决方案
+- 判断 cookie 是否同源操作  
+  HTTP 请求的时候 Request Header 会带上 Origin Header 和 Referer Header，服务器可以解析这两者内的域名 - Origin 包含请求的域名 - Referer，记录了该 HTTP 请求的来源地址:  
+   Ajax 请求，图片和 script 等资源请求，Referer 为发起请求的页面地址;  
+   页面跳转，Referer 为打开页面历史记录的前一个页面地址
+- 设置 cookie 的`samesite`（IE11+）
+  如果 SamesiteCookie 被设置为 Strict，浏览器在任何跨域请求中都不会携带 Cookie  
+  也就是跳转子域名或者是新标签重新打开刚登陆的网站，之前的 Cookie 都不会存在。尤其是有登录的网站，那么我们新打开一个标签进入，或者跳转到子域名的网站，都需要重新登录
 
-以 SSL 连接
+```http
+Set-Cookie: foo=1; Samesite=Strict
+```
 
-每次请求都要带验证码。
+如果 SamesiteCookie 被设置为 Lax，那么其他网站通过页面跳转过来的时候可以使用 Cookie，可以保障外域连接打开页面时用户的登录状态。  
+但子域名也无法使用
 
-get 改成 post 也没有用，使用 cookie 也不行，可以伪造
+```http
+Set-Cookie: bar=2; Samesite=Lax
+```
 
-#### XSS
+- 以 SSL 连接
+- 每次请求都要带验证码(token)。
+  get 改成 post 也没有用，使用 cookie 也不行，可以伪造
 
+### XSS
+
+Cross-Site Scripting(为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS)  
 跨站脚本攻击，主要是前端层面的，用户在输入层面插入攻击脚本，改变页面的显示，或则窃取网站
 cookie
 
 预防方法：不相信用户的所有操作，对用户输入进行一个转义，不允许 js 对 cookie
-的读写
+的读写  
+参考[前端安全系列（一）：如何防止 XSS 攻击？](https://tech.meituan.com/2018/09/27/fe-security.html)  
+比如：
 
-### 解决跨域
+- 前端负责页面渲染，与后台只有 ajax 交互。可以防止在服务端取出恶意代码后，插入到响应 HTML 的 XSS
+- 如果是为了 SEO，需要后台渲染 HTML 的，用成熟的转义库，对后台的 HTML 模板（比如 ejs）进行进行充分的转义
+- 在 Vue 中少用`v-html`指令
+- 设置 httpOnly
+- 验证码
+
+## 解决跨域
 
 跨域大概可以分为 iframe 的跨域和纯粹的跨全域请求
 
-1. CORS（cross-origin resource sharing）跨域资源共享
+### CORS
+
+cross-origin resource sharing 跨域资源共享
 
 利用自定义的 HTTP 头部让浏览器和服务器之间沟通
 
@@ -200,7 +284,7 @@ xhr.withCredentials = true
 
 只支持 IE10+
 
-3. JSONP(JSON with Padding)
+### JSONP(JSON with Padding)
 
 本质上就是返回函数立即执行
 
@@ -229,7 +313,7 @@ script 不受限制，可以让服务器在 js 内返回内容
 
   - 不能解决 iframe 之间的通信
 
-4. 服务器代理
+### 服务器代理
 
 比如 NodeJs + webpack。比如 nginx
 
@@ -267,7 +351,7 @@ const server = http
   .listen(3000, '127.0.0.1')
 ```
 
-5. WebSocket
+### WebSocket
 
 只能传送简单的文本，JSON 要转成字符串
 
