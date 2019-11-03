@@ -72,7 +72,7 @@ Expires: Wed, 22 Oct 2018 08:41:00 GMT
 
 浏览器接收到这个资源后，连同这个 header 和本次请求的时间缓存在浏览器端
 
-1.  下一次再请求这个资源时，浏览器根据上一次请求的时间，这次请求的时间的时间差，去 Cache-control 中设置的时间差比较，如果小于 Cache-Control 中设置的时间差，那么说明未过期，直接从本地缓存中取，请求返回 200（from cache）
+2.  下一次再请求这个资源时，浏览器根据上一次请求的时间，这次请求的时间的时间差，去 Cache-control 中设置的时间差比较，如果小于 Cache-Control 中设置的时间差，那么说明未过期，直接从本地缓存中取，请求返回 200（from cache）
 
 ### no-cache 和 no-store
 
@@ -98,6 +98,22 @@ http
     }
   })
   .listen(8888)
+```
+
+### max-age 和 s-maxage
+
+s-maxage 仅在代理服务器中生效，客户端中只考虑 max-age
+
+### public 和 private
+
+两者是针对服务器（CDN）才生效
+
+- public: 既可以被浏览器缓存，也可以被代理服务器缓存
+- private: 该资源只能被浏览器缓存。private 为默认值  
+  服务器 Response 返回
+
+```http
+Cache-control: public
 ```
 
 ## 协商缓存

@@ -6,6 +6,7 @@
 
 ## PWA(Progressive web apps)
 
+参考[PWA 开发实战](https://www.ituring.com.cn/book/2040)  
 渐进式 Web 应用
 
 本质是个 web app
@@ -627,3 +628,7 @@ navigator.serviceWorker.ready
 Chrome 扩展插件 Lighthouse
 
 库 ProgressiveKITT
+
+## 其他 demo
+
+- [zhangxinxu/https-demo](https://github.com/zhangxinxu/https-demo)

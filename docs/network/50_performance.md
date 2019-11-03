@@ -1,39 +1,57 @@
-# 优化  
+# 优化
+
 大致上拆成两块：
+
 - 网络
-- 页面代码  
+- 页面代码
 
 参考：
+
 - [PageSpeed Insights](https://developers.google.com/speed/docs/insights/rules)
+
 ## 网络
+
 常见的有
+
 - 减少重定向
 - 资源加载
 - 压缩
 - 缓存
+
 ## 重定向
+
 重定向会触发额外的 HTTP 请求，无法避免的情况下只要一次重定向
 比如百度首页是响应式的，PC/移动域名一样  
-而哔哩哔哩移动端是bilibili.com  → m.bilibili.com
+而哔哩哔哩移动端是 bilibili.com → m.bilibili.com
+
 ## 资源加载
+
 比如
-- css：放头部，使CSS样式表尽早加载，减少@import的使用，因为需要解析完样式表中所有import的资源才会算CSS资源下载完  
-  而CSS是会阻塞浏览器渲染的，因为Render Tree依赖DOM和CSSOM，见[浏览器加载过程](#浏览器加载过程)  
-  如果CSS很小，可以考虑写成内联
-- JS：尽可能用defer/async进行异步
-- 控制单个资源的文件大小(最好小于14.6kb)
+
+- css：放头部，使 CSS 样式表尽早加载，减少@import 的使用，因为需要解析完样式表中所有 import 的资源才会算 CSS 资源下载完  
+  而 CSS 是会阻塞浏览器渲染的，因为 Render Tree 依赖 DOM 和 CSSOM，见[浏览器加载过程](#浏览器加载过程)  
+  如果 CSS 很小，可以考虑写成内联
+- JS：尽可能用 defer/async 进行异步
+- 控制单个资源的文件大小(最好小于 14.6kb)
+
 ### 资源预加载
+
 参考[前端性能优化 - 资源预加载](https://bubkoo.com/2015/11/19/prefetching-preloading-prebrowsing/)  
-预加载意味着消耗硬件性能，需要取舍  
-- DNS预解析: DNS-Prefetch
-`<link rel="dns-prefetch" href="//example.com">`  
-通过 DNS 预解析来告诉浏览器未来我们可能从某个特定的 URL 获取资源，当浏览器真正使用到该域中的某个资源时就可以尽快地完成 DNS 解析。  
-也就是从这个URL请求一个资源时，DNS解析已经完成了  
+预加载意味着消耗硬件性能，需要取舍
+
+- DNS 预解析: DNS-Prefetch
+  `<link rel="dns-prefetch" href="//example.com">`  
+  通过 DNS 预解析来告诉浏览器未来我们可能从某个特定的 URL 获取资源，当浏览器真正使用到该域中的某个资源时就可以尽快地完成 DNS 解析。  
+  也就是从这个 URL 请求一个资源时，DNS 解析已经完成了
 - 预连接 Preconnect: `<link rel="preconnect" href="http://example.com">`  
-与 DNS 预解析类似，preconnect 不仅完成 DNS 预解析，同时还将进行 TCP 握手和建立传输层协议  
+  与 DNS 预解析类似，preconnect 不仅完成 DNS 预解析，同时还将进行 TCP 握手和建立传输层协议
 - 预获取 Prefetching: `<link rel="prefetch" href="image.png">`  
-预获取是真正请求并下载了资源，并储存在缓存中
+  预获取是真正请求并下载了资源，并储存在缓存中
+
 ## 压缩
+
+任何压缩的都需要更多硬件功能消耗，自行取舍
+
 - 减少 HTTP 请求，将代码压缩合并
 - 压缩代码
   ::: tip
@@ -41,17 +59,67 @@
   :::
 - 使用 Gzip 编码，服务器端压缩文件。 Nginx：使用 [ngx_http_gzip_module](http://nginx.org/en/docs/http/ngx_http_gzip_module.html)
 - 图片优化
+
 ### 图片优化
-- 首选矢量图：不会失真
+
+- 首选矢量图：不会失真，SVG 与 PNG 和 JPG 相比，文件体积更小，可压缩性更强  
+  缺点是渲染成本比较高
 - 使用`srcset`属性，比如在 2x 显示屏上使用 2x 图像。
-``` html
-<img src="photo.png" srcset="photo@2x.png 2x" src="photo.png">
+
+```html
+<img src="photo.png" srcset="photo@2x.png 2x" src="photo.png" />
 ```
-- 尽可能用CSS实现
-- 不考虑兼容的情况下可以用WebP 。其次图片格式优先JPEG（如果原图相对高清，可以压缩到85%），如果一定要保留高精度和细节，用PNG，不是动图的情况下不要用GIF
+
+- 尽可能用 CSS 实现
+
+- 不考虑兼容的情况下可以用 WebP，还支持动图。  
+  可以用 JS 先判断浏览器类型，再生成图片的 src  
+  或者根据 HTTP Header，让服务器根据`Accept`字段返回对应的文件类型
+
+- 其次图片格式优先 JPEG（如果原图相对高清，可以压缩到 85%）。[图片压缩工具](https://tinypng.com/)
+
+- 如果一定要保留高精度和细节或者透明度，用 PNG  
+  PNG 有 PNG-8 和 PNG-24，8 位的 PNG 最多支持 256 种颜色，而 24 位的可以呈现约 1600 万种颜色。
+  当然优先 PNG-8
+
+- 不是动图的情况下不要用 GIF
+
+- 雪碧图(CSS Sprites)，webpack 也可以配置，或者使用网站[在线生成](https://www.toptal.com/developers/css/sprite-generator)
+
+- Base64: 用字符串代替图片，那么就不会发送 HTTP 请求  
+  缺点是标签字符串会很长，高清文件就不适合编码成 Base64  
+  webpack 的 url-loader 可以配置图片编码  
+  一般 10kb 以下大小可以用 Base64
+
+- 存在在 oss 服务器上的图片可以在图片后面加 w,h 直接在获取图片时就限制大小，减少了图片大小也减少了浏览器把图片放大缩小的操作
+
+### webpack 打包优化
+
+见[优化：optimization](../webpack4/07_optimization.md)或者官网[Build Performance](https://webpack.js.org/guides/build-performance/)  
+常用的有
+
+- tree shaking
+- dllplugin
+- happypack
+
+### Gzip
+
+参考[前端性能优化-gzip 压缩](https://zhuanlan.zhihu.com/p/37429159)  
+需要注意的是 Gzip 并不保证针对每一个文件的压缩都会使其变小  
+Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小  
+文件中代码的重复率越高，那么压缩的效率就越高，使用 Gzip 的收益也就越大
+
+- Gzip 对于文本文件（js、css、ttf...）收益会比较大
+- 对于多媒体文件则没有必要采用 Gzip，因为多数多媒体文件本身就是采用了有损压缩。对有损压缩的文件再进行 Gzip 意义不大
+
+扩展阅读：哈夫曼编码
+
 ## 缓存
+
+详细内容见[浏览器缓存](./40_cache.md)
+
 - 缓存：使用`Cache-Control`和`Etag`，抽取频繁更新的资源，那么只需要更新这些，其余缓存失效时间可以变长
-![cache](../images/http-cache-decision-tree.png)
+  ![cache](../images/http-cache-decision-tree.png)
 - CDN
 
 ## 代码可维护性
@@ -117,7 +185,7 @@ const Constants = {
 
 - 显示给用户的值，方便国际化
 
-## JS性能
+## JS 性能
 
 尽可能使用局部变量
 
@@ -220,7 +288,8 @@ var name = foo[i++]
 回流要比重绘消耗性能开支更大。
 
 回流必将引起重绘，重绘不一定会引起回流
-### DOM操作
+
+### DOM 操作
 
 - 批量修改 DOM
 
@@ -240,12 +309,14 @@ var name = foo[i++]
 
   对于布局信息（scroll, client, offset）可以事先赋值给局部变量。在布局确定，不会修改之后，再去访问
 
+## CSS 优化
 
-## CSS优化
 CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
 
-也可以通过 Chrome 的 Performance 
+也可以通过 Chrome 的 Performance
+
 - :hover
 
 避免使用大量的 hover 伪类
+
 - 减少选择器的层级嵌套
