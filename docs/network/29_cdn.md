@@ -6,6 +6,8 @@
 内容分发网络（Content Delivery Network/Content Distribution Network）:
 用最靠近（一般指物理上距离）用户的服务器，更快、更可靠地把内容发送给用户，以提高用户体验
 
+另一个好处是，通常 cdn 和浏览的网站是不同的，即跨域。请求静态资源的时候就不会携带一大串 cookie 值了
+
 ## 大致流程
 
 参考[关于 cdn、回源等问题一网打尽](https://juejin.im/post/5af46498f265da0b8d41f6a3)  

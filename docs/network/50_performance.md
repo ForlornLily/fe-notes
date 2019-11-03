@@ -48,6 +48,11 @@
 - 预获取 Prefetching: `<link rel="prefetch" href="image.png">`  
   预获取是真正请求并下载了资源，并储存在缓存中
 
+### 懒加载/按需加载
+
+比如图片  
+监听滚动条，用 data-src 指定 img 的路径，滚动到一定位置的时候替换成 src
+
 ## 压缩
 
 任何压缩的都需要更多硬件功能消耗，自行取舍
@@ -118,11 +123,11 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
 
 详细内容见[浏览器缓存](./40_cache.md)
 
-- 缓存：使用`Cache-Control`和`Etag`，抽取频繁更新的资源，那么只需要更新这些，其余缓存失效时间可以变长
+- 缓存：使用`Cache-Control`和`Etag`，抽取频繁更新的资源，那么只需要更新这些，其余缓存失效时间可以变长  
   ![cache](../images/http-cache-decision-tree.png)
 - CDN
 
-## 代码可维护性
+## JS 代码可维护性
 
 ### 可读性：加注释
 
@@ -134,7 +139,8 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
 
 ### 数据类型
 
-初始化就确定要数据类型，尽可能避免变量的数据类型改变
+初始化就确定要数据类型，尽可能避免变量的数据类型改变  
+尽可能使用轻量级的 JSON 数据
 
 ### 松散耦合
 
@@ -222,9 +228,13 @@ i++
 var name = foo[i++]
 ```
 
-#### 用数组和对象字面量代替构造函数
+### 用数组和对象字面量代替构造函数
 
-### 浏览器加载过程
+### 节流与防抖
+
+见[函数防抖与节流](../js/022_bom.md#函数防抖与节流)
+
+## 浏览器加载过程
 
 渲染由排版引擎（layout engine）执行
 
@@ -311,6 +321,7 @@ var name = foo[i++]
 
 ## CSS 优化
 
+更多规范可以看[mdo/code-guide](https://github.com/mdo/code-guide)  
 CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
 
 也可以通过 Chrome 的 Performance
@@ -319,4 +330,66 @@ CSS 属性影响的过程可参考[csstriggers](https://csstriggers.com/)
 
 避免使用大量的 hover 伪类
 
-- 减少选择器的层级嵌套
+- 减少选择器的层级嵌套（控制到三层以内）  
+  CSS 引擎查找样式表，对每条规则都按**从右到左**的顺序去匹配
+- 避免使用通配符`*`，只对需要用到的元素进行选择。
+
+- 关注可以通过继承实现的属性，避免重复匹配重复定义。
+
+- 少用标签选择器。如果可以，用类选择器替代
+
+### 开启硬件加速
+
+用 css 开启硬件加速，使 GPU (Graphics Processing Unit) 发挥功能。
+
+但是使用 GPU 可能会导致严重的性能问题，因为它增加了内存的使用，而且它会减少移动端设备的电池寿命。需要权衡
+
+CSS animations, transforms 以及 transitions
+不会自动开启 GPU 加速，而是由浏览器的渲染引擎来执行。可以通过某些规则来触发 GPU 渲染
+
+比如 3D 变换
+
+哪怕不需要变换，也可以，比如 transform: translateZ(0)
+
+```css
+.example {
+  transform: translate3d(250px, 250px, 250px) rotate3d(
+      250px,
+      250px,
+      250px,
+      -120deg
+    )
+    scale3d(0.5, 0.5, 0.5);
+}
+```
+
+在 Chrome and Safari 中，当我们使用 CSS transforms 或者
+animations 时可能会有页面闪烁的效果，下面的代码可以修复此情况
+
+backface-visibility: 定义当元素不面向屏幕时是否可见
+
+perspective：元素距离视图的距离
+
+```css
+.example {
+  backface-visibility: hidden;
+  perspective: 1000;
+  /* Other transform properties here */
+}
+```
+
+## 性能监测
+
+Chrome 开发者工具可以用`Performance`和`Audits`  
+`Audits`内置的其实是扩展程序`LightHouse`, LightHouse 可以产生一份当前网站的报告  
+或者 npm 上安装[LightHouse](https://www.npmjs.com/package/lighthouse)
+
+```bash
+npm install -g lighthouse
+lighthouse https://www.baidu.com
+```
+
+### Performance API
+
+`window.performance`  
+参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance)

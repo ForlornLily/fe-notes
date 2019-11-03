@@ -1,6 +1,6 @@
 Base on [vuepress](https://vuepress.vuejs.org/)
 
-在线地址：https://forlornlily.github.io/fe-notes/
+短域名地址：[https://git.io/JegFf](https://git.io/JegFf)，来自[github 生成短域名](https://git.io/)
 
 本项目为个人在前端路上的一些笔记
 

@@ -1,7 +1,7 @@
 # 实现小型 webpack
 
-[Dell Lee ](https://coding.imooc.com/lesson/316.html#mid=22920)
-
+[Dell Lee ](https://coding.imooc.com/lesson/316.html#mid=22920)  
+知乎[理解 webpack 原理，手写一个 100 行的 webpack](https://zhuanlan.zhihu.com/p/58151131)  
 调用 NodeJS 的 API
 
 比如 fs 模块

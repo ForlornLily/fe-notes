@@ -563,6 +563,42 @@ p4.then(value => {
 })
 ```
 
+手写 all
+
+```js
+function PromiseAll(arrs) {
+  return new Promise((resolve, reject) => {
+    const list = [...arrs],
+      length = list.length
+    let count = 0,
+      result = []
+    for (let i = 0; i < length; i++) {
+      list[i]
+        .then(value => {
+          count++
+          result[i] = value
+          if (count == length) {
+            return resolve(result)
+          }
+        })
+        .catch(value => {
+          reject(value)
+        })
+    }
+  })
+}
+var p1 = Promise.resolve(1),
+  p2 = Promise.reject(2),
+  p3 = Promise.resolve(3)
+PromiseAll([p1, p2, p3])
+  .then(res => {
+    console.log(res)
+  })
+  .catch(value => {
+    console.log(value)
+  })
+```
+
 ![](../images/fea81858e524697d399be5ef28e73c64.png)
 
 ### Promise.race()
@@ -591,6 +627,163 @@ p4.then(value => {
 }).catch(value => {
   console.log(value) //不进
 })
+```
+
+### 手写 promise.then
+
+参考：
+
+- [剖析 Promise 内部结构，一步一步教你实现一个完整的、能通过所有 Test case 的 Promise ](https://github.com/xieranmaya/blog/issues/2)
+- [Promise 实现原理（附源码）](https://juejin.im/post/5b83cb5ae51d4538cc3ec354)
+
+```js
+var utils = {
+  pending: 'pending',
+  resolve: 'fullfilled',
+  reject: 'rejected',
+  isFucntion: function(obj) {
+    return typeof obj === 'function'
+  }
+}
+function MyPromise(fn) {
+  var that = this
+  that.value = void 0
+  that.state = utils.pending
+  that.resolveHandles = [] //then执行的回调，可以链式回调，所以用数组触发
+  that.rejectHandles = [] //catch执行的回调
+  try {
+    /* 执行fn的过程中有可能出错，用try/catch块进行异常处理
+    比如
+    var promise = new MyPromise(function (resolve, reject) {
+      throw new Error("出错")
+    }) */
+    fn(handleResolve, handleReject) // 执行fn
+  } catch (e) {
+    handleReject(e)
+  }
+  function handleResolve(value) {
+    if (that.state === utils.pending) {
+      /* 判断状态是为了处理以下情况
+        var promise = new MyPromise(function (resolve, reject) {
+          resolve(test)
+          reject(test)//不应该进reject，不处理状态的话就会进handleReject了
+      }) */
+      that.state = utils.resolve
+      that.value = value
+      var handles = that.resolveHandles,
+        length = handles.length
+      for (var i = 0; i < length; i++) {
+        handles[i](value)
+      }
+    }
+  }
+  function handleReject(value) {
+    if (that.state === utils.pending) {
+      that.state = utils.reject
+      that.value = value
+      var handles = that.handleReject,
+        length = handles.length
+      for (var i = 0; i < length; i++) {
+        handles[i](value)
+      }
+    }
+  }
+}
+MyPromise.prototype.then = function(onFulfilled, onRejected) {
+  var that = this,
+    promise = null,
+    //根据规范，如果then/reject的参数不是function，需要忽略它
+    onFulfilled = utils.isFucntion(onFulfilled)
+      ? onFulfilled
+      : function(value) {
+          return value
+        },
+    onRejected = utils.isFucntion(onFulfilled)
+      ? onFulfilled
+      : function(error) {
+          throw error
+        }
+  if (that.state === utils.resolve) {
+    //onFulfilled(that.value)
+    //返回的仍然是Promise对象
+    return new MyPromise(function(resolve, reject) {
+      //仍然用try catch进行异常处理
+      try {
+        var result = onFulfilled(that.value)
+        if (result instanceof MyPromise) {
+          /* 处理以下情况，第二次的then值是第一次then 返回的值
+          promise.then(value => {
+            return value + 'world'
+          })
+          .then(value => {
+            console.log(value) 
+          }) */
+          result.then(resolve, reject)
+        } else {
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+  if (that.state === utils.reject) {
+    //onRejected(that.value)
+    //同上
+    return new MyPromise(function(resolve, reject) {
+      try {
+        var result = onRejected(that.value)
+        if (result instanceof MyPromise) {
+          result.then(resolve, reject)
+        } else {
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+  if (that.state === utils.pending) {
+    /* that.resolveHandles.push(onFulfilled)
+    that.rejectHandles.push(onRejected) */
+    //不确定到底是reject还是resolve，都push进去
+    that.resolveHandles.push(function(value) {
+      try {
+        var result = onFulfilled(that.value)
+        if (result instanceof MyPromise) {
+          result.then(resolve, reject)
+        } else {
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+    that.rejectHandles.push(function(value) {
+      try {
+        var result = onRejected(that.value)
+        if (result instanceof MyPromise) {
+          result.then(resolve, reject)
+        } else {
+          resolve(result)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+}
+var test = '1'
+var promise = new MyPromise(function(resolve, reject) {
+  resolve(test)
+})
+promise
+  .then(value => {
+    return value + 'world'
+  })
+  .then(value => {
+    console.log(value)
+  })
 ```
 
 ## Fetch

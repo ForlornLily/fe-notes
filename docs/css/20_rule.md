@@ -3,7 +3,7 @@
 ## 自闭合标签(self-closing)
 
 不要加"/"  
-例：<img>，<input>，<br>
+例：`<img>`，`<input>`，`<br>`
 
 ## CSS 与 JS 引入
 
