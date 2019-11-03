@@ -240,13 +240,22 @@ Function.prototype.myApply = function(context) {
   //此时的arguments只有两个，第一个是obj，第二个是参数数组
   let result
   if (arguments[1]) {
-    result = context.fn(...arguments)
+    result = context.fn(...arguments[1])
   } else {
     result = context.fn()
   }
   delete context.fn
   return result
 }
+let obj = {
+  hello: 'world',
+  foo: 'bar'
+}
+function myMethod(value1, value2) {
+  this.hello = value1 //'world2'
+  this.foo = value2 //'bar2'
+}
+myMethod.myApply(obj, ['world2', 'bar2'])
 ```
 
 ### 手写 bind
