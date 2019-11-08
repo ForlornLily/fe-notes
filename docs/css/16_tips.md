@@ -134,3 +134,39 @@ img {
   -webkit-touch-callout: none;
 }
 ```
+
+## CSS3 实现位移
+
+```html
+<div class="danmu-wrapper">
+  <img src="../../assets/img/danmu.png" class="loop"></img>
+  <img src="../../assets/img/danmu.png" class="loop"></img>
+</div>
+```
+
+```scss
+.loop {
+  position: absolute;
+  animation: slideshow 10s linear infinite;
+}
+.loop:last-child {
+  left: 100%;
+  animation: slideSecond 10s linear infinite;
+}
+@keyframes slideshow {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+@keyframes slideSecond {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: 0;
+  }
+}
+```

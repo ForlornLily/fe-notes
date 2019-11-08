@@ -381,7 +381,7 @@ position 是 absolute 或者 fixed，float 无效
 
 当元素祖先的 transform 属性非 none 时，定位容器由视口改为该祖先
 
-#### Stacking Context
+### Stacking Context
 
 - 任何非 none 的 transform 值都会导致一个堆叠上下文(Stacking
   Context)和包含块(Containing Block)的创建。
@@ -391,8 +391,9 @@ position 是 absolute 或者 fixed，float 无效
 
 堆叠上下文是一个三维概念，生成堆叠上下文的元素会影响自己的层叠关系和位置关系
 
-##### 层叠顺序 z-index
+#### 层叠顺序 z-index
 
+z-index:0 的会创建一个新的层叠上下文而 auto 不会（0 会在 auto 上面）  
 ![z-index](../images/ac555e82dea868a92d44f1cfdf7adf44.png)
 
 1.  形成堆叠上下文环境的元素的**背景与边框**
@@ -412,7 +413,7 @@ position 是 absolute 或者 fixed，float 无效
 
 z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那么元素 A 的子元素 z-index 再高也没用，不会盖住 B
 
-##### 形成堆叠上下文的条件
+#### 形成堆叠上下文的条件
 
 详见[MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
 
