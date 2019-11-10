@@ -17,7 +17,7 @@ HTML 中的属性是大小写不敏感的，所以浏览器会把所有大写字
 - b:与 i 语义差不多，表现为粗体(boldface)
 - time: 表示时间
 - q: 引用
-- em/strong
+- em/strong：语义上表示斜体/强调
 
 ### ARIA
 

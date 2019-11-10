@@ -75,6 +75,13 @@ if (condition) {
 }
 ```
 
+[为什么要变量提升](https://segmentfault.com/q/1010000013591021)
+
+- 解析和预编译过程中的声明提升可以提高性能，让函数可以在执行时预先为变量分配栈空间  
+  比如函数声明本身是不会变的，没有必要每次执行的时候都重新解析一边声明
+
+- 声明提升还可以提高 JS 代码的容错性，使一些不规范的代码也可以正常执行
+
 #### 函数优先
 
 函数声明是在普通变量之前被提升的
@@ -379,7 +386,7 @@ const deepCopy = {
   },
   copy(obj, deep) {
     if (!this.isFunction) {
-      this.createType()
+      this.createType() //如果还没有调用过createType
       this.copy(obj, deep)
       return
     }
@@ -403,10 +410,10 @@ const deepCopy = {
         continue
       }
       if (deep) {
-        if (this.isArray(obj) || this.isObject(obj)) {
-          target[key] = copy(obj, value)
-        } else if (this.isFunction(obj)) {
-          target[key] = new Function('return ' + obj.toString())()
+        if (this.isArray(value) || this.isObject(value)) {
+          target[key] = this.copy(value, deep)
+        } else if (this.isFunction(value)) {
+          target[key] = new Function('return ' + value.toString())()
         } else {
           target[key] = value
         }

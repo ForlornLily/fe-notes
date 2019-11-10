@@ -62,6 +62,9 @@ hello1.length //3
 
 ### prototype
 
+prototype 是为了方便属性共享，减少内存消耗。  
+具体来说就是不需要每个实例都去定义相同的内容
+
 ```js
 function FactoryPerson() {}
 FactoryPerson.prototype.name = 'Emma'
@@ -81,18 +84,47 @@ let person1 = new FactoryPerson()
 
 ### constructor
 
-对象的 constructor 指向创建该对象的函数
+参考[用自己的方式（图）理解 constructor、prototype、**proto**和原型链](https://juejin.im/post/5cc99fdfe51d453b440236c3)  
+对象的 constructor 指向创建该对象的函数（构造函数）
 
 ```js
 var foo = new Object()
 foo.constructor === Object //true
 var test = {}
 test.constructor === Object //true
+
+function FactoryPerson() {}
+var person1 = new FactoryPerson()
+person1.constructor === FactoryPerson //true
+```
+
+`Function`是`Object`这类内置对象的构造函数  
+`Function`也是内置对象，所以`Function`也是`Function`的构造函数
+
+```js
+function FactoryPerson() {}
+//等价于FactoryPerson = new Function(); 即Function是普通函数的构造函数
+FactoryPerson.constructor === Function //true
+Function.constructor === Function //true
+Object.constructor === Function //true
 ```
 
 所有原型对象都会获得一个`constructor`属性，指向 prototype 所在的函数
 
 `FactoryPerson.prototype.constructor = FactoryPerson`
+
+```js
+function FactoryPerson() {}
+let person1 = new FactoryPerson()
+let person2 = new FactoryPerson()
+```
+
+对象`person1`和`person2`的 constructor 指向的都是 FactoryPerson。  
+同样为了节省内存，没有必要 person1 和 person2 都各自存储 constructor，用`prototype`来节省即可，就会出现以下关系  
+找`person1.属性值`，如果没找到，那么往上找`FactoryPerson.prototype.属性值`  
+因为 person1.constructor 等于`FactoryPerson`，所以  
+ person1.constructor → FactoryPerson.prototype.constructor  
+ `FactoryPerson.prototype.constructor等于FactoryPerson`
 
 ### 对象字面量创建 prototype
 
@@ -132,14 +164,16 @@ FactoryPerson.prototype = {
 
 ### 实例的[[Prototype]]
 
-调用构造函数后创建的实例，实例内部会有一个指针，指向构造函数的原型对象。
-
-指针[[Prototype]]对外不可访问，通常浏览器表现为`__proto__`
-
+调用构造函数后创建的实例，实例内部会有一个指针，指向构造函数的原型对象。  
+指针[[Prototype]]对外不可访问，通常浏览器表现为`__proto__`  
 可以用 Object.getPrototypeOf 获取，避免直接操作`__proto__`
 
+因为 FactoryPerson.prototype 指向原型对象，person1.**proto**指向原型对象  
+所以
 `FactoryPerson.prototype == person1.__proto__`
 
+又因为 FactoryPerson.prototype.constructor 等于 FactoryPerson
+所以`person1.__proto__.constructor`等于 FactoryPerson
 ![](../images/01827ec1933e73750c59c2772306c192.png)
 ![](../images/2203bf7d2d27a3b8fe4ce7ef4e6e258b.png)
 
@@ -156,6 +190,35 @@ FactoryPerson.prototype = {
 ### 读取对象的属性
 
 先在从实例本身找，找不到就去原型对象上找
+
+### 总结
+
+```js
+function Person() {}
+let person1 = new Person()
+let person2 = new Person()
+```
+
+对于 person1 和 person2 来说
+
+1. Person.prototype 储存共享属性/方法，即`person1.属性`不存在的时候，往上找`Person.prototype`
+2. Person.prototype 叫原型对象
+3. `constructor`储存构造函数，即 person1.constructor === Person
+4. 为了节省内存，person1/person2 并没有实际声明`constructor`，就会往上找  
+   person1.constructor → Person.prototype.constructor === Person
+5. 实例有一个内部的`[[Prototype]]`，也指向原型对象  
+   所以`Person.prototype === person1.__proto__`
+6. 第 4 点中 Person.prototype.constructor === Person  
+   所以`person1.__proto__.constructor === FactoryPerson`
+
+对于 Person 来说
+
+```js
+person1.__proto__ === Person.prototype //true
+Person.__proto__ === Function.prototype //true
+Person.prototype.__proto__.constructor === Object // true
+Person.prototype.__proto__.constructor.constructor === Function //true
+```
 
 ## 自定义函数属性
 
@@ -269,11 +332,20 @@ Function.prototype.myBind = function(context) {
     //如果调用的不是函数，报错
     throw new Error('error')
   }
-  let arr = [...arguments].slice(1)
+  let arr = [...arguments].slice(1) //此处的arguments是["1", "2"]
   return function() {
+    //此处的arguments是"hello"
     that.apply(context, arr.concat(...arguments))
   }
 }
+function myMethod(arr, value2) {
+  // arr是["1", "2"]， value2是"hello"
+}
+let o = {
+  name: 'world'
+}
+let instance = myMethod.myBind(o, ['1', '2'])
+instance('hello')
 ```
 
 ## 参数按值传递
@@ -320,7 +392,7 @@ console.log(obj.value) // 1
 
 把多个独立的参数合并到一个数组中
 ::: tip
-函数的参数只能有一个剩余参数，放在最后；  
+函数的**形参**只能有一个剩余参数，放在最后；  
 不能在对象字面量的 setter 里面用：因为 setter 被限定只能使用单个参数
 :::
 
@@ -339,8 +411,13 @@ let object = {
 
 ```js
 let values = [1, 5, 2, 10]
-Math.max(...values)
+Math.max(...values, 8)
 ```
+
+适用情景：
+
+- 在函数参数、数组展开的场合，这种情况要求对象是可迭代的（iterable）
+- 用于对象展开，也就是 {…obj} 形式，这种情况需要对象是可枚举的（enumerable）
 
 ## 箭头函数=>
 

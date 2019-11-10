@@ -37,7 +37,8 @@
 ### 资源预加载
 
 参考[前端性能优化 - 资源预加载](https://bubkoo.com/2015/11/19/prefetching-preloading-prebrowsing/)  
-预加载意味着消耗硬件性能，需要取舍
+预加载表示浏览器在后台（空闲时）获取将来可能用得到的资源，并且将他们存储在浏览器的缓存中  
+意味着消耗硬件性能，需要取舍
 
 - DNS 预解析: DNS-Prefetch
   `<link rel="dns-prefetch" href="//example.com">`  

@@ -34,7 +34,7 @@ line-height 决定了行框盒子的最小高度。
 
 ## vertical-align
 
-作用于 inline box, inline blocks, img
+作用于 inline box, inline blocks（比如`img`)
 
 默认是 baseline，也就是子元素的基线和父元素的基线对齐
 
@@ -50,9 +50,7 @@ normal 对应 400, bold 对应 700
 
 ## font-style
 
-font-style: italic
-
-斜体
+斜体:`font-style: italic`
 
 ## text-transform
 

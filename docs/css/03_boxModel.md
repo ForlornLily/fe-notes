@@ -307,7 +307,7 @@ position 是 absolute 或者 fixed，float 无效
 
 ### 百分比
 
-元素往往不会被声明，通常用内容撑。padding 和 margin 的百分比都是根据最近的父元素的宽度来
+元素往往不会声明宽高，通常用内容撑。padding 和 margin 的百分比都是根据最近的父元素的**宽度**来
 
 ```css
 .parent {
@@ -475,11 +475,11 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 
 ![margin](../images/272c99cd5f1b24e5ed85ac7010e4d9b8.png)
 
-##### 伪元素::after 上加 clear
+#### 伪元素::after 上加 clear
 
 子元素全都浮动，父元素高度就会是 0
 
-常用做法就是加伪类让父元素可以包裹子元素
+常用做法就是加伪元素让父元素可以包裹子元素
 
 ```html
 <div class="wrapper">
@@ -508,7 +508,7 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 ::after 设置成不在页面上占据高度(即 height 为 0)，不可见(visibility)，但是需要占据空间，所以 display
 :::
 
-#### Formatting Contexts
+## Formatting Contexts
 
 格式化上下文。
 
@@ -517,7 +517,7 @@ inline
 
 元素之间如何影响彼此布局，需要遵循一些规则。格式化上下文是其中一个规则
 
-##### BFC
+### BFC
 
 BFC(block formattting
 context)就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。
@@ -528,7 +528,7 @@ context)就是页面上的一个隔离的独立容器，容器里面的子元素
 
 - 同样的，当 BFC 内部有浮动时，为了不影响外部元素的布局，BFC 计算高度时会包括浮动的高度
 
-##### 块级格式上下文的形成条件
+### 块级格式上下文的形成条件
 
 - display 的值是类似块级的(box-like)，比如 inline-block 或者 table-cell
 

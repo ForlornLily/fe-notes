@@ -227,9 +227,7 @@ lang = lang + 'Script'
 如果不是特殊含义的[转义字符](./011_regexp.md#常用的转义（非打印字符）)，比如`\#`, 和"#"是等价的;  
 因为`\`不算字符串本身的内容
 
-```js
-var test = 'hello  ' // "hello  "
-```
+`var test = 'hello \'`值是 "hello "
 
 ### toString(基数)
 
@@ -249,7 +247,7 @@ var test = 'hello  ' // "hello  "
 
 将所有类型转成字符串。如果类型本身有 toString()方法，返回 toString 的值。
 
-null 返回`"nulll"`, undefined 返回`"undefined"`
+null 返回`"null"`, undefined 返回`"undefined"`
 
 ### 识别子字符串
 

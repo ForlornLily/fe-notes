@@ -259,6 +259,25 @@ var test = {}
 test instanceof Object //true
 ```
 
+### 手写
+
+```js
+function myInstanceOf(left, right) {
+  const rightProto = right.prototype
+  let leftProto = left.__proto__
+  while (leftProto) {
+    if (leftProto === null) {
+      return false
+    }
+    if (leftProto === rightProto) {
+      return true
+    }
+    leftProto = leftProto.__proto__
+  }
+  return false
+}
+```
+
 ## 防止篡改对象
 
 严格模式下，设置防篡改后再修改都会报错  

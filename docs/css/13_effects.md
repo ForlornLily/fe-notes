@@ -58,4 +58,11 @@
 
 ## 滤镜 fliter
 
-另外也有背景滤镜 background-filter
+另外也有背景滤镜 background-filter  
+比如[Vue 中文官网](https://cn.vuejs.org/)的赞助商图片，彩色变黑白
+
+```css
+#sponsors img {
+  filter: grayscale(100%);
+}
+```
