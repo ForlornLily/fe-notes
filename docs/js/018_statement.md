@@ -156,6 +156,31 @@ function jude(x) {
 }
 ```
 
+try..catch 只能是同步的，无法用于异步代码模式。  
+参考[try/catch 无法捕获 promise.reject 的问题](https://segmentfault.com/q/1010000014905440)
+
+```js
+//报错，Uncaught (in promise)
+function f2() {
+  try {
+    Promise.reject('出错了')
+  } catch (e) {
+    console.log(e)
+  }
+}
+//正常
+function f2() {
+  try {
+    Promise.reject('出错了').catch(err => {
+      console.log('2', err)
+    })
+    console.log('1')
+  } catch (e) {
+    console.log(e)
+  }
+}
+```
+
 ## 递归，迭代和缓存
 
 - 递归是自己调用自己

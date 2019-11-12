@@ -2,7 +2,7 @@
 
 ## 函数 requestAnimationFrame(function)
 
-## Canavs
+## Canvas
 
 标签的基本属性有`width`和`height`，以 px 为单位，width="400"  
 JS 可以动态修改这两个属性  

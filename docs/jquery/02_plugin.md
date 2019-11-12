@@ -8,6 +8,8 @@ $(“#test”).abc()和$.trim()
 
 ## IIFEs
 
+IIFE 并不是闭包
+
 ```js
 ;(function($) {
   $.fn.myFunction = function() {

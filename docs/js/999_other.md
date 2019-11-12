@@ -15,6 +15,8 @@ var newWindow = window.open()
 newWindow.location.href = src
 ```
 
+但这样的方式在新版里也不行，无法打开新窗口，只能本窗口打开：设置`window.location.href`
+
 ## 正则替换所有匹配项
 
 比如替换所有的"\\n"
@@ -56,3 +58,9 @@ window.addEventListener('scroll', () => {
 ## 监听滚动条
 
 要监听撑出滚动条的 DOM，如果 body 本身没有撑出滚动条，`window.onscroll`不会触发
+
+## 图片 403
+
+参考[html 访问图片资源 403 问题(http referrer)](https://www.jianshu.com/p/56df73d0d128?utm_source=oschina-app)
+设置`meta`标签  
+`<meta name="referrer" content="no-referrer" />`

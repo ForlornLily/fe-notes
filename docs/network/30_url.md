@@ -49,12 +49,12 @@
 - css 加载会阻塞 DOM 树的渲染
 - css 加载会阻塞后面 js 语句的执行
 
-原因是 DOM 树和 CSSOM 树的解析是并行执行的，见[浏览器加载过程](../js/033_best_practice.md)，但 Rentder Tree 是依赖于 DOM Tree 和 CSSOM Tree 的，所以必须等待到 CSSOM Tree 构建完成，也就是 CSS 资源加载完成(或者 CSS 资源加载失败)后，才能开始渲染  
+原因是 DOM 树和 CSSOM 树的解析是并行执行的，见[浏览器加载过程](./50_performance.md)，但 Rentder Tree 是依赖于 DOM Tree 和 CSSOM Tree 的，所以必须等待到 CSSOM Tree 构建完成，也就是 CSS 资源加载完成(或者 CSS 资源加载失败)后，才能开始渲染  
 同样 JS 会可能会操作 DOM 和 CSS，所以等 CSS 加载玩
 
 ### css 优化方案
 
 - 使用[CDN](./29_cdn.md)
 - 对 css 进行压缩(比如 webpack,，gzip)
-- 合理的使用缓存(设置 cache-control,expires,以及 E-tag 都是不错的，不过要注意缓存而带来的影响：版本更新时新旧资源的处理)
+- 合理的使用缓存(cache-control，expires，E-tag。不过要注意缓存而带来的影响：版本更新时新旧资源的处理)
 - 减少 http 请求数，将多个 css 文件合并，或者是干脆直接写成内联样式(内联样式的一个缺点就是不能缓存)

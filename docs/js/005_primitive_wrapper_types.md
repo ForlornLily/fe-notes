@@ -105,6 +105,12 @@ test.substr(1, 3) //"ell"
 
 ### trim()
 
+```js
+function trim(str) {
+  return str.replace(/(^\s*)|(\s*$)/g, '')
+}
+```
+
 ### 大小写转换
 
 toLowerCase /toUpperCase

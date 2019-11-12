@@ -59,7 +59,7 @@ function selectionSort() {
 
 假设第一项已经排好序，从后往前一个个比较，如果待插入元素小于已排序元素，则已排序元素往后移动一位。以此类推。
 
-也就是移动的是已排序的元素。
+将每个元素向后移动一个位置，以便为要排序的新元素腾出空间。
 
 ```js
 function insertSort(arr) {
@@ -284,3 +284,8 @@ function heapify(arr, index, size) {
 选择排序绝对没用吗？
 
 选择排序只需要 O(n) 次交换，这一点好于冒泡排序
+
+## V8 中的排序
+
+用的`TimSort`，源码[array-sort.tq](https://github.com/v8/v8/blob/78f2610345fdd14ca401d920c140f8f461b631d1/third_party/v8/builtins/array-sort.tq#L5)  
+摘自[wiki](https://zh.wikipedia.org/wiki/Timsort): Timsort 是一种混合稳定的排序算法，源自归并排序和插入排序

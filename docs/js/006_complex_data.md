@@ -265,10 +265,10 @@ test instanceof Object //true
 function myInstanceOf(left, right) {
   const rightProto = right.prototype
   let leftProto = left.__proto__
+  if (leftProto === null) {
+    return false
+  }
   while (leftProto) {
-    if (leftProto === null) {
-      return false
-    }
     if (leftProto === rightProto) {
       return true
     }

@@ -150,9 +150,11 @@ CSRF 是基于客户端对用户的信任。例如：
 解决方案：
 
 - 判断 cookie 是否同源操作  
-  HTTP 请求的时候 Request Header 会带上 Origin Header 和 Referer Header，服务器可以解析这两者内的域名 - Origin 包含请求的域名 - Referer，记录了该 HTTP 请求的来源地址:  
-   Ajax 请求，图片和 script 等资源请求，Referer 为发起请求的页面地址;  
-   页面跳转，Referer 为打开页面历史记录的前一个页面地址
+  HTTP 请求的时候 Request Header 会带上 Origin Header 和 Referer Header，服务器可以解析这两者内的域名
+  - Origin 包含请求的域名
+  - Referer，记录了该 HTTP 请求的来源地址:  
+    Ajax 请求，图片和 script 等资源请求，Referer 为发起请求的页面地址;  
+    页面跳转，Referer 为打开页面历史记录的前一个页面地址
 - 设置 cookie 的`samesite`（IE11+）
   如果 SamesiteCookie 被设置为 Strict，浏览器在任何跨域请求中都不会携带 Cookie  
   也就是跳转子域名或者是新标签重新打开刚登陆的网站，之前的 Cookie 都不会存在。尤其是有登录的网站，那么我们新打开一个标签进入，或者跳转到子域名的网站，都需要重新登录
