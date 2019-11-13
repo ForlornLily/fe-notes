@@ -54,8 +54,7 @@ The <abbr title="People's Republic of China">PRC</abbr> was founded in 1949.
 
 pseudo elements  
 伪元素用于创建一些不在文档树中的元素，并为其添加样式。比如说，我们可以通过`::before` 来在一个元素前增加一些文本，并为这些文本添加样式。虽然用户可以看到这些文本，但是这些文本实际上不在文档树中  
-语法：双冒号（旧写法是单冒号，CSS3 规范的要求使用双冒号用于区分。如果要做兼容性处理，还是单冒号）  
-更多伪类参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-classes)
+语法：双冒号（旧写法是单冒号，CSS3 规范的要求使用双冒号用于区分。如果要做兼容性处理，还是单冒号）
 
 ### ::before/::after
 
@@ -65,7 +64,8 @@ pseudo elements
 
 伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的  
 pseudo classes  
-语法：单冒号
+语法：单冒号  
+更多伪类参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-classes)
 
 ### 标签 a/表单元素/按钮具有的伪类
 

@@ -5,6 +5,7 @@
 ## 一行文字，多余用省略号显示
 
 ```css
+display: block;
 text-overflow: ellipsis;
 overflow: hidden;
 white-space: nowrap;

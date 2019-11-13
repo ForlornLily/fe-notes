@@ -332,7 +332,7 @@ Function.prototype.myBind = function(context) {
     //如果调用的不是函数，报错
     throw new Error('error')
   }
-  let arr = [...arguments].slice(1) //此处的arguments是["1", "2"]
+  let arr = [...arguments].slice(1) //此处的arguments是[o, ["1", "2"]]
   return function() {
     //此处的arguments是"hello"
     that.apply(context, arr.concat(...arguments))
