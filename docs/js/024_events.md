@@ -29,6 +29,10 @@ var handler = function() {
 target.addEventListener('click', handler, { capture: true })
 ```
 
+::: warning
+设置了`visibility: hidden;`的元素，即使绑定了事件也不会触发
+:::
+
 #### options
 
 - capture
