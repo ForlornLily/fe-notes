@@ -4,17 +4,44 @@ webpack 运行到某一时刻会调用的方法
 
 插件都需要手动引入
 
-比如
+## HTMLWebpackPlugin
 
-![](../images/6dbf7f5ea95762e0327342a7f7f0c58b.png)
+[html-webpack-plugin](https://webpack.js.org/plugins/html-webpack-plugin/#root): 管理 HTML
 
-## 管理 HTML：HTMLWebpackPlugin
+```bash
+npm install --save-dev html-webpack-plugin
+```
 
-html-webpack-plugin
+```js
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+
+module.exports = {
+  entry: 'index.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'index_bundle.js'
+  },
+  plugins: [new HtmlWebpackPlugin()]
+}
+```
 
 在文件打包后自动在 output 目录生成 html 文件，并引入 js
 
-filename 默认就是"index.html"
+filename 默认就是"index.html"。上面的配置生成的代码如下:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <script src="index_bundle.js"></script>
+  </body>
+</html>
+```
 
 ### 配置项
 
@@ -77,26 +104,39 @@ new CleanWebpackPlugin({
 
 ## 抽取 CSS：mini-css-extract-plugin
 
-![](../images/71ebe77c191177643b2da259004f4381.png)
+[官网](https://webpack.js.org/plugins/mini-css-extract-plugin)
 
 ```js
-module: {
-  rules: [
-    {
-      test: /\.css$/,
-      use: [
-        {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            // you can specify a publicPath here
-            // by default it use publicPath in webpackOptions.output
-            publicPath: '../'
-          }
-        },
-        'css-loader'
-      ]
-    }
-  ]
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+module.exports = {
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false // Enable to remove warnings about conflicting order
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader, //不再使用style-loader
+            options: {
+              // you can specify a publicPath here
+              // by default it uses publicPath in webpackOptions.output
+              publicPath: '../',
+              hmr: process.env.NODE_ENV === 'development'
+            }
+          },
+          'css-loader'
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -110,27 +150,49 @@ module: {
 
 ![](../images/bf5fbda9c5de9bb18590d6b7d836987f.png)
 
-### 模块热替换：[Hot Module ReplacemMent](https://webpack.js.org/guides/hot-module-replacement)
+### HMR
 
-webpack.HotModuleReplacementPlugin()
+webpack.HotModuleReplacementPlugin(): 模块热替换
 
 回调等方法见[API](https://webpack.js.org/api/hot-module-replacement)
 
-HMR: Hot Module ReplacemMent
-
 devServer 设置为 true 之后可以避免每次更新刷新整个页面，只进行局部更新
 
-### 依赖定义：DefinePlugin
+### DefinePlugin
 
-允许创建一个在编译时可以配置的全局常量
+[webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root): 编译的时候创建的一个全局变量。可以变量的不同进行不同的配置
+
+```js
+// 引入 webpack
+const webpack = require('webpack')
+// 增加 webpack 配置
+plugins: [
+  new webpack.DefinePlugin({
+    // 比如：开发环境写 'development'，生产环境写 'production'
+    ENV: JSON.stringify('development')
+  })
+]
+
+//在逻辑js中
+if (ENV === 'development') {
+  //do sth.
+}
+```
 
 ### ProvidePlugin
 
+[ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/#root):
 自动加载插件，比如加载 jQuery
 
-![](../images/ff19f27c563355be0bb217d4d39f7284.png)
-
-![](../images/9024662df6f74161af242ccf9d440798.png)
+```js
+//自动加载 jquery，将两个变量都指向jquery
+plugins: [
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery'
+  });
+]
+```
 
 ### HashedModuleIdsPlugin
 
@@ -144,3 +206,26 @@ devServer 设置为 true 之后可以避免每次更新刷新整个页面，只�
 
 插件会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin
 映射到相关的依赖上去的
+
+## CopyWebpackPlugin
+
+[copy-webpack-plugin](https://webpack.js.org/plugins/copy-webpack-plugin): 复制文件
+
+```bash
+npm install copy-webpack-plugin --save-dev
+```
+
+比如把 src 下的 doc 文件夹全部复制到 dist 目录中的 doc 文件夹
+
+```js
+const CopyPlugin = require('copy-webpack-plugin')
+
+module.exports = {
+  plugins: [
+    new CopyPlugin([
+      { from: path.join(srcPath, 'doc'), to: path.join(distPath, 'doc') },
+      { from: 'other', to: 'public' }
+    ])
+  ]
+}
+```

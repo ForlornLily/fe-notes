@@ -13,3 +13,24 @@ webpack 查找 "lodash" 的方式去做修改
 创建 import 或 require 的别名，来确保模块引入变得更简单
 
 ![](../images/0138e6956d94793609116701612e52b6.png)
+
+### vue.config.js
+
+```js
+const path = require('path')
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+module.exports = {
+  publicPath: './',
+  lintOnSave: true,
+  productionSourceMap: false, //不要map
+  chainWebpack: config => {
+    //alias
+    config.resolve.alias
+      .set('@', resolve('src'))
+      .set('assets', resolve('src/assets'))
+      .set('common', resolve('src/common'))
+  }
+}
+```

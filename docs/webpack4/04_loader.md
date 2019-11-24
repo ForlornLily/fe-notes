@@ -84,7 +84,16 @@ style-loader，css-loader
 
 css-loader 解析样式，style-loader 转成 style 标签
 
-![](../images/c2641958d655e76434a9d05c400382fc.png)
+```js
+module: {
+  rules: [
+    {
+      test: /\.css$/,
+      loader: ['style-loader', 'css-loader']
+    }
+  ]
+}
+```
 
 ### css-loader 配置项
 
@@ -116,7 +125,7 @@ CSS 模块化，让引入的 CSS 只在当前文件生效，避免全局
 
 ![](../images/5c6bb18c6a9fe49e7bf6d65fca671b46.png)
 
-### 处理 Sass:
+### 处理 Sass
 
 安装 node-sass, sass-loader
 
@@ -163,6 +172,73 @@ module: {
 }
 ```
 
+### 抽取 CSS
+
+[mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin)
+
+```js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+module.exports = {
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false // Enable to remove warnings about conflicting order
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader, //不再使用style-loader
+            options: {
+              // you can specify a publicPath here
+              // by default it uses publicPath in webpackOptions.output
+              publicPath: '../',
+              hmr: process.env.NODE_ENV === 'development'
+            }
+          },
+          'css-loader'
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 压缩 CSS
+
+安装`terser-webpack-plugin`和`optimize-css-assets-webpack-plugin`，见官网[minimizing-for-production](https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production)
+
+```js
+const TerserJSPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+module.exports = {
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }
+    ]
+  }
+}
+```
+
 ## JS
 
 ### babel
@@ -188,6 +264,26 @@ preset-env 是将 JS 转成对应 ECMAScript 版本的工具，包含了转成 E
       presets: ["@babel/preset-env"]
     }
   }]
+}
+```
+
+babel 可以解析 ES6 大部分语法特性，但是无法解析 `class` 、静态属性、块级作用域，还有很多大于 ES6 版本的语法特性，如装饰器  
+完全转换成 ES5 可以安装对应的插件
+
+```bash
+npm i @babel/plugin-proposal-class-properties @babel/plugin-transform-block-scoping @babel/plugin-transform-classes -D
+```
+
+然后在`.babelrc`文件中
+
+```json
+{
+  "presets": ["@babel/preset-env"],
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-block-scoping",
+    "@babel/plugin-transform-classes"
+  ]
 }
 ```
 

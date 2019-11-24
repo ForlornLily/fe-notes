@@ -114,8 +114,48 @@ splitChunks 的配置见官网[split-chunks-plugin](https://webpack.js.org/plugi
 
 - 尽可能使用 include，少用 plugin，比如开发环境不需要压缩
 
+- tree shaking: 只能用在 ES module 上
+
+- [noParse](https://webpack.js.org/configuration/module/#modulenoparse)  
+  防止 webpack 解析 noParse 内的文件。这些文件不会依赖其他模块，也就是不会有`import`, `require`, `define`的调用  
+  对于不依赖任何其他的插件来说可以提高构建的性能
+
+```js
+module.exports = {
+  //...
+  module: {
+    noParse: /jquery|lodash/
+  }
+}
+```
+
 - 减少[resolve](./04_loader.md#自定义loader)
 - 合理使用[sourceMap](./06_mode.md#cheap-module-eval-source-map)
+- [Externals](https://webpack.js.org/configuration/externals/#root)  
+  html 中已经用 CDN 引入了第三方插件，就没必要打包
+
+  ```html
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  ```
+
+  ```js
+  module.exports = {
+    //...
+    externals: {
+      jquery: 'jQuery'
+    }
+  }
+  ```
+
+  在业务内仍然可以使用
+
+  ```js
+  //仍然可以import
+  import $ from 'jquery'
+
+  $('.my-element').animate(/* ... */)
+  ```
+
 - 其他:
   [官网](https://webpack.docschina.org/guides/build-performance/)
 - 用`dllplugin`配置第三方模块，第一次打包后不再反复打包
@@ -123,6 +163,21 @@ splitChunks 的配置见官网[split-chunks-plugin](https://webpack.js.org/plugi
   - DllReferencePlugin 通过读取这个 json 文件来使用打包的这些模块
 - Happypack: JS 是单线程的，同样 NodeJS 也是，那么 webpack 也只能一个一个操作打包。  
   用 Happypack 可以进行多**进程**打包，对于复杂项目可以加快打包速度，小项目没有必要
+- [IgnorePlugin](https://webpack.js.org/plugins/ignore-plugin/#root)  
+  比如忽略某个模块下的某些文件夹，比如本地化语言文件夹
+
+```js
+//忽略moment下的locale目录
+new webpack.IgnorePlugin({
+  resourceRegExp: /^\.\/locale$/,
+  contextRegExp: /moment$/
+})
+
+//只引入需要的语言
+import moment from 'moment'
+import 'moment/locale/zh-cn' // 手动引入中文语言包
+moment.locale('zh-cn')
+```
 
 ### dllplugin
 

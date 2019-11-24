@@ -70,6 +70,7 @@ setTimeout(function() {
 [参考链接](https://segmentfault.com/a/1190000019525962)
 
 ```js
+//以下是Vue内的代码
 // input自带的select()方法在苹果端无法进行选择，所以需要自己去写一个类似的方法
 // 选择文本。createTextRange(setSelectionRange)是input方法
 function selectText(textbox, startIndex, stopIndex) {

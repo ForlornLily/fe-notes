@@ -57,9 +57,9 @@ devtool: "source-map",
 
 定位也可能不准
 
-## [devServer](https://webpack.js.org/configuration/dev-server/#devserver)：webpack-dev-server 的配置
+## devServer
 
-webpack-dev-server
+[webpack-dev-server](https://webpack.js.org/configuration/dev-server/#devserver)：webpack-dev-server 的配置
 
 创建一个服务器，并实时重新加载。只要代码改变就会重新打包，刷新浏览器
 
@@ -83,27 +83,58 @@ webpack 内置，可以使用 proxy 进行代理
 
 ![](../images/ee0c6b774626022f92c62781e25bef8f.png)
 
-### 配置项
+### contentBase
 
-![](../images/c09659fd59d622ddb7833c3e78825119.png)
-
-#### contentBase
-
-#### open
+### open
 
 自动打开默认浏览器，并访问地址
 
-#### allowedHosts
+### allowedHosts
 
 允许访问的服务器
 
-#### proxy
+### proxy
 
-#### port
+[官网](https://webpack.js.org/configuration/dev-server/#devserverproxy)  
+webpack-dev-server 实现 proxy 的功能是依赖的 http-proxy-middleware
+
+```js
+devServer: {
+  // 设置代理
+  proxy: {
+    // 将本地 /api/xxx 代理到 localhost:3000/api/xxx
+    '/api': 'http://localhost:3000',
+
+    // 将本地 /api2/xxx 代理到 localhost:3000/xxx
+    '/api2': {
+        target: 'http://localhost:3000',
+        pathRewrite: {
+            '/api2': ''
+        }
+    }
+}
+```
+
+#### changeOrigin
+
+默认是 false，请求头中 host 仍然是浏览器发送过来的 host  
+为 true 后请求头（request header）的中的 Host 变成 target URL
+
+```js
+proxy: {
+  "/api": {
+    target: "http://www.baidu.com/",
+    pathRewrite: {'^/api' : ''}
+    changeOrigin: true
+  }
+}
+```
+
+### port
 
 端口号
 
-#### hot
+### hot
 
 为 true 时进行热模块更新。只加载改变的内容，不会刷新整个页面
 
@@ -124,7 +155,7 @@ if (module.hot) {
 })
 ```
 
-#### hotOnly
+### hotOnly
 
 通常和 hot 一起用，为 true 时，如果修改的模块不支持热更新，就不会刷新页面，而是抛出警告。
 
