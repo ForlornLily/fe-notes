@@ -480,6 +480,18 @@ object）
 
 JS 引擎通过栈的结构去处理上下文
 
+```js
+function multiply(x, y) {
+  return x * y
+}
+function printSquare(x) {
+  var s = multiply(x, x)
+  console.log(s)
+}
+printSquare(5)
+```
+
+![](../images/stack.jpg)
 假设全局代码叫 globalContext，执行函数的时候创建的执行上下文叫 ECStack
 
 那么执行 fun1 的时候，最开始解释的的肯定是全局代码

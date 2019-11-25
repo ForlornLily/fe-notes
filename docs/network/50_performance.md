@@ -136,6 +136,11 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
   ![cache](../images/http-cache-decision-tree.png)
 - CDN
 
+### HTTP/2
+
+由于[HTTP2](../http/08_http_2.md)的优势，以下方案可以弃用  
+合并文件、内联资源、雪碧图、域名分片对于 HTTP/2 来说是不必要的，使用 HTTP/2 尽可能将资源细粒化，文件分解地尽可能散，不用担心请求数多
+
 ## JS 代码可维护性
 
 ### 可读性：加注释
@@ -209,6 +214,8 @@ const Constants = {
 少操作 DOM
 
 合理的 for 循环
+
+待整理：[JavaScript 如何工作：在 V8 引擎里 5 个优化代码的技巧](https://juejin.im/post/5a102e656fb9a044fd1158c6)
 
 ### O(1)
 

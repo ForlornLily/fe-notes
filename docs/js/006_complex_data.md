@@ -195,6 +195,16 @@ arr.valueOf() //[1, 2]
 
 和[可迭代对象](./030_iterators.md)的用法类似
 
+## Object.fromEntries
+
+`Object.fromEntries(iterable);`: 把键值对列表转成对象  
+类似数组的 from，或者说`Object.entries`的反转
+
+```js
+const arr = [['0', 'a'], ['1', 'b'], ['2', 'c']]
+Object.fromEntries(arr) // {0: 'a', 1: 'b', 2: 'c'}
+```
+
 ## 比较：Object.is(key1, key2)
 
 进行===比较，不会出现类型转换

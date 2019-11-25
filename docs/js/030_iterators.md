@@ -323,7 +323,7 @@ async function secondMethod() {
 secondMethod() //"hello"
 ```
 
-#### 例子
+### 例子
 
 ```js
 async function a1() {
@@ -374,4 +374,16 @@ a1 end
 promise2.then
 promise3
 setTimeout
+```
+
+### 异步迭代器
+
+让 await 可以和 for...of 循环一起使用，以串行的方式运行异步操作
+
+```js
+async function process(array) {
+  for await (let i of array) {
+    doSomething(i)
+  }
+}
 ```

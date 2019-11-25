@@ -335,6 +335,38 @@ while (append--) {
 newStr = arr.join()
 ```
 
+### flat
+
+`arr.flat([depth])`: 根据指定的 depth 进行深度遍历，depth 默认是 1  
+最常见的应用就是数组降维
+
+```js
+var test = [1, 2, [3, 4, [5, 6]], [7, 8]]
+test.flat() //[1, 2, 3, 4, [5,6], 7, 8]
+test.flat(2) //[1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+还可以去掉空项
+
+```js
+var test = [1, 2, null, undefined, 0, '', , 8]
+test.flat() //[1, 2, null, undefined, 0, "", 8]
+```
+
+### flatMap
+
+类似 map 和 flat 深度为 1 的结合体  
+flatMap 只会降维一层
+
+```js
+var test1 = [1, 2]
+test1.flatMap(item => item * 2) // [2, 4], 与map一致
+var test3 = [1, [2, 3]]
+test3.flatMap(item => [item * 2]) // [2, NaN]
+var test2 = [1, [2]]
+test2.flatMap(item => [item * 2]) // [2, 4]
+```
+
 ## 数组解构
 
 类似对象解构
@@ -440,3 +472,12 @@ ArrayBuffer 是 canvas 绘图的重要部分
 - filter 配合 indexOf
 
 - Set 数据结构
+
+## SharedArrayBuffer
+
+参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
+
+## Atomics 对象
+
+Atomics 对象提供了一组静态方法用来对 SharedArrayBuffer 对象进行原子操作  
+Atomics 不是构造函数，因此不能使用 `new` 操作符调用，也不能将其当作函数直接调用

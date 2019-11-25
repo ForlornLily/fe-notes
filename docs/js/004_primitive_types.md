@@ -7,7 +7,8 @@ simple data types/primitive types
 - Number
 - String
 - Boolean
-- Symbol
+- Symbol (ES6 新增)
+- BigInt (ES10 新增)
 
 ## null
 
@@ -201,6 +202,59 @@ Number.isInteger(25.0) //true
 Number.isInteger(25.1) //false
 ```
 
+## BigInt
+
+BigInt 可以是任意大的**整数**  
+Number 的范围是-9007199254740991 (`-(2^53-1)`) 和 9007199254740991(`2^53-1`)，任何超出此范围的整数值都会失去精度（四舍五入）
+
+```js
+9007199254740992 === 9007199254740993 // true
+```
+
+创建`BigInt`类型，在整数后面加`n`即可，或者使用`BigInt()`构造函数
+
+### 构造函数
+
+- Boolean：true 变 1n，false 变 0n
+- 不是整数的 Number 类型，会报错
+
+```js
+BigInt(10) //10n
+BigInt(0.1) //报错：The number 0.1 cannot be converted to a BigInt because it is not an integer
+```
+
+- 只有数字的 string 并且是整数的话可以变数字
+
+```js
+BigInt('10') //10n
+BigInt('0.1') //SyntaxError
+```
+
+- 其他，比如 null, undefined, obj 和`Number()`不同，都会报错
+
+### 算术运算
+
+因为数据类型不同，三等号的 BigInt 和 Number 类型的数字肯定是不等的
+
+- 进行`>`, `<`, `==`的时候会进行类型转换
+- 无法和 Number 类型进行混合四则运算，因为会存在超出 Number 类型的数字范围情况
+- 不允许在 BigInt 上使用一元加号（+）运算符
+
+```js
+typeof 10n //"bigint"
+10n == 10 //true
+10n === 10 //false
+
+10 + 10n //报错, TypeError
+```
+
+可以通过调用 Number()或 BigInt()来转换操作数
+
+```js
+BigInt(10) + 10n // 20n
+10 + Number(10n) // 20
+```
+
 ## String
 
 0 或者多个 16 位 Unicode 字符组成
@@ -337,6 +391,39 @@ Template Literals
 去除空格，不去换行
 
 ![trim](../images/d6a6e80d2fdd1a2a239c14d3997013e3.png)
+
+### padStart
+
+`str.padStart(targetLength [, padString])`: 用 padString 填充 str 的开头
+
+- 不传 padString，用空格填充
+- targetLength 等于 str.length + padingString.length，那么会有以下表现：
+  - targetLength 小于 0 无效
+  - 如果 targetLength 小于 str 的长度，则忽略
+  - 如果 padString 本身的长度大于 str.length + targetLength, 则忽略溢出的部分
+
+```js
+var test = 'abc'
+test.padStart(6) //"   abc"
+test.padStart(1, 'd') //"abc"
+test.padStart(-6, 'd') // "abc"
+test.padStart(6, 'd') //"dddabc"
+test.padStart(6, 'defg') //"defabc"，忽略了"g"
+```
+
+### padEnd
+
+`str.padEnd(targetLength [, padString])`: 用 padString 填充 str 的结尾
+和 padStart 类似
+
+```js
+var test = 'abc'
+test.padEnd(6) //"abc   "
+test.padEnd(1, 'd') //"abc"
+test.padEnd(-6, 'd') // "abc"
+test.padEnd(6, 'd') //"abcddd"
+test.padEnd(6, 'defg') //"abcdef"，忽略了"g"
+```
 
 ## Symbol
 
