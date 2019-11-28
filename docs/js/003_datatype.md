@@ -12,6 +12,7 @@
 - string
 - boolean
 - symbol
+- bigint
 - object: null 也返回 object
 - function
 
@@ -46,6 +47,7 @@ Object.prototype.toString.call(Hello) // "[object Function]"
 - Null
 - Undefined
 - Symbol
+- BigInt
 - Object
 - Array
 - Function

@@ -6,12 +6,20 @@ primitive wrapper types
 所以 string 可以调用对象的方法
 
 但不要自己去显式地 new 一个
-
+::: warning
+Number, String, Boolean 是构造函数，但 Symbol 和 BigInt 不是，不能`new`
+:::
 比如
 
 ```js
 var s1 = 'emma'
 var s2 = s1.substring(2)
+
+var s3 = new String('Noman')
+typeof s3 //"object"
+
+var test2 = new Symbol('1') //报错，Symbol不是构造函数
+var test3 = new BigInt('10') //报错，BigInt is not a constructor
 ```
 
 实际上调用`s1.substring`的后台会经过以下步骤
@@ -22,9 +30,9 @@ var s2 = s1.substring(2)
    上面的 `substring` 等价于
 
 ```js
-var s3 = new String('emma')
+var s4 = new String('emma')
 var s2 = s1.substring(2)
-s3 = null
+s4 = null
 ```
 
 ## Number 包装类型的方法

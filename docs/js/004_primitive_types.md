@@ -48,7 +48,7 @@ Boolean(1) //true
 - number 类，除了 0、-0 和 NaN 其他都是 true
 - object 都是 true
 - null， undefined 为 false
-- symbol 是 true
+- symbol 是 true, BigInt 是 true
 
 ## Number
 
@@ -285,13 +285,13 @@ lang = lang + 'Script'
 
 ### toString(基数)
 
-`Number`、`Boolean`、`Object`、`String`、`Symbol`都有该方法。null 和 undefined 没有
+`Number`、`Boolean`、`Object`、`String`、`Symbol`、`BigInt`都有该方法。null 和 undefined 没有
 
 可以指定转换后的进制。
 
 执行结果一般和`String()`一样
 
-默认就以 10 进制的方式输出。也就只有 Number 类会有差别
+默认就以 10 进制的方式输出。也就只有 Number/BigInt 会有差别
 
 ![toString](../images/3559113963e32036f1f54178a08605a4.png)
 
@@ -413,7 +413,7 @@ test.padStart(6, 'defg') //"defabc"，忽略了"g"
 
 ### padEnd
 
-`str.padEnd(targetLength [, padString])`: 用 padString 填充 str 的结尾
+`str.padEnd(targetLength [, padString])`: 用 padString 填充 str 的结尾  
 和 padStart 类似
 
 ```js

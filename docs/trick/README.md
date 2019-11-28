@@ -50,7 +50,7 @@ setTimeout(function() {
 
 ### input
 
-1. Safari 下 input type="search"按 Enter 不会隐藏搜索框
+1. Safari 下 input type="search"按 Enter 不会隐藏搜索框  
    替代方案：  
    手动失焦
 2. input 只读的时候 IOS 软键盘还是会弹起
@@ -123,3 +123,7 @@ if (document.execCommand('copy')) {
   }
 }
 ```
+
+## 1px
+
+参考[怎么画一条 0.5px 的边](https://zhuanlan.zhihu.com/p/34908005)

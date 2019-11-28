@@ -7,7 +7,7 @@ transform: translate(0, 100px) rotate(45deg);
 ```
 
 ::: warning
-只能作用在块级元素内
+作用在类块级元素内(比如 inline-block, block, flex)，inline 元素无效
 :::
 
 ## 原点 transform-origin
@@ -22,11 +22,11 @@ transform: translate(0, 100px) rotate(45deg);
 
 整个都会旋转，包括 margin。但还是在原本的位置，不会影响到其他元素(也就是可能会盖住相邻元素)
 
+```css
 border: 1px solid black;
-
 transform: rotate(45deg);
-
-margin:20px;
+margin: 20px;
+```
 
 ![](../images/d31f0ff0a6351d75fb27ea2834734e1a.png)
 

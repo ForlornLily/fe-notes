@@ -15,6 +15,41 @@
 ![outline](../images/944e3e9456bf18356579d34d6aac117c.png)
 ![border](../images/73634357a6807686d8014ee88d67178c.png)
 
+## border
+
+当 width（height）本身小于内容的宽度（高度），表现会比较怪异  
+例如下面的 div，内容宽度大于 40px。设置了`border-box`后，会先把 border 算进去
+
+```html
+<div id="test" class="border">2222222222</div>
+<span>1111</span>
+```
+
+```css
+.border {
+  box-sizing: border-box;
+  border: 10px solid #000;
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+```
+
+![](../images/border.jpg)  
+如果不写 box-sizing
+
+```css
+.border {
+  /* box-sizing: border-box; */
+  border: 20px solid #000;
+  width: 40px;
+  height: 40px;
+  float: left;
+}
+```
+
+![](../images/border_content_box.jpg)
+
 ## display
 
 - inline:行内元素没有上下的 margin 和 padding，width 和 height 属性无效。修改高度只能通过 line-height 和 padding

@@ -60,6 +60,15 @@ pseudo elements
 
 常用在 content 属性设置内容
 
+### 生效元素
+
+参考知乎[为什么 input 不支持伪元素(:after,:before)？](https://www.zhihu.com/question/21296044/answer/27011625)  
+简而言之是规范说明伪元素所在的元素，是可以插入`content`内容，那么无法插入内容的元素，比如`input`, `img`, `iframe`是无法生效的。
+::: tip
+注意是存在伪元素，但无法生效
+:::
+![](../images/pesdo_element.jpg)
+
 ## 伪类
 
 伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的  

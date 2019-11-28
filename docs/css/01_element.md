@@ -62,3 +62,71 @@ application
   网页内容都是以超文本（Hypertext）的方式来互相链接的，网站之间也是如此。除了搜索引擎以外，人们也不同网站之间的链接来 Surfing（“冲浪”）。  
   其它网站到你的网站的链接越多，你也就会获得更多的访问量。网站的外部链接数越多，会被搜索引擎认为它的重要性越大，从而给你更高的排名。
 - 标签的合理使用。
+
+## title
+
+必须闭合  
+一个`<head>`内只能包含一个`<title>`标签  
+只可以包含文本，若是包含有标签，则包含的任何标签都会被转义
+
+```html
+<title><strong>Leetcode</strong></title>
+```
+
+浏览器标题是`<strong>Leetcode</strong>`
+
+## meta
+
+meta 标签本身是一个空元素，不需要闭合标签  
+`<title>`, `<link>`, `<script>`, `<style>`无法描述的内容，可以放在 meta
+
+### charset
+
+声明文档的编码格式，推荐用 UTF-8
+
+```html
+<meta charset="utf-8" />
+```
+
+### 指定内核
+
+```html
+<!-- 指定为谷歌内核 -->
+<meta name="renderer" content="webkit" />
+<!-- 指定最新的ie内核 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+```
+
+### http-equiv
+
+```html
+<meta
+  http-equiv="Content-Security-Policy"
+  content="upgrade-insecure-requests"
+/>
+```
+
+参考[chrome 浏览器请求头中“Upgrade-Insecure-Requests:1”表示什么意思？](https://segmentfault.com/q/1010000005875125?_ea=937051)  
+用于让浏览器自动升级请求从 http 到 https。  
+如果在 https 网页中跨域载入一个 http 的资源,那么它会将所有连接强制以 https 或 wss 等 SSL 加密形式发送请求；  
+如果资源不支持 https 等 SSL 加密,那么该资源就不会被载入
+
+### viewport
+
+`name="viewport"`指定理想视口，详见[meta](./07_responsive.html#meta)
+
+```html
+<meta
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
+  name="viewport"
+/>
+```
+
+### portrait
+
+强制竖屏
+
+```html
+<!-- x5内核浏览器强制竖屏 -->
+<meta name="x5-orientation" content="portrait" />
+```

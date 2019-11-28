@@ -104,7 +104,11 @@ border: 0;
 
 - 如果第三、第六等 3 的倍数不需要 border，用:nth-child
 
-## 渐变代替 border 虚线的间隔
+## 渐变代替 border
+
+实现虚线:
+linear-gradient 设置单根线，一半有色，一半透明  
+background-size 控制虚线间隔和线的大小
 
 ```css
 .border {
@@ -116,9 +120,16 @@ border: 0;
     #000 50%,
     transparent 50%
   );
-  background-size: 8px 1px;
+  background-size: 8px;
   background-repeat: repeat-x;
 }
+
+/* 实线修改linear-gradient即可 */
+/* background-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 100%
+  ); */
 ```
 
 ## 让输入法的 enter 显示为搜索

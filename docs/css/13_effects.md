@@ -58,11 +58,26 @@
 
 ## 滤镜 fliter
 
-另外也有背景滤镜 background-filter  
-比如[Vue 中文官网](https://cn.vuejs.org/)的赞助商图片，彩色变黑白
+另外也有背景滤镜 background-filter
+
+### grayscale
+
+比如[Vue 中文官网](https://cn.vuejs.org/)的赞助商图片，彩色变黑白  
+只能百分比
 
 ```css
 #sponsors img {
   filter: grayscale(100%);
+}
+```
+
+### blur
+
+模糊，为 0 完全不模糊，足够大（比如 999px）时相当于彻底模糊到元素不可见  
+值可以是 px，也可以是 em, rem；百分比无效，没有参照物
+
+```css
+#sponsors img {
+  filter: blur(81px);
 }
 ```

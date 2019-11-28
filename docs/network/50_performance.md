@@ -260,7 +260,8 @@ var name = foo[i++]
   object model）；
 
 - 当遇到指向 CSS 文件时（不论是 style 还是外部 link），会转成 CSSOM（CSS object
-  model, CSS 对象模型）
+  model, CSS 对象模型）  
+  解析的顺序是`浏览器的样式 -> 用户自定义的样式 -> link标签等引进来的样式 -> style标签的内联样式`
 
 每个 CSS 选择符都会匹配一个 DOM 节点
 
@@ -268,11 +269,11 @@ var name = foo[i++]
 
 ![](../images/ab3cbacc6158d722853d139b940835c1.png)
 
-2.  渲染树(render tree)
+1.  渲染树(render tree)
 
 构建另外一个树结构，每个节点表示渲染到屏幕上的信息。
 
-类似 DOM，但是不包含隐藏元素，会保存伪类，还有其他表现性信息，比如滚动条。
+类似 DOM，但是不包含隐藏元素，有没有`<head>`标签内的内容；会保存伪类，还有其他表现性信息，比如滚动条。
 
 也就是渲染树内每个节点都知道了自己的颜色、字体等等
 
@@ -306,10 +307,12 @@ var name = foo[i++]
 
 - 元素尺寸改变（包括 padding、margin、border，宽高等）
 
-- 内容改变（比如文本改变，如偏）
+- 内容改变（比如文本改变，图片 src 改变）
 
 - 获取布局信息（offsetTop, offsetLeft, offsetWidth,
   offsetHeight，还有 scroll 相关，client 相关，getComputeStyle）需要返回最新的布局信息，因为浏览器会触发 reflow
+
+- 浏览器本身的尺寸改变
 
 回流要比重绘消耗性能开支更大。
 
