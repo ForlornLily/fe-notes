@@ -66,7 +66,7 @@ foo2.toString !== undefined // true
 
 ### for...in
 
-`for key in object`，不包括`enumerable`为 false（不可枚举）
+`for key in object`，不包括`enumerable`为 false（不可枚举），包括继承
 
 for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先自己写个 key 的数组
 
