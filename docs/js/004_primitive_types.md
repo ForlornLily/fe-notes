@@ -446,3 +446,20 @@ let privateName1 = Symbol.for('name')
 let privateName2 = Symbol.for('name')
 privateName1 === privateName2 //true
 ```
+
+### 类型转换
+
+Symbol 不能转换成字符串或者数字，但可以变成 boolean
+
+```js
+var smb = Symbol('hello')
+console.log(smb) //Symbol(hello)
+console.log(Boolean(smb)) //true
+
+console.log(String(smb)) //Symbol(hello)
+console.log('' + smb) //TypeError: Cannot convert a Symbol value to a string
+
+//上面代码报错就不会往下走了，这里为了方便放在一起
+console.log(1 + smb) //TypeError: Cannot convert a Symbol value to a number
+console.log(Number(smb)) //TypeError: Cannot convert a Symbol value to a number
+```

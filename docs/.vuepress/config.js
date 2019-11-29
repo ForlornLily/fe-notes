@@ -44,7 +44,8 @@ module.exports = {
         text: '后台',
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
-          { text: 'Express', link: '/express/' }
+          { text: 'Express', link: '/express/' },
+          { text: 'Docker', link: '/docker/' }
         ]
       },
       {

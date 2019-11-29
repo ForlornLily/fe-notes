@@ -100,6 +100,7 @@ for (let value of values) {
 
 `for...of`会先调 Symbol.iterator 方法，Symbol.iterator 返回一个迭代器，然后 next()被调用,
 获取到的 value 值放到 for 的 key 中
+同样其他迭代方法也是，比如[Array.from](./js/../009_array.md)
 
 ```js
 let values = ['1', 2, '3']

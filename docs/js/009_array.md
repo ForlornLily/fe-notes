@@ -51,9 +51,10 @@ arr.toString() //"5,2,[object Object]"
 
 ## 类数组
 
-拥有 length 属性和索引，但不能使用数组的方法。常见的有
+拥有 length 属性和索引。不能使用数组的方法。常见的有
 
-arguments, DOM 相关的对象
+arguments, DOM 相关的对象  
+给 arguments.length 赋值无效，可以用索引改值
 
 ## 修改原本数组的方法
 
@@ -283,9 +284,28 @@ function filter() {
 
 - forEach: 没有返回值
 
+```js
+const arr = [1, 2, 3, 4]
+let result = arr.forEach(item => {
+  return item
+})
+console.log(result) //undefined
+```
+
+::: tip
+迭代方法都需要传函数，否则报错
+:::
+
+```js
+const arr = [1, 2, 3, 4]
+arr.filter() //报错，TypeError: undefined is not a function
+arr.map(1) //报错，TypeError: 1 is not a function
+arr.forEach() //报错，TypeError: undefined is not a function
+```
+
 ### 缩小方法: reduce, reduceRight
 
-一般用来四则运算。
+一般用来四则运算。同样需要传入一个函数
 
 reduceRight 和 reduce 反向相反，从最后一项开始。
 
@@ -423,6 +443,39 @@ console.log(items[0]) // 2
 原本用`slice`
 
 只要具有`Symbole.iterator`属性的值，也就是可迭代对象都可以转为数组
+
+```js
+var test = {
+  0: 'a',
+  1: 'b'
+}
+console.log(Array.from(test)) //[]
+```
+
+```js
+var test2 = {
+  0: 'a',
+  1: 'b',
+  length: 2
+}
+
+console.log(Array.from(test2))
+;['a', 'b']
+```
+
+```js
+var arrayLike = {
+  0: 'a',
+  1: 'b',
+  length: 2,
+  *[Symbol.iterator]() {
+    yield this[1]
+    yield this[0]
+  }
+}
+
+console.log(Array.from(arrayLike)) // ['b', 'a']，优先级比length高
+```
 
 ### 映射
 

@@ -21,7 +21,8 @@ const sidebarMap = [
   { title: '设计模式', dirname: 'design' },
   { title: '综合方案', dirname: 'case' },
   { title: 'Photoshop', dirname: 'ps' },
-  { title: '踩坑', dirname: 'trick' }
+  { title: '踩坑', dirname: 'trick' },
+  { title: 'Docker', dirname: 'docker' }
 ]
 
 module.exports = sidebarMap

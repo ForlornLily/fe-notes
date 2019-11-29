@@ -673,6 +673,28 @@ AO = {
 
   - 在代码中引用了自由变量
 
+```js
+class A {
+  say() {
+    console.log(A)
+  }
+}
+
+var B = A
+A = null
+
+var a = new B()
+a.say()
+/* 
+  结果
+  class A {
+    say() {
+      console.log(A);
+    };
+  } 
+*/
+```
+
 ### 按值传递
 
 闭包保存的是整个变量对象，而不是单个变量

@@ -35,9 +35,7 @@ ECMAScript 的参数在内部是用一个数组来表示的。通过`arguments`�
 
 arguments 不是 Array 的实例，是一个类数组对象，可以用 length 获取长度
 
-顺序和形参一致，并且可以改变形参，但是形参无法改变对应的 arguments
-
-严格模式下不允许改变 arguments，会报错
+顺序和形参一致，并且可以改变形参
 
 ### this
 
