@@ -459,8 +459,7 @@ var test2 = {
   length: 2
 }
 
-console.log(Array.from(test2))
-;['a', 'b']
+console.log(Array.from(test2)) //['a', 'b']
 ```
 
 ```js

@@ -60,6 +60,7 @@ hello1.length //3
 
 ### prototype
 
+prototype 是函数特有的属性，普通对象不存在。  
 prototype 是为了方便属性共享，减少内存消耗。  
 具体来说就是不需要每个实例都去定义相同的内容
 
@@ -69,6 +70,7 @@ FactoryPerson.prototype.name = 'Emma'
 FactoryPerson.prototype.sayName = function() {
   console.log(this.name)
 }
+//FactoryPerson有`prototype`, person1没有
 let person1 = new FactoryPerson()
 ```
 

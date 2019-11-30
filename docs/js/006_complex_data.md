@@ -350,7 +350,42 @@ key 和 value 变量名一样时，可以省略简写
 
 JSON 并不能序列化所有值。
 
-- `NaN`, `Infinity`和`-Infinity`序列化结果是`null`
+- undefined 不能序列化和还原
+
+```js
+var test = {
+  a: undefined,
+  b: null
+}
+JSON.parse(JSON.stringify(test))
+/* 
+  结果
+  {
+    b: null
+  } 
+*/
+```
+
+- Number：`NaN`, `Infinity`和`-Infinity`序列化结果是`null`
+
+```js
+var test = {
+  a: NaN,
+  b: 0
+}
+JSON.parse(JSON.stringify(test)) //{a: null, b: 0}
+```
+
+- symbol: 不能序列化和还原
+
+```js
+var test = {
+  a: Symbol('1')
+}
+JSON.parse(JSON.stringify(test)) //{}
+```
+
+- BigInt 不能：TypeError: Do not know how to serialize a BigInt
 - Date 类型,JSON.parse() 仍然是字符串，不会还原成原本的日期对象
 
 ```js
@@ -359,7 +394,27 @@ JSON.stringify(date) // "2019-09-29T08:42:13.409Z"
 JSON.parse(JSON.stringify(date)) //"2019-09-29T08:42:13.409Z"
 ```
 
-- 函数、RegExp、Error 对象和 undefined 不能序列化和还原
-- JSON.stringify 只能序列化**可枚举的自有属性**
+- 只能序列化和还原普通对象，Set、Map、RegExp、Error 等构造函数的实例都变成`{}`，函数不能序列化和还原
 
-此处涉及到[深浅拷贝](./020_scope.md#变量复制)
+```js
+var test = {
+  a: new Set([1, 2]),
+  b: function() {
+    console.log('1')
+  },
+  c: new Error('error')
+}
+console.log(JSON.parse(JSON.stringify(test)))
+/* 
+  {
+    a: {}
+    c: {}
+  } 
+*/
+```
+
+- JSON.stringify 只能序列化**可枚举的自有属性**
+- 会抛弃对象的 constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成 Object
+- 不能解决循环引用
+
+相关内容[深浅拷贝](./020_scope.md#变量复制)

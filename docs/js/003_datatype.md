@@ -56,3 +56,7 @@ Object.prototype.toString.call(Hello) // "[object Function]"
 - Error
 - Math
 - JSON
+- Set
+- WeakSet
+- Map
+- WeakMap

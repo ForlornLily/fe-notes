@@ -61,8 +61,6 @@ function hoisting() {
   if (condition) {
     var value = 'hello'
     console.log(value) // hello
-  } else {
-    console.log(value)
   }
   console.log(value) // hello
 }
@@ -97,6 +95,17 @@ foo = function() {
   console.log(2)
 }
 foo() //2
+```
+
+如果变量被赋值，那赋值会覆盖掉声明
+
+```js
+test() // 1
+var test = 2
+function test() {
+  console.log(1)
+}
+test() //TypeError: test is not a function
 ```
 
 ### 函数表达式
@@ -156,22 +165,6 @@ var a = 2
   console.log(param) //2
 })(window, a)
 console.log(a) // 2
-```
-
-#### UMD 模式
-
-Universal Module Definition
-
-```js
-var a = 2
-;(function IIFE(def) {
-  def(window)
-})(function def(global) {
-  //参数是个函数
-  var a = 3
-  console.log(a) // 3
-  console.log(global.a) // 2
-})
 ```
 
 ### 块级声明
@@ -316,28 +309,50 @@ console.log(p1) //{name: 'xxx', age: 26}
 
 #### for...in
 
+包含`prototype`上的值
+
 ```js
-function shallowClone(obj) {
-  let copiedObj = {}
-  for (let key in obj) {
-    copiedObj[key] = obj[key]
-  }
-  return copiedObj
+Object.prototype.b = 2
+var test = {
+  a: '1'
 }
+let tmp = {}
+for (let key in test) {
+  tmp[key] = test[key]
+}
+console.log(tmp) //{a: '1', b: 2}
 ```
 
 #### Object.assign()
 
-#### 展开运算符
+不包括`prototype`上的值
 
 ```js
-let a = {
-  name: 'Emma'
+Object.prototype.b = 2
+var test = {
+  a: '1'
 }
-b = { ...a }
+let tmp = {}
+Object.assign(tmp, test)
+console.log(tmp) // {a: '1'}
+```
+
+#### 展开运算符
+
+不包括`prototype`上的值
+
+```js
+Object.prototype.b = 2
+var test = {
+  a: '1'
+}
+let tmp = { ...test }
+console.log(tmp) //{a: '1'}
 ```
 
 #### slice 和 concat
+
+数组专用
 
 ### 深拷贝
 
@@ -345,15 +360,9 @@ b = { ...a }
 
 能够处理 JSON 格式能表示的所有数据类型。性能最高
 
-缺点：
+缺点见[JSON](./006_complex_data.md#限制)
 
-- 函数、RegExp、Error 对象、undefined、symbol 不能序列化和还原。
-- JSON.stringify 只能序列化**可枚举的自有属性**
-- 会抛弃对象的 constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成 Object
-
-- 不能解决循环引用
-
-实现
+#### 手写
 
 完整实现可以参考[loadhash](https://github.com/lodash/lodash/blob/master/cloneDeep.js)
 
@@ -370,7 +379,10 @@ const deepCopy = {
     'Array',
     'Function',
     'Date',
-    'RegExp'
+    'RegExp',
+    'Set',
+    'Map',
+    'BigInt'
   ], //Object.prototype.toString返回的所有类型
   type(obj) {
     return Object.prototype.toString.call(obj).slice(8, -1)
