@@ -144,7 +144,7 @@ Set-Cookie: hello=world; Secure; HttpOnly
 
 ### sessionStorage
 
-只保持到窗口关闭  
+只保持到窗口关闭。刷新页面不会失效  
 即便是相同域名下的两个页面，只要它们不在同一个浏览器窗口中打开，那么它们的 sessionStorage 内容便无法共享
 
 ### localStorage

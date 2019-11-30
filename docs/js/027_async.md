@@ -253,7 +253,7 @@ GET，HEAD，POST
 
 3.  Content-Type 的值仅限于下列三者之一：
 
-text/plain, multipart/form-data, application/x-www-form-urlencoded
+text/plain, multipart/form-data(上传), application/x-www-form-urlencoded(表单)
 
 不满足以上条件就会触发复杂请求
 

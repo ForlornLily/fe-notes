@@ -36,7 +36,9 @@ console.log(typeof notDeclared) // "undefined"
 `Object.prototype.toString.call(value)`
 
 ```js
-Object.prototype.toString.call(Hello) // "[object Function]"
+let target = {}
+let proxy = new Proxy(target, {})
+Object.prototype.toString(proxy) //"[object Object]"
 ```
 
 返回的是"[object Number]"

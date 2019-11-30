@@ -6,7 +6,7 @@ JS 和 HTML 之间交互是通过事件实现的
 
 元素本身的事件不会在 margin 触发，也就是只在 content, padding, border 上
 
-也包括伪类（比如::after, before）
+也包括伪元素（比如::after, ::before）
 
 ## 事件流
 
@@ -86,29 +86,25 @@ child.addEventListener(
 
 为 true 时永远不会调 e.preventDefault()。如果写了 prevent 就会报错
 
-### 事件对象 event
+## 事件对象 event
 
-#### target/currentTarget/this
+### target/currentTarget/this
 
 target 等于具体的元素
 
 this 始终等于 currentTarget，等于 addEventListener 绑定的对象
 
-#### preventDefault()
+### preventDefault()
 
 阻止默认
 
-#### stopPropagation()
+### stopPropagation()
 
 阻止冒泡/捕获
 
-## 常用事件
+## UI 事件
 
-最好都用 addEventListener 的 JS 绑定
-
-### UI 事件
-
-#### DOMContentLoaded/load/unload/beforeunload
+### DOMContentLoaded/load/unload/beforeunload
 
 - DOMContentLoaded:
   DOM 渲染完毕就触发，不管外部的 CSS、图片（jQuery 的\$(document).ready）
@@ -121,13 +117,13 @@ this 始终等于 currentTarget，等于 addEventListener 绑定的对象
 
 可以标签上直接写 onload/onunload, 也可以用 addEventListener 监听"load"/"unload"
 
-#### resize
+### resize
 
 不同浏览器实现不一样，有些等拖拽结束才触发，有些只要窗口变化 1 像素就会触发，导致拖拽过程中不断触发。
 
 要避免在里面做大量计算
 
-### 焦点事件: focus/blur, focusin/focusout
+## 焦点事件: focus/blur, focusin/focusout
 
 focus/blur 不会冒泡
 
@@ -137,52 +133,138 @@ focusin 和 focus 功能一样
 
 focusout 和 blur 一样
 
-### 鼠标事件
+## 鼠标事件
 
-#### click/dblclick
+### click/dblclick
 
 mousedown+mouseup 等于 click，任何一个被取消都不会触发 click
 
-#### mousedown/mouseup
+### mousedown/mouseup
 
 鼠标专用，键盘不会触发
 
-#### mouseenter/mouseleave
+### mouseenter/mouseleave
 
 不冒泡。其他鼠标事件都会冒泡
 
 触发一次以后，再移动到子元素，也不会进。
 
-#### mouseover/mouseout
+### mouseover/mouseout
 
 触发一次以后，再移动到子元素，也会进。
 
-#### mousemove
+### mousemove
 
 鼠标移动的时候触发
 
-#### 拖放
+### 拖放
 
 见红宝书 22.5 节
+拖拽分为两部分：
 
-### 键盘事件：keydown/keypress/keyup
+1. 被拖拽的物体。设置`draggable`属性为`true`（默认`auto`，由浏览器根据标签决定）。  
+   `<a>`和`<img>`默认 draggable 为 true
+
+- ondragstart: 在元素开始被拖动时候触发
+- ondrag: 元素被拖动时候反复触发，触发 dragstart 之后，即使鼠标暂停也会一直触发 ondrag
+- ondragend: 拖动操作完成时触发
+
+2. 目标元素。事件有
+
+- ondragenter: 元素进入目标元素
+- ondragover: 当元素在目标元素内移动
+- ondragleave: 元素离开目标元素
+- ondrop: 目标元素内放开鼠标时
+
+#### demo
+
+```html
+<style>
+  .target {
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    border: 1px solid gray;
+    color: red;
+  }
+</style>
+<div class="txt" id="txt">
+  <p draggable="true">设置属性draggable="true"</p>
+</div>
+<div class="url" id="url">
+  <a href="www.baidu.com" target="_blank">www.baidu.com</a>
+</div>
+<div id="target" class="dropabled target">Drop Here</div>
+```
+
+```js
+var dragSrc = document.getElementById('txt')
+dragSrc.ondragstart = handle_start
+dragSrc.ondrag = handle_drag
+dragSrc.ondragend = handle_end
+function handle_start(e) {
+  console.log('dragstart-在元素开始被拖动时候触发')
+}
+function handle_drag() {
+  console.log('drag-在元素被拖动时候反复触发')
+}
+function handle_end() {
+  console.log('dragend-在拖动操作完成时触发')
+}
+
+var target = document.getElementById('target')
+target.ondragenter = handle_enter
+target.ondragover = handle_over
+target.ondragleave = handle_leave
+
+target.ondrop = handle_drop
+
+function handle_enter(e) {
+  console.log('handle_enter-当元素进入目的地时触发')
+  // 阻止浏览器默认行为
+  e.preventDefault()
+}
+
+function handle_over(e) {
+  console.log('handle_over-当元素在目的地时触发')
+  // 阻止浏览器默认行为
+  e.preventDefault()
+}
+
+function handle_leave(e) {
+  console.log('handle_leave-当元素离开目的地时触发')
+  // 阻止浏览器默认行为
+  // e.preventDefault()
+}
+
+function handle_drop(e) {
+  console.log('handle_drop-当元素在目的地放下时触发')
+  var t = Date.now()
+  target.innerHTML = ''
+  target.append(t + '-拖放触发的事件。')
+  e.preventDefault()
+}
+```
+
+## 键盘事件：keydown/keypress/keyup
 
 可以输入字符类的文字被按下时触发的 keypress（比如 a,b,空格,
 123 等等，tab 等不会触发）
 
 先 keydown 再 keypress
 
-### contextmenu
+## contextmenu
 
-### 手机端
+## 手机端
 
-#### touchstart/touchmove/touchend
+### touchstart/touchmove/touchend
 
 都会冒泡
 
-### 表单事件
+## 表单事件
 
-#### input
+### input
 
 `<input>`, `<select>`或者`<textarea>`的值改变的时候（不需要失焦）
 

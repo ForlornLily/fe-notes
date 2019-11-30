@@ -239,7 +239,7 @@ function getters(target, key, receiver) {
   const result = Reflect.get(target, key, receiver)
   if (typeof result === 'object') {
     //再次调用
-    return createReactive(result, handlers)
+    return createReactive(result)
   }
   return result
 }
