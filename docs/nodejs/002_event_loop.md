@@ -3,7 +3,7 @@
 和浏览器相比，多了一个`nextTick`  
 官网[说明](https://github.com/nodejs/nodejs.org/blob/master/locale/zh-cn/docs/guides/event-loop-timers-and-nexttick.md)
 ::: warning
-以下示例 node 版本是 10.x(v10.16.3)，其余 node 版本表现可能不同, 11.x 以上表现结果与浏览器一致
+以下所有示例和解释的 node 版本是 10.x(v10.16.3)，其余 node 版本表现可能不同, 11.x 以上表现结果与浏览器一致
 :::
 
 ```js
@@ -41,6 +41,7 @@ NodeJS结果  1 7 8 2 4 9 11 5 12
 
 ## 执行顺序
 
+Node v10.x 下：  
 如果执行宏任务的时候发现了微任务，不会像浏览器一样执行了，而是将为微任务放到微任务队列中，等待整个宏任务队列执行完毕，下一个阶段开始的时候先执行完微任务队列中的任务  
 Node 中  
 微任务：then 、nextTick 、messageChannel、mutationObersve(微任务中 nextTick 会比 then 先执行)

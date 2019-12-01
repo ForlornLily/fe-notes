@@ -45,7 +45,10 @@ module.exports = {
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
           { text: 'Express', link: '/express/' },
-          { text: 'Docker', link: '/docker/' }
+          { text: 'Docker', link: '/docker/' },
+          { text: 'Linux', link: '/linux/' },
+          { text: 'redis', link: '/redis/' },
+          { text: 'MongoDB', link: '/mongodb/' }
         ]
       },
       {
@@ -57,10 +60,6 @@ module.exports = {
               { text: '数据结构', link: '/algorithm/' },
               { text: 'LeetCode', link: '/leetcode/' }
             ]
-          },
-          {
-            text: '操作系统',
-            items: [{ text: 'Linux', link: '/linux/' }]
           },
           {
             text: '网络',

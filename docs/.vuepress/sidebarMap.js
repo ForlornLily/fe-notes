@@ -22,7 +22,9 @@ const sidebarMap = [
   { title: '综合方案', dirname: 'case' },
   { title: 'Photoshop', dirname: 'ps' },
   { title: '踩坑', dirname: 'trick' },
-  { title: 'Docker', dirname: 'docker' }
+  { title: 'Docker', dirname: 'docker' },
+  { title: 'redis', dirname: 'redis' },
+  { title: 'mongodb', dirname: 'mongodb' }
 ]
 
 module.exports = sidebarMap
