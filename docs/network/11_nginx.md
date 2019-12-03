@@ -16,9 +16,21 @@ Brower =\> host =\> nginx =\> 目标地址
 - [前端开发者必备的 Nginx 知识](https://juejin.im/post/5c85a64d6fb9a04a0e2e038c)
 - [Nginx 与前端开发](https://juejin.im/post/5bacbd395188255c8d0fd4b2)
 - [前端想要了解的 Nginx](https://juejin.im/post/5cae9de95188251ae2324ec3)
+- [Nginx 极简教程](https://dunwu.github.io/nginx-tutorial/#/nginx-quickstart)
+- [Nginx 开发从入门到精通](http://tengine.taobao.org/book/index.html)
 
 扩展阅读：[Nginx 配置之完整篇](https://imququ.com/post/my-nginx-conf.html)  
 在线自定义配置 nginx: [digitalocean/nginxconfig.io](https://github.com/digitalocean/nginxconfig.io)
+
+## 组成
+
+nginx 采用异步非阻塞的方式，以多进程的方式运行：分为一个 master 进程和多个 worker 进程
+
+- master: 管理作用：比如接收外界信号（重启 nginx），向 worker 发送信号，监控 worker 状态，处理 worker 异常（重启 worker）
+- worker: 实际的工作处理。
+  - worker 之间是相互独立的，不需要加锁，一个 worker 终止也不会影响其他
+  - 一个 http 请求只可能由一个 worker 处理
+  - 进程数量(`worker_processes`)一般和 CPU 核数一致：worker 进程数越多，资源消耗就越大，让 worker 数=CPU 数，可以做到最大的并发又不消耗过于资源
 
 ## 反向代理
 
@@ -115,16 +127,26 @@ vim /usr/local/nginx/conf/nginx.conf
 
 ## 常用命令
 
-进入目录后启动:  
-linux: `./nginx`  
-windows: `start nginx`  
-退出：`nginx -s quit`  
-重新加载配置文件: `nginx -s reload`
+- 启动
+  进入目录后启动:  
+  linux: `./nginx`  
+  windows: `start nginx`
+- nginx -s signal: 向 master 发出信号
+  - 退出：`nginx -s quit`
+  - 重新加载配置文件: `nginx -s reload`
+- nginx -t: 测试
+- nginx -c <文件名> 设置配置文件的路径，默认是`conf/nginx.conf`
+  例：
+
+```
+nginx.exe -t -c conf/nginx.conf
+```
 
 ## 默认的配置文件
 
 ```nginx
-# 设置工作进程的数量
+# 设置工作进程worker的数量
+# 为1，线程打开2个，有一个是主线程master
 worker_processes  1;
 # 处理连接
 events {
@@ -150,7 +172,7 @@ http {
     sendfile        on;
     #tcp_nopush     on;
 
-    # 客户端与服务器连接超时时间，超时自动断开
+    # 客户端与服务器连接超时时间，超时自动断开。以秒为单位
     #keepalive_timeout  0;
     keepalive_timeout  65;
 
@@ -236,6 +258,118 @@ server {
     server_name  fe.server.com;
     location / {
         proxy_pass dev.server.com;
+    }
+}
+```
+
+### demo
+
+```nginx
+#运行用户
+#user somebody;
+
+#启动进程,通常设置成和cpu的数量相等
+worker_processes  1;
+
+#全局错误日志: error_log /path/to/log level, 级别越高记录的信息越少
+#level可以是debug, info, notice, warn, error, crit, alert, emerg, 错误级别等于或高于level才会写入错误
+error_log  logs/error.log;
+error_log  logs/error.log  notice;
+
+#PID文件，记录当前启动的nginx的进程ID
+pid        logs/nginx.pid;
+
+#工作模式及连接数上限
+events {
+    worker_connections 1024;    #单个后台worker process进程的最大并发链接数
+}
+
+#设定http服务器，利用它的反向代理功能提供负载均衡支持
+http {
+    #设定mime类型(邮件支持类型),类型由mime.types文件定义
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #设定日志
+    log_format  main  '[$remote_addr] - [$remote_user] [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log    D:/Tools/nginx-1.10.1/logs/access.log main;
+    #rewrite_log     on;
+
+    #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，
+    #必须设为 on,如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，以平衡磁盘与网络I/O处理速度，降低系统的uptime.
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #连接超时时间
+    keepalive_timeout  120;
+    tcp_nodelay        on;
+
+    #gzip压缩开关
+    #gzip  on;
+
+    #设定实际的服务器列表
+    upstream zp_server1{
+        server 127.0.0.1:8089;
+    }
+
+    #HTTP服务器
+    server {
+        #监听80端口，80端口是知名端口号，用于HTTP协议
+        listen       80;
+
+        #定义使用www.xx.com访问
+        server_name  www.helloworld.com;
+
+        #首页
+        index index.html
+
+        #指向webapp的目录
+        root D:\01_Workspace\Project\github\zp\SpringNotes\spring-security\spring-shiro\src\main\webapp;
+
+        #编码格式
+        charset utf-8;
+
+        #代理配置参数
+        proxy_connect_timeout 180;
+        proxy_send_timeout 180;
+        proxy_read_timeout 180;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarder-For $remote_addr;
+
+        #反向代理的路径（和upstream绑定），location 后面设置映射的路径
+        location / {
+            proxy_pass http://zp_server1;
+        }
+
+        #静态文件，nginx自己处理
+        location ~ ^/(images|javascript|js|css|flash|media|static)/ {
+            root D:\01_Workspace\Project\github\zp\SpringNotes\spring-security\spring-shiro\src\main\webapp\views;
+            #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。
+            expires 30d;
+        }
+
+        #设定查看Nginx状态的地址
+        location /NginxStatus {
+            stub_status           on;
+            access_log            on;
+            auth_basic            "NginxStatus";
+            auth_basic_user_file  conf/htpasswd;
+        }
+
+        #禁止访问 .htxxx 文件
+        location ~ /\.ht {
+            deny all;
+        }
+
+        #错误处理页面（可选择性配置）
+        #error_page   404              /404.html;
+        #error_page   500 502 503 504  /50x.html;
+        #location = /50x.html {
+        #    root   html;
+        #}
     }
 }
 ```
