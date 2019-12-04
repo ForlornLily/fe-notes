@@ -136,6 +136,7 @@ FactoryPerson.prototype = {
     console.log(this.name)
   }
 }
+//new的过程中指定了person1.__proto__ = FactoryPerson.prototype
 let person1 = new FactoryPerson()
 ```
 

@@ -117,7 +117,7 @@ height 是 auto，所有元素都由子元素的高度决定。
 垂直方向上的两个 block 格子，因为[BFC](#bfc)，外边距会叠加，拿较大值。
 
 - 普通文档流的 block。即绝对定位(absolute,
-  fixed)、浮动、内联元素(inline/inline-block)不会叠加。 flex 会
+  fixed)、浮动、内联元素(inline/inline-block)不会叠加。 flex 会, relative 会
 
 - 不管是兄弟还是嵌套的父子。
 
@@ -605,6 +605,8 @@ box)，比如\<strong\>元素，链接两个元素之间的匿名盒子(anonymou
 另外的就是 flex 布局: [justify-content](#justify-content)
 
 #### 绝对定位+transform
+
+#### margin 负值
 
 已知元素的宽度，用 margin 为负数，值是宽度的一半
 

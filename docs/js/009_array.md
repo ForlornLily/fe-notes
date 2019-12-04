@@ -528,7 +528,7 @@ ArrayBuffer 是 canvas 绘图的重要部分
 ## 内存中
 
 参考[[译] 深入 JavaScript 数组：进化与性能](http://www.wemlion.com/post/javascript-array-evolution-performance/)  
-广义上的数据结构`Array`是一串**连续**的内存位置，用来保存某些值
+广义上的数据结构`Array`是一串**连续**的内存位置，用来保存某些值  
 但 JS 内的数组不是连续存放的，正如[对象](./008_object.md)所说，是从字符串到值的映射，即类似哈希映射的方式  
 因为数组内的每一项都可以是不同的数据类型（Number, String,...）  
 对于读取操作，哈希表的效率并不高，而修改删除的效率比较高  
