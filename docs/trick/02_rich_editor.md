@@ -126,3 +126,22 @@ export default {
 };
 </script>
 ```
+
+## 文字样式
+
+`div`标签会忽略富文本的前后空格，可以用`pre`标签代替；  
+另外由于浏览器会有默认的 prev 样式，要保证一致需要设置样式。  
+以 Vue 为例
+
+```html
+<pre class="detail-more" v-html="content"></pre>
+<style>
+  .detail-more {
+    /* 继承字体 */
+    font-family: inherit;
+    /* 字体换行 */
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+</style>
+```

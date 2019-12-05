@@ -408,3 +408,8 @@ const router = new VueRouter({
   }
 })
 ```
+
+## mode
+
+浏览器两种`"hash"`, `"history"`；非浏览器环境还有一种`"abstract"`  
+没有浏览器的 API，路由会自动强制进入 abstract

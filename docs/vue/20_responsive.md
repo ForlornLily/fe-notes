@@ -4,6 +4,7 @@
 更多内容:  
 [answershuto/learnVue](https://github.com/answershuto/learnVue)  
 [Vue.js 技术揭秘](https://ustbhuangyi.github.io/vue-analysis/)  
+[「从源码中学习」面试官都不知道的 Vue 题目答案](https://juejin.im/post/5c959f74f265da610c068fa8)  
 响应式概览
 ![](../images/33f72cc561e3f368215ee8bf252a69b8.png)
 
@@ -41,12 +42,12 @@ function Vue(options) {
 //src\core\instance\init.js
 Vue.prototype._init = function(options) {
   //...
-  initLifecycle(vm) //初始化生命周期
-  initEvents(vm) //事件
-  initRender(vm)
+  initLifecycle(vm) //建立父子组件关系，在当前实例上添加一些属性和生命周期标识。如：$children、$refs、_isMounted
+  initEvents(vm) //事件，比如$on
+  initRender(vm) //初始化$slots, $attrs, $listeners
   callHook(vm, 'beforeCreate') //调用钩子
-  initInjections(vm)
-  initState(vm) //data属性内数据绑定
+  initInjections(vm) //初始化inject
+  initState(vm) //数据绑定，包括props、methods、data、computed 和 watch
   initProvide(vm)
   callHook(vm, 'created')
   //...

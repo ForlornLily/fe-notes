@@ -7,8 +7,12 @@
 - [从 URL 输入到页面展现到底发生什么？](https://github.com/ljianshu/Blog/issues/24)
 
 1.  首先做 DNS 查询，如果这一步做了智能 DNS 解析的话，会提供访问速度最快的 IP
-    地址回来
-    DNS 缓存：浏览器缓存、路由器缓存、DNS 缓存
+    地址回来  
+    DNS 缓存：参考掘金[「真 ® 全栈之路 - DNS 篇」故事从输入 URL 开始.....](https://juejin.im/post/5ceebb7251882507266414b7)
+    - 浏览器自身的 DNS 缓存：以 Chrome 为例，缓存时间比较短，默认只有 1 分钟，且只能容纳 1000 条缓存
+    - 系统自身的 DNS 缓存
+    - `hosts`文件
+    - 路由器缓存(发送 UDP 协议)
 2.  接下来是 TCP 握手，应用层会下发数据给传输层，这里 TCP
     协议会指明两端的端口号，然后下发给网络层。网络层中的 IP 协议会确定 IP
     地址，并且指示了数据传输中如何跳转路由器（ARP 协议）。  
@@ -50,7 +54,7 @@
 - css 加载会阻塞后面 js 语句的执行
 
 原因是 DOM 树和 CSSOM 树的解析是并行执行的，见[浏览器加载过程](./50_performance.md)，但 Rentder Tree 是依赖于 DOM Tree 和 CSSOM Tree 的，所以必须等待到 CSSOM Tree 构建完成，也就是 CSS 资源加载完成(或者 CSS 资源加载失败)后，才能开始渲染  
-同样 JS 会可能会操作 DOM 和 CSS，所以等 CSS 加载玩
+同样 JS 会可能会操作 DOM 和 CSS，所以等 CSS 加载完
 
 ### css 优化方案
 

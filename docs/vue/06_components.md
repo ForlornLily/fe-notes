@@ -571,6 +571,18 @@ activated 和 deactivated 会被对应执行
 </keep-alive>
 ```
 
+在 Vue 中是一个全局抽象(`abstract`)组件，通过自定义 render 函数并且利用了插槽来实现数据缓存和更新
+
+```js
+export default {
+  name: 'keep-alive',
+  abstract: true
+  //...
+}
+```
+
+抽象组件**不渲染**真实 DOM，且不会出现在父子关系的路径上（`initLifecycle`会忽略抽象组件）
+
 #### include and exclude
 
 include 的组件被缓存，exclude 的组件不会被缓存（一直触发 created 钩子）

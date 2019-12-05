@@ -41,9 +41,25 @@ B mounted
 
 ![https://cn.vuejs.org/images/lifecycle.png](../images/6f2c97f045ba988851b02056c01c8d62.png)
 
-### 钩子
+### 完整的周期
 
-不要在生命周期钩子内使用箭头函数
+```js
+var LIFECYCLE_HOOKS = [
+  'beforeCreate',
+  'created',
+  'beforeMount',
+  'mounted',
+  'beforeUpdate',
+  'updated',
+  'beforeDestroy',
+  'destroyed',
+  'activated', //keep-alive
+  'deactivated', //keep-alive
+  'errorCaptured', //异常处理
+  // v2.6+
+  'serverPrefetch' //SSR
+]
+```
 
 ### 父子间的生命周期
 
