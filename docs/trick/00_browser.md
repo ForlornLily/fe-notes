@@ -45,6 +45,7 @@ setTimeout(function() {
 2. 最外层 div fixed 定位，输入框靠近底部，IOS 可以聚焦，但无法输入。  
    替代方案：  
    聚焦输入框的时候，div 改回 static，再让滚动条滚到底部，让它看起来效果和正常一致
+3. IOS 下 fixed 定位的元素，快速滑动时抖动：加上`transform: translateZ(0);`
 
 ### input
 
