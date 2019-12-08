@@ -35,6 +35,7 @@ module.exports = {
               { text: 'webpack4.x', link: '/webpack4/' },
               { text: 'TypeScript', link: '/typescript/' },
               { text: 'Vue3.x', link: '/vue-3.x/' },
+              { text: 'React', link: '/react/' },
               { text: '踩坑', link: '/trick/' }
             ]
           }

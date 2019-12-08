@@ -24,7 +24,8 @@ const sidebarMap = [
   { title: '踩坑', dirname: 'trick' },
   { title: 'Docker', dirname: 'docker' },
   { title: 'redis', dirname: 'redis' },
-  { title: 'mongodb', dirname: 'mongodb' }
+  { title: 'mongodb', dirname: 'mongodb' },
+  { title: 'React', dirname: 'react' }
 ]
 
 module.exports = sidebarMap
