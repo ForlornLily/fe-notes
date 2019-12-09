@@ -184,9 +184,34 @@ h3 {
 
 ## 嵌套
 
-### &
+### \&
 
 &表示父元素选择器
+
+### \&\&
+
+`&`和`&`之间必须有空格，否则会报错
+
+```scss
+.parent {
+  .test {
+    & .hello {
+      color: #66ccff;
+    }
+    & & .world {
+      color: #ee0000;
+    }
+  }
+}
+
+//结果
+.parent .test .hello {
+  color: #66ccff;
+}
+.parent .test .parent .test .world {
+  color: #ee0000;
+}
+```
 
 ### @at-root
 

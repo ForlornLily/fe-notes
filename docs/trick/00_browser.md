@@ -126,3 +126,10 @@ if (document.execCommand('copy')) {
 ## 1px
 
 参考[怎么画一条 0.5px 的边](https://zhuanlan.zhihu.com/p/34908005)
+
+## iframe
+
+iframe 的问题见[Why Not Iframe](https://www.yuque.com/kuitos/gky7yw/gesexv)
+
+比如：iframe 内的路由跳转，会影响到外部的浏览器前进/后退。  
+又比如不居中 iframe 里面想要弹出一个居中在整个浏览器的对话框

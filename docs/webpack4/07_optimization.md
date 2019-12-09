@@ -33,6 +33,12 @@ output: {
 
 ![](../images/2a5812e0ebf7da17be16c40fb5ab525a.png)
 
+### sideEffects
+
+参考[Webpack 中的 sideEffects 到底该怎么用？](https://zhuanlan.zhihu.com/p/40052192)  
+总结：  
+在 package.json 里面设置`sideEffects: false`是为了告诉 webpack，这个包理论上是没有副作用的。做 Tree Shaking 的时候当做无副用作的包处理
+
 ### 作用
 
 webpack 入口文件有很多依赖的模块。实际情况中，虽然依赖了某个模块，但其实只使用其中的某些功能。  
