@@ -323,9 +323,9 @@ obj.value = 'hi'
 
 不能修改、新增、删除
 
-#### 判断是否冻结 ObjectisFrozen
+#### 判断是否冻结 Object.isFrozen
 
-freez 后返回 true，同时 isSealed 返回 true, isExtensible 返回 false
+freeze 后返回 true，同时 isSealed 返回 true, isExtensible 返回 false
 
 ## 对象字面量语法扩展
 

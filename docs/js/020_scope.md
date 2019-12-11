@@ -201,6 +201,16 @@ let value = 'world'
 ```
 
 ```js
+let params = (function() {
+  params = {
+    a: 1
+  }
+  return params
+})()
+console.log(params.a) //ReferenceError: Cannot access 'params' before initialization
+```
+
+```js
 //不在块级
 var condition = true
 let result = typeof value //不报错，因为不在块级作用域内

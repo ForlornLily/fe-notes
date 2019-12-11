@@ -47,6 +47,22 @@ arguments 不是 Array 的实例，是一个类数组对象，可以用 length �
 
 ![https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageslim](../images/4fd85c39dd36c95a3426d0d96370d6fc.png)
 
+```js
+var length = 10
+function fn() {
+  console.log(this.length)
+}
+var obj = {
+  length: 5,
+  method: function(fn) {
+    console.log(this.length)
+    fn()
+    arguments[0]() //this指向arguments, 即arguments.length
+  }
+}
+obj.method(fn, '1', '2') // 5 10 3
+```
+
 ## 函数都包含的属性: length, prototype
 
 ### length
