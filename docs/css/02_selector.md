@@ -14,7 +14,7 @@ adjacent sibling selector
 
 general sibling combinator
 
-与`>`类似，作用于兄弟节点。会选择所有匹配元素。
+与`>`类似，作用于兄弟节点。会选择所有匹配元素。**只会往下找**
 
 ```css
 h2 + p {
@@ -26,6 +26,7 @@ h2 ~ p {
 ```
 
 ```html
+  <p>456</p>
   <h2>选择符</h1>
   <p>123</p>
   <p>456</p>
@@ -33,7 +34,7 @@ h2 ~ p {
 
 效果图
 
-![效果图](../images/f2e8c1dc33947c0e774d532a5f05a06d.png)
+![效果图](../images/selector.jpg)
 
 ## []属性选择器
 

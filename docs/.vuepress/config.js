@@ -25,20 +25,28 @@ module.exports = {
         items: [
           { text: 'HTML&CSS', link: '/css/' },
           { text: 'JS', link: '/js/' },
+          { text: 'jQuery', link: '/jquery/' },
           {
-            text: '库',
+            text: 'Vue',
             items: [
-              { text: 'jQuery', link: '/jquery/' },
               { text: 'Vue2.x', link: '/vue/' },
               { text: 'Vue Router', link: '/vue-router/' },
               { text: 'Vuex', link: '/vuex/' },
-              { text: 'webpack4.x', link: '/webpack4/' },
-              { text: 'TypeScript', link: '/typescript/' },
-              { text: 'Vue3.x', link: '/vue-3.x/' },
-              { text: 'React', link: '/react/' },
-              { text: '踩坑', link: '/trick/' }
+              { text: 'Vue3.x', link: '/vue-3.x/' }
             ]
-          }
+          },
+          { text: 'webpack4.x', link: '/webpack4/' },
+          { text: 'TypeScript', link: '/typescript/' },
+          {
+            text: 'React',
+            items: [
+              { text: 'React', link: '/react/' },
+              { text: 'Transition', link: '/transition/' },
+              { text: 'React Router', link: '/react-router/' }
+            ]
+          },
+          { text: 'Redux', link: '/redux/' },
+          { text: '踩坑', link: '/trick/' }
         ]
       },
       {

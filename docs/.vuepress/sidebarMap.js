@@ -25,7 +25,10 @@ const sidebarMap = [
   { title: 'Docker', dirname: 'docker' },
   { title: 'redis', dirname: 'redis' },
   { title: 'mongodb', dirname: 'mongodb' },
-  { title: 'React', dirname: 'react' }
+  { title: 'React', dirname: 'react' },
+  { title: 'Transition', dirname: 'transition' },
+  { title: 'React Router', dirname: 'react-router' },
+  { title: 'Redux', dirname: 'redux' }
 ]
 
 module.exports = sidebarMap
