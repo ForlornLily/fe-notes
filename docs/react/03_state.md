@@ -56,6 +56,30 @@ class NameForm extends React.Component {
 }
 ```
 
+### 非受控组件和 defaultValue
+
+非受控组件：表单数据通过 DOM（`ref`）直接处理，最常见的就是上传  
+如果是受控组件，表单通过`value`属性来进行数据处理。  
+如果希望组件初始化有值，但是后续更新不能改变，那么可以用`defaultValue`  
+如果是`radio`和`checkbox`，对应的属性是`defaultChecked`
+
+```js
+render() {
+  return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Name:
+        <input
+          defaultValue="hello"
+          type="text"
+          ref={this.input} />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+```
+
 ### hooks
 
 用 hooks 可以省掉一些麻烦  

@@ -163,3 +163,26 @@ interface Point3d extends Point {
 }
 let point3d: Point3d = { x: 1, y: 2, z: 3 }
 ```
+
+## 比较
+
+如果两个类型有`protected`或者`private`关键字时，他们必须来源于同一个声明  
+理解为[对象不相等](../js/018_statement.md#对象不相等)
+
+```ts
+class Magica {
+  private name: string
+  constructor(name: string) {
+    this.name = name
+  }
+}
+class Servant {
+  private name: string
+  constructor(name: string) {
+    this.name = name
+  }
+}
+let girl = new Magica('madoka')
+const servant = new Servant('saber')
+girl = servant //不能赋值，因为两者具有private属性，尽管都叫name
+```

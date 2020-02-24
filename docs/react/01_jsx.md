@@ -159,3 +159,49 @@ class MyComponent extends React.Component {
   }
 }
 ```
+
+## forwardRef
+
+把本身的 ref 传递给子组件
+
+```js
+const CustomInput = React.forwardRef((props, ref) => {
+  //把CustomInput的ref传递给子组件
+  return <input ref={ref} />
+})
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.inputRef = React.createRef()
+  }
+  render() {
+    return (
+      <div>
+        <CustomInput type="text" ref={this.inputRef} />
+      </div>
+    )
+  }
+  componentDidMount() {
+    //注意current
+    this.inputRef.current.focus()
+  }
+}
+```
+
+## 关于 falsy
+
+`null`, `undefined`, `true`, `false`放在标签内，都不会被渲染  
+但数字`0`会
+
+```js
+//以下内容结果都一样
+<div></div>
+
+<div>{false}</div>
+
+<div>{null}</div>
+
+<div>{undefined}</div>
+
+<div>{true}</div>
+```

@@ -1,6 +1,9 @@
 # 概要
 
-本节大部分是[官网教程](https://git-scm.com/book/zh/v2)的笔记;
+本节大部分是[官网教程](https://git-scm.com/book/zh/v2)的笔记;  
+推荐阅读
+
+- [git 思维导图](https://www.processon.com/view/link/5c6e2755e4b03334b523ffc3)
 
 ## 基础
 

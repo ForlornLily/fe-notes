@@ -116,6 +116,15 @@ interface myArray {
 let arr: myArray = ['1', '2', '3']
 ```
 
+### 只读数组
+
+`ReadonlyArray<T>`
+
+```ts
+let test: ReadonlyArray<number> = [1, 2, 3]
+test[0] = 1 //报错，不允许赋值
+```
+
 ### 类数组
 
 比如 arguments, NodeList, HTMLCollection

@@ -90,6 +90,39 @@ class TodoItem extends Component {
 }
 ```
 
+### 默认为 true
+
+只传 prop，但是不赋值，prop 的值默认是`true`。建议写完整  
+下面两者等价
+
+```js
+<MyTextBox autocomplete />
+
+<MyTextBox autocomplete={true} />
+```
+
+### 展开运算符
+
+注意不要传递多余的 prop
+
+```js
+function App1() {
+  return <Greeting firstName="Ben" lastName="Hector" />
+}
+//等价于
+function App2() {
+  const props = { firstName: 'Ben', lastName: 'Hector' }
+  return <Greeting {...props} />
+}
+
+//进一步
+const Button = props => {
+  const { kind, ...other } = props
+  const className = kind === 'primary' ? 'PrimaryButton' : 'SecondaryButton'
+  return <button className={className} {...other} />
+}
+```
+
 ## 第三方 PropTypes
 
 [Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)  
@@ -120,6 +153,62 @@ TodoItem.defaultProps = {
 
 官网[React.Component](https://reactjs.org/docs/react-component.html)  
 定义类组件必须要调用`render()`方法
+
+### defaultProps
+
+添加默认的 props。props 未赋值，但又不能为 null 的情况，会拿默认值
+
+```js
+class CustomButton extends React.Component {
+  // ...
+}
+
+CustomButton.defaultProps = {
+  color: 'blue'
+}
+```
+
+```js
+render() {
+  return <CustomButton /> ; // props.color 将设置为 'blue';如果给了color={null}，那么color的值是null
+}
+```
+
+### 事件绑定
+
+官网[handling-events](https://reactjs.org/docs/handling-events.html)  
+主要是对`this`进行处理，调用方法一般都是`this.myMethod`，对于方法调用有三种方式可以实现
+
+```js
+class EventsSample extends React.Component {
+  constructor(props) {
+    super(props)
+    //第一种：手动bind
+    this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick = e => {
+    //第一种
+    console.log(e)
+  }
+  secondClick = e => {
+    //第二种，属于实验性质，直接在class内写
+    console.log(e)
+  }
+  thirdClick = e => {
+    //第三种
+    console.log(e)
+  }
+  render() {
+    return (
+      <>
+        <button onClick={this.handleClick}>第一种，手动bind</button>
+        <button onClick={this.secondClick}>第二种，直接在class内写</button>
+        <button onClick={e => this.thirdClick(e)}>第三种，使用箭头函数</button>
+      </>
+    )
+  }
+}
+```
 
 ## 生命周期
 
@@ -252,3 +341,57 @@ shouldComponentUpdate(nextProps, nextState) {
 如果在`componentDidMount`内添加了订阅（比如绑定 click 事件），记得在 componentWillUnmount 取消订阅（解绑）
 
 服务端渲染不会被调用
+
+## 返回空组件
+
+满足条件时渲染组件，不满足时不渲染，组件返回的应该是个`null`，即`return null`
+
+## 错误边界
+
+官网[Error Boundaries](https://reactjs.org/docs/error-boundaries.html)  
+本质上是一个**Class 组件**，用于捕获**子组件**报错的情况下的异常处理  
+当 Class 组件具有`static getDerivedStateFromError()`或者`componentDidCatch()`的声明周期时，这个组件成为了一个错误边界  
+用`getDerivedStateFromError`渲染出错情况下的展示  
+`componentDidCatch`获取错误信息
+
+```js
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(error) {
+    //修改state
+    return { hasError: true }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log(error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      //错误情况下的展示
+      return <h1>Something went wrong.</h1>
+    }
+
+    return this.props.children
+  }
+}
+```
+
+::: warning
+错误边界不能捕获以下错误：
+
+- 事件
+- 异步代码
+- SSR
+- 错误边界本身的报错
+  :::
+
+## React.PureComponent
+
+官网[React.PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)  
+通常可以用`PureComponent`代替 shouldComponentUpdate。  
+PureComponent 会进行浅比较。用法和 React.Component 一致

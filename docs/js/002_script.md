@@ -116,6 +116,16 @@ window.addEventListener('load', function() {
 
 即 src 不受[同源策略](./027_async.md#同源策略)的限制
 
+### crossorigin
+
+参考[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin)  
+在标签上设置 CORS，该属性可以用在`<audio>`、 `<img>`等等具有`src`属性的标签上。  
+如果脚本是放在 CDN 上的，推荐加上这个属性
+
+```js
+<script src="https://example.com/example-framework.js" crossorigin></script>
+```
+
 ### type="module"
 
 [ES module](./032_modules.md) 在 script 内可以通过`type="module"`直接使用

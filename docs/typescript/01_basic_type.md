@@ -14,6 +14,13 @@ let num: number = 1,
 
 支持二进制、八进制、十进制
 
+### bigint
+
+::: warning
+只有开启 ESNext 才支持  
+`tsc greeter.ts --target ESNEXT --strictNullChecks`
+:::
+
 ### boolean
 
 ### string
@@ -54,6 +61,20 @@ let u: undefined
 let seconed: number = u
 ```
 
+### 叹号后缀
+
+声明变量不是`null`和`undefined`
+
+```ts
+interface Entity {
+  name: string
+}
+function processEntity(e?: Entity) {
+  let s = e!.name // 因为e可选。用感叹号排除e为null和undefined的情况
+  let error = e.name //TS报错，对象可能不存在
+}
+```
+
 ## void
 
 如果函数没有 return 值，可以将函数类型设置为空值(void)
@@ -61,6 +82,17 @@ let seconed: number = u
 ```ts
 function myFunction(): void {
   console.log('hello, world')
+}
+```
+
+## nerver
+
+void 表示函数没有返回值  
+nerver 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环
+
+```js
+function error(message: string): never {
+  throw new Error(message)
 }
 ```
 
