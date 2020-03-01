@@ -28,7 +28,9 @@ const sidebarMap = [
   { title: 'React', dirname: 'react' },
   { title: 'Transition', dirname: 'transition' },
   { title: 'React Router', dirname: 'react-router' },
-  { title: 'Redux', dirname: 'redux' }
+  { title: 'Redux', dirname: 'redux' },
+  { title: 'Next', dirname: 'nextjs' },
+  { title: '文案排版', dirname: 'copywriting' }
 ]
 
 module.exports = sidebarMap

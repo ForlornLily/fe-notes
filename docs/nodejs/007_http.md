@@ -17,7 +17,7 @@ http
 
 ## request
 
-对应上面的`req`
+对应上面的`req`, req 是`http.IncomingMessag`实例
 
 ### method 属性
 
@@ -71,6 +71,8 @@ req.pipe(res)
 但 pipe 使用了流(stream)的方式，读取大文件更加高效
 
 ## response
+
+res 是`http.ServerResponse`实例
 
 ### setHeader 方法
 

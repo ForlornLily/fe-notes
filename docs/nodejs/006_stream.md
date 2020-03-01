@@ -1,6 +1,7 @@
 # Stream
 
-处理大文件  
+所有的流都是 EventEmitter 的实例  
+主要用于处理大文件  
 readFile 和 writeFile 读写大文件时性能较差
 
 改用流来进行分片，流通过管道(pipe)传输
@@ -12,6 +13,13 @@ readFile 和 writeFile 读写大文件时性能较差
 等价于
 
 `req.pipe(res);`
+
+## 类型
+
+- Writable - 可写入数据的流（例如 fs.createWriteStream()）。
+- Readable - 可读取数据的流（例如 fs.createReadStream()）。
+- Duplex - 可读又可写的流（例如 net.Socket）。
+- Transform - 在读写过程中可以修改或转换数据的 Duplex 流（例如 zlib.createDeflate()）
 
 ## cmd 下显示输入的内容
 
@@ -90,7 +98,7 @@ readFile.on('data', chunk => {
 
 ## readline
 
-基于 stream。用来读取一行行的 stream
+基于 stream。用来逐行读取 stream
 
 ### createInterface
 

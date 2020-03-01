@@ -1,6 +1,6 @@
 # 声明
-
 ## 声明合并
+官网[Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)  
 
 定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型
 

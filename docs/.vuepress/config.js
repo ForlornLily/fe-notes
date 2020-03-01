@@ -42,7 +42,8 @@ module.exports = {
             items: [
               { text: 'React', link: '/react/' },
               { text: 'Transition', link: '/transition/' },
-              { text: 'React Router', link: '/react-router/' }
+              { text: 'React Router', link: '/react-router/' },
+              { text: 'Next', link: '/nextjs/' }
             ]
           },
           { text: 'Redux', link: '/redux/' },
@@ -88,6 +89,7 @@ module.exports = {
           { text: '综合方案', link: '/case/' },
           { text: 'Git', link: '/git/' },
           { text: 'Yarn', link: '/yarn/' },
+          { text: '文案排版', link: '/copywriting/' },
           { text: '网站', link: '/repository/' }
         ]
       }

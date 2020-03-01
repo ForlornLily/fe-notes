@@ -158,4 +158,28 @@ myEvent.emit('join', 'hello', 'world')
 
 ![](../images/2e68b435c61d4dde9113b1916c9832bf.png)
 
-removeAllListeners 删除所有对应的监听器，用法同 removeListener
+removeAllListeners 删除所有对应的监听器，用法同 removeListener  
+如果绑定多个，按照绑定的顺序执行，和`addEventListener`表现一致
+
+### once
+
+只绑定一次，调用之后立即解绑
+
+```js
+const events = require('events')
+const instance = new events()
+instance.once('play', data => {
+  console.log(data)
+})
+instance.on('play', data => {
+  console.log('second: ' + data)
+})
+instance.emit('play', 'hello')
+instance.emit('play', 'hello')
+
+/* 
+hello 
+second: hello
+second: hello
+*/
+```

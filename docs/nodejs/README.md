@@ -1,7 +1,10 @@
 # 概要
 
-本节大部分是[七天学会 NodeJS](http://nqdeng.github.io/7-days-nodejs/), [《Node.js 实战（第 2 版）》](http://www.ituring.com.cn/book/1993)的笔记;  
-包含了少量的后台知识
+参考
+
+- [七天学会 NodeJS](http://nqdeng.github.io/7-days-nodejs/)
+- [《Node.js 实战（第 2 版）》](http://www.ituring.com.cn/book/1993)
+- [Node.js 入门指南和实践](https://juejin.im/post/5e0006c251882512795675f9)
 
 ## windows 安装(个人兴趣)
 

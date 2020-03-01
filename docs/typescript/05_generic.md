@@ -1,5 +1,5 @@
-# 泛型(Generics)
-
+# 泛型
+官网[Generics](https://www.typescriptlang.org/docs/handbook/generics.html)   
 定义的时候不指定类型，使用的时候再指定
 
 比如定义一个函数，创建数组。
@@ -58,6 +58,7 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
 }
 loggingIdentity('hello') //通过
 loggingIdentity(1) //报错，number不具有length属性
+loggingIdentity({length: 10, value: 3});//通过
 ```
 
 ## 多个参数

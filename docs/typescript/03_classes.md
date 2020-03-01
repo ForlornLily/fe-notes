@@ -1,5 +1,5 @@
 # 类 class
-
+官网[Classes](https://www.typescriptlang.org/docs/handbook/classes.html)  
 ## 修饰符 public/private/protected
 
 TypeScript 可以使用三种访问修饰符
@@ -40,36 +40,38 @@ console.log(person.name) //报错，name是private，只能在Factory访问
 
 ```ts
 abstract class Factory {
-  public name
-  public constructor(name, serialNumber) {
+  public name: string
+  public constructor(name: string) {
     this.name = name
   }
 }
-let person = new Factory('John', 13) //报错
+let person = new Factory('John') //报错，不允许new
+```
+``` ts
 abstract class Factory {
-  protected name
-  public constructor(name) {
+  protected name: string
+  public constructor(name: string) {
     this.name = name
   }
   public sayName() {
     //不是抽象类，不需要子类实现
     console.log(this.name)
   }
-  public abstract sayNumer() //sayNumer必须在子类中被实现
+  public abstract sayNumber(): void //sayNumber必须在子类中被实现
 }
 class Plant extends Factory {
-  public number
-  public constructor(name, number) {
+  public number: string
+  public constructor(name: string, number: string) {
     super(name)
     this.number = number
   }
-  public sayNumer() {
+  public sayNumber() {
     console.log(this.number)
   }
 }
 let child = new Plant('Emma', '1')
 child.sayName() //"Emma"
-child.sayNumer() //"1"
+child.sayNumber() //"1"
 ```
 
 ## 类的接口(interface)和实现（implements）
