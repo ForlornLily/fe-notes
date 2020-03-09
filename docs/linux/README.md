@@ -1,6 +1,8 @@
 # 概要
 
-主要是对 Shell 操作的记录
+参考
+
+- [Linux 命令行与 shell 脚本编程大全（第 3 版）](https://www.ituring.com.cn/book/1698)
 
 ## CentOS 常用命令
 

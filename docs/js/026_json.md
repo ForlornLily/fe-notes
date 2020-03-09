@@ -28,7 +28,12 @@ var result = JSON.stringify(childArr, ['name'])
 
 ![](../images/f7a29502341bb563b1c10cd772630fb9.png)
 
-缩进可以提高可读性
+缩进可以提高可读性  
+只缩进不过滤
+
+```js
+JSON.stringify(childArr, undefined, 2)
+```
 
 ## JSON.parse
 

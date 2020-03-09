@@ -126,7 +126,8 @@ return {
 [React.createRef](https://reactjs.org/docs/react-api.html#reactcreateref)  
 对应 Vue 的`ref`属性，即指向 DOM 元素的引用  
 使用`createRef`来创建，或者 ref 直接使用一个函数  
-比如初始化后输入框聚焦, 注意 createRef 的时候的`current`
+比如初始化后输入框聚焦, 注意 createRef 的时候的`current`  
+但更广义的 `ref` 应该是一个容器，和 DOM 挂钩只是很少的一部分，参考[React Hooks 的体系设计之三 - 什么是 ref](https://zhuanlan.zhihu.com/p/109742536)
 
 ```js
 class MyComponent extends React.Component {

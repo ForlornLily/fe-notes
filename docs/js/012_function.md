@@ -41,11 +41,52 @@ arguments 不是 Array 的实例，是一个类数组对象，可以用 length �
 
 当函数被保存为一个对象的属性时，称之为方法。
 
-方法被调用时, this 被绑定到该对象（全局的函数也可以看做是`window`的属性）
+方法被调用时, this 被绑定到该对象（全局的函数也可以看做是 `window` 的属性）
 
-关于 this 的规范可以看从[ECMAScript 规范解读 this](https://github.com/mqyqingfeng/Blog/issues/7)，具体表现如下
+关于 this 的规范可以看从[ECMAScript 规范解读 this](https://github.com/mqyqingfeng/Blog/issues/7)  
+this 是在运行时基于函数的执行环境动态绑定的，而不是函数被声明时的环境  
+具体表现如下  
+![https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageslim](../images/4fd85c39dd36c95a3426d0d96370d6fc.png)  
+值得注意的是，如果构造函数显式地返回一个对象，那么会取返回的内容
 
-![https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageslim](../images/4fd85c39dd36c95a3426d0d96370d6fc.png)
+```js
+function Test(name, age) {
+  this.name = name
+  this.age = age
+  return {
+    name: 'hello'
+  }
+}
+const test = new Test('world', 12)
+console.log(test.name) //"hello"
+console.log(test.age) // undefined
+```
+
+```js
+var length = 10
+
+const obj = {
+  length: 5,
+  getLength() {
+    console.log(this.length)
+  }
+}
+const getLength = obj.getLength
+getLength() // 10
+```
+
+```js
+const hello = 10
+
+const obj = {
+  length: 5,
+  getLength() {
+    console.log(this.hello)
+  }
+}
+const getLength = obj.getLength
+getLength() // undefined ，因为const定义的变量，不会成为window的属性
+```
 
 ```js
 var length = 10
@@ -441,3 +482,47 @@ Math.max(...values, 8)
 - 没有 `this`、`super`、`arguments`
 
 - 不能用 new 调用，没有原型
+
+## 高阶函数
+
+符合以下任意一种
+
+- 函数可以作为参数传递
+- 函数可以作为返回值输出
+
+### 作为参数传递
+
+常见的有回调函数，比如 ajax 的 success  
+还有数组排序 sort
+
+### 作为返回值输出
+
+比如[闭包](./020_scope.md)里面返回的匿名函数
+
+### AOP
+
+Aspect-oriented programming：面向切面编程  
+主要目的是把和主要业务无关的操作剥离出来。  
+比如埋点、日志、异常处理等等
+
+```js
+Function.prototype.before = function(beforefn) {
+  var that = this
+  return function() {
+    beforefn.aplly(this, arguments) //执行新函数
+    return that.apply(this, arguments) //执行原本的函数
+  }
+}
+var test = function() {
+  console.log('hello')
+}
+test = test.before(function() {
+  console.log('埋点')
+})
+test()
+```
+
+### 其他应用
+
+- [柯里化](./028_curry.md)
+- [函数节流](./022_bom.md)

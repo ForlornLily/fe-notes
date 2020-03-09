@@ -1,3 +1,6 @@
 # 概要
 
-本节大部分是[印记中文](https://webpack.docschina.org/guides/)的笔记
+参考
+
+- [印记中文](https://webpack.docschina.org/guides/)
+- [webpack4 从零学习常用配置](http://www.imooc.com/article/287156)

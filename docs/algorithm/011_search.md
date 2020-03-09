@@ -19,7 +19,7 @@ function binarySearch(item, target) {
   //数组的二分查找
   let end = item.length - 1,
     start = 0,
-    mid = Math.floor(length / 2) //向下取整
+    mid = Math.floor((start + end) / 2) //向下取整
   if (item[mid] == target) {
     return mid
   }

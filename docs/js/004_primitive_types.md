@@ -204,6 +204,7 @@ Number.isInteger(25.1) //false
 
 ## BigInt
 
+参考[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)  
 BigInt 可以是任意大的**整数**  
 Number 的范围是-9007199254740991 (`-(2^53-1)`) 和 9007199254740991(`2^53-1`)，任何超出此范围的整数值都会失去精度（四舍五入）
 
