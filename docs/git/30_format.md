@@ -24,7 +24,7 @@
 - feat: 新功能（feature）
 - fix: BUG 修复
 - docs: 只有文档修改
-- style: 不影响代码的改动，比如格式化、注释、分好等等
+- style: 不影响代码的改动，比如格式化、注释、分号等等
 - refactor: 不属于新功能或者 bug 修复，重构
 - perf: A code change that improves performance
 - test: Adding missing or correcting existing tests
