@@ -1,5 +1,7 @@
 # 类 class
-官网[Classes](https://www.typescriptlang.org/docs/handbook/classes.html)  
+
+官网[Classes](https://www.typescriptlang.org/docs/handbook/classes.html)
+
 ## 修饰符 public/private/protected
 
 TypeScript 可以使用三种访问修饰符
@@ -34,7 +36,8 @@ console.log(person.name) //报错，name是private，只能在Factory访问
 
 抽象类是供其他类继承的基类
 
-本身不允许被实例化(不能 new)
+本身不允许被实例化(不能 new)  
+比如“饮料”是抽象类，去商店购买的时候，是没有一种物品叫“饮料”的（不能实例化），而应该具体到“雪碧”、“可口可乐”
 
 抽象类中的抽象方法（有 abstract 前缀的）必须在子类中被实现
 
@@ -47,7 +50,8 @@ abstract class Factory {
 }
 let person = new Factory('John') //报错，不允许new
 ```
-``` ts
+
+```ts
 abstract class Factory {
   protected name: string
   public constructor(name: string) {

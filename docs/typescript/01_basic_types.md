@@ -206,12 +206,29 @@ function processEntity(e?: Entity) {
 
 ## never
 
-`void` 表示函数没有返回值  
-`nerver` 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环
+从不存在的值类型
 
-```js
-function error(message: string): never {
-  throw new Error(message)
+`void` 表示函数没有返回值  
+`nerver` 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环  
+常见场景是枚举所有可能类型，如果漏了就可以进行提示  
+参考[知乎](https://www.zhihu.com/question/354601204)
+
+```ts
+type Shape = 'square' | 'rectangle' | 'circle' | 'triangle'
+function assertNever(x: never): never {
+  throw new Error('Unexpected object: ' + x)
+}
+function area(s: Shape) {
+  switch (s) {
+    case 'square':
+      return `1`
+    case 'rectangle':
+      return 2
+    case 'circle':
+      return 3
+    default:
+      return assertNever(s) // error here if there are missing cases
+  }
 }
 ```
 
