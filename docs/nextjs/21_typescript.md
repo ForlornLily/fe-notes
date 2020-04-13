@@ -27,6 +27,11 @@ const HomePage: NextPage = () => {
 export default HomePage
 ```
 
+::: warning
+设置为 `NextPage` 类型组件后，无法使用 DOM 相关的 API，因为服务端是没有 DOM 的  
+如果需要 DOM 操作，使用常规的 React 类型，比如 `FunctionComponent`
+:::
+
 ## 类组件
 
 在 TS 内使用函数组件，需要把`NextPageContext`作为类组件的类型

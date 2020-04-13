@@ -1,5 +1,6 @@
 # 泛型
-官网[Generics](https://www.typescriptlang.org/docs/handbook/generics.html)   
+
+官网[Generics](https://www.typescriptlang.org/docs/handbook/generics.html)  
 定义的时候不指定类型，使用的时候再指定
 
 比如定义一个函数，创建数组。
@@ -22,7 +23,8 @@ let currentClass = createArray(2, 'Saber') // ["Saber", "Saber"]
 上述例子可以改成
 
 ```ts
-//T相当于一个变量，所有用到T的数据类型都是一样的
+//T相当于一个占位符，所有用到T的数据类型都是一样的
+//在实现createArray时并不知道`T`的具体类型，调用的时候就可以处理任意类型的数据
 function createArray<T>(length: number, value: T): Array<T> {
   let result: T[] = []
   for (let i = 0; i < length; i++) {
@@ -58,7 +60,7 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
 }
 loggingIdentity('hello') //通过
 loggingIdentity(1) //报错，number不具有length属性
-loggingIdentity({length: 10, value: 3});//通过
+loggingIdentity({ length: 10, value: 3 }) //通过
 ```
 
 ## 多个参数
@@ -134,7 +136,7 @@ class GenericNumber<T> {
 
 let myGenericNumber = new GenericNumber<number>()
 myGenericNumber.zeroValue = 0
-myGenericNumber.add = function(x, y) {
+myGenericNumber.add = function (x, y) {
   return x + y
 }
 ```

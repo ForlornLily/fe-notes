@@ -1,6 +1,8 @@
 # 声明
+
 ## 声明合并
-官网[Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)  
+
+官网[Declaration Merging](https://www.typescriptlang.org/docs/handbook/declaration-merging.html)
 
 定义了两个相同名字的函数、接口或类，那么它们会合并成一个类型
 
@@ -46,21 +48,42 @@ interface Alarm {
 
 ## 声明文件
 
+方便在 ts 内使用已有的 JS 库
+
 比如在 ts 内使用 jQuery
+
+```js
+$('.awesome').show() // Error: cannot find name `$`
+```
 
 需要先声明一个全局变量代表 jQuery
 
-`declare var jQuery: (selector: string) => any;`
+```ts
+declare var $: any
+$('.awesome').show() // Okay!
+```
+
+或者更具体一些
+
+```ts
+declare var $: {
+  (selector: string): any
+}
+$('.awesome').show() // Okay!
+$(123).show() // Error: selector needs to be a string
+```
 
 declare var 并没有声明变量，在编译后的 js 文件里这一句话是不存在的。
 
 它仅仅是为了编译时的检查，只定义了全局变量 jQuery 的类型
 
-通常把声明语句放到一个单独的文件，文件名后缀必须是.d.ts
+通常把声明语句放到一个单独的文件，文件名后缀必须是`.d.ts`
 
 一般来说，ts 会解析项目中所有的 \*.ts 文件，当然也包含以 .d.ts
 结尾的文件。所以当我们将 jQuery.d.ts 放到项目中时，其他所有 \*.ts
 文件就都可以获得 jQuery 的类型定义了
+
+如果一个文件有扩展名 `.d.ts`，这意味着每个根级别的声明都必须以 `declare` 关键字作为前缀
 
 ### 第三方声明文件
 
@@ -128,3 +151,10 @@ declare class Animal {
   }
 }
 ```
+
+## lib.d.ts
+
+参考[lib.d.ts](https://basarat.gitbook.io/typescript/type-system/lib.d.ts)  
+安装 TypeScript 之后，lib 文件夹下会有一个 `lib.d.ts` 声明文件  
+文件包含 JavaScript 运行时以及 DOM 中存在各种常见的环境声明  
+比如 String 包装类型的 `toString()` 方法

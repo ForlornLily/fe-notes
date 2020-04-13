@@ -107,7 +107,7 @@ interface Tuple extends Array<string | number> {
 enum Servant {
   'Saber' = 4,
   'Lancer',
-  'Archer' = 'hello'
+  'Archer' = 'hello',
 }
 console.log(Servant.Saber) //4
 console.log(Servant.Lancer) //5
@@ -119,7 +119,7 @@ console.log(Servant['hello']) //报错，只能用数字访问枚举
 
 //编译后的JS
 var Servant
-;(function(Servant) {
+;(function (Servant) {
   Servant[(Servant['Saber'] = 4)] = 'Saber'
   Servant[(Servant['Lancer'] = 5)] = 'Lancer'
   Servant['Archer'] = 'hello'
@@ -134,7 +134,7 @@ var Servant
 const enum Servant {
   'Saber' = 4,
   'Lancer',
-  'Archer' = 'hello'
+  'Archer' = 'hello',
 }
 console.log(Servant.Saber) //4
 console.log(Servant.Lancer) //5
@@ -206,7 +206,7 @@ function processEntity(e?: Entity) {
 
 ## never
 
-从不存在的值类型
+从不存在的值类型，属于 TypeScript 的底层
 
 `void` 表示函数没有返回值  
 `nerver` 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环  
@@ -239,6 +239,7 @@ function area(s: Shape) {
 
 ## 类型断言
 
+目的是为了覆盖 TypeScript 本身的推断，前提是该类型是推断类型的子集  
 两种写法
 
 1. 尖括号: `<类型>值`
@@ -258,6 +259,12 @@ const str_len = (str as string).length
 ::: warning
 如果是在 tsx 语法，必须用值 as 类型
 :::
+
+```ts
+function handler(event: Event) {
+  const element = event as HTMLElement // Error: HTMLElement 不是 event 的子集
+}
+```
 
 ## 未声明类型的变量
 
@@ -289,7 +296,7 @@ Document、HTMLElement、Event、NodeList
 ```ts
 let body: HTMLElement = document.body
 let allDiv: NodeList = document.querySelectorAll('div')
-document.addEventListener('click', function(e: MouseEvent) {
+document.addEventListener('click', function (e: MouseEvent) {
   // Do something
 })
 ```

@@ -47,6 +47,11 @@ function HomePage() {
 
 ## 使用 Sass
 
+::: tip  
+Next.js 自 9.3 版本起已经内置了 Sass ，不需要额外安装
+:::  
+以下是 9.2 版本内容
+
 参考官网[next-sass](https://github.com/zeit/next-plugins/tree/master/packages/next-sass)
 
 1. 安装依赖

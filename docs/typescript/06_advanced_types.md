@@ -4,6 +4,29 @@
 
 ## 交叉类型
 
+让一个对象拥有多个对象的所有功能
+
+```ts
+function extend<T extends object, U extends object>(
+  first: T,
+  second: U
+): T & U {
+  let obj = <T & U>{}
+  for (let key in first) {
+    ;(obj as T)[key] = first[key]
+  }
+  for (let key in second) {
+    ;(obj as U)[key] = second[key]
+  }
+  return obj
+}
+
+const x = extend({ a: 'hello' }, { b: 42 })
+
+const a = x.a
+const b = x.b
+```
+
 ## 联合类型
 
 一个变量可以拥有多个类型，多个类型之间用`|`进行分割。
