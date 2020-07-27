@@ -5,8 +5,9 @@
 - [七天学会 NodeJS](http://nqdeng.github.io/7-days-nodejs/)
 - [《Node.js 实战（第 2 版）》](http://www.ituring.com.cn/book/1993)
 - [Node.js 入门指南和实践](https://juejin.im/post/5e0006c251882512795675f9)
+- [《深入浅出 Node.js》](https://www.ituring.com.cn/book/1290)
 
-## windows 安装(个人兴趣)
+## windows 安装(个人偏好)
 
 npx 启动路径不能带空格，Program Files 要全部替换掉，暂时改成 project\\node
 
@@ -79,16 +80,4 @@ JS 是脚本语言，脚本语言都需要一个解析器才能运行。对于�
 
 ![](../images/ec4fb3e732d2c723cb22fb7bcd0147fc.png)
 
-## CommonJS
-
-NodeJS 是 CommonJS 规范的一个实现
-
-`require`引入，`module.exports`导出
-
-- 每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见
-
-- CommonJS 规范规定，每个模块内部，module 变量代表当前模块。这个变量是一个对象，它的 exports 属性（即 module.exports）是对外的接口。加载某个模块，其实是加载该模块的 module.exports 属性
-
-![](../images/3c06c487350e6d8409181caf2a027850.png)
-
-![](../images/cf2f9891e4495b844346771dc726f6ef.png)
+- libuv：作为跨平台的基础组件

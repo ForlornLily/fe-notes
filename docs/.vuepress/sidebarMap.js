@@ -33,6 +33,7 @@ const sidebarMap = [
   { title: '文案排版', dirname: 'copywriting' },
   { title: 'Jest', dirname: 'jest' },
   { title: 'Handlebars', dirname: 'handlebars' },
+  { title: 'Electron', dirname: 'electron' },
 ]
 
 module.exports = sidebarMap

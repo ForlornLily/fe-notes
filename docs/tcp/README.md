@@ -10,4 +10,13 @@ OSI(Open Systems Interconnect):是计算机网络模型，称之为"开放系统
 
 TCP/IP 借鉴了 OSI 的这些概念建立 TCP/IP 模型。  
 由于 OSI 过于庞大复杂，TCP/IP 成为了主流  
-![](../images/v2-e476b7e05e77bab0d2c43735e3a4d45b_hd.jpg)
+![](../images/v2-e476b7e05e77bab0d2c43735e3a4d45b_hd.jpg)  
+| 作用 | 层级 |
+| ------------------ | ------ |
+| HTTP、SMTP、IMAP 等 | 应用层 |
+| 加密/解密等 | 表示层 |
+| 通信连接/维持会话 | 会话层 |
+| TCP/UDP | 传输层 |
+| IP | 网络层 |
+| 网络特有的链路接口 | 链路层 |
+| 网络物理硬件 | 物理层 |

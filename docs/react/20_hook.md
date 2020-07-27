@@ -152,3 +152,14 @@ FancyInput = forwardRef(FancyInput);
 
 本质上就是一个函数，封装了 React 自带的 hooks  
 必须用`useSomething`进行命名，否则 React 会无法识别
+
+## 渲染保证数量一致
+
+以下是错误示范：在 return 之后才声明 hook。
+
+```js
+if (!list.length) {
+  return ''
+}
+const [page_num, setNum] = useState(1)
+```

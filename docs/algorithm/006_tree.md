@@ -31,8 +31,7 @@
 ### 深度遍历
 
 - inOrderTraverse: 中序遍历，LNR。  
-  考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。
-  输出表现为左、根、右
+  考察到一个节点后，将其暂存，遍历完左子树后，再输出该节点的值，然后遍历右子树。输出表现为左、根、右
 - preOrderTraverse: 先序遍历，NLR  
   考察到一个节点后，即刻输出该节点的值，并继续遍历其左右子树。(根左右)
 - postOrderTraverse: 后序遍历，LRN
@@ -291,7 +290,7 @@ class BinarySearchTree {
     if (node === null) {
       return null
     }
-    var findMinNode = function(node) {
+    var findMinNode = function (node) {
       while (node && node.left !== null) {
         node = node.left
       }
@@ -378,3 +377,51 @@ AVL 进行增加和删除的时候，为了保持平衡，会对树进行旋转�
 ### 时间复杂度
 
 插入、删除、搜索都是 O(log(n))
+
+## 普通树遍历
+
+数据结构可能如下
+
+```json
+[
+  {
+    "id": "1",
+    "name": "1",
+    "chidlren": [
+      {
+        "id": "1-1",
+        "name": "1-1"
+      },
+      {
+        "id": "1-2",
+        "name": "1-2"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "2"
+  }
+]
+```
+
+```js
+// 广度优先非递归遍历
+function traverseTree(treeNodes) {
+  if (!treeNodes || !treeNodes.length) return
+  let stack = []
+  // 先将第一层节点放入栈
+  for (let i = 0, len = treeNodes.length; i < len; i++) {
+    stack.push(treeNodes[i])
+  }
+  let item
+  while (stack.length) {
+    item = stack.shift()
+    // do sth.
+    // 如果该节点有子节点，继续添加进入栈尾
+    if (item.children && item.children.length) {
+      stack = stack.concat(item.children)
+    }
+  }
+}
+```

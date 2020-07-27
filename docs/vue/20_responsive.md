@@ -13,10 +13,10 @@
 大致可以理解成由 3 个模块组成，observer 完成对数据的劫持，compile 完成对模板片段的渲染，watcher 作为桥梁连接二者，订阅数据变化及更新视图
 
 - 实现一个数据监听器`Observer`，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者。  
-  Observer 就是在 init 的时候通过 `Object.defineProperty` 进行了绑定，使得当被设置的对象被读取的时候会执行 getter 函数，而在当被赋值的时候会执行 setter 函数  
-  如果 set 里面新值和旧值不一样，那么通知所有订阅者`Watcher`
+  Observer就是在init的时候通过`Object.defineProperty` 进行了绑定，使得当被设置的对象被读取的时候会执行 getter 函数，而在当被赋值的时候会执行 setter 函数  
+  如果set里面新值和旧值不一样，那么通知所有订阅者`Watcher`
 - 当 render function 被渲染的时候，因为会读取所需对象的值，所以会触发 getter 函数进行「依赖收集」  
-  「依赖收集」的目的是将观察者 Watcher 对象存放到当前闭包中的订阅者 Dep 的 subs 中
+  「依赖收集」的目的是将观察者Watcher对象存放到当前闭包中的订阅者Dep的subs中
 
 - 在修改对象的值的时候，会触发对应的 setter， setter 通知之前「依赖收集」得到的 Dep 中的每一个 Watcher，告诉它们自己的值改变了，需要重新渲染视图。
   这时候这些 Watcher 就会开始调用 update 来更新视图，当然这中间还有一个 patch 的过程以及使用队列来异步更新
@@ -40,7 +40,7 @@ function Vue(options) {
 ```js
 //部分代码，省略静态类型检查
 //src\core\instance\init.js
-Vue.prototype._init = function(options) {
+Vue.prototype._init = function (options) {
   //...
   initLifecycle(vm) //建立父子组件关系，在当前实例上添加一些属性和生命周期标识。如：$children、$refs、_isMounted
   initEvents(vm) //事件，比如$on
@@ -73,7 +73,7 @@ function MyVue(options) {
   this.data = options.data
   this.observe()
 }
-MyVue.prototype.observe = function() {
+MyVue.prototype.observe = function () {
   const data = this.data
   for (let key in data) {
     if (data.hasOwnProperty(key)) {
@@ -92,7 +92,7 @@ MyVue.prototype.observe = function() {
           return
         }
         callback(key, newValue)
-      }
+      },
     })
   }
 }
@@ -101,8 +101,8 @@ function callback(key, value) {
 }
 const app = new MyVue({
   data: {
-    hello: 'world'
-  }
+    hello: 'world',
+  },
 })
 app.data.hello = 'test' //属性hello改变了，新值是test
 ```
@@ -124,9 +124,9 @@ app.data.hello = 'test' //属性hello改变了，新值是test
     },
     get() {
       return inputEl.value
-    }
+    },
   })
-  inputEl.addEventListener('change', e => {
+  inputEl.addEventListener('change', (e) => {
     obj.hello = e.target.value
   })
 </script>
@@ -137,9 +137,9 @@ app.data.hello = 'test' //属性hello改变了，新值是test
 依赖收集的作用:
 
 1. 避免不必要的更新  
-   假设 Vue 实例的`template`里面没有涉及到变量"hello"，那么当变量 hello 改变的时候，就没必要进 hello 的`set`
+   假设Vue实例的`template`里面没有涉及到变量"hello"，那么当变量 hello 改变的时候，就没必要进 hello 的`set`
 2. 更新所有需要更新的对象  
-   假设有一个全局变量 globalObj，有多个 Vue 实例的`template`都用到 globalObj，那么当 globalObj 的值改变的时候，所有实例都应该更新
+   假设有一个全局变量globalObj，有多个Vue实例的`template`都用到 globalObj，那么当 globalObj 的值改变的时候，所有实例都应该更新
 
 ### 实现
 
@@ -173,10 +173,10 @@ Vue 中响应式对象中的**每一个属性**都对应一个 dep
 function Dep() {
   this.subs = []
 }
-Dep.prototype.add = function(target) {
+Dep.prototype.add = function (target) {
   this.subs.push(target)
 }
-Dep.prototype.notify = function() {
+Dep.prototype.notify = function () {
   const data = this.subs,
     length = data.length
   for (let i = 0; i < length; i++) {
@@ -187,7 +187,7 @@ Dep.prototype.notify = function() {
 function Watcher() {
   Dep.target = this
 }
-Watcher.prototype.update = function() {
+Watcher.prototype.update = function () {
   console.log('更新逻辑')
 }
 function MyVue(options) {
@@ -195,7 +195,7 @@ function MyVue(options) {
   this.observe()
   new Watcher() //一个Vue实例只有一个Watcher实例
 }
-MyVue.prototype.observe = function() {
+MyVue.prototype.observe = function () {
   const data = this.data
   const dep = new Dep()
   for (let key in data) {
@@ -219,14 +219,14 @@ MyVue.prototype.observe = function() {
         }
         //更新逻辑
         dep.notify()
-      }
+      },
     })
   }
 }
 const app = new MyVue({
   data: {
-    hello: 'world'
-  }
+    hello: 'world',
+  },
 })
 ```
 
@@ -398,7 +398,7 @@ export default class Watcher {
 有关异步、任务队列见[单线程与异步编程](../js/027_async.md)  
 比如修改 data 内的某个值，做了个`for`循环，data 内的值不是实时更新的，而是异步的。  
 Vue 实现了一个 `nextTick` 函数，传入一个 callback ，这个 callback 会被存储到一个队列中，在下一个 tick 时触发队列中的所有 callback 事件  
-用 Promise、setTimeout、setImmediate 等方式在宏任务/微任务中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件  
+用 Promise、setTimeout、setImmediate 等方式在 task/microtask 中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件  
 同一个 watcher 实例，只会调用最后一个 cb
 
 Vue 修改视图的过程大致上就是通过 setter -> Dep -> Watcher -> patch -> 视图的过程。  
@@ -411,7 +411,7 @@ Watcher 会有用唯一 id, 放置被反复 push。setter 方法被触发 100 �
 
 ```js
 //src\core\instance\init.js
-Vue.prototype._init = function(options) {
+Vue.prototype._init = function (options) {
   //...
   initState(vm) //data属性内数据绑定
   //...
@@ -435,8 +435,8 @@ Observer 为数据加上响应式属性进行双向绑定。
   var app = new Vue({
     el: '#app',
     data: {
-      message: 'Hello Vue!'
-    }
+      message: 'Hello Vue!',
+    },
   })
   console.log(app.message) //"Hello Vue!"
   console.log(app._data.message) //"Hello Vue!"
@@ -487,7 +487,7 @@ const sharedPropertyDefinition = {
   enumerable: true,
   configurable: true,
   get: noop,
-  set: noop
+  set: noop,
 }
 export function proxy(target, sourceKey, key) {
   sharedPropertyDefinition.get = function proxyGetter() {
@@ -520,9 +520,9 @@ const methodsToPatch = [
   'unshift',
   'splice',
   'sort',
-  'reverse'
+  'reverse',
 ]
-methodsToPatch.forEach(function(method) {
+methodsToPatch.forEach(function (method) {
   // cache original method
   const original = arrayProto[method]
   def(arrayMethods, method, function mutator(...args) {

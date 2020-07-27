@@ -26,6 +26,8 @@
 
 ## 3xx 重定向
 
+[AJAX 不能捕获](../trick/04_http.md)
+
 - 301 Moved Permanently
 
 永久重定向。表示请求的资源被重新分配了 URI，以后应该使用现在所指的 URI

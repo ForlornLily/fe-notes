@@ -4,6 +4,8 @@
 
 当页面关闭时，该页面新建的 Web Worker 也会随之关闭，不会常驻在浏览器中
 
+由来见[起源](../nodejs/015_child_process.md#起源)
+
 ## PWA(Progressive web apps)
 
 参考[PWA 开发实战](https://www.ituring.com.cn/book/2040)  
@@ -58,7 +60,7 @@ service worker 是一个特殊的 web Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/serviceworker.js')
-    .then(function(registration) {
+    .then(function (registration) {
       if (registration.installing) {
         console.log('Service worker installing')
       } else if (registration.waiting) {
@@ -67,7 +69,7 @@ if ('serviceWorker' in navigator) {
         console.log('Service worker active')
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       console.log('Service worker registration failed:', err)
     })
 }
@@ -89,7 +91,7 @@ if ('serviceWorker' in navigator) {
 
 ```js
 navigator.serviceWorker.register('/serviceworker.js', {
-  scope: '/'
+  scope: '/',
 })
 ```
 
@@ -146,7 +148,7 @@ navigator.serviceWorker.register('/serviceworker.js', {
 
 ```js
 //监听fetch事件
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
   console.log(event)
 })
 ```
@@ -169,7 +171,7 @@ service worker 要处于激活状态
 
 ```js
 //fetch替换图片src
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
   if (event.request.url.includes('/img/logo.png')) {
     event.respondWith(fetch('/img/logo-flipped.png'))
   }
@@ -206,9 +208,9 @@ event.respondWith(
 所有依赖的核心 cache 被缓存之前都不会被安装
 
 ```js
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open('gih-cache').then(function(cache) {
+    caches.open('gih-cache').then(function (cache) {
       return cache.add('/index-offline.html')
     })
   )
@@ -230,16 +232,16 @@ Service Worker 之间缓存不共享。
 ```js
 var immutableRequests = [
   '/vendor/bootstrap/3.3.7/bootstrap.min.css',
-  '/css/style-v355.css'
+  '/css/style-v355.css',
 ]
 var mutableRequests = ['app-settings.json', 'index.html']
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open('cache-v2').then(function(cache) {
+    caches.open('cache-v2').then(function (cache) {
       var newImmutableRequests = []
       return Promise.all(
-        immutableRequests.map(function(url) {
-          return caches.match(url).then(function(response) {
+        immutableRequests.map(function (url) {
+          return caches.match(url).then(function (response) {
             if (response) {
               return cache.put(url, response)
             } else {
@@ -249,7 +251,7 @@ self.addEventListener('install', function(event) {
             }
           })
         })
-      ).then(function() {
+      ).then(function () {
         return caches.addAll(newImmutableRequests.concat(mutableRequests))
       })
     })
@@ -277,12 +279,12 @@ self.addEventListener('install', function(event) {
 // Register your service worker:
 navigator.serviceWorker.register('/sw.js')
 // Then later, request a one-off sync:
-navigator.serviceWorker.ready.then(function(swRegistration) {
+navigator.serviceWorker.ready.then(function (swRegistration) {
   return swRegistration.sync.register('myFirstSync')
 })
 
 //在sw.js中
-self.addEventListener('sync', function(event) {
+self.addEventListener('sync', function (event) {
   if (event.tag == 'myFirstSync') {
     //doSomeStuff()返回Promise的reject或者resolve
     event.waitUntil(doSomeStuff())
@@ -299,10 +301,10 @@ self.addEventListener('sync', function(event) {
 navigator.serviceWorker.controller.postMessage({
   arrival: '05/11/2022',
   nights: 3,
-  guests: 2
+  guests: 2,
 })
 //监听message 事件来捕获
-self.addEventListener('message', function(event) {
+self.addEventListener('message', function (event) {
   console.log(event.data)
 })
 ```
@@ -335,16 +337,16 @@ caches.open(cacheName).then(function(cache) {
 比如在 install 已经 add 的资源，在 fetch 中进行获取
 
 ```js
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
   event.respondWith(
     //如果获取失败，拿本地的缓存内容
-    fetch(event.request).catch(function() {
+    fetch(event.request).catch(function () {
       return caches.match('/index-offline.html')
     })
   )
 })
 // 在特定的缓存中寻找匹配的请求
-caches.open('my-cache').then(function(cache) {
+caches.open('my-cache').then(function (cache) {
   return cache.match('logo.png')
 })
 ```
@@ -393,7 +395,7 @@ options 和 match 一样
 会缓存 Response.status 是任意值
 
 ```js
-caches.open('v1').then(function(cache) {
+caches.open('v1').then(function (cache) {
   cache.put(event.request, response)
 })
 ```
@@ -517,7 +519,7 @@ function notifyMe() {
     var notification = new Notification('Hi there!')
   } else if (Notification.permission !== 'denied') {
     // 请求允许通知
-    Notification.requestPermission().then(function(permission) {
+    Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === 'granted') {
         var notification = new Notification('Hi there!')
@@ -539,19 +541,19 @@ in window 条件就不满足)，就放在 service worker 中
 由 service worker 的 registration 对象进行
 
 ```js
-var showNewReservationNotification = function() {
-  navigator.serviceWorker.ready.then(function(registration) {
+var showNewReservationNotification = function () {
+  navigator.serviceWorker.ready.then(function (registration) {
     registration.showNotification('Reservation Received', {
       body: 'Hi there!',
       icon: '/img/reservation-gih.jpg',
       badge: '/img/icon-hotel.png',
-      tag: 'new-reservation'
+      tag: 'new-reservation',
     })
   })
 }
-var offerNotification = function() {
+var offerNotification = function () {
   if ('Notification' in window && 'serviceWorker' in navigator) {
-    Notification.requestPermission().then(function(permission) {
+    Notification.requestPermission().then(function (permission) {
       if (permission === 'granted') {
         showNewReservationNotification()
       }
@@ -590,13 +592,13 @@ GCM）。GCM 需要注册谷歌的 API
 
 ```js
 var subscribeOptions = {
-  userVisibleOnly: true
+  userVisibleOnly: true,
 }
 navigator.serviceWorker.ready
-  .then(function(registration) {
+  .then(function (registration) {
     return registration.pushManager.subscribe(subscribeOptions)
   })
-  .then(function(subscription) {
+  .then(function (subscription) {
     console.log(subscription)
   })
 ```

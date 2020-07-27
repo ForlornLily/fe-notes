@@ -21,3 +21,11 @@ $ git checkout 远程分支名
 ```bash
 git push origin --delete 远程分支名
 ```
+
+## 更新远程仓库
+
+比如远程分支已被删除，但本地还能看到远程分支存在
+
+```bash
+git remote update origin --prune
+```

@@ -258,7 +258,7 @@ for (let i = 0; i < length; i++) {
 ```
 
 - 替换 img 的 src 为自定义内容  
-  例如替换 src 为 data-url 的值
+  例如替换src为data-url的值
 
 ```html
 <p>
@@ -269,11 +269,32 @@ for (let i = 0; i < length; i++) {
 ```
 
 ```js
-value = value.replace(/<img [^>]*data-url=['"]([^'"]+)[^>]*>/gi, function(
+value = value.replace(/<img [^>]*data-url=['"]([^'"]+)[^>]*>/gi, function (
   match,
   capture
 ) {
   return match.replace(/src=[\'\"]?([^\'\"]*)[\'\"]?/i, `src="${capture}"`) //替换src为data-url里面的值
 })
 return value
+```
+
+- 截取匹配的开头结尾
+
+```js
+// 比如全局匹配，以"%"开头，以"%"结尾的内容
+//const match_reg = /(?<=%).*?(?=%)/g;  // 此种写法会出现浏览器不兼容，改为创建一个正则实例
+const match_reg = new RegExp('(?<=%).*?(?=%)', 'g')
+const matched_arr = '1111%123%456'.match(match_reg) // ["123"]
+```
+
+- 校验是否为 url
+
+```js
+const validUrl = () => {
+  const regex = /([\w-]+\.)+[\w-]+(\/[\w- .\/?#%&=]*)?$/i
+  if (!regex.test(url)) {
+    return false
+  }
+  return true
+}
 ```

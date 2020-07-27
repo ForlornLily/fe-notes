@@ -64,6 +64,7 @@ module.exports = {
           { text: 'Linux', link: '/linux/' },
           { text: 'redis', link: '/redis/' },
           { text: 'MongoDB', link: '/mongodb/' },
+          { text: 'Electron', link: '/electron/' },
         ],
       },
       {

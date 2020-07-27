@@ -8,28 +8,28 @@
 
 ```js
 console.log('1')
-setTimeout(function() {
+setTimeout(function () {
   console.log('2')
-  new Promise(function(resolve) {
+  new Promise(function (resolve) {
     console.log('4')
     resolve()
-  }).then(function() {
+  }).then(function () {
     console.log('5')
   })
 })
-new Promise(function(resolve) {
+new Promise(function (resolve) {
   console.log('7')
   resolve()
-}).then(function() {
+}).then(function () {
   console.log('8')
 })
 
-setTimeout(function() {
+setTimeout(function () {
   console.log('9')
-  new Promise(function(resolve) {
+  new Promise(function (resolve) {
     console.log('11')
     resolve()
-  }).then(function() {
+  }).then(function () {
     console.log('12')
   })
 })
@@ -42,13 +42,13 @@ NodeJS结果  1 7 8 2 4 9 11 5 12
 ## 执行顺序
 
 Node v10.x 下：  
-如果执行宏任务的时候发现了微任务，不会像浏览器一样执行了，而是将为微任务放到微任务队列中，等待整个宏任务队列执行完毕，下一个阶段开始的时候先执行完微任务队列中的任务  
+如果执行 task 的时候发现了 microtask，不会像浏览器一样执行了，而是将为微任务放到微任务队列中，等待整个 job queue 执行完毕，下一个阶段开始的时候先执行完微任务队列中的任务  
 Node 中  
-微任务：then 、nextTick 、messageChannel、mutationObersve(微任务中 nextTick 会比 then 先执行)
-宏任务：setTimeout 、setInterval 、setImmediate 、io 文件操作、Promise
+microtask：then 、nextTick 、messageChannel、mutationObersve(微任务中 nextTick 会比 then 先执行)
+task：setTimeout 、setInterval 、setImmediate 、io 文件操作、Promise
 
 ```js
-new Promise(function(resolve, reject) {
+new Promise(function (resolve, reject) {
   console.log('start')
   resolve()
 })
@@ -73,7 +73,7 @@ process.nextTick(() => {
 })
 setTimeout(() => {
   console.log('setTimeout')
-  new Promise(function(resolve, reject) {
+  new Promise(function (resolve, reject) {
     console.log('setTimeout Promise')
     resolve()
   })
@@ -86,7 +86,7 @@ setTimeout(() => {
 })
 setTimeout(() => {
   console.log('setTimeout2')
-  new Promise(function(resolve, reject) {
+  new Promise(function (resolve, reject) {
     console.log('setTimeout2 Promise')
     resolve()
   })
@@ -168,10 +168,10 @@ removeAllListeners 删除所有对应的监听器，用法同 removeListener
 ```js
 const events = require('events')
 const instance = new events()
-instance.once('play', data => {
+instance.once('play', (data) => {
   console.log(data)
 })
-instance.on('play', data => {
+instance.on('play', (data) => {
   console.log('second: ' + data)
 })
 instance.emit('play', 'hello')

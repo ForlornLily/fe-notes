@@ -25,7 +25,7 @@ JS 是单线程的。
 以 NodeJS 读取文件为例。readFile 会立刻进入任务队列，等到读取结束以后的，触发的回调才进入任务队列
 
 ```js
-readFile('example.txt', function(err, contents) {
+readFile('example.txt', function (err, contents) {
   if (err) {
     throw err
   }
@@ -39,15 +39,18 @@ console.log('Hi!')
 ```js
 $.ajax({
   url: '',
-  success: function(data) {
+  success: function (data) {
     console.log(data)
-  }
+  },
 })
 ```
 
-### macro task 与 micro task
+### task 与 microtask
 
-以下事件属于宏任务：
+::: warning
+宏任务这个词不严谨，根据规范只有 task 和 microtask，参考[知乎](https://www.zhihu.com/question/302612139)  
+:::
+以下事件属于 task：
 
 - setInterval()
 
@@ -57,51 +60,51 @@ $.ajax({
 
 - 鼠标键盘事件
 
-以下事件属于微任务
+以下事件属于 microtask
 
 Promise.then
 
-- 当前执行栈执行完毕时会立刻先处理所有微任务队列中的事件，然后再去宏任务队列中取出一个事件。同一次事件循环中，微任务永远在宏任务之前执行。
+- 当前执行栈执行完毕时会立刻先处理所有微任务队列中的事件，然后再去队列（job queue）中取出一个事件。同一次事件循环中，微任务永远在 task 之前执行。
 
 - 所有 setTimeout()的回调都会进入到 setTimeout 任务队列，所有 then()回调都会进入到 then 队列
 
 ```js
 console.log('1')
-setTimeout(function() {
+setTimeout(function () {
   console.log('2')
-  new Promise(function(resolve) {
+  new Promise(function (resolve) {
     console.log('4')
     resolve()
-  }).then(function() {
+  }).then(function () {
     console.log('5')
   })
 })
-new Promise(function(resolve) {
+new Promise(function (resolve) {
   console.log('7')
   resolve()
-}).then(function() {
+}).then(function () {
   console.log('8')
 })
 
-setTimeout(function() {
+setTimeout(function () {
   console.log('9')
-  new Promise(function(resolve) {
+  new Promise(function (resolve) {
     console.log('11')
     resolve()
-  }).then(function() {
+  }).then(function () {
     console.log('12')
   })
 })
 /*
 浏览器结果  1 7 8 2 4 5 9 11 12
 解释：
-第一轮宏任务：1 7 
+第一轮task：1 7 
 第一轮微任务：8 
 -----第一轮结束-----
-第二轮宏任务：第一个setTimeout 2 4  
+第二轮task：第一个setTimeout 2 4  
 第二轮微任务：第一个setTimeout内的微任务5 
 -----第二轮结束-----
-第三轮宏任务：第二个setTimeout 9 11  
+第三轮task：第二个setTimeout 9 11  
 第三轮微任务：第二个setTimeout内的微任务 12
 */
 ```
@@ -150,14 +153,14 @@ CSRF 是基于客户端对用户的信任。例如：
 解决方案：
 
 - 判断 cookie 是否同源操作  
-  HTTP 请求的时候 Request Header 会带上 Origin Header 和 Referer Header，服务器可以解析这两者内的域名
+  HTTP请求的时候RequestHeader会带上OriginHeader和RefererHeader，服务器可以解析这两者内的域名
   - Origin 包含请求的域名
   - Referer，记录了该 HTTP 请求的来源地址:  
-    Ajax 请求，图片和 script 等资源请求，Referer 为发起请求的页面地址;  
-    页面跳转，Referer 为打开页面历史记录的前一个页面地址
+    Ajax请求，图片和script等资源请求，Referer为发起请求的页面地址;  
+    页面跳转，Referer为打开页面历史记录的前一个页面地址
 - 设置 cookie 的`samesite`（IE11+）
   如果 SamesiteCookie 被设置为 Strict，浏览器在任何跨域请求中都不会携带 Cookie  
-  也就是跳转子域名或者是新标签重新打开刚登陆的网站，之前的 Cookie 都不会存在。尤其是有登录的网站，那么我们新打开一个标签进入，或者跳转到子域名的网站，都需要重新登录
+  也就是跳转子域名或者是新标签重新打开刚登陆的网站，之前的Cookie都不会存在。尤其是有登录的网站，那么我们新打开一个标签进入，或者跳转到子域名的网站，都需要重新登录
 
 ```http
 Set-Cookie: foo=1; Samesite=Strict
@@ -224,7 +227,7 @@ Access-Control-Expose-Headers 允许前端发送的额外请求头
 require('http')
   .createServer((req, res) => {
     res.writeHead(200, {
-      'Access-Control-Allow-Origin': 'http://localhost:8080'
+      'Access-Control-Allow-Origin': 'http://localhost:8080',
     })
     res.end('这是你要的数据：1111')
   })
@@ -336,14 +339,14 @@ const server = http
   .createServer((req, res) => {
     const path = url.parse(req.url).path.slice(1)
     if (path === 'topics') {
-      https.get('https://cnodejs.org/api/v1/topics', resp => {
+      https.get('https://cnodejs.org/api/v1/topics', (resp) => {
         let data = ''
-        resp.on('data', chunk => {
+        resp.on('data', (chunk) => {
           data += chunk
         })
         resp.on('end', () => {
           res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8'
+            'Content-Type': 'application/json; charset=utf-8',
           })
           res.end(data)
         })
@@ -362,10 +365,10 @@ const server = http
 ```js
 let socket = new WebSocket('ws:35.201.238.65')
 const messgae = {
-  hell: 'world'
+  hell: 'world',
 }
 socket.send(JSON.stringify(messgae))
-socket.onmessage(msg => {
+socket.onmessage((msg) => {
   console.log(msg)
 })
 ```
@@ -376,7 +379,7 @@ Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）
 
 ```js
 let xhr = new XMLHttpRequest()
-xhr.onreadystatechange = function() {
+xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
     // 4表示整个请求过程已经完毕.
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
@@ -385,7 +388,7 @@ xhr.onreadystatechange = function() {
     }
   }
 }
-xhr.onerror = function() {
+xhr.onerror = function () {
   //
 }
 xhr.open('GET', 'http://www.example.org/some.file', true) //true为异步，不写默认为true
@@ -424,11 +427,10 @@ url 如果要传参，都需要进行 encodeURIComponent 编码
 
 浏览器后退时 get 无害，post 会重新提交请求
 
-get 能被缓存，post 不能缓存
-
-get 有长度限制，因为 url 有限制（由浏览器决定）。post 没有
-
-get 只允许 ASCII 字符，post 编码类型无限制，可以用二进制
+get 能被缓存，post 不能缓存  
+get 只允许 ASCII 字符，post 编码类型无限制，可以用二进制  
+get 有长度限制，因为 url 有限制（由浏览器决定，参考[知乎](https://www.zhihu.com/question/391726099)）。post 没有  
+浏览器的长度限制可以忽略不计，主要瓶颈在于服务端
 
 #### send
 
@@ -462,7 +464,7 @@ export function ajax(options) {
     type = 'GET',
     responseType = 'text',
     callback,
-    data = null
+    data = null,
   } = options
   if (!url) {
     return false
@@ -476,15 +478,15 @@ export function ajax(options) {
         // 200 表示一个成功的请求
         callback({
           success: true,
-          data: xhr.response
+          data: xhr.response,
         })
       }
     }
   }
-  xhr.onerror = err => {
+  xhr.onerror = (err) => {
     callback({
       success: false,
-      data: err
+      data: err,
     })
   }
   xhr.open(type, url, true) //true为异步，不写默认为true
@@ -533,12 +535,12 @@ const promise = new Promise((resolve, reject) => {
   reject('hello') //可以是resolve
 })
 promise
-  .catch(value => {
+  .catch((value) => {
     //resolve时改为then
     console.log(value) //"hello"
     return value + 'world'
   })
-  .then(value => {
+  .then((value) => {
     console.log(value) // "helloworld"
   })
 ```
@@ -548,19 +550,19 @@ promise
 有一个被 reject 就不会进 p4 的 then
 
 ```js
-let p1 = new Promise(function(resolve, reject) {
+let p1 = new Promise(function (resolve, reject) {
   resolve(42)
 })
-let p2 = new Promise(function(resolve, reject) {
+let p2 = new Promise(function (resolve, reject) {
   resolve('hello')
 })
-let p3 = new Promise(function(resolve, reject) {
+let p3 = new Promise(function (resolve, reject) {
   resolve({
-    hello: 'world'
+    hello: 'world',
   })
 })
 let p4 = Promise.all([p1, p2, p3])
-p4.then(value => {
+p4.then((value) => {
   console.log(value)
 })
 ```
@@ -576,14 +578,14 @@ function PromiseAll(arrs) {
       result = []
     for (let i = 0; i < length; i++) {
       list[i]
-        .then(value => {
+        .then((value) => {
           count++
           result[i] = value
           if (count == length) {
             return resolve(result)
           }
         })
-        .catch(value => {
+        .catch((value) => {
           reject(value)
         })
     }
@@ -593,10 +595,10 @@ var p1 = Promise.resolve(1),
   p2 = Promise.reject(2),
   p3 = Promise.resolve(3)
 PromiseAll([p1, p2, p3])
-  .then(res => {
+  .then((res) => {
     console.log(res)
   })
-  .catch(value => {
+  .catch((value) => {
     console.log(value)
   })
 ```
@@ -612,21 +614,21 @@ PromiseAll([p1, p2, p3])
 有一个 reject 就立刻进 catch
 
 ```js
-let p1 = new Promise(function(resolve, reject) {
+let p1 = new Promise(function (resolve, reject) {
   resolve(42)
 })
-let p2 = new Promise(function(resolve, reject) {
+let p2 = new Promise(function (resolve, reject) {
   resolve('hello')
 })
-let p3 = new Promise(function(resolve, reject) {
+let p3 = new Promise(function (resolve, reject) {
   reject({
-    hello: 'world'
+    hello: 'world',
   })
 })
 let p4 = Promise.race([p1, p2, p3])
-p4.then(value => {
+p4.then((value) => {
   console.log(value) //42，不是数组
-}).catch(value => {
+}).catch((value) => {
   console.log(value) //不进
 })
 ```
@@ -643,9 +645,9 @@ var utils = {
   pending: 'pending',
   resolve: 'fullfilled',
   reject: 'rejected',
-  isFucntion: function(obj) {
+  isFucntion: function (obj) {
     return typeof obj === 'function'
-  }
+  },
 }
 function MyPromise(fn) {
   var that = this
@@ -691,24 +693,24 @@ function MyPromise(fn) {
     }
   }
 }
-MyPromise.prototype.then = function(onFulfilled, onRejected) {
+MyPromise.prototype.then = function (onFulfilled, onRejected) {
   var that = this,
     promise = null,
     //根据规范，如果then/reject的参数不是function，需要忽略它
     onFulfilled = utils.isFucntion(onFulfilled)
       ? onFulfilled
-      : function(value) {
+      : function (value) {
           return value
         },
     onRejected = utils.isFucntion(onFulfilled)
       ? onFulfilled
-      : function(error) {
+      : function (error) {
           throw error
         }
   if (that.state === utils.resolve) {
     //onFulfilled(that.value)
     //返回的仍然是Promise对象
-    return new MyPromise(function(resolve, reject) {
+    return new MyPromise(function (resolve, reject) {
       //仍然用try catch进行异常处理
       try {
         var result = onFulfilled(that.value)
@@ -732,7 +734,7 @@ MyPromise.prototype.then = function(onFulfilled, onRejected) {
   if (that.state === utils.reject) {
     //onRejected(that.value)
     //同上
-    return new MyPromise(function(resolve, reject) {
+    return new MyPromise(function (resolve, reject) {
       try {
         var result = onRejected(that.value)
         if (result instanceof MyPromise) {
@@ -749,7 +751,7 @@ MyPromise.prototype.then = function(onFulfilled, onRejected) {
     /* that.resolveHandles.push(onFulfilled)
     that.rejectHandles.push(onRejected) */
     //不确定到底是reject还是resolve，都push进去
-    that.resolveHandles.push(function(value) {
+    that.resolveHandles.push(function (value) {
       try {
         var result = onFulfilled(that.value)
         if (result instanceof MyPromise) {
@@ -761,7 +763,7 @@ MyPromise.prototype.then = function(onFulfilled, onRejected) {
         reject(e)
       }
     })
-    that.rejectHandles.push(function(value) {
+    that.rejectHandles.push(function (value) {
       try {
         var result = onRejected(that.value)
         if (result instanceof MyPromise) {
@@ -776,14 +778,14 @@ MyPromise.prototype.then = function(onFulfilled, onRejected) {
   }
 }
 var test = '1'
-var promise = new MyPromise(function(resolve, reject) {
+var promise = new MyPromise(function (resolve, reject) {
   resolve(test)
 })
 promise
-  .then(value => {
+  .then((value) => {
     return value + 'world'
   })
-  .then(value => {
+  .then((value) => {
     console.log(value)
   })
 ```
@@ -819,13 +821,13 @@ fetch(url, {
   credentials: 'same-origin', // include, same-origin, *omit
   headers: {
     'user-agent': 'Mozilla/4.0 MDN Example',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
   },
   method: 'POST', // *GET, POST, PUT, DELETE, etc.
   mode: 'cors', // no-cors, cors, *same-origin
   redirect: 'follow', // manual, *follow, error
-  referrer: 'no-referrer' // *client, no-referrer
-}).then(response => response.json()) // parses response to JSON
+  referrer: 'no-referrer', // *client, no-referrer
+}).then((response) => response.json()) // parses response to JSON
 ```
 
 #### credentials
@@ -843,7 +845,7 @@ request.headers/response.headers
 ```js
 let myHeaders = new Headers({
   'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'text/plain'
+  'Content-Type': 'text/plain',
 })
 ```
 
@@ -867,7 +869,7 @@ options 不传, 默认 method 是"GET",
 
 ```js
 const myRequest = new Request('http://localhost/flowers.jpg')
-fetch(myRequest).then(response => response.json())
+fetch(myRequest).then((response) => response.json())
 ```
 
 #### options
@@ -877,7 +879,7 @@ fetch(myRequest).then(response => response.json())
 ```js
 const myRequest = new Request('http://localhost/api', {
   method: 'POST',
-  body: '{"foo":"bar"}'
+  body: '{"foo":"bar"}',
 })
 ```
 
@@ -892,8 +894,8 @@ new Response('<h1>Service Unavailable</h1>', {
   status: 503,
   statusText: 'Service Unavailable',
   headers: new Headers({
-    'Content-Type': 'text/html'
-  })
+    'Content-Type': 'text/html',
+  }),
 })
 ```
 
@@ -912,9 +914,9 @@ new Response('<h1>Service Unavailable</h1>', {
 例如
 
 ```js
-fetch(myRequest).then(function(response) {
+fetch(myRequest).then(function (response) {
   if (response.headers.get('content-type') === 'application/json') {
-    return response.json().then(function(json) {
+    return response.json().then(function (json) {
       // process your JSON further
     })
   } else {
@@ -928,7 +930,7 @@ fetch(myRequest).then(function(response) {
 多次使用同一个 response，需要调用 clone 进行复制
 
 ```js
-fetch(request).then(function(response) {
+fetch(request).then(function (response) {
   cache.put(request, response.clone())
   return response
 })
@@ -941,13 +943,13 @@ fetch(request).then(function(response) {
 ```js
 let myHeaders = new Headers({
   'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'text/plain'
+  'Content-Type': 'text/plain',
 })
 fetch(url, {
   method: 'GET',
   headers: myHeaders,
-  mode: 'cors'
-}).then(res => {
+  mode: 'cors',
+}).then((res) => {
   // TODO
 })
 ```

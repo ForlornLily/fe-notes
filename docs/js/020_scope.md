@@ -91,7 +91,7 @@ function foo() {
   console.log(1)
 }
 foo() //1
-foo = function() {
+foo = function () {
   console.log(2)
 }
 foo() //2
@@ -135,7 +135,7 @@ immediately-invoked function expressions: 立即调用函数表达式
 最常见的形式是一个匿名函数表达式。
 
 ```js
-;(function() {
+;(function () {
   var a = 3
   console.log(a) // 3
 })()
@@ -201,9 +201,9 @@ let value = 'world'
 ```
 
 ```js
-let params = (function() {
+let params = (function () {
   params = {
-    a: 1
+    a: 1,
   }
   return params
 })()
@@ -236,7 +236,7 @@ let value = 'hello' //报错
 function a() {
   for (let i = 0; i < 5; i++) {
     this.i = i
-    setTimeout(function() {
+    setTimeout(function () {
       console.log(i)
     }, 0)
     console.log(this.i)
@@ -287,13 +287,13 @@ function test(person) {
   person.age = 26
   person = {
     name: 'yyy',
-    age: 30
+    age: 30,
   }
   return person
 }
 const p1 = {
   name: 'xxx',
-  age: 25
+  age: 25,
 }
 const p2 = test(p1) // {name: 'yyy', age: 30}
 console.log(p1) //{name: 'xxx', age: 26}
@@ -324,7 +324,7 @@ console.log(p1) //{name: 'xxx', age: 26}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1'
+  a: '1',
 }
 let tmp = {}
 for (let key in test) {
@@ -340,7 +340,7 @@ console.log(tmp) //{a: '1', b: 2}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1'
+  a: '1',
 }
 let tmp = {}
 Object.assign(tmp, test)
@@ -354,7 +354,7 @@ console.log(tmp) // {a: '1'}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1'
+  a: '1',
 }
 let tmp = { ...test }
 console.log(tmp) //{a: '1'}
@@ -392,7 +392,7 @@ const deepCopy = {
     'RegExp',
     'Set',
     'Map',
-    'BigInt'
+    'BigInt',
   ], //Object.prototype.toString返回的所有类型
   type(obj) {
     return Object.prototype.toString.call(obj).slice(8, -1)
@@ -401,7 +401,7 @@ const deepCopy = {
     const types = this.types
     let i = types.length - 1
     do {
-      this['is' + types[i]] = function(elem) {
+      this['is' + types[i]] = function (elem) {
         return this.type.call(elem) == types[i]
       }
     } while (--i >= 0)
@@ -444,7 +444,7 @@ const deepCopy = {
       }
     }
     return target
-  }
+  },
 }
 ```
 
@@ -584,7 +584,7 @@ AO = VO + function parameters + arguments
 function foo(a) {
   var b = 2
   function c() {}
-  var d = function() {}
+  var d = function () {}
   b = 3
 }
 foo(1)
@@ -651,39 +651,13 @@ AO = {
 
 让值脱离执行环境，方便下次的垃圾回收
 
-#### V8 下的垃圾回收机制
-
-采用了分代式垃圾回收机制，将内存（堆）分为新生代和老生代两部分
-
-#### 新生代算法
-
-新生代中的对象一般存活时间较短
-
-- 内存空间分为两部分，分别为 From 空间和 To 空间。
-
-- 这两个空间，必定有一个空间是使用的，另一个空间是空闲的
-
-- 新分配的对象会被放入 From 空间中，From
-  空间被占满时垃圾回收开始，将存活对象复制到 To 空间，失活对象被销毁
-
-- 复制完成后 to 和 from 也就完成了互换
-
-#### 老生代
-
-进入老生代的对象可能是因为：
-
-- 新生代中的对象经历过一次垃圾回收，将对象从新生代空间移到老生代空间中。
-
-- To 空间的对象占比大小超过 25
-  %。在这种情况下，为了不影响到内存分配，会将对象从新生代空间移到老生代空间中
-
-老生代内进行标记清除和压缩
-
 ## 闭包(closure)
 
 闭包是依赖于词法作用域编写代码而产生的结果
 
-闭包是一个函数，这个函数有权访问另一个函数作用域中的变量（或者说自由变量：在函数中使用的，但既不是函数参数也不是函数的局部变量的变量）
+闭包是一个函数，这个函数有权访问另一个函数作用域中的变量  
+或者说自由变量：在函数中使用的，但既不是函数参数也不是函数的局部变量的变量  
+或者说可以让外部作用域访问内部作用域的局部变量
 
 ### 定义
 
@@ -725,7 +699,7 @@ a.say()
 ```js
 function test() {
   var a = 1
-  return function() {
+  return function () {
     a++
     console.log(a)
   }
