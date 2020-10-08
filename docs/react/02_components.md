@@ -18,9 +18,9 @@ class Welcome extends React.Component {
 
 ## props
 
-父组件以属性的形式给子组件传值/函数，子组件通过`props`接收/调用
+父组件以属性的形式给子组件传值/函数，子组件通过 `props` 接收/调用
 
-比如一个 TodoList。用类组件需要注意`this`的指向
+比如一个 TodoList。用类组件需要注意 `this` 的指向
 
 ```js
 //父组件中
@@ -30,11 +30,11 @@ import TodoItem from './TodoItem'
 class TodoList extends Component {
   constructor(props) {
     super(props)
-    // 当组件的state或者props发生改变的时候，render函数就会重新执行
+    // 当组件的 state 或者 props 发生改变的时候，render 函数就会重新执行
     this.state = {
-      list: []
+      list: [],
     }
-    //this的绑定都放在constructor处理，性能较好
+    // this 的绑定都放在 constructor 处理，性能较好
     this.handleItemDelete = this.handleItemDelete.bind(this)
   }
 
@@ -56,7 +56,7 @@ class TodoList extends Component {
   }
 
   handleItemDelete(index) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const list = [...prevState.list]
       list.splice(index, 1)
       return { list }
@@ -116,7 +116,7 @@ function App2() {
 }
 
 //进一步
-const Button = props => {
+const Button = (props) => {
   const { kind, ...other } = props
   const className = kind === 'primary' ? 'PrimaryButton' : 'SecondaryButton'
   return <button className={className} {...other} />
@@ -141,11 +141,11 @@ class TodoItem extends Component {
 TodoItem.propTypes = {
   content: PropTypes.string.isRequired, //数据类型是`string`且必输
   deleteItem: PropTypes.func,
-  index: PropTypes.number
+  index: PropTypes.number,
 }
 //默认值，对应vue的`default`
 TodoItem.defaultProps = {
-  content: 'hello' // 父组件没有传值时默认值是`hello`
+  content: 'hello', // 父组件没有传值时默认值是`hello`
 }
 ```
 
@@ -164,7 +164,7 @@ class CustomButton extends React.Component {
 }
 
 CustomButton.defaultProps = {
-  color: 'blue'
+  color: 'blue',
 }
 ```
 
@@ -186,15 +186,15 @@ class EventsSample extends React.Component {
     //第一种：手动bind
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick = e => {
+  handleClick = (e) => {
     //第一种
     console.log(e)
   }
-  secondClick = e => {
+  secondClick = (e) => {
     //第二种，属于实验性质，直接在class内写
     console.log(e)
   }
-  thirdClick = e => {
+  thirdClick = (e) => {
     //第三种
     console.log(e)
   }
@@ -203,7 +203,9 @@ class EventsSample extends React.Component {
       <>
         <button onClick={this.handleClick}>第一种，手动bind</button>
         <button onClick={this.secondClick}>第二种，直接在class内写</button>
-        <button onClick={e => this.thirdClick(e)}>第三种，使用箭头函数</button>
+        <button onClick={(e) => this.thirdClick(e)}>
+          第三种，使用箭头函数
+        </button>
       </>
     )
   }
@@ -292,7 +294,13 @@ componentDidUpdate(prevProps, prevState) {
 或者父组件的 render 函数被执行，也会被执行。  
 这样会引起不必要的渲染（比如父组件 render 之后，但是与子组件无关。子组件不需要更新）  
 此时可以用[shouldComponentUpdate](#shouldComponentUpdate)进行判断  
-render 是一个纯函数：state 不改变的情况下 return 的结果始终是一致的。并且不会和浏览器有交互，比如 ajax，应该在[componentDidMount](#componentDidMount)内
+render 是一个纯函数：state 不改变的情况下 return 的结果始终是一致的。并且不会和浏览器有交互，比如 ajax，应该在[componentDidMount](#componentDidMount)内  
+render 可以返回以下类型
+
+- React 元素
+- 数组
+- Portals
+- 字符串/ null / 布尔值
 
 ### componentDidMount
 
@@ -302,7 +310,8 @@ render 是一个纯函数：state 不改变的情况下 return 的结果始终�
 
 ### shouldComponentUpdate
 
-组件更新之前执行。目的是为了性能优化  
+尽可能用 PureComponent 来代替，不建议在 shouldComponentUpdate 中进行深层比较或使用 `JSON.stringify`
+组件更新之前执行。目的是为了性能优化。  
 返回 true/false  
 false 时后面的函数(componentWillUpdate，render，componentDidUpdate)都不会执行。  
 会收到两个回调参数。  
@@ -331,7 +340,7 @@ shouldComponentUpdate(nextProps, nextState) {
 ### componentDidUpdate
 
 更新结束后执行。首次渲染不会执行  
-如果执行了 getSnapshotBeforeUpdate，第三个参数值[getSnapshotBeforeUpdate](#getSnapshotBeforeUpdate)的返回值  
+如果执行了 getSnapshotBeforeUpdate，会作为第三个参数[getSnapshotBeforeUpdate](#getSnapshotBeforeUpdate) 传给 componentDidUpdate  
 `componentDidUpdate(prevProps, prevState, snapshot)`
 
 ### componentWillUnmount
@@ -348,6 +357,7 @@ shouldComponentUpdate(nextProps, nextState) {
 
 ## 错误边界
 
+只有类组件才能作为错误边界  
 官网[Error Boundaries](https://reactjs.org/docs/error-boundaries.html)  
 本质上是一个**Class 组件**，用于捕获**子组件**报错的情况下的异常处理  
 当 Class 组件具有`static getDerivedStateFromError()`或者`componentDidCatch()`的声明周期时，这个组件成为了一个错误边界  
@@ -387,7 +397,7 @@ class ErrorBoundary extends React.Component {
 - 事件
 - 异步代码
 - SSR
-- 错误边界本身的报错
+- 错误边界本身的报错  
   :::
 
 ## React.PureComponent
@@ -395,3 +405,19 @@ class ErrorBoundary extends React.Component {
 官网[React.PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)  
 通常可以用`PureComponent`代替 shouldComponentUpdate。  
 PureComponent 会进行浅比较。用法和 React.Component 一致
+
+## 动态引入
+
+使用 React.lazy（React.lazy 不支持 ssr）
+
+```js
+const HelloWorld = React.lazy(() => import('./HelloWorld'))
+```
+
+lazy 必须在 Suspense 内使用，Suspense 必须要有一个过渡的 `fallback` 属性用于 loading
+
+```jsx
+<Suspense fallback={<div>Loading...</div>}>
+  <HelloWorld />
+</Suspense>
+```

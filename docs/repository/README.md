@@ -25,6 +25,7 @@ sidebar: auto
   - [A Single Div](https://github.com/lynnandtonic/a-single-div)
   - [css3patterns](https://github.com/LeaVerou/css3patterns)
 - 博主[Coco](http://www.cnblogs.com/coco1s)
+- 博主[CSS 中二魔法使](https://github.com/alphardex)
 - [css-tricks](https://css-tricks.com)
 
 ### JS

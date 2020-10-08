@@ -43,7 +43,49 @@ useEffect(() => {
 }, [props.friend.id]) // 仅在 props.friend.id 发生变化时，重新订阅
 ```
 
-如果只想初始化调一次，而不是每次更新都调，传入空数组`[]`即可
+如果只想初始化调一次，而不是每次更新都调，传入空数组`[]`即可  
+::: warning
+注意：effect 的依赖默认值需要是同一个引用  
+例
+
+```js
+// 死循环
+function Child(props) {
+  const {
+    data = [], // 对象不相等，每次生成的 `[]` 都不等，导致 useEffect 依赖每次都会更新
+  } = props
+  const [map, setMap] = useState({})
+  useEffect(() => {
+    let tmp_map = {}
+    data.forEach((item) => {
+      tmp_map[1] = 'hello'
+    })
+    setMap(tmp_map)
+  }, [data])
+  console.log(111)
+  return <div className="modal">11</div>
+}
+```
+
+```js
+// 正常
+const empty_arr = []
+function Child(props) {
+  const { data = empty_arr } = props
+  const [map, setMap] = useState({})
+  useEffect(() => {
+    let tmp_map = {}
+    data.forEach((item) => {
+      tmp_map[1] = 'hello'
+    })
+    setMap(tmp_map)
+  }, [data])
+  console.log(111)
+  return <div className="modal">11</div>
+}
+```
+
+:::
 
 ### useLayoutEffect
 
@@ -115,38 +157,7 @@ const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
 
 ## useRef
 
-返回的是个对象，可以用`current`存储任意变量
-
-```js
-const refContainer = useRef(initialValue)
-```
-
-```js
-const inputEl = useRef(null)
-const onButtonClick = () => {
-  // `current` 指向已挂载到 DOM 上的文本输入元素
-  inputEl.current.focus()
-}
-```
-
-## useImperativeHandle
-
-useImperativeHandle 应当与 forwardRef 一起用
-
-```js
-function FancyInput(props, ref) {
-  const inputRef = useRef();
-  useImperativeHandle(ref, () => ({
-    focus: () => {
-      inputRef.current.focus();
-    }
-  }));
-  return <input ref={inputRef} ... />;
-}
-FancyInput = forwardRef(FancyInput);
-```
-
-`<FancyInput ref={inputRef} />` 的父组件可以调用`inputRef.current.focus()`
+见[useRef](./09_dom.md#useRef)
 
 ## 自定义 hook
 

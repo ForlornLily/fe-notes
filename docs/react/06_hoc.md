@@ -29,16 +29,10 @@ const EnhancedComponent = logProps(InputComponent)
 
 ```js
 // React Redux 的 `connect` 函数
-const ConnectedComment = connect(
-  commentSelector,
-  commentActions
-)(CommentList)
+const ConnectedComment = connect(commentSelector, commentActions)(CommentList)
 //等价于
 // connect 是一个函数，它的返回值为另外一个函数。
-const enhance = connect(
-  commentListSelector,
-  commentListActions
-)
+const enhance = connect(commentListSelector, commentListActions)
 // 返回值为 HOC，它会返回已经连接 Redux store 的组件
 const ConnectedComment = enhance(CommentList)
 ```
@@ -56,13 +50,13 @@ render() {
 }
 ```
 
-2. refs 无法传递，解决方案是通过[forwardRef](./01_jsx.md#forwardref)
+2. refs 无法传递，解决方案是通过[forwardRef](./09_dom.md#forwardRef)
 
 ## React.memo
 
 高阶组件。只适用于函数组件，和 PureComponent 功能一致  
 如果传入第二个参数，根据第二个参数的返回值来确定是否更新。返回 true 不更新  
-`React.memo`只比较 props
+`React.memo`只比较 props，如果想要定制化，传入第二个参数
 
 ```js
 import React, { Component, memo } from 'react'
@@ -80,12 +74,12 @@ class App extends Component {
     super(props)
     this.state = {
       value: '1',
-      test: '111'
+      test: '111',
     }
   }
   changeValue = () => {
     this.setState({
-      value: '2'
+      value: '2',
     })
   }
   render() {

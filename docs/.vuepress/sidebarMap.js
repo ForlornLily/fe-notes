@@ -19,7 +19,6 @@ const sidebarMap = [
   { title: 'jQuery', dirname: 'jquery' },
   { title: '网络', dirname: 'network' },
   { title: '设计模式', dirname: 'design' },
-  { title: '综合方案', dirname: 'case' },
   { title: 'Photoshop', dirname: 'ps' },
   { title: '踩坑', dirname: 'trick' },
   { title: 'Docker', dirname: 'docker' },
@@ -34,6 +33,7 @@ const sidebarMap = [
   { title: 'Jest', dirname: 'jest' },
   { title: 'Handlebars', dirname: 'handlebars' },
   { title: 'Electron', dirname: 'electron' },
+  { title: 'npm', dirname: 'npm' },
 ]
 
 module.exports = sidebarMap

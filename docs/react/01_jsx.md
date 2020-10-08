@@ -2,7 +2,7 @@
 
 官网[Introducing JSX](https://reactjs.org/docs/introducing-jsx.html)  
 React 的专用语法，一定要引入 React 才能编译  
-JSX 通过`React.createElement`生成 JS 对象，生成虚拟 DOM，虚拟 DOM 生成真实 DOM
+本质上 JSX 只是 `React.createElement` 的语法糖
 
 ```js
 function getGreeting(user) {
@@ -47,6 +47,26 @@ return (
     <ChildB />
   </>
 )
+```
+
+### 传递 key
+
+React.Fragment 只能接受 key 作为属性，其他属性无效
+
+```jsx
+function Glossary(props) {
+  return (
+    <dl>
+      {props.items.map((item) => (
+        // 没有`key`，React 会发出一个关键警告
+        <React.Fragment key={item.id}>
+          <dt>{item.term}</dt>
+          <dd>{item.description}</dd>
+        </React.Fragment>
+      ))}
+    </dl>
+  )
+}
 ```
 
 ## DOM 元素
@@ -101,7 +121,7 @@ return (
 ```js
 const divStyle = {
   WebkitTransition: 'all', // note the capital 'W' here
-  msTransition: 'all' // 'ms' is the only lowercase vendor prefix
+  msTransition: 'all', // 'ms' is the only lowercase vendor prefix
 }
 
 function ComponentWithTransition() {
@@ -121,74 +141,6 @@ return {
 }
 ```
 
-## ref
-
-[React.createRef](https://reactjs.org/docs/react-api.html#reactcreateref)  
-对应 Vue 的`ref`属性，即指向 DOM 元素的引用  
-使用`createRef`来创建，或者 ref 直接使用一个函数  
-比如初始化后输入框聚焦, 注意 createRef 的时候的`current`  
-但更广义的 `ref` 应该是一个容器，和 DOM 挂钩只是很少的一部分，参考[React Hooks 的体系设计之三 - 什么是 ref](https://zhuanlan.zhihu.com/p/109742536)
-
-```js
-class MyComponent extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.inputRef = React.createRef()
-    this.handleChange = this.handleChange.bind(this)
-  }
-
-  render() {
-    return (
-      <div>
-        {/* createRef */}
-        <input type="text" ref={this.inputRef} />
-        {/* 使用函数 */}
-        <input ref={e => (this.input = e)} onChange={this.handleChange} />
-      </div>
-    )
-  }
-
-  componentDidMount() {
-    //注意current
-    this.inputRef.current.focus()
-  }
-
-  handleChange() {
-    //直接指向，不需要current
-    console.log(this.input)
-  }
-}
-```
-
-## forwardRef
-
-把本身的 ref 传递给子组件
-
-```js
-const CustomInput = React.forwardRef((props, ref) => {
-  //把CustomInput的ref传递给子组件
-  return <input ref={ref} />
-})
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.inputRef = React.createRef()
-  }
-  render() {
-    return (
-      <div>
-        <CustomInput type="text" ref={this.inputRef} />
-      </div>
-    )
-  }
-  componentDidMount() {
-    //注意current
-    this.inputRef.current.focus()
-  }
-}
-```
-
 ## 关于 falsy
 
 `null`, `undefined`, `true`, `false`放在标签内，都不会被渲染  
@@ -205,4 +157,14 @@ class App extends React.Component {
 <div>{undefined}</div>
 
 <div>{true}</div>
+```
+
+### 数字 0
+
+数字 0 会被渲染，如果做条件渲染，确保条件一定是布尔值
+
+```jsx
+{
+  list.length > 0 && <input />
+}
 ```

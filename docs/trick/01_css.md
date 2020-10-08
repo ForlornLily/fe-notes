@@ -1,6 +1,10 @@
-# 常用
+# CSS
 
 属性尽量都简写
+
+推荐阅读
+
+- [我写 CSS 的常用套路](https://juejin.im/post/6844904033405108232)
 
 ## 一行文字，多余用省略号显示
 
@@ -9,6 +13,15 @@ display: block;
 text-overflow: ellipsis;
 overflow: hidden;
 white-space: nowrap;
+```
+
+### 双行文字，多余用省略号
+
+```css
+display: -webkit-box;
+overflow: hidden;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
 ```
 
 ## 去掉默认样式

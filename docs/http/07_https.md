@@ -12,7 +12,7 @@ SSL（Secure Socket Layer 安全套接层）组合使用 HTTP 就是 HTTPS。
 
 可以对通信进行加密，让 SSL 建立安全线路
 
-SSL 还可以使用证书，确认服务端和客户端身份
+还可以使用证书，确认服务端和客户端身份
 
 原本由 HTTP 直接和 TCP 通信，HTTPS 变成 HTTPS 先和 SSL 通信，再由 SSL 和 TCP 通信
 

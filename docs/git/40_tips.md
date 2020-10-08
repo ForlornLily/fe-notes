@@ -29,3 +29,54 @@ git push origin --delete 远程分支名
 ```bash
 git remote update origin --prune
 ```
+
+## 授权
+
+### Permission denied (publickey)
+
+Ubuntu 连接 GitLab 出现权限问题，需要添加公钥
+
+1. Ubuntu 内生成公钥
+
+```bash
+ssh-keygen -t rsa -C "邮箱"
+```
+
+2. 按提示一路 Enter，最终会把公钥放在某个地方
+
+```
+Your public key has been saved in xxx/.ssh/id_rsa.pub
+```
+
+3. 将生成的公钥(id_rsa.pub)粘贴到 GitLab → 账户 → SSH Keys
+
+## 合并多个 commit
+
+- 当前分支合并
+
+```bash
+# rebase 到要合并的开头分支
+git rebase -i hash值
+# 进入编辑模式，修改 commit 信息，把要合并的信息都改成 `squash `
+# 保存后退出，会进入 commit message 内，把多余的 message 删除即可
+```
+
+误操作了可以用 `git rebase --abort` 撤销
+
+- 合并别的分支
+
+```bash
+git merge --squash another-branch
+```
+
+## 拉取远程分支
+
+```bash
+git checkout -b locale-name remotes/origin/branch-name
+```
+
+## 还原没有 commit 的文件
+
+```bash
+git checkout -- 文件名
+```

@@ -27,14 +27,14 @@
     "singleQuote": true,
     "preserve": "never"
   },
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "gray-matter": "^4.0.2",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
-    "markdown-it-include": "^1.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "markdown-it-include": "^1.1.1",
     "markdown-toc": "^1.2.0",
-    "prettier": "^2.0.1",
-    "vuepress": "^1.4.0"
-  },
-  "dependencies": {}
+    "prettier": "^2.0.5",
+    "vuepress": "^1.5.2"
+  }
 }

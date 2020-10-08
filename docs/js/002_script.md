@@ -2,7 +2,7 @@
 
 ## &lt;script&gt;
 
-常用属性：`async`，`defer`，`src`
+常用属性：`async`，`defer`，`src`，`crossorigin`
 
 - 立即加载并执行指定的脚本，“立即”指的是读到 script 就加载并执行，script 之后的文档暂停
 - 代码从上到下依次解释。
@@ -78,7 +78,7 @@ defer
 ### DOMContentLoaded
 
 ```js
-document.addEventListener('DOMContentLoaded', e => {
+document.addEventListener('DOMContentLoaded', (e) => {
   console.log('DOMContentLoaded')
 })
 ```
@@ -103,11 +103,11 @@ HTML document 加载和解析后触发。不会等待 style, img 加载
 
 ```js
 //不触发
-document.body.addEventListener('load', function() {
+document.body.addEventListener('load', function () {
   console.log('load')
 })
 //触发
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
   console.log('load')
 })
 ```

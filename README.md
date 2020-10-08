@@ -1,4 +1,4 @@
-Base on [vuepress](https://vuepress.vuejs.org/)
+Based on [vuepress](https://vuepress.vuejs.org/)
 
 短域名地址：[https://git.io/JegFf](https://git.io/JegFf)，来自[github 生成短域名](https://git.io/)
 

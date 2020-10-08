@@ -74,6 +74,28 @@ mkdir /usr/local/bin
 ln -s /root/node/bin/node /usr/local/bin/node
 ```
 
+### Ubuntu 下 nvm 安装
+
+使用 `nvm` 进行安装
+
+```bash
+# 安装 nvm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.4/install.sh | bash
+source ~/.bashrc
+```
+
+执行命令查看是否安装成功
+
+```bash
+nvm --version
+```
+
+安装 nodejs
+
+```bash
+nvm install v12.8.3
+```
+
 ## 用处
 
 JS 是脚本语言，脚本语言都需要一个解析器才能运行。对于写在 HTML 页面里的 JS，浏览器充当了解析器的角色。而对于需要独立运行的 JS，NodeJS 就是一个解析器。

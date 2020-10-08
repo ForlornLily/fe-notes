@@ -21,54 +21,54 @@ module.exports = {
         link: '/',
       },
       {
-        text: '前端',
+        text: '基础',
         items: [
           { text: 'HTML&CSS', link: '/css/' },
           { text: 'JS', link: '/js/' },
-          { text: 'jQuery', link: '/jquery/' },
-          {
-            text: 'Vue',
-            items: [
-              { text: 'Vue2.x', link: '/vue/' },
-              { text: 'Vue Router', link: '/vue-router/' },
-              { text: 'Vuex', link: '/vuex/' },
-              { text: 'Vue3.x', link: '/vue-3.x/' },
-            ],
-          },
+        ],
+      },
+      { text: 'jQuery', link: '/jquery/' },
+      {
+        text: 'Vue',
+        items: [
+          { text: 'Vue2.x', link: '/vue/' },
+          { text: 'Vue Router', link: '/vue-router/' },
+          { text: 'Vuex', link: '/vuex/' },
+          { text: 'Vue3.x', link: '/vue-3.x/' },
+        ],
+      },
+      {
+        text: 'React',
+        items: [
+          { text: 'React', link: '/react/' },
+          { text: 'Transition', link: '/transition/' },
+          { text: 'React Router', link: '/react-router/' },
+          { text: 'Next', link: '/nextjs/' },
+        ],
+      },
+      {
+        text: '工程化',
+        items: [
           { text: 'webpack4.x', link: '/webpack4/' },
           { text: 'TypeScript', link: '/typescript/' },
-          {
-            text: 'React',
-            items: [
-              { text: 'React', link: '/react/' },
-              { text: 'Transition', link: '/transition/' },
-              { text: 'React Router', link: '/react-router/' },
-              { text: 'Next', link: '/nextjs/' },
-            ],
-          },
           { text: 'Redux', link: '/redux/' },
-          {
-            text: '测试',
-            items: [{ text: 'Jest', link: '/jest/' }],
-          },
-          { text: 'Handlebars', link: '/handlebars/' },
-          { text: '踩坑', link: '/trick/' },
+          { text: 'Jest', link: '/jest/' },
         ],
       },
       {
         text: '后台',
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
+          { text: 'npm', link: '/npm/' },
           { text: 'Express', link: '/express/' },
           { text: 'Docker', link: '/docker/' },
           { text: 'Linux', link: '/linux/' },
           { text: 'redis', link: '/redis/' },
           { text: 'MongoDB', link: '/mongodb/' },
-          { text: 'Electron', link: '/electron/' },
         ],
       },
       {
-        text: '计算机',
+        text: '计算机通识',
         items: [
           {
             text: '算法',
@@ -90,13 +90,15 @@ module.exports = {
       {
         text: '其他',
         items: [
-          { text: 'Photoshop', link: '/ps/' },
+          { text: 'Electron', link: '/electron/' },
+          { text: 'Handlebars', link: '/handlebars/' },
+          { text: '踩坑', link: '/trick/' },
           { text: '设计模式', link: '/design/' },
-          { text: '综合方案', link: '/case/' },
           { text: 'Git', link: '/git/' },
           { text: 'Yarn', link: '/yarn/' },
           { text: '文案排版', link: '/copywriting/' },
           { text: '网站', link: '/repository/' },
+          { text: 'Photoshop', link: '/ps/' },
         ],
       },
     ],
