@@ -14,6 +14,10 @@ webp 格式的图片兼容性较差
 [参考链接](https://www.zhihu.com/question/39516424)  
 结论：不要让字体小于 12px
 
+## 上传
+
+多选情况下，input 触发的 change 无法按照用户选择的先后顺序
+
 ## safari
 
 ### cookie 跨域
@@ -35,7 +39,7 @@ localStorage
    解决方案： 失焦的时候滚至顶部
 
 ```js
-setTimeout(function() {
+setTimeout(function () {
   var scrollHeight =
     document.documentElement.scrollTop || document.body.scrollTop || 0
   window.scrollTo(0, Math.max(scrollHeight - 1, 0))
