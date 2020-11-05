@@ -15,15 +15,12 @@ const sidebarMap = [
   { title: 'Yarn', dirname: 'yarn' },
   { title: 'Vue Router', dirname: 'vue-router' },
   { title: 'Vuex', dirname: 'vuex' },
-  { title: 'Express', dirname: 'express' },
   { title: 'jQuery', dirname: 'jquery' },
   { title: '网络', dirname: 'network' },
   { title: '设计模式', dirname: 'design' },
   { title: 'Photoshop', dirname: 'ps' },
   { title: '踩坑', dirname: 'trick' },
   { title: 'Docker', dirname: 'docker' },
-  { title: 'redis', dirname: 'redis' },
-  { title: 'mongodb', dirname: 'mongodb' },
   { title: 'React', dirname: 'react' },
   { title: 'Transition', dirname: 'transition' },
   { title: 'React Router', dirname: 'react-router' },
@@ -34,7 +31,6 @@ const sidebarMap = [
   { title: 'Handlebars', dirname: 'handlebars' },
   { title: 'Electron', dirname: 'electron' },
   { title: 'npm', dirname: 'npm' },
-  { title: 'server', dirname: 'server' },
 ]
 
 module.exports = sidebarMap

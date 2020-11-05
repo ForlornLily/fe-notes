@@ -60,12 +60,8 @@ module.exports = {
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
           { text: 'npm', link: '/npm/' },
-          { text: 'Express', link: '/express/' },
-          { text: '后端开发', link: '/server/' },
           { text: 'Linux', link: '/linux/' },
           { text: 'Docker', link: '/docker/' },
-          { text: 'redis', link: '/redis/' },
-          { text: 'MongoDB', link: '/mongodb/' },
         ],
       },
       {
