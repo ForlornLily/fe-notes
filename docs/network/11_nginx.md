@@ -527,3 +527,7 @@ location ~* \.(png|gif|jpg|jpeg)$ {
     expires     10h;# 设置过期时间为10小时
 }
 ```
+
+## OpenResty
+
+## njs

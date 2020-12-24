@@ -80,3 +80,12 @@ git checkout -b locale-name remotes/origin/branch-name
 ```bash
 git checkout -- 文件名
 ```
+
+## 删除 tag
+
+```bash
+# 本地
+git tag -d v3.0.2
+# 远程
+git push origin --delete v3.0.2
+```
