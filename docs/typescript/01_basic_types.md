@@ -7,13 +7,16 @@
 
 ## number
 
-支持二进制、八进制、十六进制
+支持 ES6 的所有进制（比如二进制、十六进制）
 
 ## bigint
 
+```ts
+let big: bigint = 100n
+```
+
 ::: warning
-只有开启 ESNext 才支持  
-`tsc greeter.ts --target ESNEXT --strictNullChecks`
+只有设置 target 是 `ES2020` 以上才支持  
 :::
 
 ## string
@@ -33,7 +36,7 @@ let list: number[] = [1, 2, 3]
 2. 使用泛型:`Array<Type>`
 
 ```ts
-let list: Array<numer> = [1, 2, 3]
+let list: Array<number> = [1, 2, 3]
 ```
 
 ### 只读
@@ -173,22 +176,33 @@ function myFunction(): void {
 
 ## null 和 undefined
 
-默认情况下`null`和`undefined`是所有类型的子类型  
-其他类型的值可以赋值给`null`和`undefined`
+- 关闭 `strictNullChecks` 情况下 `null` 可以赋值给其他类型
 
 ```ts
+/** 关闭 strictNullChecks 情况下 */
 let type: null
 type = 'hello' //报错，不能赋值给null
 let num: number = 1
 num = null //null可以赋值给其他类型
 ```
 
-::: tip
-配置`strictNullChecks`为 true 后
+- 否则只能赋值给 `unknown` 或者 `any`
 
-- 只有`any`类型的值才能赋值给 null 和 undefined
+```ts
+/** 默认情况，即开启 strictNullChecks */
+let unknownNum: unknown = 1
+unknownNum = null // 不报错
+```
+
 - undefined 可以赋值给`void`，但是 void 不可以赋值给 undefined
-  :::
+
+```ts
+/** 返回undefined，但可以赋值给 void */
+function myFunction(): void {
+  console.log('hello, world')
+  return
+}
+```
 
 ### 叹号后缀
 
@@ -209,7 +223,7 @@ function processEntity(e?: Entity) {
 从不存在的值类型，属于 TypeScript 的底层
 
 `void` 表示函数没有返回值  
-`nerver` 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环  
+`never` 表示函数不可能有返回值，最常见的是报错；或者函数内部是个死循环  
 常见场景是枚举所有可能类型，如果漏了就可以进行提示  
 参考[知乎](https://www.zhihu.com/question/354601204)
 

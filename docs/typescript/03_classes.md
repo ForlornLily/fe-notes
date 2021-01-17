@@ -32,6 +32,19 @@ console.log(person.serialNumber) //正常
 console.log(person.name) //报错，name是private，只能在Factory访问
 ```
 
+TS 3.8 支持新的 private 语法 `#`
+
+```ts
+class Animal {
+  #name: string
+  constructor(theName: string) {
+    this.#name = theName
+  }
+}
+
+new Animal('Cat').#name // 报错
+```
+
 ## 抽象类 abstract
 
 抽象类是供其他类继承的基类

@@ -7,6 +7,7 @@
 - http-server: 全局安装 http-server, 用 nodejs 创建一个服务器
 - body-parser: 解析 header
 - cross-env: 跨平台地设置和使用环境变量`NODE_ENV`
+- autocannon: 压测
 
 ```json
 "scripts": {

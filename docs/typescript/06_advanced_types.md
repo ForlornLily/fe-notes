@@ -1,10 +1,12 @@
 # 高级类型
 
-官网[Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
+- [Unions and Intersection Types](https://www.typescriptlang.org/docs/handbook/unions-and-intersections.html)
+- [Advanced Types](https://www.typescriptlang.org/docs/handbook/advanced-types.html)
 
 ## 交叉类型
 
-让一个对象拥有多个对象的所有功能
+Intersection Types  
+让一个对象拥有多个对象的所有功能，即取并集
 
 ```ts
 function extend<T extends object, U extends object>(

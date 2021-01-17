@@ -86,6 +86,8 @@ git checkout -- 文件名
 ```bash
 # 本地
 git tag -d v3.0.2
-# 远程
+# 删除远程分支
 git push origin --delete v3.0.2
+# 删除远程 tag
+git push origin :refs/tags/1.0.4
 ```
