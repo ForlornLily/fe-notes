@@ -137,3 +137,7 @@ iframe 的问题见[Why Not Iframe](https://www.yuque.com/kuitos/gky7yw/gesexv)
 
 比如：iframe 内的路由跳转，会影响到外部的浏览器前进/后退。  
 又比如不居中 iframe 里面想要弹出一个居中在整个浏览器的对话框
+
+## Chrome 跨域没带 cookie
+
+`chrome://flags/` 禁用 `SameSite by default cookies`

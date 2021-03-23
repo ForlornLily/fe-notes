@@ -20,7 +20,7 @@ sidebar: auto
 - [CSS 参考手册](http://css.doyoe.com/): [github](https://github.com/doyoe/css-handbook)
 - [normalize.css](https://github.com/necolas/normalize.css): 尽可能保持各个浏览器表现统一
 - 纯 CSS 实现
-  - [NES](https://github.com/doyoe/css-handbook)
+  - [NES](https://github.com/nostalgic-css/NES.css)
   - [animate](https://github.com/daneden/animate.css)
   - [A Single Div](https://github.com/lynnandtonic/a-single-div)
   - [css3patterns](https://github.com/LeaVerou/css3patterns)

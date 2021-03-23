@@ -91,3 +91,17 @@ git push origin --delete v3.0.2
 # 删除远程 tag
 git push origin :refs/tags/1.0.4
 ```
+
+## 找回删除分支
+
+查看所有的引用变动的日志
+
+```bash
+git reflog
+```
+
+找到最后删除前的变动 id
+
+```bash
+git checkout 最后变动的 id
+```
