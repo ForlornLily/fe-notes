@@ -209,7 +209,7 @@ const arr = [3, 6, 7, 9]
 let obj = {
   getNum(value) {
     return value > 5
-  }
+  },
 }
 let temp = arr.find((value, index, arr) => {
   return obj.getNum(value)
@@ -233,7 +233,7 @@ function every() {
   })
   console.log({
     i,
-    result
+    result,
   })
 }
 ```
@@ -248,20 +248,20 @@ function every() {
 const arr = [
   {
     id: 1,
-    name: 'Saber'
+    name: 'Saber',
   },
   {
     id: 2,
-    name: 'Archer'
+    name: 'Archer',
   },
   {
     id: 3,
-    name: 'Rider'
+    name: 'Rider',
   },
   {
     id: 4,
-    name: 'Lancer'
-  }
+    name: 'Lancer',
+  },
 ]
 function filter() {
   let i = 0
@@ -271,7 +271,7 @@ function filter() {
   })
   console.log({
     i,
-    result
+    result,
   })
 }
 ```
@@ -286,7 +286,7 @@ function filter() {
 
 ```js
 const arr = [1, 2, 3, 4]
-let result = arr.forEach(item => {
+let result = arr.forEach((item) => {
   return item
 })
 console.log(result) //undefined
@@ -305,7 +305,7 @@ arr.forEach() //报错，TypeError: undefined is not a function
 
 ### 缩小方法: reduce, reduceRight
 
-一般用来四则运算。同样需要传入一个函数
+一般用来四则运算或者去重。同样需要传入一个函数
 
 reduceRight 和 reduce 反向相反，从最后一项开始。
 
@@ -319,12 +319,29 @@ function reduce() {
     return prev + cur
   })
   console.log({
-    result
+    result,
   })
 }
 ```
 
 ![](../images/5e7b33cedaa1adb1cad56be56687678e.png)
+
+```js
+function unique(arr, initialValue) {
+  let hash = {}
+  return arr.reduce(function (previousValue, currentValue, index, array) {
+    if (!hash[currentValue]) {
+      hash[currentValue] = true
+      previousValue.push(currentValue)
+    }
+    return previousValue
+  }, initialValue)
+}
+
+const uniqueArr = unique([1, 2, 2, 4, 4, 6, 1], [])
+
+console.log(uniqueArr) // [1, 2, 4, 6]
+```
 
 ### 比较 includes
 
@@ -380,11 +397,11 @@ flatMap 只会降维一层
 
 ```js
 var test1 = [1, 2]
-test1.flatMap(item => item * 2) // [2, 4], 与map一致
+test1.flatMap((item) => item * 2) // [2, 4], 与map一致
 var test3 = [1, [2, 3]]
-test3.flatMap(item => [item * 2]) // [2, NaN]
+test3.flatMap((item) => [item * 2]) // [2, NaN]
 var test2 = [1, [2]]
-test2.flatMap(item => [item * 2]) // [2, 4]
+test2.flatMap((item) => [item * 2]) // [2, 4]
 ```
 
 ## 数组解构
@@ -447,7 +464,7 @@ console.log(items[0]) // 2
 ```js
 var test = {
   0: 'a',
-  1: 'b'
+  1: 'b',
 }
 console.log(Array.from(test)) //[]
 ```
@@ -456,7 +473,7 @@ console.log(Array.from(test)) //[]
 var test2 = {
   0: 'a',
   1: 'b',
-  length: 2
+  length: 2,
 }
 
 console.log(Array.from(test2)) //['a', 'b']
@@ -470,7 +487,7 @@ var arrayLike = {
   *[Symbol.iterator]() {
     yield this[1]
     yield this[0]
-  }
+  },
 }
 
 console.log(Array.from(arrayLike)) // ['b', 'a']，优先级比length高
@@ -482,7 +499,7 @@ console.log(Array.from(arrayLike)) // ['b', 'a']，优先级比length高
 
 ```js
 function translate() {
-  return Array.from(arguments, value => value + 1)
+  return Array.from(arguments, (value) => value + 1)
 }
 let numbers = translate(1, 2, 3)
 console.log(numbers) // 2,3,4
@@ -497,7 +514,7 @@ let helper = {
   diff: 1,
   add(value) {
     return value + this.diff
-  }
+  },
 }
 function translate() {
   return Array.from(arguments, helper.add, helper)
