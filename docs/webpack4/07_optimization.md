@@ -20,7 +20,7 @@ output: {
 
 ### package.json
 
-开启 tree shaking 之后 webapck 只解析有导出(export)的模块
+开启 tree shaking 之后 webpack 只解析有导出(export)的模块
 
 像是 babel-pollyfill，并没有导出，而是
 全局重写的 promise 等，为了保证类似 pollyfill 模块的正常使用，需要在 package.json 内单独配置这些
@@ -63,7 +63,7 @@ ES6 module 的特点
 ```js
 function Senhai() {}
 
-Senhai.prototype.servant = function() {}
+Senhai.prototype.servant = function () {}
 
 var a = 'Saber' + 'Alter',
   b
@@ -72,7 +72,7 @@ if (a == 'QB') {
 } else {
   b = Senhai
 }
-b.prototype.unique = function() {
+b.prototype.unique = function () {
   // 将 array 中的重复元素去除
 }
 
@@ -130,8 +130,8 @@ splitChunks 的配置见官网[split-chunks-plugin](https://webpack.js.org/plugi
 module.exports = {
   //...
   module: {
-    noParse: /jquery|lodash/
-  }
+    noParse: /jquery|lodash/,
+  },
 }
 ```
 
@@ -148,8 +148,8 @@ module.exports = {
   module.exports = {
     //...
     externals: {
-      jquery: 'jQuery'
-    }
+      jquery: 'jQuery',
+    },
   }
   ```
 
@@ -176,7 +176,7 @@ module.exports = {
 //忽略moment下的locale目录
 new webpack.IgnorePlugin({
   resourceRegExp: /^\.\/locale$/,
-  contextRegExp: /moment$/
+  contextRegExp: /moment$/,
 })
 
 //只引入需要的语言
@@ -231,20 +231,20 @@ module.exports = {
   mode: 'production',
   // 编译入口
   entry: {
-    main: './src/index.js'
+    main: './src/index.js',
   },
   // 目标文件
   output: {
     path: path.join(__dirname, 'dist/'),
-    filename: '[name].js'
+    filename: '[name].js',
   },
   // dll相关配置
   plugins: [
     new webpack.DllReferencePlugin({
       context: __dirname,
       // manifest就是我们第一步中打包出来的json文件
-      manifest: require('./dist/vendor-manifest.json')
-    })
-  ]
+      manifest: require('./dist/vendor-manifest.json'),
+    }),
+  ],
 }
 ```

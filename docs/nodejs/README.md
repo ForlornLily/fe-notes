@@ -7,6 +7,10 @@
 - [Node.js 入门指南和实践](https://juejin.im/post/5e0006c251882512795675f9)
 - [《深入浅出 Node.js》](https://www.ituring.com.cn/book/1290)
 
+## 安装
+
+见[官网](https://nodejs.org/en/download/package-manager/)
+
 ## windows 安装(个人偏好)
 
 npx 启动路径不能带空格，Program Files 要全部替换掉，暂时改成 project\\node
