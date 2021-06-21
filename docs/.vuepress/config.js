@@ -95,6 +95,7 @@ module.exports = {
           { text: 'Yarn', link: '/yarn/' },
           { text: '文案排版', link: '/copywriting/' },
           { text: '网站', link: '/repository/' },
+          { text: '协议', link: '/license/' },
           { text: 'Photoshop', link: '/ps/' },
         ],
       },

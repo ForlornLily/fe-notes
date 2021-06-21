@@ -31,6 +31,7 @@ const sidebarMap = [
   { title: 'Handlebars', dirname: 'handlebars' },
   { title: 'Electron', dirname: 'electron' },
   { title: 'npm', dirname: 'npm' },
+  { title: '协议', dirname: 'license' },
 ]
 
 module.exports = sidebarMap
