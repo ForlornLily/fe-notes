@@ -61,6 +61,10 @@ sidebar: auto
 - HTML 和 CSS： [中译](https://codeguide.bootcss.com/), [原文](https://github.com/mdo/code-guide)
 - [ESlint](https://github.com/eslint/eslint)
 
+```json
+"lint:init": "eslint --init",
+```
+
 ## 性能
 
 - [Front-End-Performance-Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist): 前端性能清单

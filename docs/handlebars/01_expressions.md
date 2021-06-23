@@ -125,3 +125,10 @@ const template = Handlebars.compile(
   {{/each}}`
 )
 ```
+
+## 注释
+
+```handlebars
+{{! 注释不会渲染}}
+<!-- 注释会被渲染到 HTML -->
+```
