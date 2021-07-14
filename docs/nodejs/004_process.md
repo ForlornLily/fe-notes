@@ -50,7 +50,7 @@ process.cwd() //D:\project\express-ts
 可以传入一个可选的参数`code`，表示退出成功时的状态码，默认为 0
 
 ```js
-process.on('exit', code => {
+process.on('exit', (code) => {
   console.log(code) //666
 })
 process.exit(666)
@@ -80,5 +80,17 @@ process.stdin.on('readable', () => {
 
 process.stdin.on('end', () => {
   process.stdout.write('结束监听')
+})
+```
+
+## 监听未驳回的异常
+
+`uncaughtException`
+
+```js
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION\n', err.stack)
+  // 在这里做一些必要的清理工作，例如关闭数据库连接
+  process.exit(1)
 })
 ```

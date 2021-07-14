@@ -1,4 +1,4 @@
-# tips
+# Git
 
 ## 指定 clone 深度
 
