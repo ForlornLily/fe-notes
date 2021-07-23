@@ -24,7 +24,7 @@ module.exports = {
         text: '基础',
         items: [
           { text: 'HTML&CSS', link: '/css/' },
-          { text: 'JS', link: '/js/' },
+          { text: 'JavaScript', link: '/js/' },
         ],
       },
       { text: 'jQuery', link: '/jquery/' },
@@ -56,12 +56,12 @@ module.exports = {
         ],
       },
       {
-        text: '后台',
+        text: 'NodeJS',
         items: [
           { text: 'NodeJS', link: '/nodejs/' },
           { text: 'npm', link: '/npm/' },
-          { text: 'Linux', link: '/linux/' },
-          { text: 'Docker', link: '/docker/' },
+          { text: 'Yarn', link: '/yarn/' },
+          { text: 'Electron', link: '/electron/' },
         ],
       },
       {
@@ -82,17 +82,25 @@ module.exports = {
               { text: '网络综合', link: '/network/' },
             ],
           },
+          {
+            text: '操作系统',
+            items: [
+              { text: 'Linux', link: '/linux/' },
+              { text: 'Docker', link: '/docker/' },
+            ],
+          },
+          {
+            text: '设计模式',
+            items: [{ text: '常见', link: '/design/' }],
+          },
         ],
       },
       {
         text: '其他',
         items: [
-          { text: 'Electron', link: '/electron/' },
           { text: 'Handlebars', link: '/handlebars/' },
           { text: '踩坑', link: '/trick/' },
-          { text: '设计模式', link: '/design/' },
           { text: 'Git', link: '/git/' },
-          { text: 'Yarn', link: '/yarn/' },
           { text: '文案排版', link: '/copywriting/' },
           { text: '网站', link: '/repository/' },
           { text: '协议', link: '/license/' },

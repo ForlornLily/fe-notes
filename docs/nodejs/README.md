@@ -1,5 +1,7 @@
 # 概要
 
+后端开发内容见[server-notes](https://forlornlily.github.io/server-notes/)
+
 参考
 
 - [七天学会 NodeJS](http://nqdeng.github.io/7-days-nodejs/)
