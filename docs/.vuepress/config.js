@@ -68,6 +68,10 @@ module.exports = {
         text: '计算机通识',
         items: [
           {
+            text: '《计算机科学精粹》',
+            link: '/distilled/',
+          },
+          {
             text: '算法',
             items: [
               { text: '数据结构', link: '/algorithm/' },

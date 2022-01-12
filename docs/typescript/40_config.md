@@ -69,7 +69,8 @@
 
 ### 控制全局
 
-通过配置 `compilerOptions.types: [ "jquery" ]` 后，只允许使用 jQuery`的`@types`包 即使安装了另一个声明文件，比如`npm install @types/node`，它的全局变量（例如`process`）也不会泄漏到你的代码中
+通过配置 `compilerOptions.types: [ "jquery" ]` 后，只允许使用 jQuery 的 `@types` 包  
+即使安装了另一个声明文件，比如 `npm install @types/node`，它的全局变量（例如 `process`）也不会泄漏到你的代码中
 
 ```json
 {
