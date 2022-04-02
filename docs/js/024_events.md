@@ -23,14 +23,15 @@ JS 和 HTML 之间交互是通过事件实现的
 匿名函数无法用 remove，需要事先定义一个方法
 
 ```js
-var handler = function() {
+var handler = function () {
   console.log(1)
 }
 target.addEventListener('click', handler, { capture: true })
 ```
 
 ::: warning
-设置了`visibility: hidden;`的元素，即使绑定了事件也不会触发
+设置了`visibility: hidden;`的元素，即使绑定了事件也不会触发  
+如果需要移除事件，`options` 需要和绑定事件对应
 :::
 
 #### options
@@ -54,20 +55,20 @@ let target = doc.querySelector('.wrapper')
 let child = target.querySelector('.content')
 target.addEventListener(
   'click',
-  function(e) {
+  function (e) {
     console.log(1)
   },
   {
-    capture: false
+    capture: false,
   }
 )
 child.addEventListener(
   'click',
-  function(e) {
+  function (e) {
     console.log(2)
   },
   {
-    capture: false
+    capture: false,
   }
 )
 ```
@@ -283,14 +284,14 @@ createEvent 已经被废弃
 :::
 
 ```js
-var handler = function(e) {
+var handler = function (e) {
   console.log(e)
 }
 target1.addEventListener('customhandler', handler)
 const customEvent = new CustomEvent('customhandler', {
   detail: {
-    hello: 'world'
-  }
+    hello: 'world',
+  },
 })
 target1.dispatchEvent(customEvent) //dispatchEvent触发
 ```
@@ -347,7 +348,7 @@ EventTarget.prototype = {
         }
       }
     }
-  }
+  },
 }
 let event = new EventTarget()
 function hello() {
@@ -355,6 +356,6 @@ function hello() {
 }
 event.addHander('click', hello)
 event.fire({
-  type: 'click'
+  type: 'click',
 })
 ```
