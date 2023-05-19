@@ -21,13 +21,32 @@ mode: "development",
 devtool: "source-map",
 ```
 
-会减慢编译速度，所以就开发用
+会减慢编译速度，所以就开发用。匹配规则 `^(inline-|hidden-|eval-)?(nosources-)?(cheap-(module-)?)?source-map$`。
 
 ### source-map
 
 仅用于开发环境，报错时会生成一个.map 文件，用来映射，定位到原本没合并的 js 的第一行第几列。
 
 方便调试
+
+```
+dist
+  - main.js
+  - main.js.map
+```
+
+main.js.map
+
+```
+{"version":3,"file":"main.js","mappings":"AASAA,SAASC,KAAKC,YATd,WACE,MAAMC,EAAUH,SAASI,cAAc,OAKvC,OAFAD,EAAQE,UAAY,CAAC,QAAS,WAAWC,KAAK,KAEvCH,CACT,CAE0BI","sources":["webpack://webpack-demo/./src/index.js"],"sourcesContent":["function component() {\n  const element = document.createElement('div');\n\n  // Lodash, currently included via a script, is required for this line to work\n  element.innerHTML = ['Hello', 'webpack'].join(\" \")\n\n  return element;\n}\n\ndocument.body.appendChild(component());"],"names":["document","body","appendChild","element","createElement","innerHTML","join","component"],"sourceRoot":""}
+```
+
+在 `main.js` 中会存在 sourceMappingURL 指向 map
+
+```js
+压缩代码略
+//# sourceMappingURL=main.js.map
+```
 
 ### inline-source-map
 
@@ -38,6 +57,11 @@ devtool: "source-map",
 ### cheap-source-map
 
 同 source-map，但是只会定位到第几行，没有第几列
+
+### module
+
+webpack 中对一个模块会进行多次处理，比如 sass 转 css，经过 sass-loader 做一次转换，再用 css-loader 做一次转换，之后打包到一起。  
+每次转换都会生成 sourcemap，如果需要找到最初的转换，可以用 `module` 把每一次的 loader 的 sourcemap 关联起来
 
 ### cheap-module-source-map
 
@@ -56,6 +80,10 @@ devtool: "source-map",
 类似 eval，但还会包括 loader、第三方模块等报错
 
 定位也可能不准
+
+### nosources
+
+上边的 main.js.map 会包含 sourcesContent，也就是源码。如果不需要这部分内容，可以配置 `devtool: "nosources-source-map"`
 
 ## devServer
 
@@ -186,7 +214,7 @@ const app = express()
 //第一个参数是webapck打包，第二个是打包的额外配置项
 app.use(
   webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
   })
 )
 

@@ -26,4 +26,14 @@
 
 尽量不用。
 
-像是一个完整的 JS 解析器，参数是 JS 代码的字符串。因为是字符串，所以内部不会有变量提升
+像是一个完整的 JS 解析器，参数是 JS 代码的字符串。因为是字符串，所以内部不会有变量提升。
+
+可以在结尾加上 `sourceURL` 指向一个名字，会在控制台的 Sources 内生成一个同名文件
+
+```js
+eval(
+  `function test() {console.log("hello")}; test() //# sourceURL=www.baidu.com`
+)
+```
+
+同样也可以指定 `sourceMappingURL`

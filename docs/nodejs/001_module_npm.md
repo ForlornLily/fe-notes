@@ -76,7 +76,7 @@ package.json 的 scripts 字段就是为了让包在安装或者卸载过程中�
 
 ### npx
 
-在当前文件夹的 node_modules 寻找模块
+在当前文件夹的执行 node_modules/.bin 下的本地命令，如果没有的话会从 npm 下载然后执行。
 
 ```bash
 #全局安装下的webpack

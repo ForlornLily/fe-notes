@@ -425,3 +425,27 @@ function traverseTree(treeNodes) {
   }
 }
 ```
+
+### 过滤
+
+```js
+export function mapTree(value: string, arr) {
+  const new_arr = []
+  arr.forEach((element) => {
+    if (element.name.indexOf(value) > -1) {
+      // 判断条件
+      new_arr.push(element)
+    } else if (element.children && element.children.length > 0) {
+      const child_data = mapTree(value, element.children)
+      if (child_data && child_data.length > 0) {
+        const obj = {
+          ...element,
+          children: child_data,
+        }
+        new_arr.push(obj)
+      }
+    }
+  })
+  return new_arr
+}
+```
