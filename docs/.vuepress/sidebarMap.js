@@ -33,6 +33,7 @@ const sidebarMap = [
   { title: 'npm', dirname: 'npm' },
   { title: '协议', dirname: 'license' },
   { title: '《计算机科学精粹》', dirname: 'distilled' },
+  { title: 'ESLint', dirname: 'eslint' },
 ]
 
 module.exports = sidebarMap

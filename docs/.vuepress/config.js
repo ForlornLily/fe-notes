@@ -53,6 +53,7 @@ module.exports = {
           { text: 'TypeScript', link: '/typescript/' },
           { text: 'Redux', link: '/redux/' },
           { text: 'Jest', link: '/jest/' },
+          { text: 'ESLint', link: '/eslint/' },
         ],
       },
       {
