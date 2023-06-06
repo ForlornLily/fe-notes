@@ -97,7 +97,7 @@ function FancyInput(props, ref) {
     focus: () => {
       inputRef.current.focus();
     }
-  }));
+  }), []);
   return <input ref={inputRef} ... />;
 }
 FancyInput = forwardRef(FancyInput);
