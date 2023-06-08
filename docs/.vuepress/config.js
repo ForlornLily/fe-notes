@@ -54,6 +54,7 @@ module.exports = {
           { text: 'Redux', link: '/redux/' },
           { text: 'Jest', link: '/jest/' },
           { text: 'ESLint', link: '/eslint/' },
+          { text: 'Testing Library', link: '/testing-library/' },
         ],
       },
       {
