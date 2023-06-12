@@ -1,7 +1,7 @@
 # dom
 
 ## ref
-
+尽量少用，只能不能用 props 处理的行为才用 ref（比如聚焦，滚动到某个元素）  
 [React.createRef](https://reactjs.org/docs/react-api.html#reactcreateref)  
 对应 Vue 的`ref`属性，即指向 DOM 元素的引用  
 使用`createRef`来创建，或者 ref 直接使用一个函数  
@@ -85,7 +85,28 @@ const onButtonClick = () => {
   inputEl.current.focus()
 }
 ```
+- 不要反复创建
+``` jsx
+// bad
+const playerRef = useRef(new VideoPlayer());
 
+// better
+const playerRef = useRef(null);
+if (playerRef.current === null) {
+  playerRef.current = new VideoPlayer();
+}
+```
+- 不要在 render 时进行读写，可以写在 `useEffect` 或者事件里边
+``` jsx
+function MyComponent() {
+  // ...
+  // 🚩 Don't write a ref during rendering
+  myRef.current = 123;
+  // ...
+  // 🚩 Don't read a ref during rendering
+  return <h1>{myOtherRef.current}</h1>;
+}
+```
 ## useImperativeHandle
 
 useImperativeHandle 应当与 forwardRef 一起用
@@ -105,34 +126,9 @@ FancyInput = forwardRef(FancyInput);
 
 `<FancyInput ref={inputRef} />` 的父组件可以调用`inputRef.current.focus()`
 
-## render
-
-首次调用 render 会替换 container 的所有内容，再次调用则根据 diff 算法局部更新  
-对服务端渲染容器改用[hydrate](#hydrate)
-
-```js
-ReactDOM.render(element, container[, callback])
-```
-
-```js
-//例
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-```
-
-## hydrate
-
-和 render 用法一样，只不过用在[ReactDOMServer](./10_ssr.md)对象上，ReactDOMServer 通常存在 Node 服务端
-
-```js
-ReactDOM.hydrate(element, container[, callback])
-```
-
 ## unmountComponentAtNode
 
-卸载组件
+卸载组件，废弃，用 [createRoot](./11_client.md#createRoot)
 
 ```js
 ReactDOM.unmountComponentAtNode(container)
@@ -140,7 +136,7 @@ ReactDOM.unmountComponentAtNode(container)
 
 ## Portals
 
-官网[Portals](https://reactjs.org/docs/portals.html)  
+官网[Portals](https://react.dev/reference/react-dom/createPortal)  
 把组件挂载到指定的 DOM 上，常见的场景是下拉面板和弹框
 
 ```js
@@ -202,4 +198,16 @@ function Child() {
 }
 
 export default Parent
+```
+
+## flushSync
+尽量不要使用，存在性能损失  
+立即更新 DOM  
+一般用在非 React 实现的第三方库，需要实时获取 DOM 处理
+``` jsx
+import { flushSync } from 'react-dom';
+
+flushSync(() => {
+  setSomething(123);  // 立即调用这个函数并同步刷新 dom
+});
 ```

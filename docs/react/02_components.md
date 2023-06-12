@@ -122,33 +122,49 @@ const Button = (props) => {
   return <button className={className} {...other} />
 }
 ```
+## StrictMode  
+开发环境生效  
+- 额外 render 一次（不包括事件内的内容）  
+- 额外执行 Effect 一次（setup+cleanup cycle in development）
+- 会提示过时的 API  
+``` jsx
+<StrictMode>
+  <App />
+</StrictMode>
+``` 
+``` tsx
+function Demo() {
 
-## 第三方 PropTypes
+  const [value, setValue] = useState<number | undefined>(1)
 
-[Typechecking With PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)  
-类型校验工具，API 见官网[facebook/prop-types](https://github.com/facebook/prop-types)
+  useEffect(() => {
+    console.log('[] mount')
+    return ()=> {
+      console.log('[] unmount')
+    }
+  }, [])
 
-```js
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-
-class TodoItem extends Component {
-  render() {
-    // 省略
-  }
-}
-//报警告，不影响代码后续运行
-TodoItem.propTypes = {
-  content: PropTypes.string.isRequired, //数据类型是`string`且必输
-  deleteItem: PropTypes.func,
-  index: PropTypes.number,
-}
-//默认值，对应vue的`default`
-TodoItem.defaultProps = {
-  content: 'hello', // 父组件没有传值时默认值是`hello`
+  useEffect(() => {
+    console.log('value mount')
+    return ()=> {
+      console.log('value unmount')
+    }
+  }, [value])
+  
+  return (
+    <>
+    </>
+  )
 }
 ```
-
+``` bash
+[] mount
+value mount
+[] unmount
+value unmount
+[] mount
+value mount
+```
 ## 类组件
 
 官网[React.Component](https://reactjs.org/docs/react-component.html)  
@@ -219,8 +235,6 @@ class EventsSample extends React.Component {
 完整图示：
 ![](../images/lifecycle.jpg)
 
-旧版 React 图示  
-![](../images/react_old_lifecycle.png)
 ::: warning
 注意以下方法即将弃用，要避免使用
 :::
@@ -358,7 +372,7 @@ shouldComponentUpdate(nextProps, nextState) {
 ## 错误边界
 
 只有类组件才能作为错误边界  
-官网[Error Boundaries](https://reactjs.org/docs/error-boundaries.html)  
+官网[Error Boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)  
 本质上是一个**Class 组件**，用于捕获**子组件**报错的情况下的异常处理  
 当 Class 组件具有`static getDerivedStateFromError()`或者`componentDidCatch()`的声明周期时，这个组件成为了一个错误边界  
 用`getDerivedStateFromError`渲染出错情况下的展示  
@@ -401,23 +415,53 @@ class ErrorBoundary extends React.Component {
   :::
 
 ## React.PureComponent
-
-官网[React.PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)  
+不推荐。建议用函数组件  
+官网[React.PureComponent](https://react.dev/reference/react/PureComponentt)  
 通常可以用`PureComponent`代替 shouldComponentUpdate。  
 PureComponent 会进行浅比较。用法和 React.Component 一致
 
-## 动态引入
+## Suspense
 
-使用 React.lazy（React.lazy 不支持 ssr）
+Suspense 只在特定场景使用，Effect 或者事件里边异步拉取数据不能生效  
+- Data fetching with Suspense-enabled frameworks like Relay and Next.js
+- 使用 React.lazy（React.lazy 不支持 ssr）
 
 ```js
 const HelloWorld = React.lazy(() => import('./HelloWorld'))
 ```
-
-lazy 必须在 Suspense 内使用，Suspense 必须要有一个过渡的 `fallback` 属性用于 loading
-
 ```jsx
 <Suspense fallback={<div>Loading...</div>}>
   <HelloWorld />
 </Suspense>
 ```
+- 如果有多个子组件，总是一起出现
+- 如果 Suspense 嵌套 Suspense，谁没加载就 fallback 谁
+  - 比如父组件从来没加载，首次加载展示父组件；之后所有组件重新 render，已经加载过的就不会再出 fallback
+  - 如果子组件按特定逻辑 render，比如 flag? A: B，那么 A/B 会在第一次 render 的时候出 fallback，之后也不会再出
+
+``` tsx
+function App() {
+  const [render, setRender] = useState<boolean>(false)
+
+  return (
+    <>
+    <button onClick={() => setRender(prev => !prev)}>
+      render
+    </button>
+    <Suspense fallback={<div>Loading...</div>}>
+      <AnotherText />
+      <Suspense fallback={<div>child...</div>}>
+        {
+          render? (
+            <Test />
+          ): null
+        }
+      </Suspense>
+    </Suspense>
+    </>
+  );
+}
+```
+首次，出现 'Loading...'  
+点击 button，出现 'child...'  
+之后反复点击 button，不会再出现 fallback
