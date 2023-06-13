@@ -293,8 +293,14 @@ lang = lang + 'Script'
 执行结果一般和`String()`一样
 
 默认就以 10 进制的方式输出。也就只有 Number/BigInt 会有差别
+``` js
+12.toString() // Uncaught SyntaxError: Invalid or unexpected token
 
-![toString](../images/3559113963e32036f1f54178a08605a4.png)
+var num = 12
+num.toString() // '12'
+
+num.toString("2") // '1100'
+```
 
 ### 显式类型转换 String()
 
@@ -392,6 +398,12 @@ Template Literals
 去除空格，不去换行
 
 ![trim](../images/d6a6e80d2fdd1a2a239c14d3997013e3.png)
+
+#### raw
+``` js
+console.log(`\u00A9`); // ©
+console.log(String.raw`\u00A9`); // \u00A9
+```
 
 ### padStart
 
