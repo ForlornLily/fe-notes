@@ -40,3 +40,5 @@ npm v6
 - 学习 Electron 开发
 - PWA 项目实战
 - Professional JavaScript for Web Developers 4th
+- [Playwright](https://github.com/microsoft/playwright), [end-to-end-testing](https://www.browserstack.com/guide/end-to-end-testing)
+

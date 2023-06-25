@@ -1,6 +1,9 @@
 # 版本差异
 
-## Promise 内的状态执行
+## Promise 内的状态执行  
+
+- [New Feature: Automatic Batching](https://react.dev/blog/2022/03/29/react-v18#new-feature-automatic-batching)  
+- [Automatic batching for fewer renders in React 18](https://github.com/reactwg/react-18/discussions/21)
 
 ```tsx
 import React, { useState } from 'react'
@@ -45,4 +48,46 @@ before
 after
 app render 18.2.0 1 true
 app render 18.2.0 1 true
+```
+
+Class 组件也会有影响
+``` jsx
+handleClick = () => {
+  setTimeout(() => {
+    this.setState(({ count }) => ({ count: count + 1 }));
+
+    // { count: 1, flag: false }
+    console.log(this.state);
+
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
+```
+``` jsx
+// 18 下拿到的仍然是旧值
+handleClick = () => {
+  setTimeout(() => {
+    this.setState(({ count }) => ({ count: count + 1 }));
+
+    // { count: 0, flag: false }
+    console.log(this.state);
+
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
+```
+解决方式是 [flushSync](./09_dom.md#flushSync)
+``` jsx
+handleClick = () => {
+  setTimeout(() => {
+    ReactDOM.flushSync(() => {
+      this.setState(({ count }) => ({ count: count + 1 }));
+    });
+
+    // { count: 1, flag: false }
+    console.log(this.state);
+
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
 ```

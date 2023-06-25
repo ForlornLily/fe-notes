@@ -1,9 +1,10 @@
 # 概要
+相同的条件（props/state/context）总是返回同样的 JSX  
 
 参考
 
 - [React16.4 快速上手](https://www.imooc.com/learn/1023)
-- [官网](https://reactjs.org/)
+- [官网](https://react.dev/)
 - [React Hooks 详解](https://juejin.im/post/5dbbdbd5f265da4d4b5fe57d)
 
 特性
