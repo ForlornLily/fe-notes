@@ -139,33 +139,6 @@ Button.contextType = GlobalData
 把`Context`对象赋值给类组件的`contextType`属性  
 类组件就可以使用`this.context`来获取全局变量的值
 
-## Consumer
-
-让函数组件也可以使用`Context`对象
-
-```js
-const GlobalData = React.createContext('hello')
-
-class App extends React.Component {
-  render() {
-    return (
-      <GlobalData.Provider value="dark">
-        <SimpleDiv />
-      </GlobalData.Provider>
-    )
-  }
-}
-//函数组件
-function SimpleDiv() {
-  return (
-    <GlobalData.Consumer>{value => ConsumerDiv(value)}</GlobalData.Consumer>
-  )
-}
-function ConsumerDiv(value) {
-  return <p>{value}</p>
-}
-```
-
 ## displayName
 
 用于 React DevTools 进行调试
@@ -211,5 +184,31 @@ function Toolbar(props) {
       <button onClick={() => changeValue('white')}>{value}</button>
     </div>
   )
+}
+```
+## Consumer
+已废弃，推荐用 [useContext](#useContext)  
+让函数组件也可以使用`Context`对象
+
+```js
+const GlobalData = React.createContext('hello')
+
+class App extends React.Component {
+  render() {
+    return (
+      <GlobalData.Provider value="dark">
+        <SimpleDiv />
+      </GlobalData.Provider>
+    )
+  }
+}
+//函数组件
+function SimpleDiv() {
+  return (
+    <GlobalData.Consumer>{value => ConsumerDiv(value)}</GlobalData.Consumer>
+  )
+}
+function ConsumerDiv(value) {
+  return <p>{value}</p>
 }
 ```
