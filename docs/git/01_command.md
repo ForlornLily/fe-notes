@@ -185,7 +185,11 @@ pb 重命名为 paul
 ```bash
 git remote rm paul
 ```
-
+### git remote set-url origin
+修改源地址  
+``` bash
+git remote set-url origin git@github.com:ForlornLily/fe-notes.git
+```
 ## git fetch
 
 ```bash
