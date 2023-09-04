@@ -91,6 +91,83 @@ pseudo classes
 
 5.  :active 激活
 
+### where  
+
+``` css
+main h1,
+main h2 {
+  color: red;
+}
+
+/* 等价于 */
+main :where(h1, h2) {
+  color: orange;
+}
+```
+where 的优先级更低一些 
+```css
+main h1,
+main h2,
+main h3 {
+  color: red;
+}
+
+main :where(h1, h2) {
+  color: orange;
+}
+
+main .wrapper :where(h2, h3) {
+  color: pink;
+}
+```
+``` html
+<main>
+  <div class="wrapper">
+    <h1>
+      red
+    </h1>
+    <h2>
+      pink
+    </h2>
+    <h3>
+      pink
+    </h3>
+  </div>
+</main>
+```
+
+### is
+is 优先级正常排
+``` css
+main h1,
+main h2,
+main h3 {
+  color: red;
+}
+
+main :is(h1, h2) {
+  color: orange;
+}
+
+main .wrapper :is(h2, h3) {
+  color: pink;
+}
+```
+```html
+<main>
+  <div class="wrapper">
+    <h1>
+      orange
+    </h1>
+    <h2>
+      pink
+    </h2>
+    <h3>
+      pink
+    </h3>
+  </div>
+</main>
+```
 ## 结构化伪类
 
 structural pseudo classes
