@@ -113,6 +113,10 @@ module.exports = {
           { text: 'Photoshop', link: '/ps/' },
         ],
       },
+      {
+        text: '后端开发',
+        link: 'https://forlornlily.github.io/server-notes/'
+      }
     ],
     sidebar: utils.inferSiderbars(),
     lastUpdated: '上次更新',
