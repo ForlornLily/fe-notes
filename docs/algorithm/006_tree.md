@@ -449,3 +449,36 @@ export function mapTree(value: string, arr) {
   return new_arr
 }
 ```
+
+### 转换
+``` tsx
+interface FlattenData {
+  id: number
+  pId?: number
+}
+interface TreeData extends FlattenData {
+  children?: TreeData[]
+}
+
+/**
+ * id，pId 形式的数据转成树结构
+ */
+function toTree(arr: FlattenData[], rootId: TreeData['pId']) {
+  function loop(parentId: TreeData['pId']) {
+    const res = [];
+    for (let i = 0; i < arr.length; i++) {
+      const item: TreeData = arr[i];
+
+      if (item.pId !== parentId) {
+        continue;
+      }
+
+      item.children = loop(item.id);
+      res.push(item);
+    }
+    return res;
+  }
+  return loop(rootId);
+}
+```
+ 

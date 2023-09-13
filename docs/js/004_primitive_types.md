@@ -293,8 +293,14 @@ lang = lang + 'Script'
 执行结果一般和`String()`一样
 
 默认就以 10 进制的方式输出。也就只有 Number/BigInt 会有差别
+``` js
+12.toString() // Uncaught SyntaxError: Invalid or unexpected token
 
-![toString](../images/3559113963e32036f1f54178a08605a4.png)
+var num = 12
+num.toString() // '12'
+
+num.toString("2") // '1100'
+```
 
 ### 显式类型转换 String()
 
@@ -393,6 +399,12 @@ Template Literals
 
 ![trim](../images/d6a6e80d2fdd1a2a239c14d3997013e3.png)
 
+#### raw
+``` js
+console.log(`\u00A9`); // ©
+console.log(String.raw`\u00A9`); // \u00A9
+```
+
 ### padStart
 
 `str.padStart(targetLength [, padString])`: 用 padString 填充 str 的开头
@@ -427,15 +439,32 @@ test.padEnd(6, 'defg') //"abcdef"，忽略了"g"
 ```
 
 ## Symbol
-
+可以当做对象的属性，但不可遍历  
 ```js
 let privateName = Symbol('name')
 let tmp = {}
 tmp[privateName] = 'Emma'
+tmp.hello = "world"
+for(const key in tmp) {
+  console.log('key', key) // 找不到 Symbol 生成的内容
+}
 ```
-
-### 共享同一个 symbol: Symbol.for
-
+``` js
+const privateName = Symbol('name')
+const another = Symbol.for('another')
+const tmp = {
+  [privateName]: 'name',
+  [another]: 'for',
+  hello: 'world'
+}
+Object.getOwnPropertySymbols(tmp) // [Symbol(name), Symbol(another)]
+Object.getOwnPropertyNames(tmp) // ['hello']
+Object.getOwnPropertyDescriptors(tmp) // {hello: {…}, Symbol(name): {…}, Symbol(another): {…}}
+```
+### for
+Symbol.for(string)：对每个字符串键都执行幂等操作。  
+第一次使用某个字符串调用时，它会检查全局运行时注册表，发现不存在对应的符号，于是就会生成一个新符号实例并添加到注册表中。  
+后续使用相同字符串的调用同样会检查注册表，发现存在与该字符串对应的符号，然后就会返回该符号实例
 ```js
 let privateName1 = Symbol('name')
 let privateName2 = Symbol('name')
@@ -443,11 +472,23 @@ privateName1 === privateName2 //false
 ```
 
 ```js
-let privateName1 = Symbol.for('name')
-let privateName2 = Symbol.for('name')
-privateName1 === privateName2 //true
+const outData = Symbol.for('name')
+function testSymbol() {
+  const innerData = Symbol.for('name')
+  console.log(innerData === outData)  // true
+}
+testSymbol()
 ```
-
+### keyFor
+查询 for 生成的字符串
+``` js
+let privateName1 = Symbol.for('name')
+Symbol.keyFor(privateName1) // 'name'
+let test = Symbol('name')
+Symbol.keyFor(test) // undefined
+let notSymbol = "hello"
+Symbol.keyFor(notSymbol) // Uncaught TypeError: hello is not a symbol
+```
 ### 类型转换
 
 Symbol 不能转换成字符串或者数字，但可以变成 boolean
@@ -464,3 +505,5 @@ console.log('' + smb) //TypeError: Cannot convert a Symbol value to a string
 console.log(1 + smb) //TypeError: Cannot convert a Symbol value to a number
 console.log(Number(smb)) //TypeError: Cannot convert a Symbol value to a number
 ```
+### 更多属性
+可以覆写内置的属性。比如要遍历 Symbol 的内容，可以覆写 [Symbol.iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator)  

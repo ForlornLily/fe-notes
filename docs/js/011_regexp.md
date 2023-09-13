@@ -1,18 +1,30 @@
-# RegExp
-
+# RegExp  
+Regular expression  
 `/正则表达式/匹配模式`，第二条斜线后面可以跟一个或多个字母，修饰匹配模式的含义
 
 test 方法：返回 true/false
 
 exec: 返回匹配的数组
+  - 如果**配置了 g 标记**，每次调用 exec()都会在字符串中向前搜索下一个匹配项
 
 ```js
-var re = /cat/g
-re.test('hello, cat')
-```
+let text = "cat, bat, sat, fat";
+let pattern = /.at/g;
+let matches = pattern.exec(text);
+console.log(matches.index);  // 0
+console.log(matches[0]);  // cat
+console.log(pattern.lastIndex);  // 3
 
-exec 结果：
-![](../images/c00522c8069b1a7845ed71ad617b560e.png)
+matches = pattern.exec(text); 
+console.log(matches.index); //5 
+console.log(matches[0]); // bat 
+console.log(pattern.lastIndex); // 8
+
+matches = pattern.exec(text);
+console.log(matches.index);      // 10
+console.log(matches[0]);         // sat
+console.log(pattern.lastIndex);  // 13
+```
 
 ## 基本组成
 
@@ -171,11 +183,32 @@ reg.test('sabber') //false
 
 ## 匹配模式 m i g
 
-m 多行
+g: global，全局模式，表示查找字符串的全部内容，而不是找到第一个匹配的内容就结束。   
+i: ignoreCase，不区分大小写，表示在查找匹配时忽略 pattern 和字符串的大小写。  
+m: 多行模式，表示查找到一行文本末尾时会继续查找。  
+y: sticky，粘附模式，表示只查找从 lastIndex 开始及之后的字符串。 
+``` js
+let text = "cat, bat, sat, fat";
+let pattern = /.at/y;
+let matches = pattern.exec(text);
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern.lastIndex);
 
-i 忽略大小写
+// 以索引3对应的字符开头找不到匹配项，因此exec()返回 null。exec()没找到匹配项，于是将lastIndex设置为0
+matches = pattern.exec(text);
+console.log(matches); // null 
+console.log(pattern.lastIndex); // 0
 
-g 找到所有匹配
+// 向前设置lastIndex可以让粘附的模式通过exec()找到下一个匹配项: 
+pattern.lastIndex = 5;
+matches = pattern.exec(text);
+console.log(matches.index);  // 5
+console.log(matches[0]);  // bat
+console.log(pattern.lastIndex); // 8
+``` 
+u: unicode，Unicode 模式，启用 Unicode 匹配。  
+s: dotAll 模式，表示元字符.匹配任何字符(包括\n 或\r)。  
 
 ## 分组()
 

@@ -30,7 +30,7 @@ sidebar: auto
 
 ### JS
 
-- 《JavaScript 高级程序设计（第 3 版）》
+- 《JavaScript 高级程序设计》
 - [Understanding ECMAScript 6](https://github.com/nzakas/understandinges6/), 民间翻译可访问[gitbook](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/)
 - ~~[You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)~~: 个人认为看伢羽的博客即可
 - [冴羽的博客](https://github.com/mqyqingfeng/Blog)
@@ -41,7 +41,7 @@ sidebar: auto
 #### vue
 
 - [learnVue](https://github.com/answershuto/learnVue)
-- 后台管理系统[vue-element-admin](https://github.com/PanJiaChen), 花裤衩在[「见识」的分享](https://jianshiapp.com/circles/1209)
+- 后台管理系统[vue-element-admin](https://github.com/PanJiaChen)
 
 #### NodeJS
 
@@ -61,18 +61,13 @@ sidebar: auto
 - HTML 和 CSS： [中译](https://codeguide.bootcss.com/), [原文](https://github.com/mdo/code-guide)
 - [ESlint](https://github.com/eslint/eslint)
 
-```json
-"lint:init": "eslint --init",
-```
-
 ## 性能
 
 - [Front-End-Performance-Checklist](https://github.com/thedaviddias/Front-End-Performance-Checklist): 前端性能清单
 
 ## 数据结构
 
-- 《学习 JavaScript 数据结构与算法（第 3 版）》: [图灵](http://www.ituring.com.cn/book/2653), [配套源码](https://github.com/loiane/javascript-datastructures-algorithms)
-- [面试向](https://yuchengkai.cn/docs/cs/)
+- 《学习 JavaScript 数据结构与算法》: [图灵](http://www.ituring.com.cn/book/2653), [配套源码](https://github.com/loiane/javascript-datastructures-algorithms)
 
 ## 网络
 
@@ -91,6 +86,7 @@ sidebar: auto
 
 - jest
 - cypress
+- [playwright](https://github.com/microsoft/playwright)  
 
 ## Linux
 
@@ -104,9 +100,7 @@ sidebar: auto
 ## 博客
 
 - [凹凸实验室](https://aotu.io/index.html)
-- [富途 web 开发团队](https://futu.im/)
 - [前端精读周刊](https://github.com/dt-fe/weekly)
-- [计算机经典书籍推荐](https://github.com/woai3c/recommended-books)
 - [30-seconds](https://github.com/30-seconds)
 - [阿里云前端技术周刊](https://github.com/aliyunfe/weekly)
 
@@ -116,13 +110,11 @@ sidebar: auto
 
 - [CodeMirror](https://codemirror.net/): 代码美化
 - [autoprefixer](https://github.com/postcss/autoprefixer): 给 CSS 加前缀
-- [throttle-debounce](https://github.com/niksy/throttle-debounce): 防抖和节流
 
 ### 布局类
 
 - [Masonry](https://github.com/desandro/masonry): 瀑布图
 - [swiper](https://github.com/nolimits4web/swiper): 轮播
-  - [vue-awesome-swiper](https://github.com/surmon-china/vue-awesome-swiper): 基于 Vue 的 swiper
 - [Sortable](https://github.com/SortableJS/Sortable): 拖拽
   - [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable): 基于 Vue 的拖拽
 
@@ -136,15 +128,7 @@ sidebar: auto
 
 - [nodemon](https://github.com/remy/nodemon): 监测文件修改并自动重启服务
 - [http-server](https://github.com/indexzero/http-server): 最简单的服务器
-- [npm-run-all](https://github.com/mysticatea/npm-run-all): 一次运行多个 npm scripts
 - [pm2](https://github.com/Unitech/pm2): 进程管理工具
-- [cli-highlight](https://github.com/felixfbecker/cli-highlight): 控制台代码高亮
-
-<!-- ## VPS
-
-- [村网通](https://zoomyale.com/2016/vultr_and_ss/)
-- [个人笔记](./vps.md)
- -->
 
 ## TypeScript
 
