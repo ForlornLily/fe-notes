@@ -3,21 +3,24 @@
 [参考](https://github.com/RayJune/Elegant-JavaScript-Sorting-Algorithms)
 
 ## 冒泡排序
+依次比较，交换相邻的顺序
+```ts
+function swapList(list: number[], left: number, right: number) {
+  const tmp = list[left]
+  list[left] = list[right]
+  list[right] = tmp
+}
 
-```js
-let arrs = [3, 6, 1, 2, 8]
-function bubbleSort() {
-  let length = arrs.length
-  for (let i = 0; i < length; i++) {
-    for (let j = 0; j < length - 1; j++) {
-      if (arrs[j] > arrs[j + 1]) swap(arrs, j, j + 1)
+function bubbleSort(list: number[]) {
+  const length = list.length
+  for (let i = 0; i < length; i += 1) {
+    for (let j =0; j < length - 1; j += 1) {
+      if (list[j] > list[j + 1]) {
+        swapList(list, j, j + 1)
+      }
     }
   }
-}
-function swap(array, index, index2) {
-  let tmp = array[index]
-  array[index] = array[index2]
-  array[index2] = tmp
+  console.log('list', list)
 }
 ```
 
@@ -30,23 +33,23 @@ function swap(array, index, index2) {
 1. 找到数组中最小的元素，将它和数组的第一个元素交换
 2. 在剩下的元素内找到最小的元素，和第二个元素交换，以此类推
 
-```js
-function selectionSort() {
-  let minIndex,
-    length = arrs.length
-  for (let i = 0; i < length; i++) {
-    minIndex = i //假设第一个值是最小值
-    for (let j = i + 1; j < length; j++) {
-      if (arrs[minIndex] > arrs[j]) {
-        //如果存在更小的值
-        minIndex = j
+```ts
+function selectionSort(list: number[]) {
+  const length = list.length
+  for (let i = 0; i < length; i += 1) {
+    let min = i // 假设第一个值是最小值
+    for (let j = i + 1; j < length; j += 1) {
+      if (list[j] < list[min]) {
+        // 如果存在更小的值
+        min = j
       }
     }
-    if (i != minIndex) {
-      //将i的位置替换成最小值
-      swap(arrs, i, minIndex)
+    if (i !== min) {
+      // 将i的位置替换成最小值
+      swapList(list, i, min)
     }
   }
+  console.log('list', list)
 }
 ```
 
