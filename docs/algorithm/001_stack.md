@@ -96,7 +96,9 @@ let PrivateStack = (function() {
 })()
 var privateStack = new PrivateStack()
 ```
-
+### 单调栈  
+Monotone Stack：一种特殊的栈，要求元素依次递增或递减  
+应用：[子数组的最小值之和](../leetcode/907.md)
 ## 应用
 
 ### 十进制转二进制
