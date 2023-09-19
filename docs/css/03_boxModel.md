@@ -2,7 +2,7 @@
 
 - background 作用于 content 和 padding
 
-- outline 不影响布局，处于 boder 和 margin 之间。也就不影响盒模型的高度和宽度。设置任意大小就会产生不同的效果。还可以用来去掉聚焦表单元素的默认样式
+- outline 不影响布局，处于 border 和 margin 之间。也就不影响盒模型的高度和宽度。设置任意大小就会产生不同的效果。还可以用来去掉聚焦表单元素的默认样式
 
 - width 和 height 指的是 content
 
@@ -52,7 +52,7 @@
 
 ## display
 
-- inline:行内元素没有上下的 margin 和 padding，width 和 height 属性无效。修改高度只能通过 line-height 和 padding
+- inline:行内元素没有上下的 margin 和 padding，width 和 height 属性无效。修改高度只能通过 line-height
 
 - inline-blok: 水平排列，可以设置 width, height, margin-top/padding-bottom
 
@@ -492,7 +492,7 @@ z-index 只针对同级，如果元素 A 的 z-index 比兄弟元素 B 小，那
 
 #### clear 属性
 
-正常文档流的元素使用 clear 属性之后，浏览器内部会让这个元素的 magin-top 加足够宽，以便元素下来。导致自定义元素的 margin 是会出现不正常的情况
+正常文档流的元素使用 clear 属性之后，浏览器内部会让这个元素的 margin-top 加足够宽，以便元素下来。导致自定义元素的 margin 是会出现不正常的情况
 
 ```css
 .wrapper {
