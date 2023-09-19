@@ -4,7 +4,7 @@
 
 通过调用 `new Proxy()`，可以创建一个代理，用于替代另一个对象（target），这个代理对目标对象进行了虚拟，因此该代理与该目标对象表面上可以被当作同一个对象来对待
 
-## new Proxy(target, hanlder)
+## new Proxy(target, handler)
 
 ### target
 
@@ -27,19 +27,42 @@ proxy.name 与 target.name 都指向 target.name
 
 ### handler 对象
 
-handler 首先是个对象，包含了多个陷阱(trap)函数
+使用代理的主要目的是可以定义捕获器（trap）。一般用来做一些拦截行为，比如鉴权  
+即下方的陷阱（trap）函数
 
 ### 陷阱函数与 Reflect
 
-每个陷阱函数都有对应的 Reflect，并且同名，函数名一致
+Reflect 的存在是为了方便返回原有的实现，避免一样的逻辑需要自己手写一遍
+
+每个函数都有对应的 Reflect，并且同名，函数名一致
 
 比如 get 对应 Reflect.get
 
-#### 陷阱函数 has
+同样这类函数也存在一些限制：必须遵循“捕获器不变式”（trap invariant）
+
+```ts
+const target: {
+  foo?: string
+} = {}
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+const handler = {
+  get() {
+    return 'qux'
+  },
+}
+const proxy = new Proxy(target, handler)
+console.log(proxy.foo) // Uncaught TypeError: 'get' on proxy: property 'foo' is a read-only and non-configurable data property on the proxy target but the proxy did not return its actual value (expected 'bar' but got 'qux')
+```
+
+#### has
 
 用到关键字 in 的时候会触发 has 函数，比如遍历对象的属性的时候，即使存在这个 key，也可以让他返回 false
 
-has 陷阱接受的参数分别是
+has 接受的参数分别是
 
 - target: 目标对象(target)
 
@@ -50,7 +73,7 @@ has 陷阱接受的参数分别是
 ```js
 let target = {
   name: 'hello',
-  age: 12
+  age: 12,
 }
 let proxy = new Proxy(target, {
   has(target, key) {
@@ -58,19 +81,22 @@ let proxy = new Proxy(target, {
       return false
     }
     return Reflect.has(target, key)
-  }
+  },
 })
+console.log('name' in target) // true
+console.log('age' in target) // true
+
+console.log('name' in proxy) // true
+console.log('age' in proxy) // false
 ```
 
-![](../images/c012fe7367394c5af066cc039f20ac61.png)
-
-#### 陷阱函数 get
+#### get
 
 访问某个对象的 key 时，如果不存在，不会报错，而是返回 undefined
 
 通过 get，可以设置成报错
 
-get 陷阱函数接受的参数分别是
+get 函数接受的参数分别是
 
 - target: 目标对象(target)
 
@@ -80,30 +106,41 @@ get 陷阱函数接受的参数分别是
 
 下面访问 target，还是返回 undefined，访问 proxy 就会报错，但是可以添加属性
 
-```js
-let target = {
-  name: 'hello'
+```ts
+let target: {
+  name: string
+  age?: number
+} = {
+  name: 'hello',
 }
 let proxy = new Proxy(target, {
   get(target, key, receiver) {
     if (!(key in receiver)) {
       throw new Error('不存在该属性')
     }
+    // return Reflect.get(target, key, receiver)
     return Reflect.get(target, key, receiver)
-  }
+  },
 })
+console.log(target.name) // hello
+console.log(proxy.name) // hello
+
+console.log(target.age) // undefined
+console.log(proxy.age) // Uncaught Error: 不存在该属性
 ```
 
-![](../images/3c48697c5a347af6bcb4bbd25b4a7060.png)
-![](../images/bde9a4e2f37cb338324bd2d0ca0e074e.png)
+```ts
+proxy.age = 12
+console.log(proxy.age) // 12，赋值后正常输出
+```
 
-#### 陷阱函数 set
+#### set
 
 例：假设创建一个对象，对象的每一个新增的 key 都只能是 Number 类型。
 
-那么每新增一个 key 都必须经过校验，可以通过 set 陷阱函数来实现
+那么每新增一个 key 都必须经过校验，可以通过 set 来实现
 
-set 陷阱函数接受的参数是：
+set 接受的参数是：
 
 - target: 目标对象(target)
 
@@ -113,26 +150,37 @@ set 陷阱函数接受的参数是：
 
 - receiver: 代理对象(proxy)
 
-```js
-let target = {
-  name: 'hello'
+```ts
+let target: {
+  name: string
+  age?: number
+  plan?: string
+} = {
+  name: 'hello',
 }
 let proxy = new Proxy(target, {
-  set(target, key, value, receiver) {
+  set(target, key, value, receiver): boolean {
     //如果target本身有key，跳过，本题只是为了校验新增的key
     if (!target.hasOwnProperty(key)) {
       if (isNaN(value)) {
         console.log('不是数字')
-        return
+        return true
       }
       // 添加属性
       return Reflect.set(target, key, value, receiver)
     }
-  }
+    return false
+  },
 })
+proxy.age = 12
+console.log(proxy.age) // 12
+console.log(target) // {name: 'hello', age: 12}
+// 不报错，但不会赋值
+proxy.plan = 'S' // 不是数字
+console.log(target, proxy.plan) // {name: 'hello', age: 12} undefined
+// 因为最后 return false 所以会报错
+proxy.name = 'hello' // Uncaught TypeError: 'set' on proxy: trap returned falsish for property 'name'
 ```
-
-![](../images/5d68e2bac00153d424a86783b5805c00.png)
 
 #### 其余函数见原文
 
@@ -143,7 +191,7 @@ let proxy = new Proxy(target, {
 
 ```js
 let target = {
-  a: 1
+  a: 1,
 }
 function info(obj, key) {
   console.log(`对象的${key}是${obj[key]}`)
@@ -160,7 +208,7 @@ let proxy = new Proxy(target, {
     //通过改变proxy来改变target的值
     change(target, key, value)
     return Reflect.set(target, key, value, receiver)
-  }
+  },
 })
 ```
 
@@ -189,24 +237,24 @@ let proxy = new Proxy(target, {
     //通过改变proxy来改变target的值
     change(target, key, value)
     return Reflect.set(target, key, value, receiver)
-  }
+  },
 })
 proxy.push(5)
 ```
 
-`proxy.push(5)`会多次触发`get`和`set`陷阱  
+`proxy.push(5)`会多次触发`get`和`set`
 ![](../images/proxy_push.jpg)
 
 ### 对象嵌套
 
-嵌套不会触发`set`陷阱，但会触发`get`
+嵌套不会触发`set`，但会触发`get`
 
 ```js
 let target = {
   name: 'hello',
   location: {
-    three: 'west'
-  }
+    three: 'west',
+  },
 }
 /* 省略proxy定义 */
 proxy.location.three = 'east'
@@ -233,7 +281,7 @@ function createReactive(target) {
 }
 const handlers = {
   get: getters,
-  set: setters
+  set: setters,
 }
 function getters(target, key, receiver) {
   const result = Reflect.get(target, key, receiver)
@@ -260,9 +308,9 @@ function setters(target, key, value, receiver) {
 let target = {
   name: 'hello',
   location: {
-    three: 'west'
+    three: 'west',
   },
-  arr: [1, 2, 3]
+  arr: [1, 2, 3],
 }
 let proxy = createReactive(target)
 proxy.arr.push(6) // "not own"
