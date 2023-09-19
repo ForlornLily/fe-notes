@@ -38,54 +38,92 @@
 
 递归实现: 代码差不多，只不过输出时机（console.log）不一样
 
-```js
-preOrderTraverse() {
-  this.preOrderTraverseNode(this.root)
+```ts
+interface SimpleNode<T> {
+  key: T
+  left?: SimpleNode<T>
+  right?: SimpleNode<T>
 }
-preOrderTraverseNode(node) {
-  // 递归
-  if (node != null) {
-    console.log(node.key)
-    this.preOrderTraverseNode(node.left)
-    this.preOrderTraverseNode(node.right)
+
+const mockData: SimpleNode<string> = {
+  key: "1",
+  left: {
+    key: "2-1",
+    left: {
+      key: "3-1-l",
+      left: {
+        key: "4-1-1"
+      }
+    },
+    right: {
+      key: "3-1-r"
+    }
+  },
+  right: {
+    key: "2-2",
+    left: {
+      key: "3-2-l"
+    },
+    right: {
+      key: "3-2-r"
+    }
   }
 }
-inOrderTraverseNode(node) {
-  // 递归
-  if (node != null) {
-    this.inOrderTraverseNode(node.left)
-    console.log(node.key)
-    this.inOrderTraverseNode(node.right)
+```
+``` ts
+function preOrder<T>(node?: SimpleNode<T> | null) {
+  if(node) {
+    console.log('node', node.key)
+    preOrder<T>(node.left)
+    preOrder<T>(node.right)
   }
 }
-postOrderTraverseNode(node) {
-  // 递归
-  if (node != null) {
-    this.postOrderTraverseNode(node.left)
-    this.postOrderTraverseNode(node.right)
-    console.log(node.key)
+// 1
+// 2-1, 3-1-l, 4-1-l, 3-1-r
+// 2-2, 3-2-l, 3-2-r
+```
+``` ts
+function inOrder<T>(node?: SimpleNode<T> | null) {
+  if(node) {
+    inOrder<T>(node.left)
+    console.log('node', node.key)
+    inOrder<T>(node.right)
   }
 }
+// 4-1-1, 3-1-l, 2-1, 3-1-r
+// 1
+// 3-2-1, 2-2, 3-2-r
+```
+``` ts
+function postOrder<T>(node?: SimpleNode<T> | null) {
+  if(node) {
+    postOrder<T>(node.left)
+    postOrder<T>(node.right)
+    console.log('node', node.key)
+  }
+}
+// 4-1-1, 3-1-l, 3-1-r, 2-1
+// 3-2-l, 3-2-r, 2-2
+// 1
 ```
 
 非递归，用栈实现:
 
-```js
-stackPreOrder() {
-  //非递归的先序遍历，用栈来实现
-  let node = this.root;
-  if(node !== null) {
-    let stack = [];
-    stack.push(node);
+```ts
+function stackPreOrder<T>(root?: SimpleNode<T>) {
+  let node = root;
+  if(root) {
+    let stack: (SimpleNode<T> | undefined)[] = []
+    stack.push(node)
     while(stack.length) {
-      //弹出栈顶元素
-      node = stack.pop();
-      console.log(node.key);
-      //先弹出栈的左节点，再弹右节点，所以先push 右边
-      if(node.right) {
+      // 弹出栈顶元素
+      node = stack.pop()
+      console.log(node?.key)
+      // 先弹出栈的左节点，再弹右节点，所以先 push 右边
+      if(node?.right) {
         stack.push(node.right)
       }
-      if(node.left) {
+      if(node?.left) {
         stack.push(node.left)
       }
     }
@@ -93,53 +131,54 @@ stackPreOrder() {
 }
 ```
 
-```js
-stackInOrder() {
-  //非递归的中序遍历，用栈来实现
-  let node = this.root;
-  if(node !== null) {
-    let stack = [];
-    while(stack.length || node) {
-      //把左节点推到栈里面
+```ts
+interface SimpleNode<T> {
+  key: T
+  left?: SimpleNode<T>
+  right?: SimpleNode<T>
+}
+
+function stackInOrder<T>(root?: SimpleNode<T>) {
+  let node = root;
+  if(root) {
+    let stack: (SimpleNode<T> | undefined)[] = []
+    while(node || stack.length) {
       if(node) {
         stack.push(node)
-        node = node.left;
+        node = node.left
       } else {
-        //没有左节点，拿出栈顶元素，输出节点的值
         node = stack.pop()
-        console.log(node.key);
-        //左、根结束后访问右节点
-        node = node.right;
+        console.log(node?.key)
+        node = node?.right
       }
     }
   }
 }
 ```
 
-```js
-stackPostOrder() {
-  //非递归的后序遍历，用两个栈来实现
-  let node = this.root;
-  if(node !== null) {
-    let tmp = [];
-    tmp.push(node);
-    let stack = [];
+```ts
+function stackPostOrder<T>(root?: SimpleNode<T>) {
+  let node = root;
+  if(root) {
+    const tmp: (SimpleNode<T> | undefined)[] = []
+    tmp.push(node)
+    const stack: (SimpleNode<T> | undefined)[] = []
     while(tmp.length) {
       //输出左、右、根
       //栈是后进先出，所以stack入栈顺序应该是根、右、左
-      node = tmp.pop();
-      stack.push(node);
-      //stack要右、左
-      //那么tmp.pop的第一个是右，所以先push左
-      if(node.left) {
-        tmp.push(node.left);
+      node = tmp.pop()
+      stack.push(node)
+      // stack 要右、左
+      // 那么 tmp.pop 的第一个是右，所以先 push 左
+      if(node?.left) {
+        tmp.push(node.left)
       }
-      if(node.right) {
-        tmp.push(node.right);
+      if(node?.right) {
+        tmp.push(node.right)
       }
     }
     while(stack.length) {
-      console.log(stack.pop().key);
+      console.log(stack.pop()?.key)
     }
   }
 }
@@ -387,7 +426,7 @@ AVL 进行增加和删除的时候，为了保持平衡，会对树进行旋转�
   {
     "id": "1",
     "name": "1",
-    "chidlren": [
+    "children": [
       {
         "id": "1-1",
         "name": "1-1"
@@ -405,11 +444,15 @@ AVL 进行增加和删除的时候，为了保持平衡，会对树进行旋转�
 ]
 ```
 
-```js
+```ts
 // 广度优先非递归遍历
-function traverseTree(treeNodes) {
+interface BasicDataNode<T> extends Record<string, any> {
+  children: BasicDataNode<T>[]
+}
+
+function traverseTree<T>(treeNodes: BasicDataNode<T>[]) {
   if (!treeNodes || !treeNodes.length) return
-  let stack = []
+  let stack: BasicDataNode<T>[]= []
   // 先将第一层节点放入栈
   for (let i = 0, len = treeNodes.length; i < len; i++) {
     stack.push(treeNodes[i])
@@ -417,9 +460,10 @@ function traverseTree(treeNodes) {
   let item
   while (stack.length) {
     item = stack.shift()
+    console.log('item', item)
     // do sth.
     // 如果该节点有子节点，继续添加进入栈尾
-    if (item.children && item.children.length) {
+    if (item && item.children && item.children.length) {
       stack = stack.concat(item.children)
     }
   }

@@ -3,21 +3,24 @@
 [参考](https://github.com/RayJune/Elegant-JavaScript-Sorting-Algorithms)
 
 ## 冒泡排序
+依次比较，交换相邻的顺序
+```ts
+function swapList(list: number[], left: number, right: number) {
+  const tmp = list[left]
+  list[left] = list[right]
+  list[right] = tmp
+}
 
-```js
-let arrs = [3, 6, 1, 2, 8]
-function bubbleSort() {
-  let length = arrs.length
-  for (let i = 0; i < length; i++) {
-    for (let j = 0; j < length - 1; j++) {
-      if (arrs[j] > arrs[j + 1]) swap(arrs, j, j + 1)
+function bubbleSort(list: number[]) {
+  const length = list.length
+  for (let i = 0; i < length; i += 1) {
+    for (let j =0; j < length - 1; j += 1) {
+      if (list[j] > list[j + 1]) {
+        swapList(list, j, j + 1)
+      }
     }
   }
-}
-function swap(array, index, index2) {
-  let tmp = array[index]
-  array[index] = array[index2]
-  array[index2] = tmp
+  console.log('list', list)
 }
 ```
 
@@ -30,23 +33,23 @@ function swap(array, index, index2) {
 1. 找到数组中最小的元素，将它和数组的第一个元素交换
 2. 在剩下的元素内找到最小的元素，和第二个元素交换，以此类推
 
-```js
-function selectionSort() {
-  let minIndex,
-    length = arrs.length
-  for (let i = 0; i < length; i++) {
-    minIndex = i //假设第一个值是最小值
-    for (let j = i + 1; j < length; j++) {
-      if (arrs[minIndex] > arrs[j]) {
-        //如果存在更小的值
-        minIndex = j
+```ts
+function selectionSort(list: number[]) {
+  const length = list.length
+  for (let i = 0; i < length; i += 1) {
+    let min = i // 假设第一个值是最小值
+    for (let j = i + 1; j < length; j += 1) {
+      if (list[j] < list[min]) {
+        // 如果存在更小的值
+        min = j
       }
     }
-    if (i != minIndex) {
-      //将i的位置替换成最小值
-      swap(arrs, i, minIndex)
+    if (i !== min) {
+      // 将i的位置替换成最小值
+      swapList(list, i, min)
     }
   }
+  console.log('list', list)
 }
 ```
 
@@ -74,21 +77,20 @@ function selectionSort() {
 即索引的左边都是有序的，但最终位置不确定，为了给更小的元素腾出空间，需要进行移动。  
 当索引到达右端时，排序就完成了
 
-```js
-function insertSort(arr) {
-  let tmp = arr.slice()
-  const length = tmp.length
+```ts
+function insertSort(list: number[]) {
+  const length = list.length
   let minValue
-  for (let i = 1; i < length; i++) {
-    minValue = tmp[i]
+  for (let i = 1; i < length; i += 1) {
+    minValue = list[i]
     let j = i
-    while (j > 0 && tmp[j - 1] > minValue) {
-      tmp[j] = tmp[j - 1]
-      j--
+    while (j > 0 && list[j - 1] > minValue) {
+      list[j] = list[j - 1]
+      j -= 1
     }
-    tmp[j] = minValue
+    list[j] = minValue
   }
-  return tmp
+  console.log('list', list)
 }
 ```
 
@@ -104,26 +106,24 @@ function insertSort(arr) {
 
 插入排序每次只能将数据移动一位，希尔排序可以设置移动的位数（`gap`），当 gap = 1 的时候，就相当于插入排序了
 
-```js
-function shellSort(arr) {
-  let tmp = arr.slice()
-  const length = tmp.length
+```ts
+function shellSort(list: number[]) {
+  const length = list.length
   let gap = Math.floor(length / 2)
-  let minValue
   while (gap > 0) {
-    for (let i = gap; i < length; i++) {
-      minValue = tmp[i]
+    let minValue
+    for (let i = gap; i < length; i += 1) {
+      minValue = list[i]
       let j = i
-      while (j > 0 && tmp[j - gap] > minValue) {
-        tmp[j] = tmp[j - gap]
-        //j = j - gap;
+      while (j > 0 && list[j - gap] > minValue) {
+        list[j] = list[j - gap]
         j -= gap
       }
-      tmp[j] = minValue
+      list[j] = minValue
     }
     gap = Math.floor(gap / 2)
   }
-  return tmp
+  console.log('list', list)
 }
 ```
 
@@ -137,26 +137,26 @@ function shellSort(arr) {
 
 以此类推
 
-```js
+```ts
 //将数组分开
-function mergeSort(arr) {
-  const length = arr.length
+function mergeSort(list: number[]): number[] {
+  const length = list.length
   if (length < 2) {
-    return arr
+    return list
   }
   const middle = Math.floor(length / 2)
-  const left = arr.slice(0, middle)
-  const right = arr.slice(middle)
+  const left = list.slice(0, middle)
+  const right = list.slice(middle)
   return merge(mergeSort(left), mergeSort(right))
 }
 //合并
-function merge(left, right) {
-  let tmp = []
+function merge(left: number[], right: number[]) {
+  const newList: number[] = []
   while (left.length > 0 && right.length > 0) {
-    let minValue = left[0] <= right[0] ? left.shift() : right.shift()
-    tmp.push(minValue)
+    let minValue = left[0] > right[0] ? right.shift() : left.shift()
+    newList.push(minValue!)
   }
-  return tmp.concat(left, right)
+  return newList.concat(left, right)
 }
 ```
 
@@ -174,21 +174,20 @@ function merge(left, right) {
 
 3.  递归左边区域和右边区域
 
-```js
-function quickSort(arr) {
-  let base = arr[0] //基准元素
-  let left = [],
-    right = []
-  const length = arr.length
+```ts
+function quickSort(list: number[]): number[] {
+  const length = list.length
   if (length < 2) {
-    return arr
+    return list
   }
-  for (let i = 1; i < length; i++) {
-    if (arr[i] < base) {
-      //小于基准元素的放左边
-      left.push(arr[i])
+  const base = list[0]
+  const left: number[] = []
+  const right: number[] = []
+  for (let i = 1; i < length; i += 1) {
+    if (list[i] < base) {
+      left.push(list[i])
     } else {
-      right.push(arr[i])
+      right.push(list[i])
     }
   }
   return quickSort(left).concat([base], quickSort(right))
@@ -297,7 +296,6 @@ function heapify(arr, index, size) {
 选择排序绝对没用吗？
 
 选择排序只需要 O(n) 次交换，这一点好于冒泡排序
-
 ## V8 中的排序
 
 用的`TimSort`，源码[array-sort.tq](https://github.com/v8/v8/blob/78f2610345fdd14ca401d920c140f8f461b631d1/third_party/v8/builtins/array-sort.tq#L5)  

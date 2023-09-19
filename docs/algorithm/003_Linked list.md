@@ -52,7 +52,7 @@ class List {
       index = -1,
       length = this.length
     for (let i = 0; i < length; i++) {
-      if (element == current.element) {
+      if (element === current.element) {
         index = i
         break
       } else {
@@ -125,7 +125,7 @@ class List {
     let current = this.head,
       previous = null,
       index = 0
-    if (position == 0) {
+    if (position === 0) {
       //移除第一个
       this.head = current.next
     } else {
@@ -207,7 +207,7 @@ class DoubleList extends List {
         this.head = node
         this.length++
       }
-    } else if (position == this.length) {
+    } else if (position === this.length) {
       //位于最后相当于append
       this.append(element)
     } else {
@@ -231,16 +231,16 @@ class DoubleList extends List {
       previous = null,
       index = 0,
       length = this.length
-    if (position == 0) {
+    if (position === 0) {
       //移除第一个
       this.head = current.next
-      if (length == 1) {
+      if (length === 1) {
         //如果本身只剩1项，更新tail
         this.tail = null
       } else {
         this.head.prev = null
       }
-    } else if (position == length - 1) {
+    } else if (position === length - 1) {
       //删除最后一项，需要更新tail
       current = this.tail
       this.tail = current.prev
@@ -284,7 +284,7 @@ class CircleList extends List {
       this.head = node
     } else {
       current = this.head
-      while (current && current.next && current.next != head) {
+      while (current && current.next && current.next !== head) {
         current = current.next
       }
       //让新增节点成为最后一个
@@ -306,7 +306,7 @@ class CircleList extends List {
       //如果是做为头插入
       node.next = current
       //更新最后一个值的next
-      while (current.next != this.head) {
+      while (current.next !== this.head) {
         current = current.next
       }
       this.head = node
@@ -331,11 +331,11 @@ class CircleList extends List {
     let current = this.head,
       previous = null,
       index = 0
-    if (position == 0) {
+    if (position === 0) {
       //移除第一个
       this.head = this.head.next
       //更新最后一个的next
-      while (current.next != head) {
+      while (current.next !== head) {
         current = current.next
       }
       current.next = this.head
@@ -352,7 +352,7 @@ class CircleList extends List {
   toString() {
     let current = this.head,
       string = current.element
-    while (current && current.next != this.head) {
+    while (current && current.next !== this.head) {
       current = current.next
       string += ', ' + current.element
     }
