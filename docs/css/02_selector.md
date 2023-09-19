@@ -4,6 +4,23 @@
 
 选择直接的子元素(不止一个)
 
+```css
+.parent > .child {
+  color: red;
+}
+```
+
+```html
+<section class="parent">
+  <div class="child">red</div>
+  <div class="child">red</div>
+  <div class="nest">
+    <div class="child">nest child</div>
+  </div>
+  <div class="child">red</div>
+</section>
+```
+
 ## + 相邻选择器
 
 adjacent sibling selector
@@ -17,28 +34,28 @@ general sibling combinator
 与`>`类似，作用于兄弟节点。会选择所有匹配元素。**只会往下找**
 
 ```css
-h2 + p {
-  color: #66ccff;
-}
-h2 ~ p {
-  font-size: 20px;
+.child ~ .child {
+  color: blue;
 }
 ```
 
 ```html
-  <p>456</p>
-  <h2>选择符</h1>
-  <p>123</p>
-  <p>456</p>
+<section class="parent">
+  <div class="child">child1</div>
+  <div class="child">blue</div>
+  <div class="nest">
+    <div class="child">nest child</div>
+  </div>
+  <div class="child">blue</div>
+</section>
 ```
-
-效果图
-
-![效果图](../images/selector.jpg)
 
 ## []属性选择器
 
-input[type="submit"]
+```css
+input[type='submit'] {
+}
+```
 
 - 标签 abbr
 
@@ -47,9 +64,6 @@ abbr 标记一个缩写
 ```html
 The <abbr title="People's Republic of China">PRC</abbr> was founded in 1949.
 ```
-
-![效果图](../images/b945de9edc499f32b059324e0eb61375.png)
-![浏览器表现](../images/e37a5ce09c1ee0dc9a75eca2576bb92d.png)
 
 ## 伪元素
 
@@ -91,9 +105,9 @@ pseudo classes
 
 5.  :active 激活
 
-### where  
+### where
 
-``` css
+```css
 main h1,
 main h2 {
   color: red;
@@ -104,7 +118,9 @@ main :where(h1, h2) {
   color: orange;
 }
 ```
-where 的优先级更低一些 
+
+where 的优先级更低一些
+
 ```css
 main h1,
 main h2,
@@ -120,25 +136,22 @@ main .wrapper :where(h2, h3) {
   color: pink;
 }
 ```
-``` html
+
+```html
 <main>
   <div class="wrapper">
-    <h1>
-      red
-    </h1>
-    <h2>
-      pink
-    </h2>
-    <h3>
-      pink
-    </h3>
+    <h1>red</h1>
+    <h2>pink</h2>
+    <h3>pink</h3>
   </div>
 </main>
 ```
 
 ### is
+
 is 优先级正常排
-``` css
+
+```css
 main h1,
 main h2,
 main h3 {
@@ -153,21 +166,17 @@ main .wrapper :is(h2, h3) {
   color: pink;
 }
 ```
+
 ```html
 <main>
   <div class="wrapper">
-    <h1>
-      orange
-    </h1>
-    <h2>
-      pink
-    </h2>
-    <h3>
-      pink
-    </h3>
+    <h1>orange</h1>
+    <h2>pink</h2>
+    <h3>pink</h3>
   </div>
 </main>
 ```
+
 ## 结构化伪类
 
 structural pseudo classes
