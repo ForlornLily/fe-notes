@@ -90,6 +90,11 @@ console.log('name' in proxy) // true
 console.log('age' in proxy) // false
 ```
 
+捕获器不变式
+
+- 如果 target.property 存在且不可配置，则处理程序必须返回 true。
+- 如果 target.property 存在且目标对象不可扩展，则处理程序必须返回 true。
+
 #### get
 
 访问某个对象的 key 时，如果不存在，不会报错，而是返回 undefined
@@ -133,6 +138,11 @@ console.log(proxy.age) // Uncaught Error: 不存在该属性
 proxy.age = 12
 console.log(proxy.age) // 12，赋值后正常输出
 ```
+
+捕获器不变式
+
+- 如果 target.property 不可写且不可配置，则处理程序返回的值必须与 target.property 匹配。
+- 如果 target.property 不可配置且[[Get]]特性为 undefined，处理程序的返回值也必须是 undefined。
 
 #### set
 
@@ -182,15 +192,34 @@ console.log(target, proxy.plan) // {name: 'hello', age: 12} undefined
 proxy.name = 'hello' // Uncaught TypeError: 'set' on proxy: trap returned falsish for property 'name'
 ```
 
+捕获器不变式
+
+- 如果 target.property 不可写且不可配置，则不能修改目标属性的值。
+- 如果 target.property 不可配置且[[Set]]特性为 undefined，则不能修改目标属性的值。
+- 在严格模式下，处理程序中返回 false 会抛出 TypeError。
+
 #### 其余函数见原文
 
 [understandinges6](https://github.com/nzakas/understandinges6/blob/master/manuscript/12-Proxies-and-Reflection.md)，
 [翻译](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_12.html)
 
-## 撤销代理 
+- defineProperty
+- getOwnPropertyDescriptor
+- deleteProperty：对应 `delete`
+- ownKeys：对应 Object.keys
+- getPrototypeOf
+- setPrototypeOf
+- isExtensible
+- preventExtensions
+- apply
+- construct：对应 `new`
+
+## 撤销代理
+
 调用 `new Proxy()` 生成的代理会一直存在  
-通过 revocable 方法可以撤销，并且不可逆 
-``` ts
+通过 revocable 方法可以撤销，并且不可逆
+
+```ts
 const target: {
   foo?: string
 } = {}
@@ -201,18 +230,21 @@ const handler = {
 }
 const { proxy, revoke } = Proxy.revocable(target, handler)
 console.log(target.foo) // undefined
-console.log(proxy.foo)  // 'qux'
+console.log(proxy.foo) // 'qux'
 
 revoke()
-revoke()  // 幂等，可以调用多次，结果都一样
+revoke() // 幂等，可以调用多次，结果都一样
 console.log(target.foo) // undefined
-console.log(proxy.foo)  // Uncaught TypeError: Cannot perform 'get' on a proxy that has been revoked
+console.log(proxy.foo) // Uncaught TypeError: Cannot perform 'get' on a proxy that has been revoked
 ```
-## Reflect  
+
+## Reflect
+
 Reflect 不一定要和 Proxy 绑定，普通的对象也可以  
 比如 Reflect.defineProperty 会返回一个布尔值，表示操作是否成功  
 如果是普通写法，可以用 try catch 捕获异常
-``` ts
+
+```ts
 const target: {
   foo?: string
 } = {}
@@ -227,12 +259,14 @@ try {
   Object.defineProperty(target, 'foo', {
     value: 'test',
   })
-} catch(e) {
-  console.log(e)  // TypeError: Cannot redefine property: foo
+} catch (e) {
+  console.log(e) // TypeError: Cannot redefine property: foo
 }
 ```
-改用 Reflect，不需要 try catch，而是返回一个布尔值  
-``` ts
+
+改用 Reflect，不需要 try catch，而是返回一个布尔值
+
+```ts
 const target: {
   foo?: string
 } = {}
@@ -243,30 +277,49 @@ Object.defineProperty(target, 'foo', {
   value: 'bar',
 })
 
-console.log(Reflect.defineProperty(target, 'foo', {
-  value: 'test',
-}))  // false
+console.log(
+  Reflect.defineProperty(target, 'foo', {
+    value: 'test',
+  })
+) // false
 ```
-应用场景  
+
+应用场景
+
 - 上述的状态标记
-- 代替一些操作符，比如遍历用 `in`，可以用 Reflect.has 代替 
-    - has、get、set 
-    - deleteProperty：代替 `delete`
-    - Reflect.construct()：代替 `new` 
-``` ts
-console.log("hello" in target)
+- 代替一些操作符，比如遍历用 `in`，可以用 Reflect.has 代替
+  - has、get、set
+  - deleteProperty：代替 `delete`
+  - Reflect.construct()：代替 `new`
+
+```ts
+console.log('hello' in target)
 console.log(Reflect.has(target, 'hello'))
 ```
-``` ts
-const test = new Array("1", "2", "3")
-const arr = Reflect.construct(Array, ["1", "2", "3"])
+
+```ts
+const test = new Array('1', '2', '3')
+const arr = Reflect.construct(Array, ['1', '2', '3'])
 console.log(test, arr)
 ```
+
 - 安全的调用函数  
-在通过 apply 方法调用函数时，被调用的函数可能也定义了自己的 apply 属性  
-通常做法是通过原型链覆写`Function.prototype.apply.call(myFunc, thisVal, argumentList);`。
-可以用 Reflect.apply 代替  
-`Reflect.apply(myFunc, thisVal, argumentsList);`  
+  在通过 apply 方法调用函数时，被调用的函数可能也定义了自己的 apply 属性  
+  通常做法是通过原型链覆写`Function.prototype.apply.call(myFunc, thisVal, argumentList);`。
+  可以用 Reflect.apply 代替  
+  `Reflect.apply(myFunc, thisVal, argumentsList);`
+
+## 缺点
+
+不能很好地兼容 `this`
+
+```ts
+const target = new Date()
+const proxy = new Proxy(target, {})
+console.log(proxy instanceof Date) // true
+console.log(target.getTime())
+proxy.getTime() // Uncaught TypeError: this is not a Date object.
+```
 
 ## 基于 proxy 实现响应式
 
