@@ -92,7 +92,7 @@ priority.enqueue('Lancer', 3)
 
 ## 双端队列
 
-deque/double-ended que
+deque / double-ended que
 
 允许在两端都进行添加/删除的队列。
 

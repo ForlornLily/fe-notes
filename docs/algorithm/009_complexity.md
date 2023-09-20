@@ -60,6 +60,8 @@ if 语句最差的情况下要判断 n \* n 次
 
 ![](../images/607269bd16eef554d1d5a35d616404ef.png)
 
+![复杂度对比](../images/computational_complexity.png)
+
 ### 排序复杂度概览
 
 ![](../images/575aabcd751f933f72b4173d37ab680b.png)
