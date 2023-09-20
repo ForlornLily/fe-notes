@@ -60,7 +60,7 @@ console.log(proxy.foo) // Uncaught TypeError: 'get' on proxy: property 'foo' is 
 
 #### has
 
-用到关键字 in 的时候会触发 has 函数，比如遍历对象的属性的时候，即使存在这个 key，也可以让他返回 false
+用到关键字 in 或者 with() 的时候会触发 has 函数，比如遍历对象的属性的时候，即使存在这个 key，也可以让他返回 false
 
 has 接受的参数分别是
 
@@ -187,6 +187,87 @@ proxy.name = 'hello' // Uncaught TypeError: 'set' on proxy: trap returned falsis
 [understandinges6](https://github.com/nzakas/understandinges6/blob/master/manuscript/12-Proxies-and-Reflection.md)，
 [翻译](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_12.html)
 
+## 撤销代理 
+调用 `new Proxy()` 生成的代理会一直存在  
+通过 revocable 方法可以撤销，并且不可逆 
+``` ts
+const target: {
+  foo?: string
+} = {}
+const handler = {
+  get() {
+    return 'qux'
+  },
+}
+const { proxy, revoke } = Proxy.revocable(target, handler)
+console.log(target.foo) // undefined
+console.log(proxy.foo)  // 'qux'
+
+revoke()
+revoke()  // 幂等，可以调用多次，结果都一样
+console.log(target.foo) // undefined
+console.log(proxy.foo)  // Uncaught TypeError: Cannot perform 'get' on a proxy that has been revoked
+```
+## Reflect  
+Reflect 不一定要和 Proxy 绑定，普通的对象也可以  
+比如 Reflect.defineProperty 会返回一个布尔值，表示操作是否成功  
+如果是普通写法，可以用 try catch 捕获异常
+``` ts
+const target: {
+  foo?: string
+} = {}
+
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+
+try {
+  Object.defineProperty(target, 'foo', {
+    value: 'test',
+  })
+} catch(e) {
+  console.log(e)  // TypeError: Cannot redefine property: foo
+}
+```
+改用 Reflect，不需要 try catch，而是返回一个布尔值  
+``` ts
+const target: {
+  foo?: string
+} = {}
+
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+
+console.log(Reflect.defineProperty(target, 'foo', {
+  value: 'test',
+}))  // false
+```
+应用场景  
+- 上述的状态标记
+- 代替一些操作符，比如遍历用 `in`，可以用 Reflect.has 代替 
+    - has、get、set 
+    - deleteProperty：代替 `delete`
+    - Reflect.construct()：代替 `new` 
+``` ts
+console.log("hello" in target)
+console.log(Reflect.has(target, 'hello'))
+```
+``` ts
+const test = new Array("1", "2", "3")
+const arr = Reflect.construct(Array, ["1", "2", "3"])
+console.log(test, arr)
+```
+- 安全的调用函数  
+在通过 apply 方法调用函数时，被调用的函数可能也定义了自己的 apply 属性  
+通常做法是通过原型链覆写`Function.prototype.apply.call(myFunc, thisVal, argumentList);`。
+可以用 Reflect.apply 代替  
+`Reflect.apply(myFunc, thisVal, argumentsList);`  
+
 ## 基于 proxy 实现响应式
 
 ```js
@@ -211,8 +292,6 @@ let proxy = new Proxy(target, {
   },
 })
 ```
-
-![](../images/1f0a992c676775d6dacf94a491244927.png)
 
 ### 数组操作
 
