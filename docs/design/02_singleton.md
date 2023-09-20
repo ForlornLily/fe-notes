@@ -8,24 +8,24 @@ Singleton Pattern：保证一个类只存在一个实例
 
 用一个变量存储实例，如果变量存在则不再创建
 
-```js
-function Singleton(name) {
-  this.name = name
-  this.instance = null
-}
-Singleton.prototype.getName = function() {
-  console.log(this.name)
-}
-Singleton.getInstance = function(name) {
-  if (!this.instance) {
-    this.instance = new Singleton(name)
+```ts
+let instance: Singleton
+class Singleton {
+  private name: string
+  constructor(name: string) {
+    if(instance) {
+      throw new Error('只能一个实例')
+    }
+    instance = this
+    this.name = name
   }
-  return this.instance
+  getName() {
+    return this.name
+  }
 }
-const testA = Singleton.getInstance('hello')
-const testB = Singleton.getInstance('world')
-testA.getName() // "hello"
-testB.getName() // "hello"
+
+const singleName = new Singleton("hello")
+const singleNameSecond = new Singleton("word") // Uncaught Error: 只能一个实例
 ```
 
 ## 惰性单例
