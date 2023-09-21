@@ -1,6 +1,53 @@
 # 迭代器和生成器
 
-为了解决循环变量（for 里面用来++的 i）
+为了解决循环变量（for 里面用来++的 i）  
+循环就是一种简单的迭代  
+
+原有的循环（比如 for）遍历有一些缺陷：
+- 需要事先知道如何使用数据结构，比如数组，要通过 arr[index] 去取值 
+- 遍历顺序并不是数据结构固有的： i++ 也只能用在数组上，普通对象就不合适
+
+ES5 新增了 `forEach`，但缺点是没法中断，而且只能用在 Array 类型 
+
+## 可迭代功能
+实现 Iterable 接口(可迭代协议)要求同时具备两种能力:
+- 支持迭代的自我识别能力
+- 创建实现 Iterator 接口的对象的能力  
+  - 必须暴露一个属性作为“默认迭代器”，而 且这个属性必须使用特殊的 Symbol.iterator 作为键。
+
+JS 的数据类型很多都内置了实现：
+- 字符串 string
+- 数组 Array
+- 映射 object
+- 集合 Set
+- NodeList 等 DOM 集合类型
+- arguments 对象
+通过 `Symbol.iterator` 可以监测是否存在  
+``` ts
+const str = "hello, world"
+console.log(str[Symbol.iterator]()) // StringIterator {}
+```
+```js
+function isIterable(object) {
+  return typeof object[Symbol.iterator] === 'function'
+}
+isIterable('12345') //true
+isIterable([1, 2, 3]) //true
+isIterable(new WeakMap()) //false
+```
+
+实际用的时候不需要特意调用 `Symbol.iterator`，支持可迭代协议的类型都自动支持以下特性
+- for...of
+- 解构
+- 扩展运算符 `...`
+- Array.from
+- 创建 Set
+``` ts
+const str = "hello"
+const data = new Set(str)
+console.log(data) // Set(4) {'h', 'e', 'l', 'o'}
+```
+-  yield*操作符，在生成器中使用  
 
 ## Iterators
 
@@ -11,11 +58,19 @@ next()调用时返回一个对象，对象有两个属性：
 - value 代表下一个值
 
 - done 代表是否完成，是个布尔值。 true 时表示没有下一个 value 可以 return 了
-
-### ES5 简单实现
-
-```js
-function Iterators(items) {
+``` ts
+const str = "hello"
+const test = str[Symbol.iterator]()
+const second = str[Symbol.iterator]()
+console.log(test.next()) // {value: 'h', done: false}
+// 互相独立
+console.log(second.next()) // {value: 'h', done: false}
+```
+### 简单实现
+为了让一个可迭代对象能够创建多个迭代器，必须每创建一个迭代器就对应一个新计数器。  
+为此，可以把计数器变量放到闭包里，然后通过闭包返回迭代器
+```ts
+function Iterators(items: string[]) {
   var i = 0
   return {
     next: function() {
@@ -28,9 +83,41 @@ function Iterators(items) {
     }
   }
 }
+const test = Iterators(["hello", "world"])
+console.log(test.next())  // {done: false, value: 'hello'}
+console.log(test.next()) // {done: false, value: 'world'}
+console.log(test.next()) // {done: false, value: undefined}
+console.log(test.next()) // {done: true, value: undefined}
 ```
-
-![](../images/bf3c3bb4ec280a10e3de7741cb002aca.png)
+``` ts
+class Counter {
+  private items: string[]
+  constructor(items: string[]) {
+    this.items = items;
+  }
+  [Symbol.iterator]() {
+    let count = 0
+    const items = this.items;
+    const length = items.length
+    return {
+      next(): {
+        done: boolean
+        value: string | undefined
+      } {
+        const value = items[count]
+        count +=1
+        if (count <= length) {
+          return { done: false, value };
+        } else {
+          return { done: true, value: undefined };
+        }
+      }
+    };
+  }
+}
+let counter = new Counter(["hello", "world"]);
+for (let i of counter) { console.log(i); }
+```
 
 ## Generators
 
@@ -74,8 +161,8 @@ Iterable 是一个拥有 Symbol.iterator 属性的对象
 
 ### for of
 
-用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。
-
+用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。  
+可以使用 `break`、`continue`、`return` 或者 `throw` 中断  
 值是 next()返回的 value; done 是 true 的时候结束
 
 ```js
@@ -94,8 +181,6 @@ for (let value of values) {
 }
 ```
 
-![](../images/7a7e5606f28570db5be89535117219f4.png)
-
 ### Symbol.iterator
 
 `for...of`会先调 Symbol.iterator 方法，Symbol.iterator 返回一个迭代器，然后 next()被调用,
@@ -107,20 +192,6 @@ let values = ['1', 2, '3']
 let iterators = values[Symbol.iterator]()
 console.log(iterators.next()) //{done: false, value: '1'}
 ```
-
-#### 判断是否可以迭代
-
-通过判断 Symbol.iterator 是不是一个方法来判断是否可迭代
-
-```js
-function isIterable(object) {
-  return typeof object[Symbol.iterator] === 'function'
-}
-isIterable('12345') //true
-isIterable([1, 2, 3]) //true
-isIterable(new WeakMap()) //false
-```
-
 #### 自行创建可迭代对象
 
 通过生成器增加 Symbol.iterator 方法
