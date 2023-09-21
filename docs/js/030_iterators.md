@@ -1,32 +1,38 @@
 # 迭代器和生成器
 
 为了解决循环变量（for 里面用来++的 i）  
-循环就是一种简单的迭代  
+循环就是一种简单的迭代
 
 原有的循环（比如 for）遍历有一些缺陷：
-- 需要事先知道如何使用数据结构，比如数组，要通过 arr[index] 去取值 
+
+- 需要事先知道如何使用数据结构，比如数组，要通过 arr[index] 去取值
 - 遍历顺序并不是数据结构固有的： i++ 也只能用在数组上，普通对象就不合适
 
-ES5 新增了 `forEach`，但缺点是没法中断，而且只能用在 Array 类型 
+ES5 新增了 `forEach`，但缺点是没法中断，而且只能用在 Array 类型
 
 ## 可迭代功能
+
 实现 Iterable 接口(可迭代协议)要求同时具备两种能力:
+
 - 支持迭代的自我识别能力
-- 创建实现 Iterator 接口的对象的能力  
+- 创建实现 Iterator 接口的对象的能力
   - 必须暴露一个属性作为“默认迭代器”，而 且这个属性必须使用特殊的 Symbol.iterator 作为键。
 
 JS 的数据类型很多都内置了实现：
+
 - 字符串 string
 - 数组 Array
 - 映射 object
 - 集合 Set
 - NodeList 等 DOM 集合类型
 - arguments 对象
-通过 `Symbol.iterator` 可以监测是否存在  
-``` ts
-const str = "hello, world"
+  通过 `Symbol.iterator` 可以监测是否存在
+
+```ts
+const str = 'hello, world'
 console.log(str[Symbol.iterator]()) // StringIterator {}
 ```
+
 ```js
 function isIterable(object) {
   return typeof object[Symbol.iterator] === 'function'
@@ -37,17 +43,20 @@ isIterable(new WeakMap()) //false
 ```
 
 实际用的时候不需要特意调用 `Symbol.iterator`，支持可迭代协议的类型都自动支持以下特性
+
 - for...of
 - 解构
 - 扩展运算符 `...`
 - Array.from
 - 创建 Set
-``` ts
-const str = "hello"
+
+```ts
+const str = 'hello'
 const data = new Set(str)
 console.log(data) // Set(4) {'h', 'e', 'l', 'o'}
 ```
--  yield*操作符，在生成器中使用  
+
+- yield\*操作符，在生成器中使用
 
 ## Iterators
 
@@ -58,46 +67,51 @@ next()调用时返回一个对象，对象有两个属性：
 - value 代表下一个值
 
 - done 代表是否完成，是个布尔值。 true 时表示没有下一个 value 可以 return 了
-``` ts
-const str = "hello"
+
+```ts
+const str = 'hello'
 const test = str[Symbol.iterator]()
 const second = str[Symbol.iterator]()
 console.log(test.next()) // {value: 'h', done: false}
 // 互相独立
 console.log(second.next()) // {value: 'h', done: false}
 ```
+
 ### 简单实现
+
 为了让一个可迭代对象能够创建多个迭代器，必须每创建一个迭代器就对应一个新计数器。  
 为此，可以把计数器变量放到闭包里，然后通过闭包返回迭代器
+
 ```ts
 function Iterators(items: string[]) {
   var i = 0
   return {
-    next: function() {
+    next: function () {
       var done = items.length < i
       var value = !done ? items[i++] : undefined
       return {
         done: done,
-        value: value
+        value: value,
       }
-    }
+    },
   }
 }
-const test = Iterators(["hello", "world"])
-console.log(test.next())  // {done: false, value: 'hello'}
+const test = Iterators(['hello', 'world'])
+console.log(test.next()) // {done: false, value: 'hello'}
 console.log(test.next()) // {done: false, value: 'world'}
 console.log(test.next()) // {done: false, value: undefined}
 console.log(test.next()) // {done: true, value: undefined}
 ```
-``` ts
+
+```ts
 class Counter {
   private items: string[]
   constructor(items: string[]) {
-    this.items = items;
+    this.items = items
   }
   [Symbol.iterator]() {
     let count = 0
-    const items = this.items;
+    const items = this.items
     const length = items.length
     return {
       next(): {
@@ -105,30 +119,89 @@ class Counter {
         value: string | undefined
       } {
         const value = items[count]
-        count +=1
+        count += 1
         if (count <= length) {
-          return { done: false, value };
+          return { done: false, value }
         } else {
-          return { done: true, value: undefined };
+          return { done: true, value: undefined }
         }
-      }
-    };
+      },
+    }
   }
 }
-let counter = new Counter(["hello", "world"]);
-for (let i of counter) { console.log(i); }
+let counter = new Counter(['hello', 'world'])
+for (let i of counter) {
+  console.log(i)
+}
 ```
 
 ## Generators
 
-返回迭代器的函数，也就是用来生成迭代器
+拥有在一个函数块内暂停和恢复代码执行的能力。  
+使用生成器可以自定义迭代器和实现协程
 
-- 函数名前面加`*`表示是一个生成器。可以作为对象的方法
+生成器的形式是一个函数，函数名称前面加一个星号（\*）表示它是一个生成器。
+
+- 函数名前面加`*`表示是一个生成器。可以作为对象的方法。`*` 前后的空格没有影响
+
+```js
+// 生成器函数声明
+function* generatorFn() {}
+// 生成器函数表达式
+let generatorFn = function* () {}
+// 作为对象字面量方法的生成器函数
+let foo = {
+  *generatorFn() {},
+}
+// 作为类实例方法的生成器函数
+class Foo {
+  *generatorFn() {}
+}
+// 作为类静态方法的生成器函数
+class Bar {
+  static *generatorFn() {}
+}
+```
+
+调用生成器函数会产生一个生成器对象。调用 next 会让生成器开始或恢复执行。
+
+```ts
+function* generators() {
+  return 'hello'
+}
+const test = generators()
+console.log(test.next()) // {value: 'hello', done: true}
+```
 
 - 可以使用`yield`关键字， yield 后面指定了 value 的值
-  ::: warning
-  yield 只能放在生成器中，生成器内如果嵌套了函数，也不能放在嵌套函数内部
-  :::
+
+```js
+function* generatorFn() {
+  yield 'hello'
+  yield 'world'
+  yield 'js'
+}
+for (const x of generatorFn()) {
+  console.log(x)
+  // hello
+  // world
+  // js
+}
+```
+
+::: warning
+yield 只能放在生成器中，生成器内如果嵌套了函数，也不能放在嵌套函数内部
+:::
+
+```js
+// 无效
+function* invalidGeneratorFnA() {
+  function a() {
+    yield
+  }
+}
+```
+
 - 不能用箭头函数创建生成器
 
 ```js
@@ -151,6 +224,46 @@ function *generators(items) {
 }
 ```
 
+### 星号
+
+相当于去迭代，一次产出一个值
+
+```ts
+function* generatorFn() {
+  yield* [1, 2]
+  yield* [3, 4]
+  yield* [5, 6]
+}
+for (const x of generatorFn()) {
+  console.log(x) // 一次一个值，1 2 3 4 5 6，而不是 [1, 2] [3,4] [5,6]
+}
+```
+
+可以用来实现递归
+
+```ts
+function* iterArr(
+  arr: (string | string[])[]
+): Generator<(string | string[])[], void, unknown> {
+  //迭代器返回一个迭代器对象
+  if (Array.isArray(arr)) {
+    // 内节点
+    for (let i = 0; i < arr.length; i++) {
+      yield* iterArr(arr[i] as (string | string[])[]) // (*) 递归
+    }
+  } else {
+    // 离开
+    yield arr
+  }
+}
+// 使用 for-of 遍历：
+const arr = ['a', ['b', 'c'], ['d', 'e']]
+const result = iterArr(arr)
+for (const x of iterArr(arr)) {
+  console.log(x) // a  b  c  d  e
+}
+```
+
 ## 可迭代对象(Iterables)
 
 Iterable 是一个拥有 Symbol.iterator 属性的对象
@@ -169,12 +282,12 @@ Iterable 是一个拥有 Symbol.iterator 属性的对象
 let values = [
   {
     id: 1,
-    name: 1
+    name: 1,
   },
   {
     id: 2,
-    name: 2
-  }
+    name: 2,
+  },
 ]
 for (let value of values) {
   console.log(value)
@@ -192,6 +305,7 @@ let values = ['1', 2, '3']
 let iterators = values[Symbol.iterator]()
 console.log(iterators.next()) //{done: false, value: '1'}
 ```
+
 #### 自行创建可迭代对象
 
 通过生成器增加 Symbol.iterator 方法
@@ -203,7 +317,7 @@ let items = {
     for (let item of this.value) {
       yield item
     }
-  }
+  },
 }
 items.value.push(1)
 items.value.push(2)
@@ -241,14 +355,15 @@ for (let key of keys) {
 ```
 
 ```js
-let values = new Map([[11, 'hello'], [22, 'world']])
+let values = new Map([
+  [11, 'hello'],
+  [22, 'world'],
+])
 let keys = values.entries()
 for (let key of keys) {
   console.log(key)
 }
 ```
-
-![](../images/000d9569755b4279a91d5ca4e2d687bd.png)
 
 #### 默认的迭代器
 
@@ -419,12 +534,12 @@ Promise.resolve().then(() => {
 
 a1()
 
-let promise2 = new Promise(resolve => {
+let promise2 = new Promise((resolve) => {
   resolve('promise2.then')
   console.log('promise2')
 })
 
-promise2.then(res => {
+promise2.then((res) => {
   console.log(res)
   Promise.resolve().then(() => {
     console.log('promise3')
