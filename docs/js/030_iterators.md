@@ -25,8 +25,10 @@ JS 的数据类型很多都内置了实现：
 - 映射 object
 - 集合 Set
 - NodeList 等 DOM 集合类型
-- arguments 对象
-  通过 `Symbol.iterator` 可以监测是否存在
+- arguments 对象  
+
+通过 `Symbol.iterator` 可以监测是否存在  
+`for...of`会先调 Symbol.iterator 方法，Symbol.iterator 返回一个迭代器，然后 next()被调用
 
 ```ts
 const str = 'hello, world'
@@ -173,22 +175,34 @@ const test = generators()
 console.log(test.next()) // {value: 'hello', done: true}
 ```
 
-- 可以使用`yield`关键字， yield 后面指定了 value 的值
+- 可以使用`yield`关键字， yield 后面指定了 value 的值  
 
-```js
-function* generatorFn() {
-  yield 'hello'
-  yield 'world'
-  yield 'js'
+  可以传参：next(参数)，第一次调用参数无效
+```ts
+function* createIterator(): Generator<string, void, string> {
+  let first = yield 'hello'
+  let second = yield first + ' world' //2赋值给了first
+  let third = yield second //3赋值给了second
 }
-for (const x of generatorFn()) {
-  console.log(x)
-  // hello
-  // world
-  // js
-}
+let iterators = createIterator()
+console.log(iterators.next('1'))  // {value: 'hello', done: false}
+console.log(iterators.next('2')) //  {value: '2 world', done: false}
+console.log(iterators.next('3')) // {value: '3', done: false}
+console.log(iterators.next('4')) // {value: undefined, done: true}
 ```
-
+``` ts
+function* createIterator(): Generator<string, string, string> {
+  let first = yield 'hello'
+  return 'finished'
+  let second = yield first + ' world' 
+  let third = yield second 
+}
+let iterators = createIterator()
+console.log(iterators.next('first'))  // {value: 'hello', done: false}
+console.log(iterators.next('second')) //  {value: 'finished', done: true}
+console.log(iterators.next('third')) // {value: undefined, done: true}
+console.log(iterators.next('last')) // {value: undefined, done: true}
+```
 ::: warning
 yield 只能放在生成器中，生成器内如果嵌套了函数，也不能放在嵌套函数内部
 :::
@@ -203,19 +217,6 @@ function* invalidGeneratorFnA() {
 ```
 
 - 不能用箭头函数创建生成器
-
-```js
-function* generators(items) {
-  let length = items.length
-  for (let i = 0; i < length; i++) {
-    yield items[i]
-  }
-}
-let iterators = generators([5, 6, 7])
-```
-
-![](../images/61aa8abbbbf6c6a7c6b2b337a102fb5d.png)
-
 ```js
 function *generators(items) {
   items.forEach(function(element) {
@@ -264,68 +265,53 @@ for (const x of iterArr(arr)) {
 }
 ```
 
-## 可迭代对象(Iterables)
+### 提前终止生成器
 
-Iterable 是一个拥有 Symbol.iterator 属性的对象
-
-所有集合对象（数组、Set、Map）和字符串都是可迭代对象，拥有[默认的迭代器](#内置的迭代器-built-in-iterators)。WeakSet, WeakMap 不是
-
-生成器默认会为 Symbol.iterator 属性赋值，因此它创建的所有迭代器都是可迭代对象
-
-### for of
-
-用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。  
-可以使用 `break`、`continue`、`return` 或者 `throw` 中断  
-值是 next()返回的 value; done 是 true 的时候结束
-
-```js
-let values = [
-  {
-    id: 1,
-    name: 1,
-  },
-  {
-    id: 2,
-    name: 2,
-  },
-]
-for (let value of values) {
-  console.log(value)
+#### return
+所有生成器对象都有 `return` 方法，调用后进入关闭状态，无法恢复  
+``` ts
+function* createIterator(): Generator<string, void | string, string> {
+  let first = yield 'hello'
+  let second = yield first + ' world' //2赋值给了first
+  let third = yield second //3赋值给了second
 }
+let iterators = createIterator()
+console.log(iterators.next('1'))  // {value: 'hello', done: false}
+console.log(iterators.return('2')) //  {value: '2', done: true}
+console.log(iterators.next('3')) // {value: undefined, done: true}
+console.log(iterators.next('4')) // {value: undefined, done: true}
 ```
-
-### Symbol.iterator
-
-`for...of`会先调 Symbol.iterator 方法，Symbol.iterator 返回一个迭代器，然后 next()被调用,
-获取到的 value 值放到 for 的 key 中  
-同样其他迭代方法也是，比如[Array.from](./js/../009_array.md)
-
-```js
-let values = ['1', 2, '3']
-let iterators = values[Symbol.iterator]()
-console.log(iterators.next()) //{done: false, value: '1'}
-```
-
-#### 自行创建可迭代对象
-
-通过生成器增加 Symbol.iterator 方法
-
-```js
-let items = {
-  value: [],
-  *[Symbol.iterator]() {
-    for (let item of this.value) {
-      yield item
-    }
-  },
+#### throw
+``` ts
+function* createIterator(): Generator<string, void | string, string> {
+  let first = yield 'hello'
+  let second = yield first + ' world' //2赋值给了first
+  let third = yield second //3赋值给了second
 }
-items.value.push(1)
-items.value.push(2)
-for (let value of items) {
-  console.log(value)
-}
+let iterators = createIterator()
+console.log(iterators.next('1'))  // {value: 'hello', done: false}
+console.log(iterators.next('2')) //  {value: '2 world', done: false}
+console.log(iterators.throw(new Error('error')))  // Uncaught Error: error
+// 直接报错，不会往下走
+console.log(iterators.next('4'))
 ```
+如果在生成器里边 try catch 了就能继续往下走  
+``` ts
+function* createIterator(): Generator<string, void | string, string> {
+  try {
+    let first = yield 'hello'
+    let second = yield first + ' world' //2赋值给了first
+    let third = yield second //3赋值给了second
+  } catch {
 
+  }
+}
+let iterators = createIterator()
+console.log(iterators.next('1'))  // {value: 'hello', done: false}
+console.log(iterators.throw(new Error('error')))  // {value: undefined, done: true}
+console.log(iterators.next('2')) //  {value: undefined, done: true}
+console.log(iterators.next('4')) // {value: undefined, done: true}
+```
 ## 内置的迭代器(Built-in Iterators)
 
 ### 集合的迭代器: keys, values, entries
@@ -367,7 +353,10 @@ for (let key of keys) {
 
 #### 默认的迭代器
 
-用`for..of`直接遍历某个集合时，不同集合有不同的迭代器
+用`for..of`直接遍历某个集合时，不同集合有不同的迭代器  
+用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。  
+可以使用 `break`、`continue`、[return](#提前退出-return) 或者 [throw](#抛出错误-throw) 中断  
+值是 next()返回的 value; done 是 true 的时候结束  
 
 数组和 Set 是 values
 
@@ -385,63 +374,11 @@ for (let key of arr) {
 
 NodeList 是一个类数组，迭代表现和数组一样
 
-## 迭代器传参
-
-可以传递参数：next(参数)
-
-第一次调用参数无效
-
-```js
-function* createIteratror() {
-  let first = yield 'hello'
-  let second = yield first + ' world' //2赋值给了first
-  let third = yield second //3赋值给了second
-}
-let iterators = createIteratror()
-console.log(iterators.next('1'))
-console.log(iterators.next('2'))
-console.log(iterators.next('3'))
-console.log(iterators.next('4'))
-```
-
-![](../images/aaf30df5b9a6152f6f6895073bb220f4.png)
-
-## 抛出错误 throw
-
-```js
-function* createIteratror() {
-  let first = yield 'hello'
-  let second = yield first + ' world' //2赋值给了first
-  let third = yield second //报错，不会执行
-}
-let iterators = createIteratror()
-console.log(iterators.next('1'))
-console.log(iterators.next('2'))
-console.log(iterators.throw(new Error('error')))
-```
-
-![](../images/9d2d9cc9f67768871686df244a385226.png)
-
-## 提前退出 return
-
-```js
-function* createIteratror() {
-  let first = yield 'hello'
-  return 'Done'
-  let second = yield first + ' world' //已结束
-}
-let iterators = createIteratror()
-console.log(iterators.next('1'))
-console.log(iterators.next('2'))
-```
-
-![](../images/bff65753b95c3d0dbeead72e20708b5b.png)
-
 ## 委托
 
 生成器做为函数，成为另一个生成器的一部分
 
-```js
+```ts
 function* createStr() {
   yield 'hello'
   yield 'world'
@@ -450,14 +387,17 @@ function* createNum() {
   yield 1
   yield 2
 }
-function* createIteratror() {
+function* createIterator() {
   yield* createNum()
   yield* createStr()
 }
-let iterators = createIteratror()
+let iterators = createIterator()
+console.log(iterators.next())  // {value: 1, done: false}
+console.log(iterators.next())  // {value: 2, done: false}
+console.log(iterators.next()) // {value: 'hello', done: false}
+console.log(iterators.next()) // {value: 'world', done: false}
+console.log(iterators.next()) // {value: undefined, done: true}
 ```
-
-![](../images/86fe682dda1d74460352a45f1d91a66a.png)
 
 ## await/async
 
@@ -563,7 +503,7 @@ promise3
 setTimeout
 ```
 
-### 异步迭代器
+### 异步迭代
 
 让 await 可以和 for...of 循环一起使用，以串行的方式运行异步操作
 
