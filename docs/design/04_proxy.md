@@ -37,3 +37,4 @@ var proxyMulti = (function() {
 proxyMulti(1, 4, 5, 6)
 console.log(proxyMulti(1, 4, 5, 6)) //第二次调用的时候值已经缓存
 ```
+更多见 [Proxy](../js/031_proxy.md)

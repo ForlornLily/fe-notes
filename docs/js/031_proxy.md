@@ -4,7 +4,7 @@
 
 通过调用 `new Proxy()`，可以创建一个代理，用于替代另一个对象（target），这个代理对目标对象进行了虚拟，因此该代理与该目标对象表面上可以被当作同一个对象来对待
 
-## new Proxy(target, hanlder)
+## new Proxy(target, handler)
 
 ### target
 
@@ -27,19 +27,42 @@ proxy.name 与 target.name 都指向 target.name
 
 ### handler 对象
 
-handler 首先是个对象，包含了多个陷阱(trap)函数
+使用代理的主要目的是可以定义捕获器（trap）。一般用来做一些拦截行为，比如鉴权  
+即下方的陷阱（trap）函数
 
 ### 陷阱函数与 Reflect
 
-每个陷阱函数都有对应的 Reflect，并且同名，函数名一致
+Reflect 的存在是为了方便返回原有的实现，避免一样的逻辑需要自己手写一遍
+
+每个函数都有对应的 Reflect，并且同名，函数名一致
 
 比如 get 对应 Reflect.get
 
-#### 陷阱函数 has
+同样这类函数也存在一些限制：必须遵循“捕获器不变式”（trap invariant）
 
-用到关键字 in 的时候会触发 has 函数，比如遍历对象的属性的时候，即使存在这个 key，也可以让他返回 false
+```ts
+const target: {
+  foo?: string
+} = {}
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+const handler = {
+  get() {
+    return 'qux'
+  },
+}
+const proxy = new Proxy(target, handler)
+console.log(proxy.foo) // Uncaught TypeError: 'get' on proxy: property 'foo' is a read-only and non-configurable data property on the proxy target but the proxy did not return its actual value (expected 'bar' but got 'qux')
+```
 
-has 陷阱接受的参数分别是
+#### has
+
+用到关键字 in 或者 with() 的时候会触发 has 函数，比如遍历对象的属性的时候，即使存在这个 key，也可以让他返回 false
+
+has 接受的参数分别是
 
 - target: 目标对象(target)
 
@@ -50,7 +73,7 @@ has 陷阱接受的参数分别是
 ```js
 let target = {
   name: 'hello',
-  age: 12
+  age: 12,
 }
 let proxy = new Proxy(target, {
   has(target, key) {
@@ -58,19 +81,27 @@ let proxy = new Proxy(target, {
       return false
     }
     return Reflect.has(target, key)
-  }
+  },
 })
+console.log('name' in target) // true
+console.log('age' in target) // true
+
+console.log('name' in proxy) // true
+console.log('age' in proxy) // false
 ```
 
-![](../images/c012fe7367394c5af066cc039f20ac61.png)
+捕获器不变式
 
-#### 陷阱函数 get
+- 如果 target.property 存在且不可配置，则处理程序必须返回 true。
+- 如果 target.property 存在且目标对象不可扩展，则处理程序必须返回 true。
+
+#### get
 
 访问某个对象的 key 时，如果不存在，不会报错，而是返回 undefined
 
 通过 get，可以设置成报错
 
-get 陷阱函数接受的参数分别是
+get 函数接受的参数分别是
 
 - target: 目标对象(target)
 
@@ -80,30 +111,46 @@ get 陷阱函数接受的参数分别是
 
 下面访问 target，还是返回 undefined，访问 proxy 就会报错，但是可以添加属性
 
-```js
-let target = {
-  name: 'hello'
+```ts
+let target: {
+  name: string
+  age?: number
+} = {
+  name: 'hello',
 }
 let proxy = new Proxy(target, {
   get(target, key, receiver) {
     if (!(key in receiver)) {
       throw new Error('不存在该属性')
     }
+    // return Reflect.get(target, key, receiver)
     return Reflect.get(target, key, receiver)
-  }
+  },
 })
+console.log(target.name) // hello
+console.log(proxy.name) // hello
+
+console.log(target.age) // undefined
+console.log(proxy.age) // Uncaught Error: 不存在该属性
 ```
 
-![](../images/3c48697c5a347af6bcb4bbd25b4a7060.png)
-![](../images/bde9a4e2f37cb338324bd2d0ca0e074e.png)
+```ts
+proxy.age = 12
+console.log(proxy.age) // 12，赋值后正常输出
+```
 
-#### 陷阱函数 set
+捕获器不变式
+
+- 如果 target.property 不可写且不可配置，则处理程序返回的值必须与 target.property 匹配。
+- 如果 target.property 不可配置且[[Get]]特性为 undefined，处理程序的返回值也必须是 undefined。
+
+#### set
 
 例：假设创建一个对象，对象的每一个新增的 key 都只能是 Number 类型。
 
-那么每新增一个 key 都必须经过校验，可以通过 set 陷阱函数来实现
+那么每新增一个 key 都必须经过校验，可以通过 set 来实现
 
-set 陷阱函数接受的参数是：
+set 接受的参数是：
 
 - target: 目标对象(target)
 
@@ -113,37 +160,172 @@ set 陷阱函数接受的参数是：
 
 - receiver: 代理对象(proxy)
 
-```js
-let target = {
-  name: 'hello'
+```ts
+let target: {
+  name: string
+  age?: number
+  plan?: string
+} = {
+  name: 'hello',
 }
 let proxy = new Proxy(target, {
-  set(target, key, value, receiver) {
+  set(target, key, value, receiver): boolean {
     //如果target本身有key，跳过，本题只是为了校验新增的key
     if (!target.hasOwnProperty(key)) {
       if (isNaN(value)) {
         console.log('不是数字')
-        return
+        return true
       }
       // 添加属性
       return Reflect.set(target, key, value, receiver)
     }
-  }
+    return false
+  },
 })
+proxy.age = 12
+console.log(proxy.age) // 12
+console.log(target) // {name: 'hello', age: 12}
+// 不报错，但不会赋值
+proxy.plan = 'S' // 不是数字
+console.log(target, proxy.plan) // {name: 'hello', age: 12} undefined
+// 因为最后 return false 所以会报错
+proxy.name = 'hello' // Uncaught TypeError: 'set' on proxy: trap returned falsish for property 'name'
 ```
 
-![](../images/5d68e2bac00153d424a86783b5805c00.png)
+捕获器不变式
+
+- 如果 target.property 不可写且不可配置，则不能修改目标属性的值。
+- 如果 target.property 不可配置且[[Set]]特性为 undefined，则不能修改目标属性的值。
+- 在严格模式下，处理程序中返回 false 会抛出 TypeError。
 
 #### 其余函数见原文
 
 [understandinges6](https://github.com/nzakas/understandinges6/blob/master/manuscript/12-Proxies-and-Reflection.md)，
 [翻译](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_12.html)
 
+- defineProperty
+- getOwnPropertyDescriptor
+- deleteProperty：对应 `delete`
+- ownKeys：对应 Object.keys
+- getPrototypeOf
+- setPrototypeOf
+- isExtensible
+- preventExtensions
+- apply
+- construct：对应 `new`
+
+## 撤销代理
+
+调用 `new Proxy()` 生成的代理会一直存在  
+通过 revocable 方法可以撤销，并且不可逆
+
+```ts
+const target: {
+  foo?: string
+} = {}
+const handler = {
+  get() {
+    return 'qux'
+  },
+}
+const { proxy, revoke } = Proxy.revocable(target, handler)
+console.log(target.foo) // undefined
+console.log(proxy.foo) // 'qux'
+
+revoke()
+revoke() // 幂等，可以调用多次，结果都一样
+console.log(target.foo) // undefined
+console.log(proxy.foo) // Uncaught TypeError: Cannot perform 'get' on a proxy that has been revoked
+```
+
+## Reflect
+
+Reflect 不一定要和 Proxy 绑定，普通的对象也可以  
+比如 Reflect.defineProperty 会返回一个布尔值，表示操作是否成功  
+如果是普通写法，可以用 try catch 捕获异常
+
+```ts
+const target: {
+  foo?: string
+} = {}
+
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+
+try {
+  Object.defineProperty(target, 'foo', {
+    value: 'test',
+  })
+} catch (e) {
+  console.log(e) // TypeError: Cannot redefine property: foo
+}
+```
+
+改用 Reflect，不需要 try catch，而是返回一个布尔值
+
+```ts
+const target: {
+  foo?: string
+} = {}
+
+Object.defineProperty(target, 'foo', {
+  configurable: false,
+  writable: false,
+  value: 'bar',
+})
+
+console.log(
+  Reflect.defineProperty(target, 'foo', {
+    value: 'test',
+  })
+) // false
+```
+
+应用场景
+
+- 上述的状态标记
+- 代替一些操作符，比如遍历用 `in`，可以用 Reflect.has 代替
+  - has、get、set
+  - deleteProperty：代替 `delete`
+  - Reflect.construct()：代替 `new`
+
+```ts
+console.log('hello' in target)
+console.log(Reflect.has(target, 'hello'))
+```
+
+```ts
+const test = new Array('1', '2', '3')
+const arr = Reflect.construct(Array, ['1', '2', '3'])
+console.log(test, arr)
+```
+
+- 安全的调用函数  
+  在通过 apply 方法调用函数时，被调用的函数可能也定义了自己的 apply 属性  
+  通常做法是通过原型链覆写`Function.prototype.apply.call(myFunc, thisVal, argumentList);`。
+  可以用 Reflect.apply 代替  
+  `Reflect.apply(myFunc, thisVal, argumentsList);`
+
+## 缺点
+
+不能很好地兼容 `this`
+
+```ts
+const target = new Date()
+const proxy = new Proxy(target, {})
+console.log(proxy instanceof Date) // true
+console.log(target.getTime())
+proxy.getTime() // Uncaught TypeError: this is not a Date object.
+```
+
 ## 基于 proxy 实现响应式
 
 ```js
 let target = {
-  a: 1
+  a: 1,
 }
 function info(obj, key) {
   console.log(`对象的${key}是${obj[key]}`)
@@ -160,11 +342,9 @@ let proxy = new Proxy(target, {
     //通过改变proxy来改变target的值
     change(target, key, value)
     return Reflect.set(target, key, value, receiver)
-  }
+  },
 })
 ```
-
-![](../images/1f0a992c676775d6dacf94a491244927.png)
 
 ### 数组操作
 
@@ -189,24 +369,24 @@ let proxy = new Proxy(target, {
     //通过改变proxy来改变target的值
     change(target, key, value)
     return Reflect.set(target, key, value, receiver)
-  }
+  },
 })
 proxy.push(5)
 ```
 
-`proxy.push(5)`会多次触发`get`和`set`陷阱  
+`proxy.push(5)`会多次触发`get`和`set`
 ![](../images/proxy_push.jpg)
 
 ### 对象嵌套
 
-嵌套不会触发`set`陷阱，但会触发`get`
+嵌套不会触发`set`，但会触发`get`
 
 ```js
 let target = {
   name: 'hello',
   location: {
-    three: 'west'
-  }
+    three: 'west',
+  },
 }
 /* 省略proxy定义 */
 proxy.location.three = 'east'
@@ -233,7 +413,7 @@ function createReactive(target) {
 }
 const handlers = {
   get: getters,
-  set: setters
+  set: setters,
 }
 function getters(target, key, receiver) {
   const result = Reflect.get(target, key, receiver)
@@ -260,9 +440,9 @@ function setters(target, key, value, receiver) {
 let target = {
   name: 'hello',
   location: {
-    three: 'west'
+    three: 'west',
   },
-  arr: [1, 2, 3]
+  arr: [1, 2, 3],
 }
 let proxy = createReactive(target)
 proxy.arr.push(6) // "not own"
