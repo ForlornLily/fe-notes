@@ -223,7 +223,7 @@ if (condition) {
 
 ```js
 var value = 'world'
-let value = 'hello' //报错
+let value = 'hello' // ReferenceError: value is not defined
 ```
 
 - 在全局声明也不会成为`window`的属性
@@ -374,7 +374,7 @@ console.log(tmp) //{a: '1'}
 
 #### 手写
 
-完整实现可以参考[loadhash](https://github.com/lodash/lodash/blob/main/src/cloneDeep.ts)
+完整实现可以参考[loadhash.cloneDeep](https://github.com/lodash/lodash)，loadhash 也不支持复制 `Proxy`  
 
 ```ts
 const deepCopy = {
