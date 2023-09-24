@@ -374,9 +374,9 @@ console.log(tmp) //{a: '1'}
 
 #### 手写
 
-完整实现可以参考[loadhash](https://github.com/lodash/lodash/blob/master/cloneDeep.js)
+完整实现可以参考[loadhash](https://github.com/lodash/lodash/blob/main/src/cloneDeep.ts)
 
-```js
+```ts
 const deepCopy = {
   types: [
     'Number',
@@ -394,23 +394,22 @@ const deepCopy = {
     'Map',
     'BigInt',
   ], //Object.prototype.toString返回的所有类型
-  type(obj) {
+  type(obj: any) {
     return Object.prototype.toString.call(obj).slice(8, -1)
   },
   createType() {
     const types = this.types
     let i = types.length - 1
     do {
-      this['is' + types[i]] = function (elem) {
+      this['is' + types[i]] = function (elem: unknown) {
         return this.type.call(elem) == types[i]
       }
     } while (--i >= 0)
   },
-  copy(obj, deep) {
+  copy(obj: any) {
     if (!this.isFunction) {
       this.createType() //如果还没有调用过createType
-      this.copy(obj, deep)
-      return
+      return this.copy(obj)
     }
     if (this.isFunction(obj)) {
       return new Function('return ' + obj.toString())()
@@ -418,7 +417,7 @@ const deepCopy = {
     if (obj === null || typeof obj !== 'object') {
       return obj
     }
-    let target = this.isArray(obj) ? [] : {},
+    let target: any = this.isArray(obj) ? [] : {},
       value
     for (let key in obj) {
       value = obj[key]
@@ -431,23 +430,112 @@ const deepCopy = {
          obj.value.value = obj; */
         continue
       }
-      if (deep) {
-        if (this.isArray(value) || this.isObject(value)) {
-          target[key] = this.copy(value, deep)
-        } else if (this.isFunction(value)) {
-          target[key] = new Function('return ' + value.toString())()
-        } else {
-          target[key] = value
-        }
+      if (this.isArray(value) || this.isObject(value)) {
+        target[key] = this.copy(value)
+      } else if (this.isFunction(value)) {
+        target[key] = new Function('return ' + value.toString())()
       } else {
-        target[key] == value
+        target[key] = value
       }
     }
     return target
   },
 }
+
 ```
 
+不考虑 proxy 的 ES6 版本
+``` ts
+enum CloneType {
+  /** 基本类型 */
+  PRIMITIVE,
+  /** null */
+  NULL,
+  /** 函数 */
+  FUNCTION,
+  /** 数组 */
+  ARRAY,
+  /** 普通对象 */
+  OBJECT,
+  /** 非普通对象，比如 Date */
+  UNKNOWN
+}
+/** 基本类型，不含 null */
+const PRIMITIVE_TYPE = [
+  "number",
+  "bigint",
+  "string",
+  "boolean",
+  "undefined",
+  "symbol",
+]
+
+function getToStringType(target: any) {
+  return Object.prototype.toString.call(target).slice(8, -1)
+}
+
+function isNormalObjectType(target: any) {
+  const result = getToStringType(target)
+  return result === "Object"
+}
+
+/**
+ * 获取需要特殊处理的类型
+ */
+export function getType(target: any): CloneType {
+  const type = typeof target
+  if (PRIMITIVE_TYPE.includes(type)) {
+    return CloneType.PRIMITIVE
+  }
+  if (type === "function") {
+    return CloneType.FUNCTION
+  }
+  if (type === null) {
+    return CloneType.NULL
+  }
+  if (Array.isArray(target)) {
+    return CloneType.ARRAY
+  }
+  return isNormalObjectType(target) ? CloneType.OBJECT : CloneType.UNKNOWN
+}
+
+function createFunction(target: Function): Function {
+  return new Function('return ' + target.toString())()
+}
+
+function copyDeep(target: any, cache = new Map()) {
+  //避免循环引用
+  /*  例如
+  var obj = {
+    value: {}
+  };
+  obj.value.value = obj; */
+  if (cache.has(target)) {
+    return cache.get(target)
+  }
+  const type = getType(target)
+  if ([CloneType.NULL, CloneType.PRIMITIVE, CloneType.UNKNOWN].includes(type)) {
+    cache.set(target, target)
+    return target
+  }
+  if (type === CloneType.FUNCTION) {
+    const functionResult = createFunction(target)
+    cache.set(target, functionResult)
+    return functionResult
+  }
+  const result: any = type === CloneType.ARRAY ? [] : {}
+  cache.set(target, result)
+  for (const key in target) {
+    // 递归不考虑继承
+    if(target.hasOwnProperty(key)) {
+      result[key] = copyDeep(target[key], cache)
+    } else {
+      result[key] = target[key]
+    }
+  }
+  return result
+}
+```
 ## 作用域链
 
 每一段 JS 代码（全局代码或者函数）都有与之相关的作用域链(scope chain)，把作用域看做一个链表对象  
