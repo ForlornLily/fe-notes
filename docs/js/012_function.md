@@ -386,7 +386,7 @@ myMethod.myApply(obj, ['world2', 'bar2'])
 ```js
 Function.prototype.myBind = function(context) {
   var that = this
-  if (typeof that != 'function') {
+  if (typeof that !== 'function') {
     //如果调用的不是函数，报错
     throw new Error('error')
   }

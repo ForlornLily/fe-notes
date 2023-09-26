@@ -41,7 +41,7 @@ console.log(typeof notDeclared) // "undefined"
 ```js
 let target = {}
 let proxy = new Proxy(target, {})
-Object.prototype.toString(proxy) //"[object Object]"
+Object.prototype.toString.call(proxy) //"[object Object]"
 ```
 
 返回的是"[object Number]"
@@ -65,3 +65,4 @@ Object.prototype.toString(proxy) //"[object Object]"
 - WeakSet
 - Map
 - WeakMap
+- Intl
