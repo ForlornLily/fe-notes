@@ -8,6 +8,7 @@
 - body-parser: 解析 header
 - cross-env: 跨平台地设置和使用环境变量`NODE_ENV`
 - autocannon: 压测
+- selfsigned：生成证书，比如本地开发用 https
 
 ```json
 "scripts": {
