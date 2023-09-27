@@ -1,5 +1,11 @@
 # HTTPS
 
+## HTTP 的发展
+
+见[HTTP 的发展](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP)  
+HTTP/1.0 开始支持 `Content-Type`，可以发送除了纯 HTML 文本外的其他内容
+HTTP/1.1 支持请求并发，分块发送，内容协商
+
 HTTP 存在不足之处，主要有
 
 - 通信使用明文（不加密），内容可能会被窃听
