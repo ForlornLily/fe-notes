@@ -102,7 +102,30 @@ webpack 中对一个模块会进行多次处理，比如 sass 转 css，经过 s
 ```
 
 实际上也会进行打包，但是不生成 dist 等文件夹，而是直接放到了内存中，文件夹看不到生成的内容
-
+``` js
+devServer: {
+  allowedHosts: 'all',
+  hot: true,
+  historyApiFallback: {
+    rewrites: [
+      { from: /^\/mobile\/.*$/, to: '/mobile.html' },
+    ],
+  },
+  host: 'localhost.test.com',
+  port: 8098,
+  open: true,
+  proxy: {
+    "/api": {
+      target: "http://www.baidu.com/",
+      pathRewrite: {'^/api' : ''}
+      changeOrigin: true
+    }
+  }
+  server: {
+    type: "https",
+  },
+}
+```
 ### 涉及的模块
 
 #### http-proxy-middleware
@@ -183,11 +206,8 @@ if (module.hot) {
 })
 ```
 
-### hotOnly
-
-通常和 hot 一起用，为 true 时，如果修改的模块不支持热更新，就不会刷新页面，而是抛出警告。
-
-不写就是只要改变内容就热更新
+### server
+可以配置证书和 http 协议  
 
 ## 扩展：webpack-dev-middleware
 
