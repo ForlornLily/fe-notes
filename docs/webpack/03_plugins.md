@@ -82,7 +82,7 @@ new HTMLWebpackPlugin({
 
 ## clean-webpack-plugin
 
-清理文件
+清理文件。生产用
 
 ### 配置
 
@@ -231,7 +231,7 @@ if (!isEnvProduction) {
 }
 ```
 ## terser-webpack-plugin
-压缩 js，用法见上   
+压缩 js，用法见上。生产用   
 fork 了 `uglify-es`（uglify-es 已不再维护）  
 
 ## 内置
@@ -270,12 +270,14 @@ devServer 设置为 true 之后可以避免每次更新刷新整个页面，只�
 
 ### DefinePlugin
 
-[webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root): 编译的时候创建的一个全局变量。可以变量的不同进行不同的配置
+[webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root): 编译的时候创建的一个全局变量（比如上述的 `process.env.NODE_ENV`）。
+可以变量的不同进行不同的配置  
+这个变量必须有引号，所以一般都会用 `JSON.stringify`
 
 ### ProvidePlugin
 
 [ProvidePlugin](https://webpack.js.org/plugins/provide-plugin/#root):
-自动加载插件，比如加载 jQuery
+自动加载插件，不需要手动 import。比如加载 jQuery
 
 ```js
 //自动加载 jquery，将两个变量都指向jquery
@@ -331,3 +333,29 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // 省略  
 config.plugins = config.plugins.concat(new BundleAnalyzerPlugin())
 ```
+## eslint-webpack-plugin
+配合 [eslint](../eslint/README.md) 使用
+
+## duplicate-package-checker-webpack-plugin
+警告是否一个包有多个版本  
+
+## case-sensitive-paths-webpack-plugin
+保证路径正确，可能系统大小写不敏感，即使文件名大小写错误，也被引用。  
+这个插件确保引用文件的大小写一定和实际的文件名一致 
+
+## webpack-filter-warnings-plugin
+过滤掉某个 warning 。生产用   
+``` js
+new FilterWarningsPlugin({
+  // suppress conflicting order warnings from mini-css-extract-plugin.
+  // ref: https://github.com/ant-design/ant-design/issues/14895
+  // see https://github.com/webpack-contrib/mini-css-extract-plugin/issues/250
+  exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+}),
+```
+
+## 手写 plugin
+官网:[Writing a Plugin](https://webpack.js.org/contribute/writing-a-plugin/)  
+
+例子可以参考 antd 的 tools：[CleanUpStatsPlugin](https://github.com/ant-design/antd-tools/blob/master/lib/utils/CleanUpStatsPlugin.js)  
+
