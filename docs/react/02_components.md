@@ -125,7 +125,7 @@ const Button = (props) => {
 ## StrictMode  
 开发环境生效  
 - 额外 render 一次（不包括事件内的内容）  
-- 额外执行 Effect 一次（setup+cleanup cycle in development）
+- React 18：额外执行 Effect 一次（setup+cleanup cycle in development）
 - 会提示过时的 API  
 ``` jsx
 <StrictMode>
@@ -133,29 +133,35 @@ const Button = (props) => {
 </StrictMode>
 ``` 
 ``` tsx
+let count = 0
 function Demo() {
 
-  const [value, setValue] = useState<number | undefined>(1)
+  const [value, setValue] = useState<number | undefined>(() => {
+    count += 1
+    return 1
+  })
 
   useEffect(() => {
     console.log('[] mount')
-    return ()=> {
+    return () => {
       console.log('[] unmount')
     }
   }, [])
 
   useEffect(() => {
     console.log('value mount')
-    return ()=> {
+    return () => {
       console.log('value unmount')
     }
   }, [value])
-  
+
   return (
     <>
+      {count}
     </>
   )
 }
+export default Demo;
 ```
 ``` bash
 [] mount
@@ -165,6 +171,8 @@ value unmount
 [] mount
 value mount
 ```
+count 值是 2 
+
 ## 类组件
 
 官网[React.Component](https://reactjs.org/docs/react-component.html)  
@@ -227,6 +235,8 @@ class EventsSample extends React.Component {
   }
 }
 ```
+在 React 17 之前，React 是把事件委托在 document 上的，React 17 及以后委托在挂载的容器上。React 合成事件采用的是事件冒泡机制，当在某具体元素上触发事件时，等冒泡到顶部被挂载事件的那个元素时，才会真正地执行事件。  
+而原生事件，当某具体元素触发事件时，会立刻执行该事件。因此若要比较事件触发的先后时机时，原生事件会先执行，React 合成事件会后执行。
 
 ## 生命周期
 

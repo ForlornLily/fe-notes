@@ -47,3 +47,8 @@ npm version prerelease
 ```
 npm dist-tag add rc-select@3.0.1-beta.0  beta
 ```
+
+## 清除缓存
+```
+npm cache clean --force
+```

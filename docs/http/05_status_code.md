@@ -20,7 +20,7 @@
 
 浏览器不会更新，比如 put/delete
 
-- 206 Partical Content
+- 206 Partical Content，比如[通过调试技术，我理清了 b 站视频播放很快的原理](https://zhuanlan.zhihu.com/p/643297227)
 
 客户端进行[范围请求](./04_message.md#范围请求)，服务端成功执行这部分的 get 请求，并返回包含 Content-Range 返回指定的内容
 
