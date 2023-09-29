@@ -1,4 +1,4 @@
-# 插件收集
+# 包收集
 
 - supervisor: `supervisor myscript.js` 实时渲染
 - pm2
@@ -9,6 +9,8 @@
 - cross-env: 跨平台地设置和使用环境变量`NODE_ENV`
 - autocannon: 压测
 - selfsigned：生成证书，比如本地开发用 https
+- hls.js：播放视频，支持 `m3u8`
+- immutable-js
 
 ```json
 "scripts": {

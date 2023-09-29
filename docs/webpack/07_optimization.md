@@ -163,7 +163,7 @@ module.exports = {
   ```
 
 - 其他:
-  [官网](https://webpack.docschina.org/guides/build-performance/)
+  [官网](https://webpack.js.org/guides/build-performance/)
 - 用`dllplugin`配置第三方模块，第一次打包后不再反复打包
   - DllPlugin 可以把我们需要打包的第三方库打包成一个 js 文件和一个 json 文件，这个 json 文件中会映射每个打包的模块地址和 id
   - DllReferencePlugin 通过读取这个 json 文件来使用打包的这些模块
