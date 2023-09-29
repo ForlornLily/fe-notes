@@ -4,9 +4,9 @@ webpack 运行到某一时刻会调用的方法
 
 插件都需要手动引入
 
-## HTMLWebpackPlugin
+## html-webpack-plugin
 
-[html-webpack-plugin](https://webpack.js.org/plugins/html-webpack-plugin/#root): 管理 HTML
+[html-webpack-plugin](https://webpack.js.org/plugins/html-webpack-plugin): 管理 HTML
 
 ```bash
 npm install --save-dev html-webpack-plugin
@@ -80,11 +80,9 @@ new HTMLWebpackPlugin({
   })
 ```
 
-## 清理文件：CleanWebpackPlugin
+## clean-webpack-plugin
 
-clean-webpack-plugin v2.x
-
-![](../images/da8f711aad2da7ecd6c13ef3a815d7f4.png)
+清理文件
 
 ### 配置
 
@@ -102,12 +100,14 @@ new CleanWebpackPlugin({
 })
 ```
 
-## 抽取 CSS：mini-css-extract-plugin
+## mini-css-extract-plugin
 
-[官网](https://webpack.js.org/plugins/mini-css-extract-plugin)
-
+抽取 CSS：[官网](https://webpack.js.org/plugins/mini-css-extract-plugin)  
+生产环境用 
 ```js
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const isEnvProduction = process.env.NODE_ENV === 'development'  
+
 module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
@@ -124,7 +124,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader, //不再使用style-loader
+            loader: isEnvProduction ? 'style-loader' : MiniCssExtractPlugin.loader
             options: {
               // you can specify a publicPath here
               // by default it uses publicPath in webpackOptions.output
@@ -139,16 +139,126 @@ module.exports = {
   }
 }
 ```
+## css-minimizer-webpack-plugin
+
+压缩 css：用于生产环境。  
+类似的有 `optimize-css-assets-webpack-plugin`，但 webpack 5 以上官方建议用 `css-minimizer-webpack-plugin`  
+  
+``` js
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+
+const isEnvProduction = process.env.NODE_ENV === 'development'
+
+const config = {
+  optimization: {
+    runtimeChunk: {
+      name: (entrypoint) => `runtime-${entrypoint.name}`,
+    },
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        styles: {
+          test: /\.(scss|css|less)$/,
+          chunks: 'all',
+          enforce: true,
+        },
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+          name(module) {
+            // 获取包名，比如 node_modules/packageName/not/this/part.js
+            // 或者 node_modules/packageName
+            const pkgNameMatcher = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)
+            let packageName = pkgNameMatcher && pkgNameMatcher[1]
+            if (!packageName) {
+              return 'vendors'
+            }
+            return `third_party.${packageName}`
+          },
+        },
+      },
+    },
+  },
+}
+if (!isEnvProduction) {
+  config.optimization.minimize = true
+  config.optimization.minimizer = [
+    // This is only used in production mode
+    new TerserPlugin({
+      terserOptions: {
+        parse: {
+          // We want terser to parse ecma 8 code. However, we don't want it
+          // to apply any minification steps that turns valid ecma 5 code
+          // into invalid ecma 5 code. This is why the 'compress' and 'output'
+          // sections only apply transformations that are ecma 5 safe
+          // https://github.com/facebook/create-react-app/pull/4234
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+          warnings: false,
+          // Disabled because of an issue with Uglify breaking seemingly valid code:
+          // https://github.com/facebook/create-react-app/issues/2376
+          // Pending further investigation:
+          // https://github.com/mishoo/UglifyJS2/issues/2011
+          comparisons: false,
+          // Disabled because of an issue with Terser breaking valid code:
+          // https://github.com/facebook/create-react-app/issues/5250
+          // Pending further investigation:
+          // https://github.com/terser-js/terser/issues/120
+          inline: 2,
+        },
+        mangle: {
+          // 支持低版本 safari
+          safari10: true,
+        },
+        // Added for profiling in devtools
+        keep_classnames: isEnvProductionProfile,
+        keep_fnames: isEnvProductionProfile,
+        output: {
+          ecma: 5,
+          comments: false,
+          // Turned on because emoji and regex is not minified properly using default
+          // https://github.com/facebook/create-react-app/issues/2488
+          ascii_only: true,
+        },
+      },
+    }),
+    // This is only used in production mode
+    new CssMinimizerPlugin(),
+  ]
+}
+```
+## terser-webpack-plugin
+压缩 js，用法见上   
+fork 了 `uglify-es`（uglify-es 已不再维护）  
 
 ## 内置
 
 直接 require('webpack')
 
 在 plugins 内使用 webpack.xxx
+``` js
+const webpack = require('webpack')
 
-![](../images/76e4b8bf352423dcb543cbe9b0dd0496.png)
+const isEnvProduction = process.env.NODE_ENV === 'development'
 
-![](../images/bf5fbda9c5de9bb18590d6b7d836987f.png)
+const config = {
+  plugins: [
+    new webpack.ProgressPlugin({
+      activeModules: true,
+    }),
+  ]
+}
+if (isEnvProduction) {
+  config.plugins = config.plugins.concat([
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development'),
+    }),
+  ])
+}
+```
 
 ### HMR
 
@@ -161,23 +271,6 @@ devServer 设置为 true 之后可以避免每次更新刷新整个页面，只�
 ### DefinePlugin
 
 [webpack.DefinePlugin](https://webpack.js.org/plugins/define-plugin/#root): 编译的时候创建的一个全局变量。可以变量的不同进行不同的配置
-
-```js
-// 引入 webpack
-const webpack = require('webpack')
-// 增加 webpack 配置
-plugins: [
-  new webpack.DefinePlugin({
-    // 比如：开发环境写 'development'，生产环境写 'production'
-    ENV: JSON.stringify('development')
-  })
-]
-
-//在逻辑js中
-if (ENV === 'development') {
-  //do sth.
-}
-```
 
 ### ProvidePlugin
 
@@ -196,7 +289,7 @@ plugins: [
 
 ### HashedModuleIdsPlugin
 
-该插件会根据模块的相对路径生成一个四位数的 hash 作为模块 id, 建议用于生产环境
+该插件会根据模块的相对路径生成一个四位数的 hash 作为模块 id, 用于生产环境
 
 见[缓存](./10_usage.md#缓存)
 
@@ -207,7 +300,7 @@ plugins: [
 插件会生成一个名为 manifest.json 的文件，这个文件是用来让 DLLReferencePlugin
 映射到相关的依赖上去的
 
-## CopyWebpackPlugin
+## copy-webpack-plugin
 
 [copy-webpack-plugin](https://webpack.js.org/plugins/copy-webpack-plugin): 复制文件
 
@@ -228,4 +321,13 @@ module.exports = {
     ])
   ]
 }
+```
+
+## webpack-bundle-analyzer
+分析构建产物  
+``` js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+// 省略  
+config.plugins = config.plugins.concat(new BundleAnalyzerPlugin())
 ```

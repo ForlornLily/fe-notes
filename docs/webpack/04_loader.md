@@ -6,14 +6,103 @@
 
 loader 内的 use 具有顺序，从后往前
 
-下面是简写。完整见[file-loader](#url-loader)
-
-![](../images/88d2ce55aebcd7b8ee010b663c31f51a.png)
-
 ## 图片/字体
-
+``` js
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.(ts(x?)|js(x?))$/,
+        exclude: /node_modules/,
+        loader: 'swc-loader',
+      },
+      {
+        test: /\.css$/,
+        use: [
+          isEnvProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              modules: {
+                auto: true,
+                localIdentName: '[local]__[hash:base64:5]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                config: path.resolve(__dirname, './postcss.config.js'),
+              },
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.less?$/,
+        use: [
+          isEnvProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                config: path.resolve(__dirname, './postcss.config.js'),
+              },
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
+        generator: {
+          filename: 'img/[name].[contenthash:7][ext]',
+        },
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024,
+          },
+        },
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        generator: {
+          filename: 'fonts/[name].[contenthash:7][ext]',
+        },
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024,
+          },
+        },
+      },
+    ],
+  },
+}
+```
 ### file-loader
-
+Webpack 5 已废弃，[file-loader](https://v4.webpack.js.org/loaders/file-loader/)，改用 [Asset Modules](https://webpack.js.org/guides/asset-modules/)  
 通常用来处理图片和字体，实际上任何类型都可以
 
 file-loader 本质上把文件挪到打包后的目录，并返回 webpack 一个地址
@@ -57,7 +146,7 @@ module.exports = {
 ![](../images/f67281503a4de57e61fb11cc530bcb89.png)
 
 ### url-loader
-
+Webpack 5 已废弃
 把文件转成 base64。通常就用在图片
 
 可以设置 limit 属性（单位是字节），小于 limit 时进行 Base64 转换，大于时和 file-loader 一样，只是挪文件位置
@@ -84,17 +173,6 @@ style-loader，css-loader
 
 css-loader 解析样式，style-loader 转成 style 标签
 
-```js
-module: {
-  rules: [
-    {
-      test: /\.css$/,
-      loader: ['style-loader', 'css-loader']
-    }
-  ]
-}
-```
-
 ### css-loader 配置项
 
 #### importLoaders
@@ -102,8 +180,6 @@ module: {
 解析 css 文件时，如果当前 css 内还\@import 了别的 css 文件，默认是不会进 loader 的
 
 配置 importLoaders 为 2 以后，确保\@import 的 css 文件也进 loader
-
-![](../images/1dac29592f27c57a4fb082ecbc33fdc5.png)
 
 #### modules
 
@@ -150,95 +226,6 @@ postcss-loader
 配置文件内引入 autoprefixer
 
 ![](../images/e836eac321ee3cb45f975b378338d650.png)
-
-```js
-module: {
-  rules: [
-    {
-      test: /\.css$/,
-      use: [
-        {
-          loader: 'style-loader'
-        },
-        {
-          loader: 'css-loader'
-        },
-        {
-          loader: 'postcss-loader'
-        }
-      ]
-    }
-  ]
-}
-```
-
-### 抽取 CSS
-
-[mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin)
-
-```js
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-module.exports = {
-  plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-      ignoreOrder: false // Enable to remove warnings about conflicting order
-    })
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader, //不再使用style-loader
-            options: {
-              // you can specify a publicPath here
-              // by default it uses publicPath in webpackOptions.output
-              publicPath: '../',
-              hmr: process.env.NODE_ENV === 'development'
-            }
-          },
-          'css-loader'
-        ]
-      }
-    ]
-  }
-}
-```
-
-### 压缩 CSS
-
-安装`terser-webpack-plugin`和`optimize-css-assets-webpack-plugin`，见官网[minimizing-for-production](https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production)
-
-```js
-const TerserJSPlugin = require('terser-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-module.exports = {
-  optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    })
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      }
-    ]
-  }
-}
-```
-
 ## JS
 
 ### babel
@@ -289,7 +276,7 @@ npm i @babel/plugin-proposal-class-properties @babel/plugin-transform-block-scop
 
 #### pollyfill（适合业务代码）
 
-比如 IE 兼容 Promise 对象
+比如 IE 兼容 Promise 对象。已废弃
 
 `npm install --save @babel/polyfill`
 
@@ -401,4 +388,4 @@ JSON 本身就支持，不需要安装额外的 loader
 
 函数内需要通过 this.query 获取到配置参数
 
-见[loaders](https://webpack.js.org/api/loaders/)，简单 demo 见 Dell Lell
+见[loaders](https://webpack.js.org/api/loaders/)
