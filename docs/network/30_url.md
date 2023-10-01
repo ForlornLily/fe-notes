@@ -1,5 +1,12 @@
 # 输入 URL 到页面渲染完成的过程
-
+大致可以拆成 3 部分
+- 网络传输：
+    - DNS、IP、TCP、如果是 HTTPS 还会有TLS
+    - 服务端可能有 nginx、静态资源有 CDN
+    - 如果是 SSR，也可以展开讲
+- 浏览器缓存
+- 浏览器解析  
+     
 ## 概要
 
 参考：
@@ -37,7 +44,7 @@
     执行完毕。遇到文件下载的会去下载文件，这里如果使用 HTTP 2.0
     协议的话会极大的提高多图的下载效率。
 
-8.  初始的 HTML 被完全加载和解析后会触发[DOMContentLoaded](../js/002_script.md) 事件
+8.  初始的 HTML 被完全加载和解析后会触发[DOMContentLoaded](../js/002_script.md#domcontentloaded) 事件
 
 9.  CSSOM 树和 DOM 树构建完成后会开始生成 Render
     树，这一步就是确定页面元素的布局、样式等等诸多方面的东西
