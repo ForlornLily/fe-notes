@@ -49,7 +49,7 @@ module.exports = {
       {
         text: '工程化',
         items: [
-          { text: 'webpack4.x', link: '/webpack4/' },
+          { text: 'webpack', link: '/webpack/' },
           { text: 'TypeScript', link: '/typescript/' },
           { text: 'Redux', link: '/redux/' },
           { text: 'Jest', link: '/jest/' },

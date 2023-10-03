@@ -160,6 +160,10 @@ function Counter() {
 `useCallback(fn, deps)`等价于`useMemo(() => fn, deps)`
 只有依赖数组里面的`[a, b]`改变了，memoizedCallback 才会更新  
 适合传递给子组件的方法
+一般使用场景：
+- 函数作为其他 hook 的依赖项
+- 函数作为 React.memo()（或 shouldComponentUpdate ）中的组件的 props
+目的是为了避免每次 render 生成新函数，引起组件或者 hook 没必要的刷新  
 
 ```js
 const memoizedCallback = useCallback(() => {
