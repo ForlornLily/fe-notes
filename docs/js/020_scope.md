@@ -250,11 +250,18 @@ a() // 0 1 2 3 4 0 1 2 3 4
 
 - 声明的时候必须赋值
 
-![](../images/5d9ed5d923a76dfc85b4b2b58fdc36b2.png)
+``` js
+const values  // Uncaught SyntaxError: Missing initializer in const declaration
+```
 
 - 改变自身的值会报错。不可以改变引用本身，但是可以改变引用内部的值
 
-![](../images/66593fd82b78100aa7df4d928de3f1a0.png)
+``` js
+const values = {}
+values = 12  // Uncaught TypeError: Assignment to constant variable.
+
+values.name = "hi"  // 正常赋值
+```
 
 #### 循环中的 const
 
