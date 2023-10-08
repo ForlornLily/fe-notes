@@ -118,7 +118,7 @@ setTimeout(function () {
 
 源（origin）就是协议、域名和端口号
 
-地址里面的协议（比如 HTTP 何 HTTPS）、域名和端口号均相同则属于同源
+地址里面的协议（比如 HTTP 和 HTTPS）、域名和端口号均相同则属于同源
 
 同源策略是浏览器的一个安全功能，不同源的客户端脚本在没有明确授权的情况下，不能读写对方资源。所以 a.com 下的 js 脚本采用 ajax 读取 b.com 里面的文件数据是会报错的
 
@@ -128,7 +128,7 @@ setTimeout(function () {
 
 - DOM 无法获得。
 
-- AJAX 请求不能发送。
+- 简单请求会发出，但 response 会被浏览器拦截。复杂请求有预检，request 直接被拦截
 
 不受同源策略限制的：
 
@@ -226,7 +226,7 @@ Access-Control-Allow-Methods: GET POST PUT OPTIONS PATCH（运行跨域的请求
 
 Access-Control-Expose-Headers 允许前端发送的额外请求头
 
-比如 NodeJS， [Express](../express/02_demo.md)
+比如 NodeJS， [Express](https://forlornlily.github.io/server-notes/express/)
 
 ```js
 require('http')

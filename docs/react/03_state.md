@@ -79,7 +79,15 @@ render() {
   );
 }
 ```
+value 是 `undefined` 将不受控，重置为 defaultValue
+``` ts
+const [value, setValue] = useState<string| undefined>(undefined)
 
+<form>
+  <input defaultValue={"1"} value={value} />
+  <button type='reset'>reset</button>
+</form>
+```
 ### hooks
 
 用 hooks 可以省掉一些麻烦  
@@ -120,8 +128,7 @@ export function NameForm(props) {
 
 官网[setState()](https://reactjs.org/docs/react-component.html#setstate)  
 setState 第一个值可以是对象，也可以 return 一个方法；使用方法的时候是 React 内部异步更新的。推荐用方法  
-第二个值返回的是 state 更新成功之后的回调  
-返回方法的时候，
+第二个值返回的是 state 更新成功之后的回调 
 
 ```js
 const value = e.target.value
