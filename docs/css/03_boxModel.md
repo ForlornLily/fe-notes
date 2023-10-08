@@ -1,9 +1,9 @@
 # 盒模型
 
 - background 作用于 content 和 padding
-
+- 滚动条位于 padding
 - outline 不影响布局，处于 border 和 margin 之间。也就不影响盒模型的高度和宽度。设置任意大小就会产生不同的效果。还可以用来去掉聚焦表单元素的默认样式
-
+- 伪元素也不影响布局
 - width 和 height 指的是 content
 
 设置 box-sizing，默认 content-box，写 border-box，width 就会包括 padding 和 border
