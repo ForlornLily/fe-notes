@@ -94,8 +94,8 @@ function Child(props) {
 使用方式和`useEffect`一致，但是会阻塞浏览器渲染  
 优先使用`useEffect`  
 useLayoutEffect 和原来 componentDidMount&componentDidUpdate 一致，在 react 完成 DOM 更新后马上同步调用的代码，会阻塞页面渲染。  
-而 useEffect 是会在整个页面渲染完才会调用的代码。
-
+而 useEffect 是会在整个页面渲染完才会调用的代码。  
+一般用于 tooltip 等自适应，需要渲染 tooltip 拿到内容的宽高，再决定 placement  
 ### useInsertionEffect
 
 使用方式和`useEffect`一致。讨论[Library Upgrade Guide](https://github.com/reactwg/react-18/discussions/110)
