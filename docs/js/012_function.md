@@ -10,7 +10,7 @@ function sum2(num1, num2) {
   //函数声明
   return num1 + num2
 }
-var num3 = function(num1, num2) {
+var num3 = function (num1, num2) {
   //函数表达式
   return num1 + num2
 }
@@ -47,14 +47,15 @@ arguments 不是 Array 的实例，是一个类数组对象，可以用 length �
 this 是在运行时基于函数的执行环境动态绑定的，而不是函数被声明时的环境  
 具体表现如下  
 ![https://user-gold-cdn.xitu.io/2018/11/15/16717eaf3383aae8?imageslim](../images/4fd85c39dd36c95a3426d0d96370d6fc.png)  
-值得注意的是，如果构造函数显式地返回一个对象，那么会取返回的内容
+值得注意的是，如果构造函数显式地返回一个对象，那么会取返回的内容  
+箭头函数没有 this，调用 call 等无法改变
 
 ```js
 function Test(name, age) {
   this.name = name
   this.age = age
   return {
-    name: 'hello'
+    name: 'hello',
   }
 }
 const test = new Test('world', 12)
@@ -69,7 +70,7 @@ const obj = {
   length: 5,
   getLength() {
     console.log(this.length)
-  }
+  },
 }
 const getLength = obj.getLength
 getLength() // 10
@@ -82,7 +83,7 @@ const obj = {
   length: 5,
   getLength() {
     console.log(this.hello)
-  }
+  },
 }
 const getLength = obj.getLength
 getLength() // undefined ，因为const定义的变量，不会成为window的属性
@@ -95,13 +96,34 @@ function fn() {
 }
 var obj = {
   length: 5,
-  method: function(fn) {
+  method: function (fn) {
     console.log(this.length)
     fn()
     arguments[0]() //this指向arguments, 即arguments.length
-  }
+  },
 }
 obj.method(fn, '1', '2') // 5 10 3
+```
+
+```js
+const obj = {
+  f1() {
+    const fn = () => {
+      console.log('this1', this)
+    }
+    fn() //  obj
+    fn.call(window) //  obj
+  },
+  f2: () => {
+    function fn() {
+      console.log('this2', this)
+    }
+    fn() // 严格模式下是 undefined，否则是 window
+    fn.call(this) // 同上，undefined
+  },
+}
+obj.f1()
+obj.f2()
 ```
 
 ## 函数都包含的属性: length, prototype
@@ -124,7 +146,7 @@ prototype 是为了方便属性共享，减少内存消耗。
 ```js
 function FactoryPerson() {}
 FactoryPerson.prototype.name = 'Emma'
-FactoryPerson.prototype.sayName = function() {
+FactoryPerson.prototype.sayName = function () {
   console.log(this.name)
 }
 //FactoryPerson有`prototype`, person1没有
@@ -191,7 +213,7 @@ FactoryPerson.prototype = {
   name: 'Emma',
   sayName() {
     console.log(this.name)
-  }
+  },
 }
 //new的过程中指定了person1.__proto__ = FactoryPerson.prototype
 let person1 = new FactoryPerson()
@@ -211,7 +233,7 @@ FactoryPerson.prototype = {
   name: 'Emma',
   sayName() {
     console.log(this.name)
-  }
+  },
 }
 ```
 
@@ -320,7 +342,7 @@ function myMethod() {
   console.log('hello')
 }
 let o = {
-  name: 'world'
+  name: 'world',
 }
 let instance = myMethod.bind(o)
 instance() //"hello"
@@ -329,7 +351,7 @@ instance() //"hello"
 ### 手写 call
 
 ```js
-Function.prototype.myCall = function(context) {
+Function.prototype.myCall = function (context) {
   //context就是obj
   context = context || window
   //这个时候的this指向myMethod
@@ -345,7 +367,7 @@ function myMethod(params) {
   console.log(params) //"world"
 }
 let obj = {
-  name: 'hello'
+  name: 'hello',
 }
 myMethod.myCall(obj, 'world')
 ```
@@ -355,7 +377,7 @@ myMethod.myCall(obj, 'world')
 与 call 只是参数传递不同
 
 ```js
-Function.prototype.myApply = function(context) {
+Function.prototype.myApply = function (context) {
   context = context || window
   context.fn = this
   //此时的arguments只有两个，第一个是obj，第二个是参数数组
@@ -370,7 +392,7 @@ Function.prototype.myApply = function(context) {
 }
 let obj = {
   hello: 'world',
-  foo: 'bar'
+  foo: 'bar',
 }
 function myMethod(value1, value2) {
   this.hello = value1 //'world2'
@@ -384,14 +406,14 @@ myMethod.myApply(obj, ['world2', 'bar2'])
 基于 apply 实现，可以看[MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind#Polyfill)
 
 ```js
-Function.prototype.myBind = function(context) {
+Function.prototype.myBind = function (context) {
   var that = this
   if (typeof that !== 'function') {
     //如果调用的不是函数，报错
     throw new Error('error')
   }
   let arr = [...arguments].slice(1) //此处的arguments是[o, ["1", "2"]]
-  return function() {
+  return function () {
     //此处的arguments是"hello"
     that.apply(context, arr.concat(...arguments))
   }
@@ -400,7 +422,7 @@ function myMethod(arr, value2) {
   // arr是["1", "2"]， value2是"hello"
 }
 let o = {
-  name: 'world'
+  name: 'world',
 }
 let instance = myMethod.myBind(o, ['1', '2'])
 instance('hello')
@@ -412,7 +434,7 @@ instance('hello')
 
 ```js
 var obj = {
-  value: 1
+  value: 1,
 }
 function foo(o) {
   o.value = 2
@@ -426,7 +448,7 @@ console.log(obj.value) // 2
 
 ```js
 var obj = {
-  value: 1
+  value: 1,
 }
 function foo(o) {
   o = 2
@@ -506,17 +528,17 @@ Aspect-oriented programming：面向切面编程
 比如埋点、日志、异常处理等等
 
 ```js
-Function.prototype.before = function(beforefn) {
+Function.prototype.before = function (beforefn) {
   var that = this
-  return function() {
+  return function () {
     beforefn.aplly(this, arguments) //执行新函数
     return that.apply(this, arguments) //执行原本的函数
   }
 }
-var test = function() {
+var test = function () {
   console.log('hello')
 }
-test = test.before(function() {
+test = test.before(function () {
   console.log('埋点')
 })
 test()
