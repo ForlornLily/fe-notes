@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
 })
 ```
 
-HTML document 加载和解析后触发。不会等待 style, img 加载
+HTML document 加载和解析后触发。不会等待 style, img 加载。`load` 会等待所有内容
 
 等于 jQuery 的`$(document).ready`。参考[官网](https://api.jquery.com/ready/)
 
