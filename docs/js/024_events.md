@@ -312,7 +312,7 @@ function EventTarget() {
 }
 EventTarget.prototype = {
   constructor: EventTarget,
-  addHander(type, handler) {
+  addHandler(type, handler) {
     //增加事件
     if (typeof this.handler[type] == 'undefined') {
       this.handler[type] = []
@@ -354,8 +354,43 @@ let event = new EventTarget()
 function hello() {
   console.log('hi')
 }
-event.addHander('click', hello)
+event.addHandler('click', hello)
 event.fire({
   type: 'click',
 })
+```
+ES6 版
+``` ts
+class CustomEventTarget {
+  private handler: {
+    [key: string]: Function[]
+  }
+  constructor() {
+    this.handler = {}
+  }
+  addHandler(type: string, handler: Function) {
+    this.handler[type] = this.handler[type] || []
+    this.handler[type].push(handler)
+  }
+  remove(type: string, handler: Function) {
+    const list = this.handler[type] || []
+    for (let i = 0; i < list.length; i += 1) {
+      if (list[i] === handler) {
+        this.handler[type].splice(i, 1)
+        break
+      }
+    }
+  }
+  fire(event: {
+    type: string
+  }) {
+    if (!event || !event.type) {
+      return
+    }
+    const list = this.handler[event.type] || []
+    for (let i = 0; i < list.length; i += 1) {
+      list[i](event)
+    }
+  }
+}
 ```

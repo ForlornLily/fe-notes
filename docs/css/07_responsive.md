@@ -56,7 +56,10 @@ css 单位是 px，默认和屏幕是 1:1 的关系
 ```css
 @media screen and (min-width: 728px) and (max-width: 1200px);
 ```
-
+`prefers-color-scheme`：light / dark：暗黑主题
+``` css
+@media (prefers-color-scheme: dark) {}
+```
 ### 常用断点
 
 768，1024，1216，1408
