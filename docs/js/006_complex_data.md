@@ -231,13 +231,13 @@ Object.is(NaN, NaN) //true
 
 ## 合并：Object.assign()
 
-浅拷贝。如果是对象，只是拷贝引用
+浅拷贝。如果是对象，只是拷贝引用。合并时只要 key 存在就会覆盖，哪怕是个 undefined
 
 ```js
 let a = {
-  name: 'Emma'
+  name: undefined
 }
-b = Object.assign({}, a)
+b = Object.assign({}, a) // {name: undefined}
 ```
 
 ## 解构
