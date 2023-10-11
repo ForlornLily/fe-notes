@@ -343,6 +343,14 @@ var num = (1,2,3)
 console.log(num)  // 3
 ```
 
+## 空值合并运算符
+Nullish coalescing operator：即双问号 `??`  
+不是 null 或 undefined 时取当前值，否则取后者
+
+``` js
+const test = 0 ?? 1  // 0
+```
+
 ## 优先级
 
 各类运算符的优先级可以看[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)

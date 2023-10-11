@@ -95,7 +95,12 @@ declare var 并没有声明变量，在编译后的 js 文件里这一句话是�
 `npm install @types/jquery --save-dev`
 
 ### 自己写声明文件
-
+``` ts
+declare module "*.module.less" {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+```
 不同作用的库写法不同。
 
 - 全局变量：通过 \<script\> 标签引入第三方库，注入全局变量

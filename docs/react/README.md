@@ -1,5 +1,6 @@
 # 概要
-相同的条件（props/state/context）总是返回同样的 JSX  
+
+相同的条件（props/state/context）总是返回同样的 JSX
 
 参考
 
@@ -17,4 +18,4 @@
 
 ## TODO
 
-- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)
+- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)，为什么要 Fiber
