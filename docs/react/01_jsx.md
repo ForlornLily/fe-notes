@@ -168,3 +168,87 @@ return {
   list.length > 0 && <input />
 }
 ```
+
+## React 17
+[Introducing the New JSX Transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)  
+[React18 源码解析之fiber等几个重要的数据结构](https://www.xiabingbao.com/post/react/react-element-jsx-rfl0yh.html)  
+``` js
+import React from 'react';
+
+function App() {
+  const handleClick = () => {
+    console.log('click');
+  };
+
+  return (
+    <div onClick={handleClick}>
+      <p>hello world</p>
+    </div>
+  );
+}
+```
+React 16 需要引入 React，本质上是用 createElement 转成 js  
+children 做为第三个参数传入  
+``` js
+import React from 'react';
+
+function App() {
+  return React.createElement('div', { onClick: handleClick }, React.createElement('p', null, 'hello world'));
+}
+```
+17 后不再需要手动引入，内部实现为
+``` js
+// Inserted by a compiler (don't import it yourself!)
+import {jsx as _jsx} from 'react/jsx-runtime';
+
+function App() {
+  return jsx('div', {
+    children: jsx('p', {
+      children: [
+        jsx('span', {
+          className: 'dd',
+          children: 'hello world',
+        }),
+        _jsx('span', {
+          children: '123',
+        }),
+      ],
+    }),
+  });
+}
+```
+children 变成了第二个参数  
+
+## createElement
+[ReactElement.js](https://github.com/facebook/react/blob/main/packages/react/src/ReactElement.js#L151)  
+React 节点会有一个 `$$typeof`，值是一个 Symbol（`Symbol.for('react.element')`），用来标记这是一个 React Element  
+目的是为了防止 XSS 攻击：React 会对大部分内容做转义，因为 JSON 不支持 Symbol，当判断 `$$typeof` 不是  Symbol 时，对这个节点不作处理  
+
+``` js
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, instanceof check
+ * will not work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ */
+function ReactElement(type, key, ref, self, source, owner, props) {
+  const element = {
+    // This tag allows us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+
+    // Record the component responsible for creating this element.
+    _owner: owner,
+  };
+
+  // 省略其他内容
+
+  return element;
+}
+```
