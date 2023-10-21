@@ -18,4 +18,4 @@
 
 ## TODO
 
-- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)，为什么要 Fiber
+- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)，[为什么要 Fiber](https://zhuanlan.zhihu.com/p/493232443)
