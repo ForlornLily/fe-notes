@@ -52,28 +52,29 @@ const mockData: SimpleNode<string> = {
     left: {
       key: "3-1-l",
       left: {
-        key: "4-1-1"
-      }
+        key: "4-1-1",
+      },
     },
     right: {
-      key: "3-1-r"
-    }
+      key: "3-1-r",
+    },
   },
   right: {
     key: "2-2",
     left: {
-      key: "3-2-l"
+      key: "3-2-l",
     },
     right: {
-      key: "3-2-r"
-    }
-  }
+      key: "3-2-r",
+    },
+  },
 }
 ```
-``` ts
+
+```ts
 function preOrder<T>(node?: SimpleNode<T> | null) {
-  if(node) {
-    console.log('node', node.key)
+  if (node) {
+    console.log("node", node.key)
     preOrder<T>(node.left)
     preOrder<T>(node.right)
   }
@@ -82,11 +83,12 @@ function preOrder<T>(node?: SimpleNode<T> | null) {
 // 2-1, 3-1-l, 4-1-l, 3-1-r
 // 2-2, 3-2-l, 3-2-r
 ```
-``` ts
+
+```ts
 function inOrder<T>(node?: SimpleNode<T> | null) {
-  if(node) {
+  if (node) {
     inOrder<T>(node.left)
-    console.log('node', node.key)
+    console.log("node", node.key)
     inOrder<T>(node.right)
   }
 }
@@ -94,12 +96,13 @@ function inOrder<T>(node?: SimpleNode<T> | null) {
 // 1
 // 3-2-1, 2-2, 3-2-r
 ```
-``` ts
+
+```ts
 function postOrder<T>(node?: SimpleNode<T> | null) {
-  if(node) {
+  if (node) {
     postOrder<T>(node.left)
     postOrder<T>(node.right)
-    console.log('node', node.key)
+    console.log("node", node.key)
   }
 }
 // 4-1-1, 3-1-l, 3-1-r, 2-1
@@ -111,19 +114,19 @@ function postOrder<T>(node?: SimpleNode<T> | null) {
 
 ```ts
 function stackPreOrder<T>(root?: SimpleNode<T>) {
-  let node = root;
-  if(root) {
+  let node = root
+  if (root) {
     let stack: (SimpleNode<T> | undefined)[] = []
     stack.push(node)
-    while(stack.length) {
+    while (stack.length) {
       // 弹出栈顶元素
       node = stack.pop()
       console.log(node?.key)
       // 先弹出栈的左节点，再弹右节点，所以先 push 右边
-      if(node?.right) {
+      if (node?.right) {
         stack.push(node.right)
       }
-      if(node?.left) {
+      if (node?.left) {
         stack.push(node.left)
       }
     }
@@ -139,11 +142,11 @@ interface SimpleNode<T> {
 }
 
 function stackInOrder<T>(root?: SimpleNode<T>) {
-  let node = root;
-  if(root) {
+  let node = root
+  if (root) {
     let stack: (SimpleNode<T> | undefined)[] = []
-    while(node || stack.length) {
-      if(node) {
+    while (node || stack.length) {
+      if (node) {
         stack.push(node)
         node = node.left
       } else {
@@ -158,26 +161,26 @@ function stackInOrder<T>(root?: SimpleNode<T>) {
 
 ```ts
 function stackPostOrder<T>(root?: SimpleNode<T>) {
-  let node = root;
-  if(root) {
+  let node = root
+  if (root) {
     const tmp: (SimpleNode<T> | undefined)[] = []
     tmp.push(node)
     const stack: (SimpleNode<T> | undefined)[] = []
-    while(tmp.length) {
+    while (tmp.length) {
       //输出左、右、根
       //栈是后进先出，所以stack入栈顺序应该是根、右、左
       node = tmp.pop()
       stack.push(node)
       // stack 要右、左
       // 那么 tmp.pop 的第一个是右，所以先 push 左
-      if(node?.left) {
+      if (node?.left) {
         tmp.push(node.left)
       }
-      if(node?.right) {
+      if (node?.right) {
         tmp.push(node.right)
       }
     }
-    while(stack.length) {
+    while (stack.length) {
       console.log(stack.pop()?.key)
     }
   }
@@ -452,7 +455,7 @@ interface BasicDataNode<T> extends Record<string, any> {
 
 function traverseTree<T>(treeNodes: BasicDataNode<T>[]) {
   if (!treeNodes || !treeNodes.length) return
-  let stack: BasicDataNode<T>[]= []
+  let stack: BasicDataNode<T>[] = []
   // 先将第一层节点放入栈
   for (let i = 0, len = treeNodes.length; i < len; i++) {
     stack.push(treeNodes[i])
@@ -460,7 +463,7 @@ function traverseTree<T>(treeNodes: BasicDataNode<T>[]) {
   let item
   while (stack.length) {
     item = stack.shift()
-    console.log('item', item)
+    console.log("item", item)
     // do sth.
     // 如果该节点有子节点，继续添加进入栈尾
     if (item && item.children && item.children.length) {
@@ -495,7 +498,8 @@ export function mapTree(value: string, arr) {
 ```
 
 ### 转换
-``` tsx
+
+```tsx
 interface FlattenData {
   id: number
   pId?: number
@@ -507,22 +511,21 @@ interface TreeData extends FlattenData {
 /**
  * id，pId 形式的数据转成树结构
  */
-function toTree(arr: FlattenData[], rootId: TreeData['pId']) {
-  function loop(parentId: TreeData['pId']) {
-    const res = [];
+function toTree(arr: FlattenData[], rootId: TreeData["pId"]) {
+  function loop(parentId: TreeData["pId"]) {
+    const res = []
     for (let i = 0; i < arr.length; i++) {
-      const item: TreeData = arr[i];
+      const item: TreeData = arr[i]
 
       if (item.pId !== parentId) {
-        continue;
+        continue
       }
 
-      item.children = loop(item.id);
-      res.push(item);
+      item.children = loop(item.id)
+      res.push(item)
     }
-    return res;
+    return res
   }
-  return loop(rootId);
+  return loop(rootId)
 }
 ```
- 

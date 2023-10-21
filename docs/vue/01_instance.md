@@ -45,19 +45,19 @@ B mounted
 
 ```js
 var LIFECYCLE_HOOKS = [
-  'beforeCreate',
-  'created',
-  'beforeMount',
-  'mounted',
-  'beforeUpdate',
-  'updated',
-  'beforeDestroy',
-  'destroyed',
-  'activated', //keep-alive
-  'deactivated', //keep-alive
-  'errorCaptured', //异常处理
+  "beforeCreate",
+  "created",
+  "beforeMount",
+  "mounted",
+  "beforeUpdate",
+  "updated",
+  "beforeDestroy",
+  "destroyed",
+  "activated", //keep-alive
+  "deactivated", //keep-alive
+  "errorCaptured", //异常处理
   // v2.6+
-  'serverPrefetch' //SSR
+  "serverPrefetch", //SSR
 ]
 ```
 

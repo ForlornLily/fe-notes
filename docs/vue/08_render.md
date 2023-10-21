@@ -4,10 +4,10 @@
 <div id="app"></div>
 <script>
   const app = new Vue({
-    el: '#app',
-    render: function(createElement, context) {
-      return createElement('div', '123')
-    }
+    el: "#app",
+    render: function (createElement, context) {
+      return createElement("div", "123")
+    },
   })
 </script>
 ```
@@ -33,17 +33,17 @@
 ```js
 // 局部声明组件
 const Child = {
-  render: h => {
-    return h('p', 'text')
-  }
+  render: (h) => {
+    return h("p", "text")
+  },
 }
 export default {
-  render: h => {
+  render: (h) => {
     // 创建一个子节点，使用组件 Child
     const ChildNode = h(Child)
 
-    return h('div', [ChildNode, ChildNode])
-  }
+    return h("div", [ChildNode, ChildNode])
+  },
 }
 ```
 

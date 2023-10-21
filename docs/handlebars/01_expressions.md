@@ -7,11 +7,11 @@
 不关心书写顺序
 
 ```js
-const template = Handlebars.compile('{{who}} {{greet}}')
+const template = Handlebars.compile("{{who}} {{greet}}")
 
 const result = template({
-  greet: 'hello',
-  who: 'world',
+  greet: "hello",
+  who: "world",
 })
 console.log(result) // "world hello"
 ```
@@ -21,12 +21,12 @@ console.log(result) // "world hello"
 可以用 `/` 代替 `.`
 
 ```js
-const template2 = Handlebars.compile('{{obj.greet}} {{obj.who}}')
+const template2 = Handlebars.compile("{{obj.greet}} {{obj.who}}")
 
 const result2 = template2({
   obj: {
-    greet: 'hello',
-    who: 'world',
+    greet: "hello",
+    who: "world",
   },
 })
 console.log(result2) // "hello world"
@@ -39,7 +39,7 @@ console.log(result2) // "hello world"
 ```js
 const template = Handlebars.compile(`{{ people.[0] }} `)
 const result = template({
-  people: ['Saber', 'Lancer'],
+  people: ["Saber", "Lancer"],
 }) // Saber
 ```
 
@@ -55,9 +55,9 @@ const template = Handlebars.compile(
 )
 const result = template({
   people: [
-    { firstname: 'Saber' },
-    { firstname: 'Lancer' },
-    { secondname: 'Alter' },
+    { firstname: "Saber" },
+    { firstname: "Lancer" },
+    { secondname: "Alter" },
   ],
 })
 console.log(result)
@@ -91,8 +91,8 @@ const template = Handlebars.compile(
   {{/each}}`
 )
 const result = template({
-  people: [{ firstname: 'Saber' }, { firstname: 'Lancer' }],
-  prefix: 'Hello',
+  people: [{ firstname: "Saber" }, { firstname: "Lancer" }],
+  prefix: "Hello",
 })
 console.log(result)
 /* 
@@ -110,7 +110,7 @@ console.log(result)
 ```js
 const template = Handlebars.compile(`{{people}}`)
 const result = template({
-  people: 'You & me',
+  people: "You & me",
 }) // "You &amp; me"
 ```
 

@@ -9,7 +9,7 @@ typescript 中箭头左边是输入类型，右边是输出类型
 函数的形参可以和声明的属性
 
 ```ts
-let myFun: (baseValue: string, another: string) => void = function(
+let myFun: (baseValue: string, another: string) => void = function (
   x: string,
   y: string
 ): void {
@@ -102,13 +102,13 @@ console.log(myCustom(1, true, 1, 2, 3))
 function myCustom(x: number): number
 function myCustom(x: string): string
 function myCustom(x: number | string): number | string {
-  if (typeof x === 'number') {
+  if (typeof x === "number") {
     return x + 1
   }
-  return x + ' world'
+  return x + " world"
 }
 console.log(myCustom(1))
-console.log(myCustom('hello'))
+console.log(myCustom("hello"))
 ```
 
 前几次都是函数定义，最后一次是函数实现。

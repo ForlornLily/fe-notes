@@ -12,7 +12,7 @@
 
 ```js
 const ast = parser.parse(content, {
-  sourceType: 'module' //ES6 module形式
+  sourceType: "module", //ES6 module形式
 })
 ```
 
@@ -25,16 +25,16 @@ const ast = parser.parse(content, {
 ### demo
 
 ```js
-const fs = require('fs')
-const path = require('path')
-const parser = require('@babel/parser') //解析字符串
-const traverse = require('@babel/traverse').default //对AST进行解析
-const babel = require('@babel/core') //将AST转成浏览器可以允许的代码
+const fs = require("fs")
+const path = require("path")
+const parser = require("@babel/parser") //解析字符串
+const traverse = require("@babel/traverse").default //对AST进行解析
+const babel = require("@babel/core") //将AST转成浏览器可以允许的代码
 
-const moduleAnalyser = filename => {
-  const content = fs.readFileSync(filename, 'utf-8')
+const moduleAnalyser = (filename) => {
+  const content = fs.readFileSync(filename, "utf-8")
   const ast = parser.parse(content, {
-    sourceType: 'module' //ES6 module形式
+    sourceType: "module", //ES6 module形式
   })
   const dependencies = {}
   traverse(ast, {
@@ -43,23 +43,23 @@ const moduleAnalyser = filename => {
       const dirname = path.dirname(filename)
       //node.source.value: 依赖的文件名，即import xx from "sth.js"的sth.js
       // 此时的sth是相对路径，转成绝对路径
-      const newFile = './' + path.join(dirname, node.source.value)
+      const newFile = "./" + path.join(dirname, node.source.value)
       // 对象内的键值对是 相对路径: 绝对路径
       // 例如dependencies["./sth.js"] =  ["./src/sth.js"]
       dependencies[node.source.value] = newFile
-    }
+    },
   })
   const { code } = babel.transformFromAst(ast, null, {
-    presets: ['@babel/preset-env'] //ES6转ES5
+    presets: ["@babel/preset-env"], //ES6转ES5
   })
   return {
     filename,
     dependencies,
-    code
+    code,
   }
 }
 
-const moduleInfo = moduleAnalyser('./src/index.js')
+const moduleInfo = moduleAnalyser("./src/index.js")
 console.log(moduleInfo)
 ```
 
@@ -70,7 +70,7 @@ console.log(moduleInfo)
 ### demo
 
 ```js
-const makeDependenciesGraph = entry => {
+const makeDependenciesGraph = (entry) => {
   const entryModule = moduleAnalyser(entry)
   const graphArray = [entryModule]
   for (let i = 0; i < graphArray.length; i++) {
@@ -83,16 +83,16 @@ const makeDependenciesGraph = entry => {
     }
   }
   const graph = {}
-  graphArray.forEach(item => {
+  graphArray.forEach((item) => {
     graph[item.filename] = {
       dependencies: item.dependencies,
-      code: item.code
+      code: item.code,
     }
   })
   return graph
 }
 
-const graghInfo = makeDependenciesGraph('./src/index.js')
+const graghInfo = makeDependenciesGraph("./src/index.js")
 ```
 
 ## 生成函数
@@ -102,7 +102,7 @@ const graghInfo = makeDependenciesGraph('./src/index.js')
 ### demo
 
 ```js
-const generateCode = entry => {
+const generateCode = (entry) => {
   const graph = JSON.stringify(makeDependenciesGraph(entry))
   return `
     (function(graph){
@@ -121,5 +121,5 @@ const generateCode = entry => {
   `
 }
 
-const code = generateCode('./src/index.js')
+const code = generateCode("./src/index.js")
 ```

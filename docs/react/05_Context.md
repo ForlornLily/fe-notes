@@ -5,9 +5,9 @@
 嵌套深的组件会很繁琐，在不用其他第三方状态管理的情况下，context 是一个选择
 
 ```js
-import React, { useContext } from 'react'
-import ReactDOM from 'react-dom'
-const GlobalData = React.createContext('hello')
+import React, { useContext } from "react"
+import ReactDOM from "react-dom"
+const GlobalData = React.createContext("hello")
 
 class App extends React.Component {
   render() {
@@ -46,7 +46,7 @@ class Button extends React.Component {
 }
 //设置`contextType`是GlobalData，必须叫contextType
 Button.contextType = GlobalData
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById("root"))
 ```
 
 ## createContext
@@ -86,13 +86,13 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 'dark'
+      value: "dark",
     }
     this.handleClick = this.handleClick.bind(this)
   }
   handleClick = () => {
     this.setState({
-      value: '1'
+      value: "1",
     })
   }
   render() {
@@ -115,7 +115,7 @@ class Toolbar extends React.Component {
     return false
   }
   render() {
-    console.log('1') //不会重新渲染
+    console.log("1") //不会重新渲染
     return <button>111</button>
   }
 }
@@ -127,7 +127,7 @@ class Button extends React.Component {
     return false
   }
   render() {
-    console.log('2') //仍然重新渲染
+    console.log("2") //仍然重新渲染
     return <button>{this.context}</button>
   }
 }
@@ -145,7 +145,7 @@ Button.contextType = GlobalData
 
 ```js
 const MyContext = React.createContext(/* some value */)
-MyContext.displayName = 'MyDisplayName'
+MyContext.displayName = "MyDisplayName"
 //<MyContext.Provider> // "MyDisplayName.Provider" in DevTools
 ```
 
@@ -155,18 +155,18 @@ MyContext.displayName = 'MyDisplayName'
 以 Hooks 为例
 
 ```js
-const GlobalData = React.createContext('hello')
+const GlobalData = React.createContext("hello")
 
 function App() {
-  const handleValue = new_value => {
+  const handleValue = (new_value) => {
     setData({
       ...data,
-      value: new_value
+      value: new_value,
     })
   }
   const [data, setData] = useState({
-    value: 'dark',
-    changeValue: handleValue
+    value: "dark",
+    changeValue: handleValue,
   })
 
   return (
@@ -181,17 +181,19 @@ function Toolbar(props) {
   const { value, changeValue } = useContext(GlobalData)
   return (
     <div>
-      <button onClick={() => changeValue('white')}>{value}</button>
+      <button onClick={() => changeValue("white")}>{value}</button>
     </div>
   )
 }
 ```
+
 ## Consumer
+
 已废弃，推荐用 [useContext](#useContext)  
 让函数组件也可以使用`Context`对象
 
 ```js
-const GlobalData = React.createContext('hello')
+const GlobalData = React.createContext("hello")
 
 class App extends React.Component {
   render() {
@@ -205,7 +207,7 @@ class App extends React.Component {
 //函数组件
 function SimpleDiv() {
   return (
-    <GlobalData.Consumer>{value => ConsumerDiv(value)}</GlobalData.Consumer>
+    <GlobalData.Consumer>{(value) => ConsumerDiv(value)}</GlobalData.Consumer>
   )
 }
 function ConsumerDiv(value) {

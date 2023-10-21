@@ -12,14 +12,14 @@ Number, String, Boolean 是构造函数，但 Symbol 和 BigInt 不是，不能`
 比如
 
 ```js
-var s1 = 'emma'
+var s1 = "emma"
 var s2 = s1.substring(2)
 
-var s3 = new String('Noman')
+var s3 = new String("Noman")
 typeof s3 //"object"
 
-var test2 = new Symbol('1') //报错，Symbol不是构造函数
-var test3 = new BigInt('10') //报错，BigInt is not a constructor
+var test2 = new Symbol("1") //报错，Symbol不是构造函数
+var test3 = new BigInt("10") //报错，BigInt is not a constructor
 ```
 
 实际上调用`s1.substring`的后台会经过以下步骤
@@ -30,7 +30,7 @@ var test3 = new BigInt('10') //报错，BigInt is not a constructor
    上面的 `substring` 等价于
 
 ```js
-var s4 = new String('emma')
+var s4 = new String("emma")
 var s2 = s1.substring(2)
 s4 = null
 ```
@@ -64,7 +64,7 @@ num2.toFixed(2) //"10.10"
 返回指定位置的字符，或者编码
 
 ```js
-var test = 'hello'
+var test = "hello"
 test.charAt(2) //"l"
 test.charCodeAt(2) //108
 test[4] //"o"
@@ -101,7 +101,7 @@ concat 拼接字符串。更多的时候还是用`+`比较方便
 传负数的时候,slice 和 substring 会不同
 
 ```js
-var test = 'hello'
+var test = "hello"
 test.slice(1, 3) //"el"
 test.substring(1, 3) //"el"
 test.substr(1, 3) //"ell"
@@ -115,7 +115,7 @@ test.substr(1, 3) //"ell"
 
 ```js
 function trim(str) {
-  return str.replace(/(^\s*)|(\s*$)/g, '')
+  return str.replace(/(^\s*)|(\s*$)/g, "")
 }
 ```
 
@@ -130,7 +130,7 @@ toLocaleLowerCase/ toLocaleUpperCase
 match 和 exec()一样, search 返回的是第一个匹配的索引
 
 ```js
-var test = 'hello'
+var test = "hello"
 test.search(/l/) //2
 ```
 
@@ -144,10 +144,10 @@ replace 用于替换，默认只替换第一个匹配。第二个参数可以是
 function htmlEscape(text) {
   return text.replace(/[<>"&]/g, (match, pos, originText) => {
     switch (match) {
-      case '<':
-        return '&lt;'
+      case "<":
+        return "&lt;"
       case '"':
-        return '&quot;'
+        return "&quot;"
       default:
         return originText[pos]
     }

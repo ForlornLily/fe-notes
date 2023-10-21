@@ -25,7 +25,7 @@ function getGreeting(user) {
 占位符，类似 vue 的`template`，不会被渲染成真实 DOM，通常用来充当包裹的父元素
 
 ```js
-import React, { Fragment } from 'react'
+import React, { Fragment } from "react"
 
 return (
   <Fragment>
@@ -87,7 +87,7 @@ function Glossary(props) {
 
 ```js
 function createMarkup() {
-  return { __html: 'First &middot; Second' }
+  return { __html: "First &middot; Second" }
 }
 function MyComponent() {
   return <div dangerouslySetInnerHTML={createMarkup()} />
@@ -111,7 +111,7 @@ const logo = require(`../../assets/img/header.png`)
 return (
   <div
     className="banner-wrapper"
-    style={{ backgroundImage: 'url(' + backgroudUrl + ')' }}
+    style={{ backgroundImage: "url(" + backgroudUrl + ")" }}
   ></div>
 )
 ```
@@ -120,8 +120,8 @@ return (
 
 ```js
 const divStyle = {
-  WebkitTransition: 'all', // note the capital 'W' here
-  msTransition: 'all', // 'ms' is the only lowercase vendor prefix
+  WebkitTransition: "all", // note the capital 'W' here
+  msTransition: "all", // 'ms' is the only lowercase vendor prefix
 }
 
 function ComponentWithTransition() {
@@ -170,61 +170,73 @@ return {
 ```
 
 ## React 17
+
 [Introducing the New JSX Transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)  
-[React18 源码解析之fiber等几个重要的数据结构](https://www.xiabingbao.com/post/react/react-element-jsx-rfl0yh.html)  
-``` js
-import React from 'react';
+[React18 源码解析之 fiber 等几个重要的数据结构](https://www.xiabingbao.com/post/react/react-element-jsx-rfl0yh.html)
+
+```js
+import React from "react"
 
 function App() {
   const handleClick = () => {
-    console.log('click');
-  };
+    console.log("click")
+  }
 
   return (
     <div onClick={handleClick}>
       <p>hello world</p>
     </div>
-  );
+  )
 }
 ```
+
 React 16 需要引入 React，本质上是用 createElement 转成 js  
-children 做为第三个参数传入  
-``` js
-import React from 'react';
+children 做为第三个参数传入
+
+```js
+import React from "react"
 
 function App() {
-  return React.createElement('div', { onClick: handleClick }, React.createElement('p', null, 'hello world'));
+  return React.createElement(
+    "div",
+    { onClick: handleClick },
+    React.createElement("p", null, "hello world")
+  )
 }
 ```
+
 17 后不再需要手动引入，内部实现为
-``` js
+
+```js
 // Inserted by a compiler (don't import it yourself!)
-import {jsx as _jsx} from 'react/jsx-runtime';
+import { jsx as _jsx } from "react/jsx-runtime"
 
 function App() {
-  return jsx('div', {
-    children: jsx('p', {
+  return jsx("div", {
+    children: jsx("p", {
       children: [
-        jsx('span', {
-          className: 'dd',
-          children: 'hello world',
+        jsx("span", {
+          className: "dd",
+          children: "hello world",
         }),
-        _jsx('span', {
-          children: '123',
+        _jsx("span", {
+          children: "123",
         }),
       ],
     }),
-  });
+  })
 }
 ```
-children 变成了第二个参数  
+
+children 变成了第二个参数
 
 ## createElement
+
 [ReactElement.js](https://github.com/facebook/react/blob/main/packages/react/src/ReactElement.js#L151)  
 React 节点会有一个 `$$typeof`，值是一个 Symbol（`Symbol.for('react.element')`），用来标记这是一个 React Element  
-目的是为了防止 XSS 攻击：React 会对大部分内容做转义，因为 JSON 不支持 Symbol，当判断 `$$typeof` 不是  Symbol 时，对这个节点不作处理  
+目的是为了防止 XSS 攻击：React 会对大部分内容做转义，因为 JSON 不支持 Symbol，当判断 `$$typeof` 不是 Symbol 时，对这个节点不作处理
 
-``` js
+```js
 /**
  * Factory method to create a new React element. This no longer adheres to
  * the class pattern, so do not use new to call it. Also, instanceof check
@@ -245,10 +257,10 @@ function ReactElement(type, key, ref, self, source, owner, props) {
 
     // Record the component responsible for creating this element.
     _owner: owner,
-  };
+  }
 
   // 省略其他内容
 
-  return element;
+  return element
 }
 ```

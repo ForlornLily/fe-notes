@@ -53,14 +53,14 @@ interface Alarm {
 比如在 ts 内使用 jQuery
 
 ```js
-$('.awesome').show() // Error: cannot find name `$`
+$(".awesome").show() // Error: cannot find name `$`
 ```
 
 需要先声明一个全局变量代表 jQuery
 
 ```ts
 declare var $: any
-$('.awesome').show() // Okay!
+$(".awesome").show() // Okay!
 ```
 
 或者更具体一些
@@ -69,7 +69,7 @@ $('.awesome').show() // Okay!
 declare var $: {
   (selector: string): any
 }
-$('.awesome').show() // Okay!
+$(".awesome").show() // Okay!
 $(123).show() // Error: selector needs to be a string
 ```
 
@@ -95,12 +95,14 @@ declare var 并没有声明变量，在编译后的 js 文件里这一句话是�
 `npm install @types/jquery --save-dev`
 
 ### 自己写声明文件
-``` ts
+
+```ts
 declare module "*.module.less" {
-  const classes: { [key: string]: string };
-  export default classes;
+  const classes: { [key: string]: string }
+  export default classes
 }
 ```
+
 不同作用的库写法不同。
 
 - 全局变量：通过 \<script\> 标签引入第三方库，注入全局变量

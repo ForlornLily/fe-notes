@@ -11,7 +11,7 @@
 export function asynceDemo() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('hello')
+      resolve("hello")
     }, 1000)
   })
 }
@@ -19,11 +19,11 @@ export function asynceDemo() {
 
 ```js
 // index.test.js
-import { asynceDemo } from './index'
+import { asynceDemo } from "./index"
 
-test('promise', () => {
+test("promise", () => {
   return asynceDemo().then((data) => {
-    expect(data).toBe('hello')
+    expect(data).toBe("hello")
   })
 })
 ```
@@ -32,10 +32,10 @@ test('promise', () => {
 
 ```js
 // 上面等价于
-import { asynceDemo } from './index'
+import { asynceDemo } from "./index"
 
-test('promise', () => {
-  return expect(asynceDemo()).resolves.toBe('hello')
+test("promise", () => {
+  return expect(asynceDemo()).resolves.toBe("hello")
 })
 ```
 
@@ -45,9 +45,9 @@ test('promise', () => {
 
 ```js
 // 上面等价于
-import { asynceDemo } from './index'
+import { asynceDemo } from "./index"
 
-test('promise', async () => {
-  await expect(asynceDemo()).resolves.toBe('hello')
+test("promise", async () => {
+  await expect(asynceDemo()).resolves.toBe("hello")
 })
 ```

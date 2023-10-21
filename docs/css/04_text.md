@@ -90,8 +90,8 @@ font-family 和 src 都是必填的，另外的 font-style 和 font-weight 可�
 
 ```css
 @font-face {
-  font-family: 'Times New Roman', Times, serif;
-  src: url('xxx.woff') format('woff'), url('xxx.woff2') format('woff2');
+  font-family: "Times New Roman", Times, serif;
+  src: url("xxx.woff") format("woff"), url("xxx.woff2") format("woff2");
 }
 ```
 

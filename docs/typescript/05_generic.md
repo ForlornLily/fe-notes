@@ -15,7 +15,7 @@ function createArray(length: number, value: string): any[] {
   }
   return result
 }
-let currentClass = createArray(2, 'Saber') // ["Saber", "Saber"]
+let currentClass = createArray(2, "Saber") // ["Saber", "Saber"]
 ```
 
 泛型可以在调用函数的时候指定传入类型和返回类型
@@ -33,7 +33,7 @@ function createArray<T>(length: number, value: T): Array<T> {
   return result
 }
 //T都是string类型
-let currentClass = createArray<string>(2, 'Saber') // ["Saber", "Saber"]
+let currentClass = createArray<string>(2, "Saber") // ["Saber", "Saber"]
 ```
 
 ## 泛型约束
@@ -58,7 +58,7 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
   console.log(arg.length)
   return arg
 }
-loggingIdentity('hello') //通过
+loggingIdentity("hello") //通过
 loggingIdentity(1) //报错，number不具有length属性
 loggingIdentity({ length: 10, value: 3 }) //通过
 ```
@@ -69,7 +69,7 @@ loggingIdentity({ length: 10, value: 3 }) //通过
 function swap<T, U>(tuple: [T, U]): [U, T] {
   return [tuple[1], tuple[0]]
 }
-swap([7, 'seven']) // ['seven', 7]
+swap([7, "seven"]) // ['seven', 7]
 ```
 
 ### 继承约束
@@ -83,7 +83,7 @@ function copy<T extends U, U>(target: T, source: U): T {
 }
 let x = { a: 1, b: 2, c: 3 }
 copy(x, { b: 666, c: 888 })
-copy(x, { b: '123' }) //报错，类型不匹配
+copy(x, { b: "123" }) //报错，类型不匹配
 ```
 
 ## 泛型接口
@@ -110,7 +110,7 @@ let myFun: customFun
 myFun = <T>(a: T, b: T): void => {
   console.log(`${a}, ${b}`)
 }
-myFun<string>('hello', 'wolrd')
+myFun<string>("hello", "wolrd")
 ```
 
 进一步，把泛型提升到接口名上

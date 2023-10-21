@@ -17,7 +17,7 @@
 - 不能利用多核 CPU
 - 一个错误会引起整个应用退出
 - 大量占用 CPU 导致不能继续调用异步 I/O：  
-  就像浏览器内JavaScript会阻塞UI渲染一样，NodeJS内长时间的CPU占用会导致后续的异步I/O发不出调用，已完成的异步I/O回调函数也得不到及时执行
+  就像浏览器内 JavaScript 会阻塞 UI 渲染一样，NodeJS 内长时间的 CPU 占用会导致后续的异步 I/O 发不出调用，已完成的异步 I/O 回调函数也得不到及时执行
 
 为了解决这个问题，HTML5 提出了 Web Workers 标准，Web Workers 可以创建工作线程来进行计算。  
 工作线程为了不阻塞主线程，通过消息传递的形式来传递运行结果。也导致工作线程无法访问主线程的 UI  
@@ -30,21 +30,21 @@ NodeJS 采用了和 Web Worker 相同的思路来解决大计算量的问题：c
 比如在一个 js 文件内允许 `npm run dev`
 
 ```js
-const childProcess = require('child_process')
+const childProcess = require("child_process")
 
 const { spawn } = childProcess
 
-const projectPath = 'D:\\filetest\\rocket-test'
+const projectPath = "D:\\filetest\\rocket-test"
 const child = spawn(
-  process.platform === 'win32' ? 'npm.cmd' : 'npm', //兼容windows
-  ['run', 'dev'],
+  process.platform === "win32" ? "npm.cmd" : "npm", //兼容windows
+  ["run", "dev"],
   {
     cwd: projectPath, //执行命令所在的文件路径
   }
 )
 
-child.stdout.setEncoding('utf8') //输出成字符串，默认是 buffer
-child.stdout.on('data', function (data) {
+child.stdout.setEncoding("utf8") //输出成字符串，默认是 buffer
+child.stdout.on("data", function (data) {
   console.log(data)
 })
 ```
@@ -61,8 +61,8 @@ node start.js
 
 ```js
 //start.js
-const child_process = require('child_process')
-child_process.exec('npm run dev', function (err, stdout, stderr) {
+const child_process = require("child_process")
+child_process.exec("npm run dev", function (err, stdout, stderr) {
   console.log(stdout)
 })
 ```
@@ -82,16 +82,16 @@ child_process.exec('npm run dev', function (err, stdout, stderr) {
 
 ```js
 //dist/index.js
-process.send({ hello: 'world' })
+process.send({ hello: "world" })
 ```
 
 ```js
-const childProcess = require('child_process')
+const childProcess = require("child_process")
 
 const { fork } = childProcess
 
-const child = fork('./dist/index.js')
-child.on('message', (data) => {
+const child = fork("./dist/index.js")
+child.on("message", (data) => {
   console.log(data) // { hello: "world" }
 })
 ```

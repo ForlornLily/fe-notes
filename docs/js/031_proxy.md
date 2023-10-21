@@ -11,10 +11,10 @@
 ```js
 let target = {}
 let proxy = new Proxy(target, {})
-proxy.name = 'proxy'
+proxy.name = "proxy"
 console.log(proxy.name) // "proxy"
 console.log(target.name) // "proxy"
-target.name = 'target'
+target.name = "target"
 console.log(proxy.name) // "target"
 console.log(target.name) // "target"
 ```
@@ -44,14 +44,14 @@ Reflect 的存在是为了方便返回原有的实现，避免一样的逻辑需
 const target: {
   foo?: string
 } = {}
-Object.defineProperty(target, 'foo', {
+Object.defineProperty(target, "foo", {
   configurable: false,
   writable: false,
-  value: 'bar',
+  value: "bar",
 })
 const handler = {
   get() {
-    return 'qux'
+    return "qux"
   },
 }
 const proxy = new Proxy(target, handler)
@@ -72,22 +72,22 @@ has 接受的参数分别是
 
 ```js
 let target = {
-  name: 'hello',
+  name: "hello",
   age: 12,
 }
 let proxy = new Proxy(target, {
   has(target, key) {
-    if (key == 'age') {
+    if (key == "age") {
       return false
     }
     return Reflect.has(target, key)
   },
 })
-console.log('name' in target) // true
-console.log('age' in target) // true
+console.log("name" in target) // true
+console.log("age" in target) // true
 
-console.log('name' in proxy) // true
-console.log('age' in proxy) // false
+console.log("name" in proxy) // true
+console.log("age" in proxy) // false
 ```
 
 捕获器不变式
@@ -116,12 +116,12 @@ let target: {
   name: string
   age?: number
 } = {
-  name: 'hello',
+  name: "hello",
 }
 let proxy = new Proxy(target, {
   get(target, key, receiver) {
     if (!(key in receiver)) {
-      throw new Error('不存在该属性')
+      throw new Error("不存在该属性")
     }
     // return Reflect.get(target, key, receiver)
     return Reflect.get(target, key, receiver)
@@ -166,14 +166,14 @@ let target: {
   age?: number
   plan?: string
 } = {
-  name: 'hello',
+  name: "hello",
 }
 let proxy = new Proxy(target, {
   set(target, key, value, receiver): boolean {
     //如果target本身有key，跳过，本题只是为了校验新增的key
     if (!target.hasOwnProperty(key)) {
       if (isNaN(value)) {
-        console.log('不是数字')
+        console.log("不是数字")
         return true
       }
       // 添加属性
@@ -186,10 +186,10 @@ proxy.age = 12
 console.log(proxy.age) // 12
 console.log(target) // {name: 'hello', age: 12}
 // 不报错，但不会赋值
-proxy.plan = 'S' // 不是数字
+proxy.plan = "S" // 不是数字
 console.log(target, proxy.plan) // {name: 'hello', age: 12} undefined
 // 因为最后 return false 所以会报错
-proxy.name = 'hello' // Uncaught TypeError: 'set' on proxy: trap returned falsish for property 'name'
+proxy.name = "hello" // Uncaught TypeError: 'set' on proxy: trap returned falsish for property 'name'
 ```
 
 捕获器不变式
@@ -225,7 +225,7 @@ const target: {
 } = {}
 const handler = {
   get() {
-    return 'qux'
+    return "qux"
   },
 }
 const { proxy, revoke } = Proxy.revocable(target, handler)
@@ -249,15 +249,15 @@ const target: {
   foo?: string
 } = {}
 
-Object.defineProperty(target, 'foo', {
+Object.defineProperty(target, "foo", {
   configurable: false,
   writable: false,
-  value: 'bar',
+  value: "bar",
 })
 
 try {
-  Object.defineProperty(target, 'foo', {
-    value: 'test',
+  Object.defineProperty(target, "foo", {
+    value: "test",
   })
 } catch (e) {
   console.log(e) // TypeError: Cannot redefine property: foo
@@ -271,15 +271,15 @@ const target: {
   foo?: string
 } = {}
 
-Object.defineProperty(target, 'foo', {
+Object.defineProperty(target, "foo", {
   configurable: false,
   writable: false,
-  value: 'bar',
+  value: "bar",
 })
 
 console.log(
-  Reflect.defineProperty(target, 'foo', {
-    value: 'test',
+  Reflect.defineProperty(target, "foo", {
+    value: "test",
   })
 ) // false
 ```
@@ -293,13 +293,13 @@ console.log(
   - Reflect.construct()：代替 `new`
 
 ```ts
-console.log('hello' in target)
-console.log(Reflect.has(target, 'hello'))
+console.log("hello" in target)
+console.log(Reflect.has(target, "hello"))
 ```
 
 ```ts
-const test = new Array('1', '2', '3')
-const arr = Reflect.construct(Array, ['1', '2', '3'])
+const test = new Array("1", "2", "3")
+const arr = Reflect.construct(Array, ["1", "2", "3"])
 console.log(test, arr)
 ```
 
@@ -383,13 +383,13 @@ proxy.push(5)
 
 ```js
 let target = {
-  name: 'hello',
+  name: "hello",
   location: {
-    three: 'west',
+    three: "west",
   },
 }
 /* 省略proxy定义 */
-proxy.location.three = 'east'
+proxy.location.three = "east"
 ```
 
 ![](../images/proxy_nest.jpg)
@@ -417,7 +417,7 @@ const handlers = {
 }
 function getters(target, key, receiver) {
   const result = Reflect.get(target, key, receiver)
-  if (typeof result === 'object') {
+  if (typeof result === "object") {
     //再次调用
     return createReactive(result)
   }
@@ -427,24 +427,24 @@ function setters(target, key, value, receiver) {
   const isOwn = target.hasOwnProperty(key)
   if (!isOwn) {
     //新增属性，执行逻辑
-    console.log('not own')
+    console.log("not own")
   } else {
     //已有属性，判断新值和旧值是否相等
     const currentValue = target[key]
     if (value !== currentValue) {
-      console.log('value changed')
+      console.log("value changed")
     }
   }
   return Reflect.set(target, key, value, receiver)
 }
 let target = {
-  name: 'hello',
+  name: "hello",
   location: {
-    three: 'west',
+    three: "west",
   },
   arr: [1, 2, 3],
 }
 let proxy = createReactive(target)
 proxy.arr.push(6) // "not own"
-proxy.location.three = 'east' // "value changed"
+proxy.location.three = "east" // "value changed"
 ```

@@ -11,7 +11,7 @@
 - 也可以用首字母大写命名
 
 ```js
-Vue.component('MyComponentName', options)
+Vue.component("MyComponentName", options)
 ```
 
 ### name
@@ -34,7 +34,7 @@ Vue.component('MyComponentName', options)
 - my-component-name 自动成为组件的 name
 
 ```js
-Vue.component('my-component-name', options)
+Vue.component("my-component-name", options)
 ```
 
 ```html
@@ -53,16 +53,16 @@ Vue.component('my-component-name', options)
 const MyComponent = {
   data() {
     return {
-      inputValue: 'hello'
+      inputValue: "hello",
     }
   },
-  template: `<input v-model="inputValue">`
+  template: `<input v-model="inputValue">`,
 }
 const app = new Vue({
-  el: '#app',
+  el: "#app",
   components: {
-    MyComponent
-  }
+    MyComponent,
+  },
 })
 ```
 
@@ -77,7 +77,7 @@ const app = new Vue({
 ### \$mount
 
 ```js
-new Vue({}).$mount('#app')
+new Vue({}).$mount("#app")
 ```
 
 ## data
@@ -111,7 +111,7 @@ setImmediate，浏览器不支持的话就用 setTimeout
 ### \$nextTick
 
 ```js
-this.$nextTick(function() {
+this.$nextTick(function () {
   //do sth
 })
 ```
@@ -153,7 +153,7 @@ this.item = Object.freeze(Object.assign({}, this.item))
 属性如果是变量，不能用短横线，所以还是用驼峰式，但在 HTML 上的组件时改为短横线。比如
 
 ```js
-props: ['myTitle']
+props: ["myTitle"]
 ```
 
 ```html
@@ -270,7 +270,7 @@ HTML 是大小写不敏感的，但 JS 是
 - 通过 \$off(eventName, eventHandler) 解绑事件
 
 ```js
-this.$once('hook:beforeDestroy', () => {
+this.$once("hook:beforeDestroy", () => {
   popup组件.$destroy()
 })
 ```
@@ -294,8 +294,8 @@ props 接收"value"，组件内监听 input 事件和绑定 value 属性
   <custom-input v-model="searchText"></custom-input>
 </div>
 <script>
-  Vue.component('custom-input', {
-    props: ['value'],
+  Vue.component("custom-input", {
+    props: ["value"],
     template: `
       <input
         :value="value"
@@ -304,15 +304,15 @@ props 接收"value"，组件内监听 input 事件和绑定 value 属性
     `,
     methods: {
       handleChange(event) {
-        this.$emit('input', event.target.value)
-      }
-    }
+        this.$emit("input", event.target.value)
+      },
+    },
   })
   let app = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
-      searchText: 'hello'
-    }
+      searchText: "hello",
+    },
   })
 </script>
 ```
@@ -328,13 +328,13 @@ props 接收"value"，组件内监听 input 事件和绑定 value 属性
 props 接收"checked"，组件内监听 change 事件和绑定 checked 属性
 
 ```js
-Vue.component('base-checkbox', {
+Vue.component("base-checkbox", {
   model: {
-    prop: 'checked',
-    event: 'change'
+    prop: "checked",
+    event: "change",
   },
   props: {
-    checked: Boolean
+    checked: Boolean,
   },
   template: `
     <input
@@ -342,7 +342,7 @@ Vue.component('base-checkbox', {
       :checked="checked"
       @change="$emit('change', $event.target.checked)"
     >
-  `
+  `,
 })
 ```
 
@@ -390,18 +390,18 @@ doc 对象的每个 key 都会各自监听
 <script>
   //点击span会触发text-document的click
   const MyComponent = {
-    template: `<div><span v-on='$listeners'>hello</span></div>`
+    template: `<div><span v-on='$listeners'>hello</span></div>`,
   }
   const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-      'text-document': MyComponent
+      "text-document": MyComponent,
     },
     methods: {
       handleClick() {
-        console.log('handleClick')
-      }
-    }
+        console.log("handleClick")
+      },
+    },
   })
 </script>
 ```
@@ -427,21 +427,21 @@ doc 对象的每个 key 都会各自监听
 ```js
 const MyComponent = {
   inheritAttrs: true,
-  props: ['test'],
-  template: `<div><span>{{$attrs}}</span></div>`
+  props: ["test"],
+  template: `<div><span>{{$attrs}}</span></div>`,
 }
 const app = new Vue({
-  el: '#app',
+  el: "#app",
   components: {
-    'text-document': MyComponent
+    "text-document": MyComponent,
   },
   data() {
     return {
-      test: 'hello',
-      notIn: 'world',
-      inNot: 'foo'
+      test: "hello",
+      notIn: "world",
+      inNot: "foo",
     }
-  }
+  },
 })
 ```
 
@@ -462,25 +462,25 @@ inject 接收指定的想要添加在这个实例上的属性（这个属性是�
 </template>
 <script>
   export default {
-    name: 'App',
+    name: "App",
     provide() {
       return {
-        reload: this.reload
+        reload: this.reload,
       }
     },
     data() {
       return {
-        isRouterAlive: true
+        isRouterAlive: true,
       }
     },
     methods: {
       reload() {
         this.isRouterAlive = false
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           this.isRouterAlive = true
         })
-      }
-    }
+      },
+    },
   }
 </script>
 ```
@@ -511,8 +511,8 @@ this.reload()
 // 全局变量
 let EventBus = new Vue()
 //用全部变量的on和emit进行事件管理
-EventBus.$emit('received', 'from child')
-EventBus.$on('received', val => {
+EventBus.$emit("received", "from child")
+EventBus.$on("received", (val) => {
   //sth.
 })
 ```
@@ -530,31 +530,31 @@ EventBus.$on('received', val => {
 </div>
 <script>
   var home = {
-    template: '<div>我是主页</div>'
+    template: "<div>我是主页</div>",
   }
   var post = {
-    template: '<div>我是提交页</div>'
+    template: "<div>我是提交页</div>",
   }
   const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
       home,
-      post
+      post,
     },
     data: {
       index: 0,
-      arr: ['home', 'post']
+      arr: ["home", "post"],
     },
     computed: {
       currentView() {
         return this.arr[this.index]
-      }
+      },
     },
     methods: {
       change() {
         this.index = ++this.index % 2
-      }
-    }
+      },
+    },
   })
 </script>
 ```
@@ -575,8 +575,8 @@ activated 和 deactivated 会被对应执行
 
 ```js
 export default {
-  name: 'keep-alive',
-  abstract: true
+  name: "keep-alive",
+  abstract: true,
   //...
 }
 ```
@@ -603,21 +603,21 @@ include 的组件被缓存，exclude 的组件不会被缓存（一直触发 cre
 
 ```js
 //全局注册异步
-Vue.component('async-example', function(resolve, reject) {
-  setTimeout(function() {
+Vue.component("async-example", function (resolve, reject) {
+  setTimeout(function () {
     // 向 `resolve` 回调传递组件定义
     resolve({
-      template: '<div>I am async!</div>'
+      template: "<div>I am async!</div>",
     })
   }, 1000)
 })
 //局部注册
 const app = new Vue({
-  el: '#app',
+  el: "#app",
   components: {
     // 需要加载的组件是一个 `Promise` 对象
-    'my-component': () => import('./my-async-component')
-  }
+    "my-component": () => import("./my-async-component"),
+  },
 })
 ```
 
@@ -626,7 +626,7 @@ const app = new Vue({
 ```js
 const AsyncComponent = () => ({
   // 需要加载的组件是一个 `Promise` 对象
-  component: import('./MyComponent.vue'),
+  component: import("./MyComponent.vue"),
   // 异步组件加载时使用的组件
   loading: LoadingComponent,
   // 加载失败时使用的组件
@@ -635,7 +635,7 @@ const AsyncComponent = () => ({
   delay: 200,
   // 如果提供了超时时间且组件加载也超时了，
   // 则使用加载失败时使用的组件。默认值是：`Infinity`
-  timeout: 3000
+  timeout: 3000,
 })
 ```
 

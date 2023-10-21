@@ -22,7 +22,7 @@ function curry(fn) {
       //传入参数等于函数的形参
       return fn.call(that, ...args)
     }
-    return function(...inerArgs) {
+    return function (...inerArgs) {
       return inner.call(that, ...args, ...inerArgs)
     }
   }

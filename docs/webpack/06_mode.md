@@ -102,7 +102,8 @@ webpack 中对一个模块会进行多次处理，比如 sass 转 css，经过 s
 ```
 
 实际上也会进行打包，但是不生成 dist 等文件夹，而是直接放到了内存中，文件夹看不到生成的内容
-``` js
+
+```js
 devServer: {
   allowedHosts: 'all',
   hot: true,
@@ -126,6 +127,7 @@ devServer: {
   },
 }
 ```
+
 ### 涉及的模块
 
 #### http-proxy-middleware
@@ -207,7 +209,8 @@ if (module.hot) {
 ```
 
 ### server
-可以配置证书和 http 协议  
+
+可以配置证书和 http 协议
 
 ## 扩展：webpack-dev-middleware
 
@@ -222,10 +225,10 @@ if (module.hot) {
 在 node 内使用 webpack 见官网[API](https://webpack.js.org/api/node) Node Interface
 
 ```js
-const express = require('express')
-const webpack = require('webpack')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const config = require('./webpack.config.js') //引入webpack配置文件
+const express = require("express")
+const webpack = require("webpack")
+const webpackDevMiddleware = require("webpack-dev-middleware")
+const config = require("./webpack.config.js") //引入webpack配置文件
 // 在node中直接使用webpack
 const compiler = webpack(config)
 
@@ -239,6 +242,6 @@ app.use(
 )
 
 app.listen(3000, () => {
-  console.log('server is running')
+  console.log("server is running")
 })
 ```

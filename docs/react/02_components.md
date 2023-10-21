@@ -24,8 +24,8 @@ class Welcome extends React.Component {
 
 ```js
 //父组件中
-import React, { Component } from 'react'
-import TodoItem from './TodoItem'
+import React, { Component } from "react"
+import TodoItem from "./TodoItem"
 
 class TodoList extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ export default TodoList
 
 ```js
 //子组件中
-import React, { Component } from 'react'
+import React, { Component } from "react"
 
 class TodoItem extends Component {
   constructor(props) {
@@ -111,59 +111,60 @@ function App1() {
 }
 //等价于
 function App2() {
-  const props = { firstName: 'Ben', lastName: 'Hector' }
+  const props = { firstName: "Ben", lastName: "Hector" }
   return <Greeting {...props} />
 }
 
 //进一步
 const Button = (props) => {
   const { kind, ...other } = props
-  const className = kind === 'primary' ? 'PrimaryButton' : 'SecondaryButton'
+  const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton"
   return <button className={className} {...other} />
 }
 ```
-## StrictMode  
-开发环境生效  
-- 额外 render 一次（不包括事件内的内容）  
+
+## StrictMode
+
+开发环境生效
+
+- 额外 render 一次（不包括事件内的内容）
 - React 18：额外执行 Effect 一次（setup+cleanup cycle in development）
-- 会提示过时的 API  
-``` jsx
+- 会提示过时的 API
+
+```jsx
 <StrictMode>
   <App />
 </StrictMode>
-``` 
-``` tsx
+```
+
+```tsx
 let count = 0
 function Demo() {
-
   const [value, setValue] = useState<number | undefined>(() => {
     count += 1
     return 1
   })
 
   useEffect(() => {
-    console.log('[] mount')
+    console.log("[] mount")
     return () => {
-      console.log('[] unmount')
+      console.log("[] unmount")
     }
   }, [])
 
   useEffect(() => {
-    console.log('value mount')
+    console.log("value mount")
     return () => {
-      console.log('value unmount')
+      console.log("value unmount")
     }
   }, [value])
 
-  return (
-    <>
-      {count}
-    </>
-  )
+  return <>{count}</>
 }
-export default Demo;
+export default Demo
 ```
-``` bash
+
+```bash
 [] mount
 value mount
 [] unmount
@@ -171,7 +172,8 @@ value unmount
 [] mount
 value mount
 ```
-count 值是 2 
+
+count 值是 2
 
 ## 类组件
 
@@ -188,7 +190,7 @@ class CustomButton extends React.Component {
 }
 
 CustomButton.defaultProps = {
-  color: 'blue',
+  color: "blue",
 }
 ```
 
@@ -235,6 +237,7 @@ class EventsSample extends React.Component {
   }
 }
 ```
+
 在 React 17 之前，React 是把事件委托在 document 上的，React 17 及以后委托在挂载的容器上。React 合成事件采用的是事件冒泡机制，当在某具体元素上触发事件时，等冒泡到顶部被挂载事件的那个元素时，才会真正地执行事件。  
 而原生事件，当某具体元素触发事件时，会立刻执行该事件。因此若要比较事件触发的先后时机时，原生事件会先执行，React 合成事件会后执行。
 
@@ -425,6 +428,7 @@ class ErrorBoundary extends React.Component {
   :::
 
 ## React.PureComponent
+
 不推荐。建议用函数组件  
 官网[React.PureComponent](https://react.dev/reference/react/PureComponentt)  
 通常可以用`PureComponent`代替 shouldComponentUpdate。  
@@ -432,46 +436,44 @@ PureComponent 会进行浅比较。用法和 React.Component 一致
 
 ## Suspense
 
-Suspense 只在特定场景使用，Effect 或者事件里边异步拉取数据不能生效  
+Suspense 只在特定场景使用，Effect 或者事件里边异步拉取数据不能生效
+
 - Data fetching with Suspense-enabled frameworks like Relay and Next.js
 - 使用 React.lazy（React.lazy 不支持 ssr）
 
 ```js
-const HelloWorld = React.lazy(() => import('./HelloWorld'))
+const HelloWorld = React.lazy(() => import("./HelloWorld"))
 ```
+
 ```jsx
 <Suspense fallback={<div>Loading...</div>}>
   <HelloWorld />
 </Suspense>
 ```
+
 - 如果有多个子组件，总是一起出现
 - 如果 Suspense 嵌套 Suspense，谁没加载就 fallback 谁
   - 比如父组件从来没加载，首次加载展示父组件；之后所有组件重新 render，已经加载过的就不会再出 fallback
   - 如果子组件按特定逻辑 render，比如 flag? A: B，那么 A/B 会在第一次 render 的时候出 fallback，之后也不会再出
 
-``` tsx
+```tsx
 function App() {
   const [render, setRender] = useState<boolean>(false)
 
   return (
     <>
-    <button onClick={() => setRender(prev => !prev)}>
-      render
-    </button>
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnotherText />
-      <Suspense fallback={<div>child...</div>}>
-        {
-          render? (
-            <Test />
-          ): null
-        }
+      <button onClick={() => setRender((prev) => !prev)}>render</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AnotherText />
+        <Suspense fallback={<div>child...</div>}>
+          {render ? <Test /> : null}
+        </Suspense>
       </Suspense>
-    </Suspense>
     </>
-  );
+  )
 }
 ```
+
 首次，出现 'Loading...'  
 点击 button，出现 'child...'  
 之后反复点击 button，不会再出现 fallback

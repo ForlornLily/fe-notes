@@ -5,7 +5,7 @@
 ```js
 console.log(sum2)
 console.log(num3)
-var sum = new Function('num1', 'num2', 'return num1 + num2') //不推荐
+var sum = new Function("num1", "num2", "return num1 + num2") //不推荐
 function sum2(num1, num2) {
   //函数声明
   return num1 + num2
@@ -55,10 +55,10 @@ function Test(name, age) {
   this.name = name
   this.age = age
   return {
-    name: 'hello',
+    name: "hello",
   }
 }
-const test = new Test('world', 12)
+const test = new Test("world", 12)
 console.log(test.name) //"hello"
 console.log(test.age) // undefined
 ```
@@ -102,21 +102,21 @@ var obj = {
     arguments[0]() //this指向arguments, 即arguments.length
   },
 }
-obj.method(fn, '1', '2') // 5 10 3
+obj.method(fn, "1", "2") // 5 10 3
 ```
 
 ```js
 const obj = {
   f1() {
     const fn = () => {
-      console.log('this1', this)
+      console.log("this1", this)
     }
     fn() //  obj
     fn.call(window) //  obj
   },
   f2: () => {
     function fn() {
-      console.log('this2', this)
+      console.log("this2", this)
     }
     fn() // 严格模式下是 undefined，否则是 window
     fn.call(this) // 同上，undefined
@@ -145,7 +145,7 @@ prototype 是为了方便属性共享，减少内存消耗。
 
 ```js
 function FactoryPerson() {}
-FactoryPerson.prototype.name = 'Emma'
+FactoryPerson.prototype.name = "Emma"
 FactoryPerson.prototype.sayName = function () {
   console.log(this.name)
 }
@@ -210,7 +210,7 @@ let person2 = new FactoryPerson()
 ```js
 function FactoryPerson() {}
 FactoryPerson.prototype = {
-  name: 'Emma',
+  name: "Emma",
   sayName() {
     console.log(this.name)
   },
@@ -230,7 +230,7 @@ FactoryPerson.prototype.constructor 等于 Object
 ```js
 FactoryPerson.prototype = {
   constructor: FactoryPerson,
-  name: 'Emma',
+  name: "Emma",
   sayName() {
     console.log(this.name)
   },
@@ -329,7 +329,7 @@ call 多个参数，第一个指定`this`, 第二...第 N 个是分开的一个�
 
 ```js
 function myMethod() {
-  console.log('hello')
+  console.log("hello")
 }
 myMethod.call()
 ```
@@ -339,10 +339,10 @@ bind 会返回一个函数，需要手动调用。传参和 apply 一样
 
 ```js
 function myMethod() {
-  console.log('hello')
+  console.log("hello")
 }
 let o = {
-  name: 'world',
+  name: "world",
 }
 let instance = myMethod.bind(o)
 instance() //"hello"
@@ -367,9 +367,9 @@ function myMethod(params) {
   console.log(params) //"world"
 }
 let obj = {
-  name: 'hello',
+  name: "hello",
 }
-myMethod.myCall(obj, 'world')
+myMethod.myCall(obj, "world")
 ```
 
 ### 手写 apply
@@ -391,14 +391,14 @@ Function.prototype.myApply = function (context) {
   return result
 }
 let obj = {
-  hello: 'world',
-  foo: 'bar',
+  hello: "world",
+  foo: "bar",
 }
 function myMethod(value1, value2) {
   this.hello = value1 //'world2'
   this.foo = value2 //'bar2'
 }
-myMethod.myApply(obj, ['world2', 'bar2'])
+myMethod.myApply(obj, ["world2", "bar2"])
 ```
 
 ### 手写 bind
@@ -408,9 +408,9 @@ myMethod.myApply(obj, ['world2', 'bar2'])
 ```js
 Function.prototype.myBind = function (context) {
   var that = this
-  if (typeof that !== 'function') {
+  if (typeof that !== "function") {
     //如果调用的不是函数，报错
-    throw new Error('error')
+    throw new Error("error")
   }
   let arr = [...arguments].slice(1) //此处的arguments是[o, ["1", "2"]]
   return function () {
@@ -422,10 +422,10 @@ function myMethod(arr, value2) {
   // arr是["1", "2"]， value2是"hello"
 }
 let o = {
-  name: 'world',
+  name: "world",
 }
-let instance = myMethod.myBind(o, ['1', '2'])
-instance('hello')
+let instance = myMethod.myBind(o, ["1", "2"])
+instance("hello")
 ```
 
 ## 参数按值传递
@@ -536,10 +536,10 @@ Function.prototype.before = function (beforefn) {
   }
 }
 var test = function () {
-  console.log('hello')
+  console.log("hello")
 }
 test = test.before(function () {
-  console.log('埋点')
+  console.log("埋点")
 })
 test()
 ```

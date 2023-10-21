@@ -69,9 +69,9 @@ class List {
   }
   toString() {
     let current = this.head,
-      string = ''
+      string = ""
     while (current) {
-      string += current.element + (current.next ? ', ' : '')
+      string += current.element + (current.next ? ", " : "")
       current = current.next
     }
     return string
@@ -144,8 +144,8 @@ class List {
   }
 }
 let list = new List()
-list.append('one')
-list.append('two')
+list.append("one")
+list.append("two")
 ```
 
 ## 双向链表
@@ -258,8 +258,8 @@ class DoubleList extends List {
   }
 }
 let dbList = new DoubleList()
-dbList.append('1')
-dbList.append('2')
+dbList.append("1")
+dbList.append("2")
 ```
 
 ## 循环链表
@@ -354,14 +354,14 @@ class CircleList extends List {
       string = current.element
     while (current && current.next !== this.head) {
       current = current.next
-      string += ', ' + current.element
+      string += ", " + current.element
     }
     return string
   }
 }
 let circleList = new CircleList()
-circleList.append('√')
-circleList.append('○')
+circleList.append("√")
+circleList.append("○")
 ```
 
 ## 时间复杂度

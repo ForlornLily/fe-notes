@@ -11,29 +11,29 @@ Vue 的根实例注册 store 属性，所有子组件都可以通过\$store 获�
 <script>
   const store = new Vuex.Store({
     state: {
-      count: 0
+      count: 0,
     },
     mutations: {
       increment(state) {
         state.count++
-      }
-    }
+      },
+    },
   })
   const UserCount = {
     template: `<div>{{count}}</div>`,
     computed: {
       count() {
         return this.$store.state.count
-      }
-    }
+      },
+    },
   }
   const app = new Vue({
     store: store,
     components: {
-      UserCount
-    }
-  }).$mount('#app')
-  store.commit('increment')
+      UserCount,
+    },
+  }).$mount("#app")
+  store.commit("increment")
 </script>
 ```
 
@@ -67,22 +67,22 @@ count() {
 ```
 
 ```js
-import { mapState } from 'vuex'
+import { mapState } from "vuex"
 computed: mapState({
   // 箭头函数可使代码更简练
-  count: state => state.count,
+  count: (state) => state.count,
   // 传字符串参数 'count' 等同于 `state => state.count`
-  countAlias: 'count',
+  countAlias: "count",
   // 为了能够使用 `this` 获取局部状态，必须使用常规函数
   countPlusLocalState(state) {
     return state.count + this.localCount
-  }
+  },
 })
 
 //如果是computed内的所有属性都和mapState的属性重名，也可以简写
 computed: mapState([
   // 映射 this.count 为 store.state.count
-  'count'
+  "count",
 ])
 ```
 
@@ -119,7 +119,7 @@ computed: {
 ```js
 mapGetters({
   // 把 `this.doneCount` 映射为 `this.$store.getters.doneTodosCount`
-  doneCount: 'doneTodosCount'
+  doneCount: "doneTodosCount",
 })
 ```
 
@@ -130,15 +130,15 @@ mutations 里面的方法必须是同步的，不可以有 promise, setTimeout �
 ```js
 const store = new Vuex.Store({
   state: {
-    count: 1
+    count: 1,
   },
   mutations: {
     increment(state, params) {
       // 变更状态
       //params是个对象，对应commit
       state.count++
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -149,13 +149,13 @@ const store = new Vuex.Store({
 ```js
 //写法一
 //第一个是方法名
-store.commit('increment', {
-  amount: 10
+store.commit("increment", {
+  amount: 10,
 })
 //写法二：全部以对象的形式
 store.commit({
-  type: 'increment', //type: 方法名
-  amount: 10 //其他参数
+  type: "increment", //type: 方法名
+  amount: 10, //其他参数
 })
 ```
 
@@ -241,18 +241,18 @@ const moduleA = {
   state: {},
   mutations: {},
   actions: {},
-  getters: {}
+  getters: {},
 }
 const moduleB = {
-  state: {}
+  state: {},
   ///省略
 }
 
 const store = new Vuex.Store({
   modules: {
     a: moduleA,
-    b: moduleB
-  }
+    b: moduleB,
+  },
 })
 store.state.a // -> moduleA 的状态
 store.state.b // -> moduleB 的状态

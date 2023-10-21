@@ -11,7 +11,7 @@
 解决方案：再次完整赋值
 
 ```js
-items = items.filter(function(item) {
+items = items.filter(function (item) {
   return item.message.match(/Foo/)
 })
 ```
@@ -43,7 +43,7 @@ items = items.filter(function(item) {
 ```js
 userProfile = Object.assign({}, userProfile, {
   age: 27,
-  favoriteColor: 'Vue Green'
+  favoriteColor: "Vue Green",
 })
 ```
 

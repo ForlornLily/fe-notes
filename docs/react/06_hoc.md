@@ -12,8 +12,8 @@ function logProps(WrappedComponent) {
   //返回新组件
   return class extends React.Component {
     componentWillReceiveProps(nextProps) {
-      console.log('Current props: ', this.props)
-      console.log('Next props: ', nextProps)
+      console.log("Current props: ", this.props)
+      console.log("Next props: ", nextProps)
     }
     render() {
       //渲染传入的组件
@@ -55,16 +55,17 @@ render() {
 ## React.memo
 
 高阶组件。只适用于函数组件，和 PureComponent 功能一致  
-如果传入第二个参数，根据第二个参数的返回值来确定是否更新。返回 true 不更新  
+如果传入第二个参数，根据第二个参数的返回值来确定是否更新。返回 true 不更新
+
 - `React.memo`默认用 `Object.is` 比较 props，如果想要定制化，传入第二个参数
-- 自定义参数时注意函数闭包  
-- 避免太深的嵌套对象  
+- 自定义参数时注意函数闭包
+- 避免太深的嵌套对象
 
 ```js
-import React, { Component, memo } from 'react'
-import ReactDOM from 'react-dom'
+import React, { Component, memo } from "react"
+import ReactDOM from "react-dom"
 const CustomInput = memo(function CustomInput(props) {
-  console.log('111')
+  console.log("111")
   return <input defaultValue={props.value} />
 }, areEqual)
 function areEqual(prevProps, nextProps) {
@@ -75,13 +76,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: '1',
-      test: '111',
+      value: "1",
+      test: "111",
     }
   }
   changeValue = () => {
     this.setState({
-      value: '2',
+      value: "2",
     })
   }
   render() {
@@ -93,5 +94,5 @@ class App extends Component {
     )
   }
 }
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById("root"))
 ```

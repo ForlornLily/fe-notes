@@ -42,7 +42,7 @@ class Bangumi extends Anime {
     console.log(this.year)
   }
 }
-let child = new Bangumi('The Promised Neverland', 2016)
+let child = new Bangumi("The Promised Neverland", 2016)
 child.sayName() //"The Promised Neverland"
 child.sayYear() //2016
 ```
@@ -50,11 +50,11 @@ child.sayYear() //2016
 ES6 模拟，用抛出异常来提示
 
 ```js
-'use strict'
+"use strict"
 class Anime {
   constructor(name) {
     if (new.target === Anime) {
-      throw new Error('不能实例化')
+      throw new Error("不能实例化")
     }
     this.name = name
   }
@@ -63,7 +63,7 @@ class Anime {
     console.log(this.name)
   }
   sayYear() {
-    throw new Error('sayYear未实现')
+    throw new Error("sayYear未实现")
   }
 }
 class Bangumi extends Anime {
@@ -72,7 +72,7 @@ class Bangumi extends Anime {
     this.year = year
   }
 }
-let child = new Bangumi('The Promised Neverland', 2016)
+let child = new Bangumi("The Promised Neverland", 2016)
 child.sayName() //"The Promised Neverland"
 child.sayYear() //Uncaught Error: sayYear未实现
 ```

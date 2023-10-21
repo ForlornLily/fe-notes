@@ -13,16 +13,16 @@
 ```js
 //部分代码，省略静态类型检查
 //src\core\instance\init.js
-Vue.prototype._init = function(options) {
+Vue.prototype._init = function (options) {
   //...
   initLifecycle(vm) //初始化生命周期
   initEvents(vm) //事件
   initRender(vm)
-  callHook(vm, 'beforeCreate') //调用钩子
+  callHook(vm, "beforeCreate") //调用钩子
   initInjections(vm)
   initState(vm)
   initProvide(vm)
-  callHook(vm, 'created')
+  callHook(vm, "created")
   //...
   if (vm.$options.el) {
     vm.$mount(vm.$options.el)
@@ -38,7 +38,7 @@ Vue.prototype._init = function(options) {
 //部分代码，省略静态类型检查
 //runtime only下
 //src\platforms\web\runtime\index.js
-Vue.prototype.$mount = function(el, hydrating) {
+Vue.prototype.$mount = function (el, hydrating) {
   return mountComponent(this, el && query(el, this.$document), hydrating)
 }
 ```
@@ -49,7 +49,7 @@ Vue.prototype.$mount = function(el, hydrating) {
 //部分代码，省略静态类型检查
 //runtime-compiler下
 //src\platforms\web\entry-runtime-with-compiler.js
-Vue.prototype.$mount = function(el, hydrating) {
+Vue.prototype.$mount = function (el, hydrating) {
   //...
   const options = this.$options
   // 如果render不存在，处理template
@@ -66,11 +66,11 @@ Vue.prototype.$mount = function(el, hydrating) {
       const { render, staticRenderFns } = compileToFunctions(
         template,
         {
-          outputSourceRange: process.env.NODE_ENV !== 'production',
+          outputSourceRange: process.env.NODE_ENV !== "production",
           shouldDecodeNewlines,
           shouldDecodeNewlinesForHref,
           delimiters: options.delimiters,
-          comments: options.comments
+          comments: options.comments,
         },
         this
       )
@@ -91,14 +91,14 @@ Vue 的渲染最终都是通过`render`函数进行的，可以用户自定义�
 ```js
 // 需要编译器
 new Vue({
-  template: '<div>{{ hi }}</div>'
+  template: "<div>{{ hi }}</div>",
 })
 
 // 不需要编译器
 new Vue({
   render(h) {
-    return h('div', this.hi)
-  }
+    return h("div", this.hi)
+  },
 })
 ```
 
@@ -117,9 +117,9 @@ export function mountComponent(vm, el, hydrating) {
     vm.$options.render = createEmptyVNode //生成空的虚拟节点
     //...
   }
-  callHook(vm, 'beforeMount')
+  callHook(vm, "beforeMount")
   let updateComponent
-  if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+  if (process.env.NODE_ENV !== "production" && config.performance && mark) {
     //...
   } else {
     updateComponent = () => {
@@ -133,9 +133,9 @@ export function mountComponent(vm, el, hydrating) {
     {
       before() {
         if (vm._isMounted && !vm._isDestroyed) {
-          callHook(vm, 'beforeUpdate')
+          callHook(vm, "beforeUpdate")
         }
-      }
+      },
     },
     true
   )
@@ -145,7 +145,7 @@ export function mountComponent(vm, el, hydrating) {
   // mounted is called for render-created child components in its inserted hook
   if (vm.$vnode == null) {
     vm._isMounted = true
-    callHook(vm, 'mounted')
+    callHook(vm, "mounted")
   }
   return vm
 }
@@ -162,9 +162,7 @@ Virtual DOM 本质上就是个对象树，树的节点是 VNode。
 Vue 的源码在[src\core\vdom\vnode.js](https://github.com/vuejs/vue/blob/dev/src/core/vdom/vnode.js)
 
 ```html
-<span class="demo" v-show="isShow" id="test">
-  This is a span.
-</span>
+<span class="demo" v-show="isShow" id="test"> This is a span. </span>
 <script>
   function VNode(tag, data, children, text, el) {
     this.tag = tag //标签名，比如span, div
@@ -175,24 +173,24 @@ Vue 的源码在[src\core\vdom\vnode.js](https://github.com/vuejs/vue/blob/dev/s
   }
   function render() {
     return new VNode(
-      'span',
+      "span",
       {
         /* 指令集合数组 */
         directives: [
           {
             /* v-show指令 */
-            rawName: 'v-show',
-            expression: 'isShow',
-            name: 'show',
-            value: true
-          }
+            rawName: "v-show",
+            expression: "isShow",
+            name: "show",
+            value: true,
+          },
         ],
         /* 静态class */
-        staticClass: 'demo'
+        staticClass: "demo",
       },
-      [new VNode(undefined, undefined, undefined, 'This is a span.')],
+      [new VNode(undefined, undefined, undefined, "This is a span.")],
       undefined,
-      document.getElementById('test')
+      document.getElementById("test")
     )
   }
 </script>

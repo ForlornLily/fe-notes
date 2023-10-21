@@ -26,7 +26,7 @@ JS 和 HTML 之间交互是通过事件实现的
 var handler = function () {
   console.log(1)
 }
-target.addEventListener('click', handler, { capture: true })
+target.addEventListener("click", handler, { capture: true })
 ```
 
 ::: warning
@@ -51,10 +51,10 @@ target.addEventListener('click', handler, { capture: true })
 
 ```js
 const doc = document
-let target = doc.querySelector('.wrapper')
-let child = target.querySelector('.content')
+let target = doc.querySelector(".wrapper")
+let child = target.querySelector(".content")
 target.addEventListener(
-  'click',
+  "click",
   function (e) {
     console.log(1)
   },
@@ -63,7 +63,7 @@ target.addEventListener(
   }
 )
 child.addEventListener(
-  'click',
+  "click",
   function (e) {
     console.log(2)
   },
@@ -200,21 +200,21 @@ mousedown+mouseup 等于 click，任何一个被取消都不会触发 click
 ```
 
 ```js
-var dragSrc = document.getElementById('txt')
+var dragSrc = document.getElementById("txt")
 dragSrc.ondragstart = handle_start
 dragSrc.ondrag = handle_drag
 dragSrc.ondragend = handle_end
 function handle_start(e) {
-  console.log('dragstart-在元素开始被拖动时候触发')
+  console.log("dragstart-在元素开始被拖动时候触发")
 }
 function handle_drag() {
-  console.log('drag-在元素被拖动时候反复触发')
+  console.log("drag-在元素被拖动时候反复触发")
 }
 function handle_end() {
-  console.log('dragend-在拖动操作完成时触发')
+  console.log("dragend-在拖动操作完成时触发")
 }
 
-var target = document.getElementById('target')
+var target = document.getElementById("target")
 target.ondragenter = handle_enter
 target.ondragover = handle_over
 target.ondragleave = handle_leave
@@ -222,28 +222,28 @@ target.ondragleave = handle_leave
 target.ondrop = handle_drop
 
 function handle_enter(e) {
-  console.log('handle_enter-当元素进入目的地时触发')
+  console.log("handle_enter-当元素进入目的地时触发")
   // 阻止浏览器默认行为
   e.preventDefault()
 }
 
 function handle_over(e) {
-  console.log('handle_over-当元素在目的地时触发')
+  console.log("handle_over-当元素在目的地时触发")
   // 阻止浏览器默认行为
   e.preventDefault()
 }
 
 function handle_leave(e) {
-  console.log('handle_leave-当元素离开目的地时触发')
+  console.log("handle_leave-当元素离开目的地时触发")
   // 阻止浏览器默认行为
   // e.preventDefault()
 }
 
 function handle_drop(e) {
-  console.log('handle_drop-当元素在目的地放下时触发')
+  console.log("handle_drop-当元素在目的地放下时触发")
   var t = Date.now()
-  target.innerHTML = ''
-  target.append(t + '-拖放触发的事件。')
+  target.innerHTML = ""
+  target.append(t + "-拖放触发的事件。")
   e.preventDefault()
 }
 ```
@@ -287,10 +287,10 @@ createEvent 已经被废弃
 var handler = function (e) {
   console.log(e)
 }
-target1.addEventListener('customhandler', handler)
-const customEvent = new CustomEvent('customhandler', {
+target1.addEventListener("customhandler", handler)
+const customEvent = new CustomEvent("customhandler", {
   detail: {
-    hello: 'world',
+    hello: "world",
   },
 })
 target1.dispatchEvent(customEvent) //dispatchEvent触发
@@ -314,7 +314,7 @@ EventTarget.prototype = {
   constructor: EventTarget,
   addHandler(type, handler) {
     //增加事件
-    if (typeof this.handler[type] == 'undefined') {
+    if (typeof this.handler[type] == "undefined") {
       this.handler[type] = []
     }
     this.handler[type].push(handler) //可能有很多方法，把方法做为数组
@@ -352,15 +352,17 @@ EventTarget.prototype = {
 }
 let event = new EventTarget()
 function hello() {
-  console.log('hi')
+  console.log("hi")
 }
-event.addHandler('click', hello)
+event.addHandler("click", hello)
 event.fire({
-  type: 'click',
+  type: "click",
 })
 ```
+
 ES6 版
-``` ts
+
+```ts
 class CustomEventTarget {
   private handler: {
     [key: string]: Function[]
@@ -381,9 +383,7 @@ class CustomEventTarget {
       }
     }
   }
-  fire(event: {
-    type: string
-  }) {
+  fire(event: { type: string }) {
     if (!event || !event.type) {
       return
     }

@@ -15,33 +15,33 @@ module: {
       test: /\.css$/,
       use: [
         {
-          loader: 'style-loader'
+          loader: "style-loader",
         },
         {
-          loader: 'css-loader'
+          loader: "css-loader",
         },
         {
-          loader: 'postcss-loader'
-        }
-      ]
+          loader: "postcss-loader",
+        },
+      ],
     },
     {
       test: /\.scss$/,
       use: [
         {
-          loader: 'style-loader'
+          loader: "style-loader",
         },
         {
-          loader: 'css-loader'
+          loader: "css-loader",
         },
         {
-          loader: 'postcss-loader'
+          loader: "postcss-loader",
         },
         {
-          loader: 'sass-loader'
-        }
-      ]
-    }
+          loader: "sass-loader",
+        },
+      ],
+    },
   ]
 }
 ```
@@ -157,7 +157,7 @@ map：以对象的形式存在。{key: value}
 $headings: (
   h1: 2em,
   h2: 1.5em,
-  h3: 1em
+  h3: 1em,
 );
 @each $key, $value in $headings {
   #{$key} {
@@ -514,18 +514,18 @@ list:
 $animals: dog, cat, monkey;
 @each $value in $animals {
   .#{$value}-img {
-    background: url('./images/#{$value}.jpg');
+    background: url("./images/#{$value}.jpg");
   }
 }
 //编译结果
 .dog-img {
-  background: url('./images/dog.jpg');
+  background: url("./images/dog.jpg");
 }
 .cat-img {
-  background: url('./images/cat.jpg');
+  background: url("./images/cat.jpg");
 }
 .monkey-img {
-  background: url('./images/monkey.jpg');
+  background: url("./images/monkey.jpg");
 }
 ```
 
@@ -535,17 +535,17 @@ list:
 $animals: (dog, #66ccff), (cat, #ee0000);
 @each $name, $color in $animals {
   .#{$name}-img {
-    background: url('./images/#{$name}.jpg');
+    background: url("./images/#{$name}.jpg");
     color: $color;
   }
 }
 //编译结果
 .dog-img {
-  background: url('./images/dog.jpg');
+  background: url("./images/dog.jpg");
   color: #66ccff;
 }
 .cat-img {
-  background: url('./images/cat.jpg');
+  background: url("./images/cat.jpg");
   color: #ee0000;
 }
 ```
@@ -556,7 +556,7 @@ map:
 $headings: (
   h1: 2em,
   h2: 1.5em,
-  h3: 1em
+  h3: 1em,
 );
 @each $key, $value in $headings {
   #{$key} {
