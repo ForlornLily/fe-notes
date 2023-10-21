@@ -13,7 +13,7 @@
 ```js
 const isEmpty = Handlebars.Utils.isEmpty
 console.log(isEmpty(0)) // false
-console.log(isEmpty('')) // true
+console.log(isEmpty("")) // true
 ```
 
 ## extend

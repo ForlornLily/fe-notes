@@ -10,7 +10,7 @@
 - 数组是对象的一种，访问索引(索引的值是 0~2^32 - 1 范围内的非负整数)可以认为是特殊的属性名，那么访问不存在的值也只是返回`undefined`
 
 ```js
-var a = ['hello']
+var a = ["hello"]
 a[-1] // undefined, 不会报错
 ```
 
@@ -42,7 +42,7 @@ Array.isArray(arr) //true
 - toString 实际上调用的是数组里面每一项值的 toSting()方法，再用`,`拼接起来，返回一串字符串
 
 ```js
-var arr = [5, '2', { x: 1 }]
+var arr = [5, "2", { x: 1 }]
 arr.toString() //"5,2,[object Object]"
 ```
 
@@ -78,7 +78,7 @@ console.log(arr[2]) // undefined
 
 ```js
 var tmp = []
-tmp.push('hello') //1
+tmp.push("hello") //1
 tmp.pop() //"hello"
 ```
 
@@ -91,9 +91,9 @@ tmp.pop() //"hello"
 `unshift` 数组前端添加项，返回数组的长度
 
 ```js
-var servant = ['Saber', 'Archer']
+var servant = ["Saber", "Archer"]
 servant.shift() //"Saber"
-servant.unshift('Lancer', 'Rider') //3
+servant.unshift("Lancer", "Rider") //3
 ```
 
 ### 重排序 reverse/sort
@@ -191,7 +191,7 @@ indexOf 从开头找起，lastIndexOf 从末尾
 ```js
 var arr = [1, 2, 3]
 arr.indexOf(2) //1
-arr.indexOf('2') //-1
+arr.indexOf("2") //-1
 ```
 
 ### 检索方法 find, findIndex
@@ -248,19 +248,19 @@ function every() {
 const arr = [
   {
     id: 1,
-    name: 'Saber',
+    name: "Saber",
   },
   {
     id: 2,
-    name: 'Archer',
+    name: "Archer",
   },
   {
     id: 3,
-    name: 'Rider',
+    name: "Rider",
   },
   {
     id: 4,
-    name: 'Lancer',
+    name: "Lancer",
   },
 ]
 function filter() {
@@ -358,7 +358,7 @@ console.log(uniqueArr) // [1, 2, 4, 6]
 :::
 
 ```js
-var str = 'sth.',
+var str = "sth.",
   newStr,
   append = 100
 while (append--) {
@@ -386,7 +386,7 @@ test.flat(2) //[1, 2, 3, 4, 5, 6, 7, 8]
 还可以去掉空项
 
 ```js
-var test = [1, 2, null, undefined, 0, '', , 8]
+var test = [1, 2, null, undefined, 0, "", , 8]
 test.flat() //[1, 2, null, undefined, 0, "", 8]
 ```
 
@@ -409,8 +409,8 @@ test2.flatMap((item) => [item * 2]) // [2, 4]
 类似对象解构
 
 ```js
-let servantClass = ['saber', 'lancer']
-let [first, second, third = 'rider'] = servantClass
+let servantClass = ["saber", "lancer"]
+let [first, second, third = "rider"] = servantClass
 console.log(first) //"saber"
 console.log(second) // "lancer"
 console.log(third) //"rider"
@@ -430,7 +430,7 @@ console.log(items[1]) // undefined
 - 传入其他认为是数组项
 
 ```js
-let items = new Array('2')
+let items = new Array("2")
 console.log(items.length) // 1
 console.log(items[0]) // "2"
 console.log(items[1]) // undefined
@@ -463,16 +463,16 @@ console.log(items[0]) // 2
 
 ```js
 var test = {
-  0: 'a',
-  1: 'b',
+  0: "a",
+  1: "b",
 }
 console.log(Array.from(test)) //[]
 ```
 
 ```js
 var test2 = {
-  0: 'a',
-  1: 'b',
+  0: "a",
+  1: "b",
   length: 2,
 }
 
@@ -481,8 +481,8 @@ console.log(Array.from(test2)) //['a', 'b']
 
 ```js
 var arrayLike = {
-  0: 'a',
-  1: 'b',
+  0: "a",
+  1: "b",
   length: 2,
   *[Symbol.iterator]() {
     yield this[1]

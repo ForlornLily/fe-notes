@@ -13,10 +13,10 @@
 大致可以理解成由 3 个模块组成，observer 完成对数据的劫持，compile 完成对模板片段的渲染，watcher 作为桥梁连接二者，订阅数据变化及更新视图
 
 - 实现一个数据监听器`Observer`，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者。  
-  Observer就是在init的时候通过`Object.defineProperty` 进行了绑定，使得当被设置的对象被读取的时候会执行 getter 函数，而在当被赋值的时候会执行 setter 函数  
-  如果set里面新值和旧值不一样，那么通知所有订阅者`Watcher`
+  Observer 就是在 init 的时候通过`Object.defineProperty` 进行了绑定，使得当被设置的对象被读取的时候会执行 getter 函数，而在当被赋值的时候会执行 setter 函数  
+  如果 set 里面新值和旧值不一样，那么通知所有订阅者`Watcher`
 - 当 render function 被渲染的时候，因为会读取所需对象的值，所以会触发 getter 函数进行「依赖收集」  
-  「依赖收集」的目的是将观察者Watcher对象存放到当前闭包中的订阅者Dep的subs中
+  「依赖收集」的目的是将观察者 Watcher 对象存放到当前闭包中的订阅者 Dep 的 subs 中
 
 - 在修改对象的值的时候，会触发对应的 setter， setter 通知之前「依赖收集」得到的 Dep 中的每一个 Watcher，告诉它们自己的值改变了，需要重新渲染视图。
   这时候这些 Watcher 就会开始调用 update 来更新视图，当然这中间还有一个 patch 的过程以及使用队列来异步更新
@@ -28,8 +28,8 @@ Vue 本质上只是个构造函数，`new Vue`的时候通过调用`_init`开始
 ```js
 //src\core\instance\index.js
 function Vue(options) {
-  if (process.env.NODE_ENV !== 'production' && !(this instanceof Vue)) {
-    warn('Vue is a constructor and should be called with the `new` keyword')
+  if (process.env.NODE_ENV !== "production" && !(this instanceof Vue)) {
+    warn("Vue is a constructor and should be called with the `new` keyword")
   }
   this._init(options)
 }
@@ -45,11 +45,11 @@ Vue.prototype._init = function (options) {
   initLifecycle(vm) //建立父子组件关系，在当前实例上添加一些属性和生命周期标识。如：$children、$refs、_isMounted
   initEvents(vm) //事件，比如$on
   initRender(vm) //初始化$slots, $attrs, $listeners
-  callHook(vm, 'beforeCreate') //调用钩子
+  callHook(vm, "beforeCreate") //调用钩子
   initInjections(vm) //初始化inject
   initState(vm) //数据绑定，包括props、methods、data、computed 和 watch
   initProvide(vm)
-  callHook(vm, 'created')
+  callHook(vm, "created")
   //...
   if (vm.$options.el) {
     vm.$mount(vm.$options.el)
@@ -101,10 +101,10 @@ function callback(key, value) {
 }
 const app = new MyVue({
   data: {
-    hello: 'world',
+    hello: "world",
   },
 })
-app.data.hello = 'test' //属性hello改变了，新值是test
+app.data.hello = "test" //属性hello改变了，新值是test
 ```
 
 另一个例子：输入框和变量双向绑定
@@ -114,10 +114,10 @@ app.data.hello = 'test' //属性hello改变了，新值是test
 <span id="display"></span>
 <script>
   const doc = document,
-    inputEl = doc.getElementById('test'),
-    spanEl = doc.getElementById('display')
+    inputEl = doc.getElementById("test"),
+    spanEl = doc.getElementById("display")
   var obj = {}
-  Object.defineProperty(obj, 'hello', {
+  Object.defineProperty(obj, "hello", {
     set(newValue) {
       inputEl.value = newValue
       spanEl.innerHTML = newValue
@@ -126,7 +126,7 @@ app.data.hello = 'test' //属性hello改变了，新值是test
       return inputEl.value
     },
   })
-  inputEl.addEventListener('change', (e) => {
+  inputEl.addEventListener("change", (e) => {
     obj.hello = e.target.value
   })
 </script>
@@ -137,9 +137,9 @@ app.data.hello = 'test' //属性hello改变了，新值是test
 依赖收集的作用:
 
 1. 避免不必要的更新  
-   假设Vue实例的`template`里面没有涉及到变量"hello"，那么当变量 hello 改变的时候，就没必要进 hello 的`set`
+   假设 Vue 实例的`template`里面没有涉及到变量"hello"，那么当变量 hello 改变的时候，就没必要进 hello 的`set`
 2. 更新所有需要更新的对象  
-   假设有一个全局变量globalObj，有多个Vue实例的`template`都用到 globalObj，那么当 globalObj 的值改变的时候，所有实例都应该更新
+   假设有一个全局变量 globalObj，有多个 Vue 实例的`template`都用到 globalObj，那么当 globalObj 的值改变的时候，所有实例都应该更新
 
 ### 实现
 
@@ -188,7 +188,7 @@ function Watcher() {
   Dep.target = this
 }
 Watcher.prototype.update = function () {
-  console.log('更新逻辑')
+  console.log("更新逻辑")
 }
 function MyVue(options) {
   this.data = options.data
@@ -225,7 +225,7 @@ MyVue.prototype.observe = function () {
 }
 const app = new MyVue({
   data: {
-    hello: 'world',
+    hello: "world",
   },
 })
 ```
@@ -427,15 +427,13 @@ Observer 为数据加上响应式属性进行双向绑定。
 - 如果是数组则为每一个成员都绑定上方法
 
 ```html
-<div id="app">
-  {{ message }}
-</div>
+<div id="app">{{ message }}</div>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script>
   var app = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
-      message: 'Hello Vue!',
+      message: "Hello Vue!",
     },
   })
   console.log(app.message) //"Hello Vue!"
@@ -457,7 +455,7 @@ export function initState(vm) {
 //initData
 function initData(vm) {
   let data = vm.$options.data
-  data = vm._data = typeof data === 'function' ? getData(data, vm) : data || {}
+  data = vm._data = typeof data === "function" ? getData(data, vm) : data || {}
   //...
   // proxy data on instance
   const keys = Object.keys(data)
@@ -469,7 +467,7 @@ function initData(vm) {
     //...
     //保证data中的key不与props中的key重复, props优先
     if (props && hasOwn(props, key)) {
-      process.env.NODE_ENV !== 'production' &&
+      process.env.NODE_ENV !== "production" &&
         warn(
           `The data property "${key}" is already declared as a prop. ` +
             `Use prop default value instead.`,
@@ -514,13 +512,13 @@ const arrayProto = Array.prototype
 export const arrayMethods = Object.create(arrayProto)
 
 const methodsToPatch = [
-  'push',
-  'pop',
-  'shift',
-  'unshift',
-  'splice',
-  'sort',
-  'reverse',
+  "push",
+  "pop",
+  "shift",
+  "unshift",
+  "splice",
+  "sort",
+  "reverse",
 ]
 methodsToPatch.forEach(function (method) {
   // cache original method
@@ -530,11 +528,11 @@ methodsToPatch.forEach(function (method) {
     const ob = this.__ob__
     let inserted
     switch (method) {
-      case 'push':
-      case 'unshift':
+      case "push":
+      case "unshift":
         inserted = args
         break
-      case 'splice':
+      case "splice":
         inserted = args.slice(2)
         break
     }

@@ -33,14 +33,14 @@
 
 ```js
 //1.js
-console.log('1')
+console.log("1")
 debugger
 
 //2.js
-console.log('defer')
+console.log("defer")
 
 //3.js
-console.log('async')
+console.log("async")
 ```
 
 当 1.js 处于断点的时候表现为
@@ -78,8 +78,8 @@ defer
 ### DOMContentLoaded
 
 ```js
-document.addEventListener('DOMContentLoaded', (e) => {
-  console.log('DOMContentLoaded')
+document.addEventListener("DOMContentLoaded", (e) => {
+  console.log("DOMContentLoaded")
 })
 ```
 
@@ -103,12 +103,12 @@ HTML document 加载和解析后触发。不会等待 style, img 加载。`load`
 
 ```js
 //不触发
-document.body.addEventListener('load', function () {
-  console.log('load')
+document.body.addEventListener("load", function () {
+  console.log("load")
 })
 //触发
-window.addEventListener('load', function () {
-  console.log('load')
+window.addEventListener("load", function () {
+  console.log("load")
 })
 ```
 

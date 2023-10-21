@@ -81,8 +81,8 @@ function selectText(textbox, startIndex, stopIndex) {
     //ie
     const range = textbox.createTextRange()
     range.collapse(true)
-    range.moveStart('character', startIndex) //起始光标
-    range.moveEnd('character', stopIndex - startIndex) //结束光标
+    range.moveStart("character", startIndex) //起始光标
+    range.moveEnd("character", stopIndex - startIndex) //结束光标
     range.select() //不兼容苹果
   } else {
     //firefox/chrome
@@ -92,12 +92,12 @@ function selectText(textbox, startIndex, stopIndex) {
 }
 const input = this.$refs.input
 selectText(input, 0, this.url.length)
-if (document.execCommand('copy')) {
-  document.execCommand('copy')
-  console.log('复制成功')
+if (document.execCommand("copy")) {
+  document.execCommand("copy")
+  console.log("复制成功")
   input.blur()
 } else {
-  console.log('浏览器不支持，请手动复制')
+  console.log("浏览器不支持，请手动复制")
 }
 ```
 

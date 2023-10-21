@@ -9,37 +9,37 @@
 
 ```js
 // 方法名是 `myPartial`
-Handlebars.registerPartial('myPartial', '{{name}}')
+Handlebars.registerPartial("myPartial", "{{name}}")
 
 // 调用
 const template = Handlebars.compile(`{{> myPartial}}`)
 const result = template({
-  name: 'hello',
+  name: "hello",
 }) // hello
 ```
 
 或者是一个函数
 
 ```js
-Handlebars.registerPartial('myPartial', (params) => {
+Handlebars.registerPartial("myPartial", (params) => {
   return params.name
 })
 const template = Handlebars.compile(`{{> myPartial}}`)
 const result = template({
-  name: 'hello',
+  name: "hello",
 }) // hello
 ```
 
 ## 传参
 
 ```js
-Handlebars.registerPartial('myPartial', (params) => {
+Handlebars.registerPartial("myPartial", (params) => {
   return params
 })
 const template = Handlebars.compile(`{{> myPartial job}}`)
 const result = template({
-  name: 'hello', // 该参数无效
-  job: 'developer',
+  name: "hello", // 该参数无效
+  job: "developer",
 }) // developer
 ```
 
@@ -51,7 +51,7 @@ const result = template({
 通过 `key = value` 的形式传入，此时可以传入多个
 
 ```js
-Handlebars.registerPartial('myPartial', (params, options) => {
+Handlebars.registerPartial("myPartial", (params, options) => {
   // params.parent 值是 `people`，params.hello 值是 "world"
 })
 const template = Handlebars.compile(
@@ -61,9 +61,9 @@ const template = Handlebars.compile(
 )
 const result = template({
   people: [
-    { firstname: 'Saber' },
-    { firstname: 'Lancer' },
-    { secondname: 'Alter' },
+    { firstname: "Saber" },
+    { firstname: "Lancer" },
+    { secondname: "Alter" },
   ],
 })
 ```
@@ -88,7 +88,7 @@ const result = template() // 出错了
 `@partial-block` 是内置的代码片段
 
 ```js
-Handlebars.registerPartial('layout', 'hello {{> @partial-block }}')
+Handlebars.registerPartial("layout", "hello {{> @partial-block }}")
 const template = Handlebars.compile(
   `{{#> layout }}
     出错了
@@ -112,9 +112,9 @@ const template = Handlebars.compile(
 )
 const result = template({
   people: [
-    { firstname: 'Saber' },
-    { firstname: 'Lancer' },
-    { secondname: 'Alter' },
+    { firstname: "Saber" },
+    { firstname: "Lancer" },
+    { secondname: "Alter" },
   ],
 })
 /* 
@@ -130,7 +130,7 @@ const result = template({
 代码片段内嵌套代码片段
 
 ```js
-Handlebars.registerPartial('layout', 'hello {{> @partial-block }}')
+Handlebars.registerPartial("layout", "hello {{> @partial-block }}")
 const template = Handlebars.compile(
   `{{#> layout}}
     {{#*inline "myPartial"}}
@@ -143,9 +143,9 @@ const template = Handlebars.compile(
 )
 const result = template({
   people: [
-    { firstname: 'Saber' },
-    { firstname: 'Lancer' },
-    { secondname: 'Alter' },
+    { firstname: "Saber" },
+    { firstname: "Lancer" },
+    { secondname: "Alter" },
   ],
 })
 /* 

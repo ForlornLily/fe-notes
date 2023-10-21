@@ -10,27 +10,27 @@
 </div>
 <script>
   const Foo = {
-    template: '<div>foo</div>'
+    template: "<div>foo</div>",
   }
   const Bar = {
-    template: '<div>bar</div>'
+    template: "<div>bar</div>",
   }
   const routes = [
     {
-      path: '/foo',
-      component: Foo
+      path: "/foo",
+      component: Foo,
     },
     {
-      path: '/bar',
-      component: Bar
-    }
+      path: "/bar",
+      component: Bar,
+    },
   ]
   const router = new VueRouter({
-    routes
+    routes,
   })
   const app = new Vue({
-    router
-  }).$mount('#app')
+    router,
+  }).$mount("#app")
 </script>
 ```
 
@@ -66,26 +66,26 @@
       <h2>User</h2>
       <div>bottom</div>
     </div>
-    `
+    `,
   }
   const menu = {
-    template: `<ul><li>菜单</li></ul>`
+    template: `<ul><li>菜单</li></ul>`,
   }
   const router = new VueRouter({
     routes: [
       {
-        path: '/',
+        path: "/",
         components: {
           //是components, 不是component
           default: User,
-          menu: menu
-        }
-      }
-    ]
+          menu: menu,
+        },
+      },
+    ],
   })
   const app = new Vue({
-    router
-  }).$mount('#app')
+    router,
+  }).$mount("#app")
 </script>
 ```
 
@@ -99,25 +99,25 @@
 
 ```js
 const User = {
-  template: '<div>User</div>',
+  template: "<div>User</div>",
   mounted() {
     //访问/user/hello
     //params是{name: "hello"}
     console.log(this.$route.params)
-  }
+  },
 }
 const router = new VueRouter({
   routes: [
     // 动态路径参数 以冒号开头
     {
-      path: '/user/:name',
-      component: User
-    }
-  ]
+      path: "/user/:name",
+      component: User,
+    },
+  ],
 })
 const app = new Vue({
-  router
-}).$mount('#app')
+  router,
+}).$mount("#app")
 ```
 
 ### \$route.params
@@ -134,29 +134,29 @@ const app = new Vue({
 
 ```js
 const User = {
-  template: '<div>User {{ $route.params.id }}</div>'
+  template: "<div>User {{ $route.params.id }}</div>",
 }
 const router = new VueRouter({
   routes: [
     {
-      path: '/user/:id',
-      component: User
-    }
-  ]
+      path: "/user/:id",
+      component: User,
+    },
+  ],
 })
 //等价于
 const User = {
-  props: ['id'], //props接受参数
-  template: '<div>User {{ id }}</div>'
+  props: ["id"], //props接受参数
+  template: "<div>User {{ id }}</div>",
 }
 const router = new VueRouter({
   routes: [
     {
-      path: '/user/:id',
+      path: "/user/:id",
       component: User,
-      props: true
-    }
-  ]
+      props: true,
+    },
+  ],
 })
 ```
 
@@ -191,11 +191,11 @@ params 参数是
 
 ```js
 const User = {
-  template: '<div>User</div>',
+  template: "<div>User</div>",
   mounted() {
     console.log(this.$route.params)
   },
-  beforeRouteUpdate(to, from, next) {}
+  beforeRouteUpdate(to, from, next) {},
 }
 ```
 
@@ -237,35 +237,35 @@ center 又分为公用的 menu 和动态的内容
       <router-view></router-view>
       <div>bottom</div>
     </div>
-  `
+  `,
   }
   const UserProfile = {
-    template: '<div>UserProfile</div>'
+    template: "<div>UserProfile</div>",
   }
   const EmptyComponent = {
-    template: '<div>empty</div>'
+    template: "<div>empty</div>",
   }
   const router = new VueRouter({
     routes: [
       {
-        path: '/user',
+        path: "/user",
         component: User,
         children: [
           {
-            path: '', //访问空的子路由#/user/
-            component: EmptyComponent
+            path: "", //访问空的子路由#/user/
+            component: EmptyComponent,
           },
           {
-            path: 'profile', //访问#/user/profile，user里面的<router-view>渲染UserProfile
-            component: UserProfile
-          }
-        ]
-      }
-    ]
+            path: "profile", //访问#/user/profile，user里面的<router-view>渲染UserProfile
+            component: UserProfile,
+          },
+        ],
+      },
+    ],
   })
   const app = new Vue({
-    router
-  }).$mount('#app')
+    router,
+  }).$mount("#app")
 </script>
 ```
 
@@ -277,20 +277,20 @@ center 又分为公用的 menu 和动态的内容
 
 ```js
 // 字符串
-router.push('home')
+router.push("home")
 
 // 带查询参数，变成 /register?plan=private
-router.push({ path: 'register', query: { plan: 'private' } })
+router.push({ path: "register", query: { plan: "private" } })
 
-const userId = '123'
-router.push({ name: 'user', params: { userId } }) // -> /user/123
+const userId = "123"
+router.push({ name: "user", params: { userId } }) // -> /user/123
 router.push({ path: `/user/${userId}` }) // -> /user/123
 
 // 这里的 params 不生效
-router.push({ path: '/user', params: { userId } }) // -> /user
+router.push({ path: "/user", params: { userId } }) // -> /user
 router.push(
   {
-    path: '/user/profile'
+    path: "/user/profile",
   },
   () => {
     //onComplete
@@ -321,14 +321,14 @@ url 的显示值也替换成成 redirect 的路径
 const router = new VueRouter({
   routes: [
     {
-      path: '/',
-      redirect: '/user' //重定向到/user
+      path: "/",
+      redirect: "/user", //重定向到/user
     },
     {
-      path: '/user',
-      component: User
-    }
-  ]
+      path: "/user",
+      component: User,
+    },
+  ],
 })
 ```
 
@@ -339,8 +339,8 @@ const router = new VueRouter({
 用方法，return 目标路由
 
 ```js
-redirect: to => {
-  return '/user'
+redirect: (to) => {
+  return "/user"
 }
 ```
 
@@ -372,12 +372,12 @@ router.beforeEach((to, from, next) => {
 ```js
 routes: [
   {
-    path: '/foo',
+    path: "/foo",
     component: Foo,
     beforeEnter: (to, from, next) => {
       // ...
-    }
-  }
+    },
+  },
 ]
 ```
 
@@ -399,13 +399,13 @@ routes: [
 const router = new VueRouter({
   routes: [
     {
-      path: '/user/:id',
-      component: User
-    }
+      path: "/user/:id",
+      component: User,
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
-  }
+  },
 })
 ```
 

@@ -54,17 +54,17 @@ ro[0] = 12 // 报错，不允许修改
 元祖：表示混合类型的数组
 
 ```ts
-let x: [string, number] = ['hello', 1] //必须一一对应
-let mixArr: [number, string] = ['1', 2] //报错，第一项匹配应该是number
-let mixArr: [number, string] = [1, '2', 3] //报错，数字3超出了范围
+let x: [string, number] = ["hello", 1] //必须一一对应
+let mixArr: [number, string] = ["1", 2] //报错，第一项匹配应该是number
+let mixArr: [number, string] = [1, "2", 3] //报错，数字3超出了范围
 ```
 
 - 和`类型+[]`有些相似，主要区别在于[联合类型](./06_advanced_types.md#联合类型)的时候:
 
 ```ts
-let arr: (number | string)[] = [1, '@']
+let arr: (number | string)[] = [1, "@"]
 console.log(arr[1].length) //报错，length不是交集属性
-let mixArr: [number, string] = [1, '2']
+let mixArr: [number, string] = [1, "2"]
 console.log(mixArr[1].length) //不报错
 ```
 
@@ -77,7 +77,7 @@ for (let i = 0; i < mixArr.length; i++) {
   if (i === 0) {
     mixArr[i] = 1
   } else {
-    mixArr[i] = 'hello'
+    mixArr[i] = "hello"
   }
 }
 ```
@@ -85,8 +85,8 @@ for (let i = 0; i < mixArr.length; i++) {
 - 调用数组方法增加项的时候，项的类型是联合类型
 
 ```ts
-let mixArr: [number, string] = [1, '2']
-mixArr.push('hi') //不报错，可以加
+let mixArr: [number, string] = [1, "2"]
+mixArr.push("hi") //不报错，可以加
 console.log(mixArr[2]) //虽然加上了，但是不允许访问，因为初始化的长度只有2
 mixArr.push(true) //报错，不是number/string
 ```
@@ -108,9 +108,9 @@ interface Tuple extends Array<string | number> {
 
 ```ts
 enum Servant {
-  'Saber' = 4,
-  'Lancer',
-  'Archer' = 'hello',
+  "Saber" = 4,
+  "Lancer",
+  "Archer" = "hello",
 }
 console.log(Servant.Saber) //4
 console.log(Servant.Lancer) //5
@@ -118,14 +118,14 @@ console.log(Servant.Archer) //"hello"
 
 console.log(Servant[4]) //"Saber"
 console.log(Servant[6]) //undefined，因为`Archer`被重新赋值
-console.log(Servant['hello']) //报错，只能用数字访问枚举
+console.log(Servant["hello"]) //报错，只能用数字访问枚举
 
 //编译后的JS
 var Servant
 ;(function (Servant) {
-  Servant[(Servant['Saber'] = 4)] = 'Saber'
-  Servant[(Servant['Lancer'] = 5)] = 'Lancer'
-  Servant['Archer'] = 'hello'
+  Servant[(Servant["Saber"] = 4)] = "Saber"
+  Servant[(Servant["Lancer"] = 5)] = "Lancer"
+  Servant["Archer"] = "hello"
 })(Servant || (Servant = {}))
 ```
 
@@ -135,19 +135,19 @@ var Servant
 
 ```ts
 const enum Servant {
-  'Saber' = 4,
-  'Lancer',
-  'Archer' = 'hello',
+  "Saber" = 4,
+  "Lancer",
+  "Archer" = "hello",
 }
 console.log(Servant.Saber) //4
 console.log(Servant.Lancer) //5
 console.log(Servant.Archer) //"hello"
 
 //编译后的JS
-'use strict'
+;("use strict")
 console.log(4 /* Saber */) //4
 console.log(5 /* Lancer */) //5
-console.log('hello' /* Archer */) //"hello"
+console.log("hello" /* Archer */) //"hello"
 ```
 
 ## any
@@ -170,7 +170,7 @@ not_concerned.hello() // TS报错
 
 ```ts
 function myFunction(): void {
-  console.log('hello, world')
+  console.log("hello, world")
 }
 ```
 
@@ -181,7 +181,7 @@ function myFunction(): void {
 ```ts
 /** 关闭 strictNullChecks 情况下 */
 let type: null
-type = 'hello' //报错，不能赋值给null
+type = "hello" //报错，不能赋值给null
 let num: number = 1
 num = null //null可以赋值给其他类型
 ```
@@ -199,7 +199,7 @@ unknownNum = null // 不报错
 ```ts
 /** 返回undefined，但可以赋值给 void */
 function myFunction(): void {
-  console.log('hello, world')
+  console.log("hello, world")
   return
 }
 ```
@@ -228,17 +228,17 @@ function processEntity(e?: Entity) {
 参考[知乎](https://www.zhihu.com/question/354601204)
 
 ```ts
-type Shape = 'square' | 'rectangle' | 'circle' | 'triangle'
+type Shape = "square" | "rectangle" | "circle" | "triangle"
 function assertNever(x: never): never {
-  throw new Error('Unexpected object: ' + x)
+  throw new Error("Unexpected object: " + x)
 }
 function area(s: Shape) {
   switch (s) {
-    case 'square':
+    case "square":
       return `1`
-    case 'rectangle':
+    case "rectangle":
       return 2
-    case 'circle':
+    case "circle":
       return 3
     default:
       return assertNever(s) // error here if there are missing cases
@@ -259,14 +259,14 @@ function area(s: Shape) {
 1. 尖括号: `<类型>值`
 
 ```ts
-const str: string = 'hello'
+const str: string = "hello"
 const str_len = (<string>str).length
 ```
 
 2. `as`: `值 as 类型`
 
 ```ts
-const str: string = 'hello'
+const str: string = "hello"
 const str_len = (str as string).length
 ```
 
@@ -288,12 +288,12 @@ function handler(event: Event) {
 
 ```ts
 let something
-something = 'seven'
+something = "seven"
 //等价于
 let something: any
-something = 'seven'
+something = "seven"
 //下面会报错，typescript会认为myFavoriteNumber是string
-let myFavoriteNumber = 'seven'
+let myFavoriteNumber = "seven"
 myFavoriteNumber = 7
 ```
 
@@ -309,8 +309,8 @@ Document、HTMLElement、Event、NodeList
 
 ```ts
 let body: HTMLElement = document.body
-let allDiv: NodeList = document.querySelectorAll('div')
-document.addEventListener('click', function (e: MouseEvent) {
+let allDiv: NodeList = document.querySelectorAll("div")
+document.addEventListener("click", function (e: MouseEvent) {
   // Do something
 })
 ```

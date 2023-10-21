@@ -9,9 +9,9 @@ div > p，是先找所有 p，再找 p 的父元素是不是 div
 
 ```js
 //未优化的
-$('div.data .gonzalez')
+$("div.data .gonzalez")
 //优化后
-$('.data td.gonzalez')
+$(".data td.gonzalez")
 ```
 
 ### 变量名
@@ -44,8 +44,8 @@ on 可以进行事件委托 ，除此以外没什么区别
 这个时候的 namespace 就是 click 的命名空间，解绑的时候就
 
 ```js
-$().unbind('click.namespace') //解绑click
-$().unbind('.namespace') // 取消这个命名空间中所有事件的绑定
+$().unbind("click.namespace") //解绑click
+$().unbind(".namespace") // 取消这个命名空间中所有事件的绑定
 ```
 
 ## \$.fn.hover
@@ -53,12 +53,12 @@ $().unbind('.namespace') // 取消这个命名空间中所有事件的绑定
 传两个函数。在 mouseenter（第一个）和 mouseleave（第二个）事件触发的时候分别执行，传一个的话 enter 和 leave 的时候都会执行
 
 ```js
-$('p').hover(
-  function() {
-    $('p').css('background-color', 'yellow')
+$("p").hover(
+  function () {
+    $("p").css("background-color", "yellow")
   },
-  function() {
-    $('p').css('background-color', 'pink')
+  function () {
+    $("p").css("background-color", "pink")
   }
 )
 ```
@@ -75,11 +75,11 @@ $('p').hover(
 最基本的例子
 
 ```js
-$.widget('nmk.progressbar', {
-  _create: function() {
-    var progress = this.options.value + '%'
-    this.element.addClass('progressbar').text(progress)
-  }
+$.widget("nmk.progressbar", {
+  _create: function () {
+    var progress = this.options.value + "%"
+    this.element.addClass("progressbar").text(progress)
+  },
 })
 ```
 

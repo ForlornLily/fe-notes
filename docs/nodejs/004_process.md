@@ -50,7 +50,7 @@ process.cwd() //D:\project\express-ts
 可以传入一个可选的参数`code`，表示退出成功时的状态码，默认为 0
 
 ```js
-process.on('exit', (code) => {
+process.on("exit", (code) => {
   console.log(code) //666
 })
 process.exit(666)
@@ -64,22 +64,22 @@ process 中流操作是**同步**的，和其他[stream](./006_stream.md)不同
 `process.stderr`: 错误。`console.error`就是通过`stderr`实现的
 
 ```js
-process.stdin.setEncoding('utf8')
+process.stdin.setEncoding("utf8")
 
-process.stdin.on('readable', () => {
+process.stdin.on("readable", () => {
   let chunk
   // 使用循环确保我们读取所有的可用数据。
   while ((chunk = process.stdin.read()) !== null) {
-    if (chunk === '\n') {
-      process.stdin.emit('end')
+    if (chunk === "\n") {
+      process.stdin.emit("end")
       return
     }
     process.stdout.write(`收到数据: ${chunk}`)
   }
 })
 
-process.stdin.on('end', () => {
-  process.stdout.write('结束监听')
+process.stdin.on("end", () => {
+  process.stdout.write("结束监听")
 })
 ```
 
@@ -88,8 +88,8 @@ process.stdin.on('end', () => {
 `uncaughtException`
 
 ```js
-process.on('uncaughtException', (err) => {
-  console.error('UNCAUGHT EXCEPTION\n', err.stack)
+process.on("uncaughtException", (err) => {
+  console.error("UNCAUGHT EXCEPTION\n", err.stack)
   // 在这里做一些必要的清理工作，例如关闭数据库连接
   process.exit(1)
 })

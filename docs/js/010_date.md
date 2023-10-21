@@ -16,28 +16,13 @@ new Date(yyyy, MM, dd, HH, mm, ss) //月份要减1。比如设3月，MM是2
 var d = new Date(time)
 return {
   time: d.getTime(),
-  year: d
-    .getFullYear()
-    .toString()
-    .padStart(2, '0'),
-  month: (d.getMonth() + 1).toString().padStart(2, '0'),
-  day: d
-    .getDate()
-    .toString()
-    .padStart(2, '0'),
-  hour: d
-    .getHours()
-    .toString()
-    .padStart(2, '0'),
-  minute: d
-    .getMinutes()
-    .toString()
-    .padStart(2, '0'),
-  second: d
-    .getSeconds()
-    .toString()
-    .padStart(2, '0'),
-  week: '周' + '日一二三四五六'.charAt(d.getDay())
+  year: d.getFullYear().toString().padStart(2, "0"),
+  month: (d.getMonth() + 1).toString().padStart(2, "0"),
+  day: d.getDate().toString().padStart(2, "0"),
+  hour: d.getHours().toString().padStart(2, "0"),
+  minute: d.getMinutes().toString().padStart(2, "0"),
+  second: d.getSeconds().toString().padStart(2, "0"),
+  week: "周" + "日一二三四五六".charAt(d.getDay()),
 }
 ```
 
@@ -53,9 +38,9 @@ return {
 value = value.split(/\D/)
 for (var i = 0; i < 6; i++) {
   if (i == 1) {
-    value[i] = value[i] ? Number(value[i]) - 1 : '' //月份需要减1
+    value[i] = value[i] ? Number(value[i]) - 1 : "" //月份需要减1
   } else {
-    value[i] = value[i] ? Number(value[i]) : ''
+    value[i] = value[i] ? Number(value[i]) : ""
   }
 }
 d = new Date(value[0], value[1], value[2], value[3], value[4], value[5])

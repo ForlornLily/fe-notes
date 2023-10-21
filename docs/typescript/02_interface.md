@@ -14,12 +14,12 @@ interface Person {
 }
 
 let tonny: Person = {
-  name: 'Tony'
+  name: "Tony",
 }
 //报错，sex未声明
 let betty: Person = {
-  name: 'Tony',
-  sex: 'female'
+  name: "Tony",
+  sex: "female",
 }
 ```
 
@@ -32,11 +32,11 @@ interface Servant {
   readonly name: string
 }
 let saber: Servant = {
-  name: 'Altria'
+  name: "Altria",
 }
-saber.name = 'Arthur' //报错，不允许再次赋值
+saber.name = "Arthur" //报错，不允许再次赋值
 let lancer: Servant = {}
-lancer.name = 'Altria' //报错，只能在创建的时候赋值
+lancer.name = "Altria" //报错，只能在创建的时候赋值
 ```
 
 ## 函数
@@ -72,9 +72,9 @@ interface Square extends Shape, Another {
 }
 
 let square: Square = {
-  color: 'hello',
+  color: "hello",
   width: 1,
-  sideLength: 1
+  sideLength: 1,
 }
 ```
 
@@ -107,8 +107,8 @@ interface Person {
   [propName: string]: any
 }
 let tom: Person = {
-  name: 'Tom',
-  gender: 'male'
+  name: "Tom",
+  gender: "male",
 }
 ```
 

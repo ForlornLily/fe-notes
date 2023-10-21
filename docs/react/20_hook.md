@@ -60,7 +60,7 @@ function Child(props) {
   useEffect(() => {
     let tmp_map = {}
     data.forEach((item) => {
-      tmp_map[1] = 'hello'
+      tmp_map[1] = "hello"
     })
     setMap(tmp_map)
   }, [data])
@@ -78,7 +78,7 @@ function Child(props) {
   useEffect(() => {
     let tmp_map = {}
     data.forEach((item) => {
-      tmp_map[1] = 'hello'
+      tmp_map[1] = "hello"
     })
     setMap(tmp_map)
   }, [data])
@@ -95,7 +95,8 @@ function Child(props) {
 优先使用`useEffect`  
 useLayoutEffect 和原来 componentDidMount&componentDidUpdate 一致，在 react 完成 DOM 更新后马上同步调用的代码，会阻塞页面渲染。  
 而 useEffect 是会在整个页面渲染完才会调用的代码。  
-一般用于 tooltip 等自适应，需要渲染 tooltip 拿到内容的宽高，再决定 placement  
+一般用于 tooltip 等自适应，需要渲染 tooltip 拿到内容的宽高，再决定 placement
+
 ### useInsertionEffect
 
 使用方式和`useEffect`一致。讨论[Library Upgrade Guide](https://github.com/reactwg/react-18/discussions/110)
@@ -104,7 +105,7 @@ useLayoutEffect 和原来 componentDidMount&componentDidUpdate 一致，在 reac
 不要在 useInsertionEffect 内更新状态，此时 ref 也拿不到。
 
 ```js
-import { useInsertionEffect } from 'react'
+import { useInsertionEffect } from "react"
 
 // Inside your CSS-in-JS library
 function useCSS(rule) {
@@ -135,9 +136,9 @@ const [state, dispatch] = useReducer(reducer, initialArg, init)
 const initialState = { count: 0 }
 function reducer(state, action) {
   switch (action.type) {
-    case 'increment':
+    case "increment":
       return { count: state.count + 1 }
-    case 'decrement':
+    case "decrement":
       return { count: state.count - 1 }
     default:
       throw new Error()
@@ -148,8 +149,8 @@ function Counter() {
   return (
     <>
       Count: {state.count}
-      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
     </>
   )
 }
@@ -161,9 +162,10 @@ function Counter() {
 只有依赖数组里面的`[a, b]`改变了，memoizedCallback 才会更新  
 适合传递给子组件的方法
 一般使用场景：
+
 - 函数作为其他 hook 的依赖项
 - 函数作为 React.memo()（或 shouldComponentUpdate ）中的组件的 props
-目的是为了避免每次 render 生成新函数，引起组件或者 hook 没必要的刷新  
+  目的是为了避免每次 render 生成新函数，引起组件或者 hook 没必要的刷新
 
 ```js
 const memoizedCallback = useCallback(() => {
@@ -204,7 +206,7 @@ const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
 ```jsx
 function TabContainer() {
   const [isPending, startTransition] = useTransition()
-  const [tab, setTab] = useState('about')
+  const [tab, setTab] = useState("about")
 
   function selectTab(nextTab) {
     startTransition(() => {
@@ -219,7 +221,7 @@ function TabContainer() {
 startTransition(() => {
   // ❌ Setting state *after* startTransition call
   setTimeout(() => {
-    setPage('/about')
+    setPage("/about")
   }, 1000)
 })
 ```
@@ -231,10 +233,10 @@ startTransition(() => {
 和 useTransition 很像，只不过没有提供 `isPending`，没有 hooks 的限制
 
 ```jsx
-import { startTransition } from 'react'
+import { startTransition } from "react"
 
 function TabContainer() {
-  const [tab, setTab] = useState('about')
+  const [tab, setTab] = useState("about")
 
   function selectTab(nextTab) {
     startTransition(() => {
@@ -256,7 +258,7 @@ function TabContainer() {
 
 ```js
 if (!list.length) {
-  return ''
+  return ""
 }
 const [page_num, setNum] = useState(1)
 ```

@@ -18,7 +18,7 @@
   用 [module.createRequire](https://nodejs.org/api/module.html#module_module_createrequire_filename) 代替
 
 ```js
-import { createRequire } from 'module'
+import { createRequire } from "module"
 const require = createRequire(import.meta.url)
 ```
 
@@ -26,8 +26,8 @@ const require = createRequire(import.meta.url)
   - 用 `fs` 和 [import.meta.url`](https://nodejs.org/api/esm.html#esm_import_meta_url) 代替
 
 ```js
-import { readFileSync } from 'fs'
-const buffer = readFileSync(new URL('./data.proto', import.meta.url))
+import { readFileSync } from "fs"
+const buffer = readFileSync(new URL("./data.proto", import.meta.url))
 ```
 
 - json 文件直接引用还处于实验状态（v16）

@@ -21,12 +21,12 @@
 2.  directive 添加全局的自定义指令
 
 ```js
-Vue.directive('focus', {
+Vue.directive("focus", {
   // 当被绑定的元素插入到 DOM 中时……
-  inserted: function(el) {
+  inserted: function (el) {
     // 聚焦元素
     el.focus()
-  }
+  },
 })
 ```
 
@@ -44,15 +44,15 @@ Vue.directive('focus', {
 
 ```js
 var Toast = {}
-Toast.install = function(Vue, options) {
-  Vue.prototype.$msg = 'Hello World'
+Toast.install = function (Vue, options) {
+  Vue.prototype.$msg = "Hello World"
 }
 Vue.use(Toast) // 注册
 let app = new Vue({
-  el: '#app',
+  el: "#app",
   mounted() {
     console.log(this.$msg) // Hello World
-  }
+  },
 })
 ```
 

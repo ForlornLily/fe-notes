@@ -10,20 +10,20 @@
 - beforeAll / afterAll：只执行一次
 
 ```js
-import { queryTable } from './index'
+import { queryTable } from "./index"
 
 beforeEach(() => {
-  console.log('beforeEach') //执行两次
+  console.log("beforeEach") //执行两次
 })
 
 beforeAll(() => {
-  console.log('beforeAll') //执行一次
+  console.log("beforeAll") //执行一次
 })
 
-test('query table', () => {
+test("query table", () => {
   expect(queryTable()).toBeTruthy()
 })
-test('query table', () => {
+test("query table", () => {
   expect(queryTable()).toBeTruthy()
 })
 ```
@@ -37,27 +37,27 @@ before 和 after 的块可以应用到文件中的每个测试。
 
 ```js
 beforeEach(() => {
-  console.log('beforeEach')
+  console.log("beforeEach")
 })
 
 beforeAll(() => {
-  console.log('beforeAll')
+  console.log("beforeAll")
 })
 
 afterAll(() => {
-  console.log('afterAll')
+  console.log("afterAll")
 })
-describe('local variable', () => {
+describe("local variable", () => {
   beforeEach(() => {
-    console.log('local beforeEach')
+    console.log("local beforeEach")
   })
   afterAll(() => {
-    console.log('local afterAll')
+    console.log("local afterAll")
   })
-  test('query table', () => {
+  test("query table", () => {
     expect(queryTable()).toBeTruthy()
   })
-  test('query table', () => {
+  test("query table", () => {
     expect(queryTable()).toBeTruthy()
   })
 })
@@ -79,27 +79,27 @@ describe('local variable', () => {
 先执行所有的 `describe`，再依次执行 `describe` 内部的 `test` 语句
 
 ```js
-describe('local variable', () => {
-  console.log('start')
-  describe('nest', () => {
-    console.log('nest')
-    test('nest test', () => {
-      console.log('nest test')
+describe("local variable", () => {
+  console.log("start")
+  describe("nest", () => {
+    console.log("nest")
+    test("nest test", () => {
+      console.log("nest test")
     })
   })
-  test('outer test', () => {
-    console.log('outer test')
+  test("outer test", () => {
+    console.log("outer test")
   })
-  describe('nest2', () => {
-    console.log('nest2')
-    test('nest test2', () => {
-      console.log('nest test2')
+  describe("nest2", () => {
+    console.log("nest2")
+    test("nest test2", () => {
+      console.log("nest test2")
     })
   })
-  test('outer test2', () => {
-    console.log('outer test2')
+  test("outer test2", () => {
+    console.log("outer test2")
   })
-  console.log('end')
+  console.log("end")
 })
 /*
  * 执行顺序，以console.log为标志

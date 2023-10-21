@@ -172,16 +172,16 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
 比如
 
 ```js
-var name = 'hello'
+var name = "hello"
 function sayName() {
   console.log(name) //用到了全局变量name
 }
 //修改为
 var nameObj = {
-  name: 'hello',
+  name: "hello",
   sayName() {
     console.log(this.name)
-  }
+  },
 }
 ```
 
@@ -195,7 +195,7 @@ var nameObj = {
 
 ```js
 const Constants = {
-  INVALID_MESSAGE: '错误'
+  INVALID_MESSAGE: "错误",
 }
 ```
 
@@ -399,7 +399,7 @@ perspective：元素距离视图的距离
 
 ## 性能监测
 
-Chrome 开发者工具可以用`Performance`和 `LightHouse`   
+Chrome 开发者工具可以用`Performance`和 `LightHouse`  
 或者 npm 上安装[LightHouse](https://www.npmjs.com/package/lighthouse)
 
 ```bash
@@ -414,6 +414,6 @@ lighthouse https://www.baidu.com
 
 ### 常见指标
 
-- FP：[First paint](https://developer.mozilla.org/en-US/docs/Glossary/First_paint)：渲染出第一个像素点。FP一般在HTML解析完成或者解析一部分时候触发。
+- FP：[First paint](https://developer.mozilla.org/en-US/docs/Glossary/First_paint)：渲染出第一个像素点。FP 一般在 HTML 解析完成或者解析一部分时候触发。
 - FCP：[First contentful paint](https://web.dev/i18n/zh/fcp/)：首次内容绘制。从开始加载到页面内容的任何部分在屏幕上完成渲染的时间。对于该指标，"内容"指的是文本、图像（包括背景图像）、`<svg>` 元素或非白色的 `<canvas>` 元素。
-- LCP：[LargestContentfulPaint](https://web.dev/lcp/)：最大内容绘制。**首次**开始加载可视区域内可见的最大图像或文本块完成渲染的相对时间  
+- LCP：[LargestContentfulPaint](https://web.dev/lcp/)：最大内容绘制。**首次**开始加载可视区域内可见的最大图像或文本块完成渲染的相对时间

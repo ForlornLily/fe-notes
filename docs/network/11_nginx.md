@@ -121,9 +121,9 @@ vim /usr/local/nginx/conf/nginx.conf
 
 常用命令
 快捷键`Insert`开始输入  
-`esc`退出输入   
+`esc`退出输入  
 `:wq`保存并退出  
-`ln -s 绝对路径 快捷方式的绝对路径`: 创建链接  
+`ln -s 绝对路径 快捷方式的绝对路径`: 创建链接
 
 ## 常用命令
 

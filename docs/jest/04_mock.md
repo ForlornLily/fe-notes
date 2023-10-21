@@ -13,12 +13,12 @@ export function sayHello(str: string, callback: Function) {
 
 ```js
 // index.test.js
-import { sayHello } from './index'
+import { sayHello } from "./index"
 
 const fn = jest.fn((x) => `${x}, world`)
-sayHello('hello', fn)
-test('mock function', () => {
-  expect(fn.mock.results[0].value).toBe('hello, world')
+sayHello("hello", fn)
+test("mock function", () => {
+  expect(fn.mock.results[0].value).toBe("hello, world")
 })
 ```
 
@@ -30,12 +30,12 @@ test('mock function', () => {
 - mock.calls：被调用时的参数。也是个数组
 
 ```js
-import { sayHello } from './index'
+import { sayHello } from "./index"
 
 const fn = jest.fn((x) => x)
-sayHello('hello', fn)
+sayHello("hello", fn)
 console.log(fn.mock.calls) // [ [ 'hello' ] ]
-test('mock function', () => {
+test("mock function", () => {
   expect(fn.mock.calls.length).toBe(1)
 })
 ```
@@ -45,18 +45,18 @@ test('mock function', () => {
 ```js
 const fn = jest.fn()
 const obj = {
-  hello: 'world',
+  hello: "world",
 }
 const mockFn = fn.bind(obj)
 mockFn()
 console.log(fn.mock.instances) // [ { hello: 'world' } ]
 const obj2 = {
-  a: 'b',
+  a: "b",
 }
 const mockFn2 = fn.bind(obj2)
 mockFn2()
 console.log(fn.mock.instances) // [ { hello: 'world' }, { a: 'b' } ]
-test('mock function', () => {
+test("mock function", () => {
   expect(fn.mock.calls.length).toBe(2)
 })
 ```
@@ -68,7 +68,7 @@ test('mock function', () => {
 ```js
 const fn = jest.fn()
 console.log(fn()) // undefined
-test('mock return value', () => {
+test("mock return value", () => {
   expect(fn.mock.calls.length).toBe(1)
 })
 
@@ -81,17 +81,17 @@ console.log(fn2(1)) // 2
 ```js
 const fn = jest.fn()
 console.log(fn()) // undefined
-fn.mockReturnValue('hello', 'world') //第二个参数无效
+fn.mockReturnValue("hello", "world") //第二个参数无效
 console.log(fn(), fn(), fn()) // hello hello hello
-test('mock return value', () => {
+test("mock return value", () => {
   expect(fn.mock.calls.length).toBe(4)
 })
 
 const fn2 = jest.fn((x) => x + 1)
-fn2.mockReturnValueOnce('hello')
+fn2.mockReturnValueOnce("hello")
 console.log(fn2(), fn2(), fn2()) // hello NaN NaN
 
 const fn3 = jest.fn()
-fn3.mockReturnValueOnce('hello').mockReturnValue('world') // 链式调用
+fn3.mockReturnValueOnce("hello").mockReturnValue("world") // 链式调用
 console.log(fn3(), fn3(), fn3()) //  hello world world
 ```

@@ -17,9 +17,9 @@ export function add(x: number, y: number): number {
 
 ```js
 // index.test.js
-import { add } from './index'
+import { add } from "./index"
 
-test('add', () => {
+test("add", () => {
   expect(add(1, 2)).toBe(3)
 })
 ```
@@ -31,10 +31,10 @@ test('add', () => {
 适用于比较对象的字段是否相等
 
 ```js
-test('object is equal', () => {
-  const data = { hello: 'world' }
-  expect(data).toEqual({ hello: 'world' }) // 通过
-  expect(data).toBe({ hello: 'world' }) // 不通过，对象不相等
+test("object is equal", () => {
+  const data = { hello: "world" }
+  expect(data).toEqual({ hello: "world" }) // 通过
+  expect(data).toBe({ hello: "world" }) // 不通过，对象不相等
 })
 ```
 
@@ -43,7 +43,7 @@ test('object is equal', () => {
 相反的匹配，比如 `not.toBe`，`not.toEqual`，`not.toBeUndefined`
 
 ```js
-test('add', () => {
+test("add", () => {
   expect(add(1, 2)).not.toBe(4)
 })
 ```
@@ -62,9 +62,9 @@ export const zero = 0
 ```
 
 ```js
-import { zero } from './index'
+import { zero } from "./index"
 
-test('object is falsy', () => {
+test("object is falsy", () => {
   expect(zero).toBeFalsy() //测试通过
   expect(zero).toBeNull() //不通过
 })
@@ -77,7 +77,7 @@ test('object is falsy', () => {
 因为 `0.1 + 0.2` 不等于 `0.3`，所以浮点数比较用 `toBeCloseTo`，而不是`toEqual`
 
 ```js
-test('number is equal', () => {
+test("number is equal", () => {
   expect(0.1 + 0.2).toBeCloseTo(0.3)
 })
 ```
@@ -87,7 +87,7 @@ test('number is equal', () => {
 - toBeGreaterThan
 
 ```js
-test('number is equal', () => {
+test("number is equal", () => {
   expect(0.1 + 0.2).toBeGreaterThan(0.3) // 通过
 })
 ```
@@ -104,8 +104,8 @@ test('number is equal', () => {
 - toMatch：只能用于字符串
 
 ```js
-test('string match', () => {
-  expect('hello world').toMatch('hello') // 通过
+test("string match", () => {
+  expect("hello world").toMatch("hello") // 通过
 })
 ```
 
@@ -114,8 +114,8 @@ test('string match', () => {
 - toContain：是否包含某一项
 
 ```js
-test('iterables', () => {
-  expect(['hello', 'world']).toContain('hello')
+test("iterables", () => {
+  expect(["hello", "world"]).toContain("hello")
 })
 ```
 
@@ -126,17 +126,17 @@ test('iterables', () => {
 ```ts
 // index.ts
 export function errorCatch() {
-  throw new Error('error msg')
+  throw new Error("error msg")
 }
 ```
 
 ```js
 // index.test.js
-import { errorCatch } from './index'
+import { errorCatch } from "./index"
 
-test('catch errors', () => {
-  expect(errorCatch).toThrow('error msg') // 通过
-  expect(errorCatch).toThrow('hello') // 不通过，抛出的内容不对
+test("catch errors", () => {
+  expect(errorCatch).toThrow("error msg") // 通过
+  expect(errorCatch).toThrow("hello") // 不通过，抛出的内容不对
 })
 ```
 
