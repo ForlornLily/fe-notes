@@ -15,6 +15,7 @@ module.exports = {
     ],
   ],
   dest: "dist",
+  temp: "temp",
   themeConfig: {
     nav: [
       {
@@ -54,8 +55,8 @@ module.exports = {
           { text: "TypeScript", link: "/typescript/" },
           { text: "Redux", link: "/redux/" },
           { text: "Jest", link: "/jest/" },
-          { text: "ESLint", link: "/eslint/" },
           { text: "Testing Library", link: "/testing-library/" },
+          { text: "代码规范", link: "/lint/" },
         ],
       },
       {
