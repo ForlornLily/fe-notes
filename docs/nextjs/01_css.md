@@ -40,7 +40,7 @@ function HomePage() {
 和`React`一致
 
 ```js
-<p className="child" style={{ border: '1px solid #ccc' }}>
+<p className="child" style={{ border: "1px solid #ccc" }}>
   11111
 </p>
 ```
@@ -65,8 +65,8 @@ yarn add @zeit/next-sass node-sass
 
 ```js
 // next.config.js
-const withCSS = require('@zeit/next-css')
-const withSass = require('@zeit/next-sass')
+const withCSS = require("@zeit/next-css")
+const withSass = require("@zeit/next-sass")
 
 module.exports = withSass(
   withCSS({

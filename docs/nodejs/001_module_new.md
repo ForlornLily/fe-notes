@@ -11,7 +11,7 @@
 - 没有标准接口：比如 Web 服务器或者数据库之类的标准统一接口
 - 缺乏包管理系统
   CommonJS 的提出，主要是为了弥补当时 JavaScript 没有标准的缺陷，期望让 JavaScript 具备开发大型应用的能力  
-  规范涵盖了模块、二进制、Buffer、字符集编码、I/O流、进程环境、文件系统、套接字、单元测试、Web服务器网关接口、包管理等。
+  规范涵盖了模块、二进制、Buffer、字符集编码、I/O 流、进程环境、文件系统、套接字、单元测试、Web 服务器网关接口、包管理等。
 
 CommonJS 对于模块的定义主要分为三部分：
 
@@ -29,7 +29,7 @@ exports.add = () => {
 
 ```js
 // index.js
-const method = require('./method')
+const method = require("./method")
 // method.add()
 ```
 
@@ -47,7 +47,7 @@ NodeJS 对 CommonJS 的模块规范进行了一定的取舍。
 在 NodeJS 中，模块分为两类
 
 - 核心模块：NodeJS 本身提供的模块。  
-  核心模块部分在NodeJS进程启动时就被直接加载进内存，会略过文件定位和编辑执行两个步骤，加载速度是最快的
+  核心模块部分在 NodeJS 进程启动时就被直接加载进内存，会略过文件定位和编辑执行两个步骤，加载速度是最快的
 - 文件模块：运行时动态加载，需要进行完整的 3 个步骤，比核心模块慢
 
 ## 优先从缓存加载
@@ -57,7 +57,7 @@ NodeJS 对 CommonJS 的模块规范进行了一定的取舍。
 
 ```js
 // method.js
-let myName = 'hello'
+let myName = "hello"
 exports.changeName = (name) => {
   myName = name
 }
@@ -69,10 +69,10 @@ exports.getName = () => {
 
 ```js
 // index.js
-const method = require('./method')
-const sameMethod = require('./method')
+const method = require("./method")
+const sameMethod = require("./method")
 method.getName() // "hello"
-sameMethod.changeName('world')
+sameMethod.changeName("world")
 method.getName() // "world"
 ```
 
@@ -125,7 +125,7 @@ windows 下可能是这样
 
 ```js
 // D:\project\typescript\src\index.js
-const method = require('method2.js')
+const method = require("method2.js")
 ```
 
 会往上找 'D:\\project\\typescript\\node_modules\\method2.js'，'D:\\project\\node_modules\\method2.js'，'D:\\node_modules\\method2.js'

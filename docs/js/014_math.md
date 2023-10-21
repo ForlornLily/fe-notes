@@ -21,8 +21,8 @@ Math.floor(18) //18
 - round：四舍五入
 
 ```js
-Math.round('18.5') //19
-Math.round('18.5b') //NaN
+Math.round("18.5") //19
+Math.round("18.5b") //NaN
 ```
 
 包含非数字都会是 NaN

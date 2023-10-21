@@ -1,10 +1,12 @@
-# LeetCode 解题目录  
+# LeetCode 解题目录
 
 参考：
-- [azl397985856/leetcode](https://github.com/azl397985856/leetcode)  
-- [labuladong/fucking-algorithm](https://github.com/labuladong/fucking-algorithm)  
 
-题目：  
+- [azl397985856/leetcode](https://github.com/azl397985856/leetcode)
+- [labuladong/fucking-algorithm](https://github.com/labuladong/fucking-algorithm)
+
+题目：
+
 - [20. 有效的括号](./020.md)，1249. 移除无效的括号，301. 删除无效的括号
 - [53. 最大子序和](./053.md)，[907. 子数组的最小值之和](./907.md)
 - [88. 合并两个有序数组](./088.md)
@@ -19,7 +21,7 @@
 - [42. 接雨水](./42.md)
 - [622. 设计循环队列](../algorithm/002_queue.md#循环队列)
 - 1293.网格中的最短路径
-- 46.全排列  
+- 46.全排列
 - 8.字符串转换整数
 - 6.N 字形变换
 - 41.缺失的第一个正数
@@ -28,7 +30,7 @@
 - 146.LRU 缓存
 - LCR 024. 反转链表
 - 53.最大子数组和
-- 215.数组中的第K个最大元素
+- 215.数组中的第 K 个最大元素
 - 918.环形子数组的最大和
 - 1035.不相交的线
 - 156.上下翻转二叉树
@@ -39,7 +41,7 @@
 - 946.验证栈序列
 - 54.螺旋矩阵
 - LCR 016. 无重复字符的最长子串
-- 69.x 的平方根 
+- 69.x 的平方根
 - 21.合并两个有序链表
 - LCR 074. 合并区间
 - LCR 103. 零钱兑换

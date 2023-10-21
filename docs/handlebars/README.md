@@ -8,8 +8,8 @@
 用双括号包裹，与 `Vue` 的文本插值规则相似，都基于 [mustache](https://github.com/mustache)
 
 ```js
-const template = Handlebars.compile('hello {{who}}')
-template({ who: 'world' }) // "hello world"
+const template = Handlebars.compile("hello {{who}}")
+template({ who: "world" }) // "hello world"
 ```
 
 ## noConflict

@@ -20,7 +20,7 @@
 - function
 
 ```js
-var test = Symbol('1')
+var test = Symbol("1")
 console.log(typeof test) // "symbol"
 class Hello {
   constructor(value) {

@@ -13,8 +13,8 @@ let instance: Singleton
 class Singleton {
   private name: string
   constructor(name: string) {
-    if(instance) {
-      throw new Error('只能一个实例')
+    if (instance) {
+      throw new Error("只能一个实例")
     }
     instance = this
     this.name = name
@@ -39,9 +39,9 @@ const singleNameSecond = new Singleton("word") // Uncaught Error: 只能一个�
 可以用闭包实现
 
 ```js
-const getSingle = function(fn) {
+const getSingle = function (fn) {
   let result
-  return function() {
+  return function () {
     return result || (result = fn.apply(this, arguments))
   }
 }
@@ -50,6 +50,6 @@ function test(name) {
   return name
 }
 const closureTest = getSingle(test)
-const testA = closureTest('hello')
-const testB = closureTest('world') // "hello"
+const testA = closureTest("hello")
+const testB = closureTest("world") // "hello"
 ```

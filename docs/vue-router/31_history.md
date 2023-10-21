@@ -21,15 +21,15 @@
       this.routes[path] = callback
     }
     refresh(state) {
-      this.url = '/' + state.name || ''
+      this.url = "/" + state.name || ""
       const fun = this.routes[this.url]
-      if (Object.prototype.toString.call(fun) === '[object Function]') {
+      if (Object.prototype.toString.call(fun) === "[object Function]") {
         fun()
       }
     }
     init() {
       //页面后退才进
-      window.addEventListener('popstate', e => {
+      window.addEventListener("popstate", (e) => {
         this.refresh.call(this, e.state)
       })
     }
@@ -37,22 +37,22 @@
   const route = new Router()
   route.init()
   const doc = document
-  const el = doc.getElementById('view')
-  route.add('/unbecoming', () => {
-    el.innerHTML = 'unbecoming'
+  const el = doc.getElementById("view")
+  route.add("/unbecoming", () => {
+    el.innerHTML = "unbecoming"
   })
-  route.add('/monster', () => {
-    el.innerHTML = 'monster'
+  route.add("/monster", () => {
+    el.innerHTML = "monster"
   })
-  doc.getElementById('link').addEventListener('click', e => {
+  doc.getElementById("link").addEventListener("click", (e) => {
     const target = e.target
-    if (target.tagName.toLowerCase() !== 'a') {
+    if (target.tagName.toLowerCase() !== "a") {
       return
     }
     e.preventDefault()
     history.pushState(
       {
-        name: e.target.innerHTML
+        name: e.target.innerHTML,
       },
       null,
       `?page=${e.target.innerHTML}`

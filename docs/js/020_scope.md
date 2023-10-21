@@ -14,10 +14,10 @@
 但只有执行到赋值语句时，才会有值。
 
 ```js
-var test = 'world'
+var test = "world"
 function f() {
   console.log(test) //undefined
-  var test = 'hello'
+  var test = "hello"
   console.log(test) // "hello"
 }
 ```
@@ -59,7 +59,7 @@ function hoisting() {
   var condition = true
   console.log(value) // undefined
   if (condition) {
-    var value = 'hello'
+    var value = "hello"
     console.log(value) // hello
   }
   console.log(value) // hello
@@ -68,7 +68,7 @@ function hoisting() {
 var value
 console.log(value) // undefined
 if (condition) {
-  value = 'hello'
+  value = "hello"
   console.log(value) // hello
 }
 ```
@@ -178,18 +178,18 @@ console.log(a) // 2
 ```js
 function hoisting() {
   var condition = true
-  let value = 'world'
+  let value = "world"
   if (condition) {
     console.log(value) // 报错
-    let value = 'hello'
+    let value = "hello"
   }
 }
 ```
 
 ```js
-let value = 'world'
+let value = "world"
 if (condition) {
-  let value = 'hello'
+  let value = "hello"
   console.log(value) // hello
 }
 ```
@@ -197,7 +197,7 @@ if (condition) {
 ```js
 //暂时性死区
 let result = typeof value //报错
-let value = 'world'
+let value = "world"
 ```
 
 ```js
@@ -215,15 +215,15 @@ console.log(params.a) //ReferenceError: Cannot access 'params' before initializa
 var condition = true
 let result = typeof value //不报错，因为不在块级作用域内
 if (condition) {
-  let value = 'world'
+  let value = "world"
 }
 ```
 
 - 不可以在一个块级中（{}内）重复声明，let/const 已经声明一个变量的情况下，再用 var/let/const 都会报错。顺序调换先用 var 再用 let 也会报错
 
 ```js
-var value = 'world'
-let value = 'hello' // ReferenceError: value is not defined
+var value = "world"
+let value = "hello" // ReferenceError: value is not defined
 ```
 
 - 在全局声明也不会成为`window`的属性
@@ -250,17 +250,17 @@ a() // 0 1 2 3 4 0 1 2 3 4
 
 - 声明的时候必须赋值
 
-``` js
+```js
 const values  // Uncaught SyntaxError: Missing initializer in const declaration
 ```
 
 - 改变自身的值会报错。不可以改变引用本身，但是可以改变引用内部的值
 
-``` js
+```js
 const values = {}
-values = 12  // Uncaught TypeError: Assignment to constant variable.
+values = 12 // Uncaught TypeError: Assignment to constant variable.
 
-values.name = "hi"  // 正常赋值
+values.name = "hi" // 正常赋值
 ```
 
 #### 循环中的 const
@@ -293,13 +293,13 @@ const b = a
 function test(person) {
   person.age = 26
   person = {
-    name: 'yyy',
+    name: "yyy",
     age: 30,
   }
   return person
 }
 const p1 = {
-  name: 'xxx',
+  name: "xxx",
   age: 25,
 }
 const p2 = test(p1) // {name: 'yyy', age: 30}
@@ -331,7 +331,7 @@ console.log(p1) //{name: 'xxx', age: 26}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1',
+  a: "1",
 }
 let tmp = {}
 for (let key in test) {
@@ -347,7 +347,7 @@ console.log(tmp) //{a: '1', b: 2}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1',
+  a: "1",
 }
 let tmp = {}
 Object.assign(tmp, test)
@@ -361,7 +361,7 @@ console.log(tmp) // {a: '1'}
 ```js
 Object.prototype.b = 2
 var test = {
-  a: '1',
+  a: "1",
 }
 let tmp = { ...test }
 console.log(tmp) //{a: '1'}
@@ -381,25 +381,25 @@ console.log(tmp) //{a: '1'}
 
 #### 手写
 
-完整实现可以参考[loadhash.cloneDeep](https://github.com/lodash/lodash)，loadhash 也不支持复制 `Proxy`  
+完整实现可以参考[loadhash.cloneDeep](https://github.com/lodash/lodash)，loadhash 也不支持复制 `Proxy`
 
 ```ts
 const deepCopy = {
   types: [
-    'Number',
-    'String',
-    'Boolean',
-    'Null',
-    'Undefined',
-    'Symbol',
-    'Object',
-    'Array',
-    'Function',
-    'Date',
-    'RegExp',
-    'Set',
-    'Map',
-    'BigInt',
+    "Number",
+    "String",
+    "Boolean",
+    "Null",
+    "Undefined",
+    "Symbol",
+    "Object",
+    "Array",
+    "Function",
+    "Date",
+    "RegExp",
+    "Set",
+    "Map",
+    "BigInt",
   ], //Object.prototype.toString返回的所有类型
   type(obj: any) {
     return Object.prototype.toString.call(obj).slice(8, -1)
@@ -408,7 +408,7 @@ const deepCopy = {
     const types = this.types
     let i = types.length - 1
     do {
-      this['is' + types[i]] = function (elem: unknown) {
+      this["is" + types[i]] = function (elem: unknown) {
         return this.type.call(elem) == types[i]
       }
     } while (--i >= 0)
@@ -419,9 +419,9 @@ const deepCopy = {
       return this.copy(obj)
     }
     if (this.isFunction(obj)) {
-      return new Function('return ' + obj.toString())()
+      return new Function("return " + obj.toString())()
     }
-    if (obj === null || typeof obj !== 'object') {
+    if (obj === null || typeof obj !== "object") {
       return obj
     }
     let target: any = this.isArray(obj) ? [] : {},
@@ -440,7 +440,7 @@ const deepCopy = {
       if (this.isArray(value) || this.isObject(value)) {
         target[key] = this.copy(value)
       } else if (this.isFunction(value)) {
-        target[key] = new Function('return ' + value.toString())()
+        target[key] = new Function("return " + value.toString())()
       } else {
         target[key] = value
       }
@@ -448,11 +448,11 @@ const deepCopy = {
     return target
   },
 }
-
 ```
 
 不考虑 proxy 的 ES6 版本
-``` ts
+
+```ts
 enum CloneType {
   /** 基本类型 */
   PRIMITIVE,
@@ -465,7 +465,7 @@ enum CloneType {
   /** 普通对象 */
   OBJECT,
   /** 非普通对象，比如 Date */
-  UNKNOWN
+  UNKNOWN,
 }
 /** 基本类型，不含 null */
 const PRIMITIVE_TYPE = [
@@ -507,7 +507,7 @@ export function getType(target: any): CloneType {
 }
 
 function createFunction(target: Function): Function {
-  return new Function('return ' + target.toString())()
+  return new Function("return " + target.toString())()
 }
 
 function copyDeep(target: any, cache = new Map()) {
@@ -534,7 +534,7 @@ function copyDeep(target: any, cache = new Map()) {
   cache.set(target, result)
   for (const key in target) {
     // 递归不考虑继承
-    if(target.hasOwnProperty(key)) {
+    if (target.hasOwnProperty(key)) {
       result[key] = copyDeep(target[key], cache)
     } else {
       result[key] = target[key]
@@ -543,6 +543,7 @@ function copyDeep(target: any, cache = new Map()) {
   return result
 }
 ```
+
 ## 作用域链
 
 每一段 JS 代码（全局代码或者函数）都有与之相关的作用域链(scope chain)，把作用域看做一个链表对象  
@@ -615,7 +616,7 @@ printSquare(5)
 
 ```js
 function fun3() {
-  console.log('fun3')
+  console.log("fun3")
 }
 function fun2() {
   fun3()

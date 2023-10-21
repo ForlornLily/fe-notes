@@ -78,7 +78,7 @@ HTTP 是无状态协议，不会记录之前的请求或者响应信息（比如
 
 ```js
 //hello=world可以在以baidu.com结尾的所有域名下显示
-document.cookie = 'hello=world;domain=.baidu.com'
+document.cookie = "hello=world;domain=.baidu.com"
 ```
 
 ::: tip
@@ -180,11 +180,11 @@ Indexed Database API，事务型对象存储数据库，用于客户端存储大
 - 异步操作，通过回调
 
 ```js
-let request = window.indexedDB.open('admin') //创建/打开一个名为"admin"的数据库
-request.onerror = event => {
+let request = window.indexedDB.open("admin") //创建/打开一个名为"admin"的数据库
+request.onerror = (event) => {
   console.log(event)
 }
-request.onsuccess = event => {
+request.onsuccess = (event) => {
   console.log(event)
 }
 ```
@@ -218,10 +218,10 @@ event.target.result 中指向数据库实例对象
 - createObjectStore(name, options)
 
 ```js
-request.onupgradeneeded = function(event) {
+request.onupgradeneeded = function (event) {
   var db = event.target.result
-  db.createObjectStore('customers', {
-    keyPath: 'passport_number'
+  db.createObjectStore("customers", {
+    keyPath: "passport_number",
   })
 }
 ```
@@ -300,16 +300,16 @@ continue()表示前进到下一个（也就是 for 里面的计数器 i++）
 advance()表示后退
 
 ```js
-var objectStore = db.transaction('customers').objectStore('customers')
-objectStore.openCursor().onsuccess = function(event) {
+var objectStore = db.transaction("customers").objectStore("customers")
+objectStore.openCursor().onsuccess = function (event) {
   var cursor = event.target.result
   if (cursor) {
-    alert('Name for SSN ' + cursor.key + ' is ' + cursor.value.name)
+    alert("Name for SSN " + cursor.key + " is " + cursor.value.name)
     //每次成功continue就会触发openCursor().onsuccess
     //即使获取到的cursor是falsy的值
     cursor.continue()
   } else {
-    alert('No more entries!')
+    alert("No more entries!")
   }
 }
 ```
@@ -319,7 +319,7 @@ objectStore.openCursor().onsuccess = function(event) {
 比如以字母 C 开头的所有记录的游标，不包括以 D 开始的记录
 
 ```js
-exchangeIndex.openCursor(IDBKeyRange.bound('C', 'D', false, true))
+exchangeIndex.openCursor(IDBKeyRange.bound("C", "D", false, true))
 ```
 
 - 设置遍历方向

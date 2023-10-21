@@ -1,7 +1,7 @@
 # http
 
 ```js
-const http = require('http')
+const http = require("http")
 ```
 
 ## createServer()
@@ -11,7 +11,7 @@ const http = require('http')
 http
   .createServer((req, res) => {
     console.log(req.method) //请求的方式，比如GET, POST
-    res.end('hello, world')
+    res.end("hello, world")
   })
   .listen(8888)
 ```
@@ -70,7 +70,7 @@ req.method
 请求头，比如
 
 ```js
-req.headers['content-type']
+req.headers["content-type"]
 ```
 
 ### on 方法
@@ -79,13 +79,13 @@ req.headers['content-type']
 
 ```js
 http.createServer((req, res) => {
-  if (req.method === 'POST') {
-    let postData = ''
-    req.on('data', (chunk) => {
+  if (req.method === "POST") {
+    let postData = ""
+    req.on("data", (chunk) => {
       postData += chunk.toString()
     })
-    req.on('end', () => {
-      res.end('post数据接收完毕')
+    req.on("end", () => {
+      res.end("post数据接收完毕")
     })
   }
 })
@@ -126,7 +126,7 @@ end 会先调用 write 并结束响应
 
 ```js
 http.createServer((req, res) => {
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader("Content-Type", "application/json")
   res.end(`{
     hello: "world"
   }`)
@@ -158,7 +158,7 @@ res.setHeader("Set-Cookie", \`username=hello; path=/\`)
 只允许后台修改 cookie
 
 ```js
-res.setHeader('Set-Cookie', `username=hello; httpOnly`)
+res.setHeader("Set-Cookie", `username=hello; httpOnly`)
 ```
 
 设置后 document.cookie 为空，也无法修改
@@ -170,7 +170,7 @@ res.setHeader('Set-Cookie', `username=hello; httpOnly`)
 ```js
 var date = new Date()
 date.toGMTString()
-res.setHeader('Set-Cookie', `username=hello; expires=${date}`)
+res.setHeader("Set-Cookie", `username=hello; expires=${date}`)
 ```
 
 ### writeHead
@@ -183,7 +183,7 @@ res.writeHead(statusCode, {
   key2: value2,
 })
 res.writeHead(200, {
-  'Content-Type': 'text/plain',
+  "Content-Type": "text/plain",
 })
 res.end(`hello, world`)
 ```
@@ -195,18 +195,18 @@ res.end(`hello, world`)
 构造客户端以发送请求
 
 ```js
-const http = require('http')
+const http = require("http")
 
 http
   .request(
     {
-      host: '127.0.0.1',
+      host: "127.0.0.1",
       port: 8888,
-      path: '/',
-      method: 'GET',
+      path: "/",
+      method: "GET",
     },
     (res) => {
-      res.on('data', (data) => console.log(data.toString())) // "hello, world"
+      res.on("data", (data) => console.log(data.toString())) // "hello, world"
     }
   )
   .end()

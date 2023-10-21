@@ -37,8 +37,8 @@ false, null, undefined, 0（+0，-0）, "", NaN
 用 Boolean()的情况下（不是用==等操作符）
 
 ```js
-Boolean('') //false
-Boolean(' ') //true
+Boolean("") //false
+Boolean(" ") //true
 Boolean(NaN) //false
 Boolean(0) //false
 Boolean(1) //true
@@ -129,25 +129,25 @@ NaN === NaN //false
   - 只有数字: 变数字，开头的 0 会被忽略。开头是"+"或者"-"看做符号位
 
   ```js
-  Number('012') //12
-  Number('012.66') //12.66
-  Number('.66') //0.66
+  Number("012") //12
+  Number("012.66") //12.66
+  Number(".66") //0.66
   ```
 
   - 十六进制也转为对应的十进制。十六进制开头有加减号变成 NaN
 
   ```js
-  Number('0xf') //15
-  Number('-1') //-1
-  Number('-0x2') //NaN
+  Number("0xf") //15
+  Number("-1") //-1
+  Number("-0x2") //NaN
   ```
 
   - 空字符串变 0, ""和" "都是
 
   ```js
-  Number('') //0
-  Number(' ') //0
-  Number('hello') //NaN
+  Number("") //0
+  Number(" ") //0
+  Number("hello") //NaN
   ```
 
   - 其他都是 NaN
@@ -168,11 +168,11 @@ NaN === NaN //false
 可以传入第 2 个参数，指定转换的进制
 
 ```js
-parseInt('+123') //123
-parseInt('-123') //-123
-parseInt('-1.2.4') //-1
-parseInt('0xf') //15
-parseInt('AF', 16) //175
+parseInt("+123") //123
+parseInt("-123") //-123
+parseInt("-1.2.4") //-1
+parseInt("0xf") //15
+parseInt("AF", 16) //175
 ```
 
 #### parseFloat()
@@ -182,12 +182,12 @@ parseInt('AF', 16) //175
 忽略第 2 个小数点
 
 ```js
-parseInt('1.2.1') //1
-parseFloat('.233') //0.233
-parseFloat('.23.3') //0.23
-parseFloat('16.a') //16
-parseFloat('16.2a') //16.2
-parseFloat('a16') //NaN
+parseInt("1.2.1") //1
+parseFloat(".233") //0.233
+parseFloat(".23.3") //0.23
+parseFloat("16.a") //16
+parseFloat("16.2a") //16.2
+parseFloat("a16") //NaN
 ```
 
 ### Number.isInteger
@@ -227,8 +227,8 @@ BigInt(0.1) //报错：The number 0.1 cannot be converted to a BigInt because it
 - 只有数字的 string 并且是整数的话可以变数字
 
 ```js
-BigInt('10') //10n
-BigInt('0.1') //SyntaxError
+BigInt("10") //10n
+BigInt("0.1") //SyntaxError
 ```
 
 - 其他，比如 null, undefined, obj 和`Number()`不同，都会报错
@@ -261,9 +261,9 @@ BigInt(10) + 10n // 20n
 0 或者多个 16 位 Unicode 字符组成
 
 ```js
-var txt = 'a \u03a3' //"a Σ"
+var txt = "a \u03a3" //"a Σ"
 txt.length //3
-'我'.length //1
+"我".length //1
 ```
 
 字符串是不可变的（immutable）。
@@ -271,8 +271,8 @@ txt.length //3
 如果定义一个变量，之后又用新的字符串赋值。那会销毁原本的字符串，再用新字符串填充这个变量
 
 ```js
-var lang = 'Java'
-lang = lang + 'Script'
+var lang = "Java"
+lang = lang + "Script"
 ```
 
 先创建一个可以容纳 10 个字符的新字符串，然后填充 Java 和 Script，最后销毁原本的 Java 和 Script 两个字符串
@@ -322,7 +322,7 @@ null 返回`"null"`, undefined 返回`"undefined"`
 position 不写默认是 0;
 
 ```js
-'hello world'.includes('world', 4) //true
+"hello world".includes("world", 4) //true
 ```
 
 - ES5 实现
@@ -338,7 +338,7 @@ function includes(str, start) {
   }
   return this.indexOf(str, start) > -1
 }
-includes.apply('hello world', ['world', 4])
+includes.apply("hello world", ["world", 4])
 ```
 
 #### startsWith
@@ -356,7 +356,7 @@ function startsWith(str, start) {
   }
   return this.substring(start, start + str.length) == str
 }
-startsWith.apply('hello world', ['ello', '1']) //true
+startsWith.apply("hello world", ["ello", "1"]) //true
 ```
 
 #### endsWith(string, length)
@@ -371,7 +371,7 @@ function endsWidth(str, length) {
   }
   return this.substring(length - str.length, length) == str
 }
-endsWidth.apply('hello world', ['world'])
+endsWidth.apply("hello world", ["world"])
 ```
 
 ### repeat()
@@ -379,7 +379,7 @@ endsWidth.apply('hello world', ['world'])
 将字符串重复指定次数。比如格式化的时候重复空格
 
 ```js
-var test = 'hello'.repeat(2) //"hellohello"
+var test = "hello".repeat(2) //"hellohello"
 ```
 
 ### 模板字面量: 反引号`
@@ -418,12 +418,12 @@ console.log(String.raw`\u00A9`) // \u00A9
   - 如果 padString 本身的长度大于 str.length + targetLength, 则忽略溢出的部分
 
 ```js
-var test = 'abc'
+var test = "abc"
 test.padStart(6) //"   abc"
-test.padStart(1, 'd') //"abc"
-test.padStart(-6, 'd') // "abc"
-test.padStart(6, 'd') //"dddabc"
-test.padStart(6, 'defg') //"defabc"，忽略了"g"
+test.padStart(1, "d") //"abc"
+test.padStart(-6, "d") // "abc"
+test.padStart(6, "d") //"dddabc"
+test.padStart(6, "defg") //"defabc"，忽略了"g"
 ```
 
 ### padEnd
@@ -432,12 +432,12 @@ test.padStart(6, 'defg') //"defabc"，忽略了"g"
 和 padStart 类似
 
 ```js
-var test = 'abc'
+var test = "abc"
 test.padEnd(6) //"abc   "
-test.padEnd(1, 'd') //"abc"
-test.padEnd(-6, 'd') // "abc"
-test.padEnd(6, 'd') //"abcddd"
-test.padEnd(6, 'defg') //"abcdef"，忽略了"g"
+test.padEnd(1, "d") //"abc"
+test.padEnd(-6, "d") // "abc"
+test.padEnd(6, "d") //"abcddd"
+test.padEnd(6, "defg") //"abcdef"，忽略了"g"
 ```
 
 ## Symbol
@@ -445,22 +445,22 @@ test.padEnd(6, 'defg') //"abcdef"，忽略了"g"
 可以当做对象的属性，但不可遍历
 
 ```js
-let privateName = Symbol('name')
+let privateName = Symbol("name")
 let tmp = {}
-tmp[privateName] = 'Emma'
-tmp.hello = 'world'
+tmp[privateName] = "Emma"
+tmp.hello = "world"
 for (const key in tmp) {
-  console.log('key', key) // 找不到 Symbol 生成的内容
+  console.log("key", key) // 找不到 Symbol 生成的内容
 }
 ```
 
 ```js
-const privateName = Symbol('name')
-const another = Symbol.for('another')
+const privateName = Symbol("name")
+const another = Symbol.for("another")
 const tmp = {
-  [privateName]: 'name',
-  [another]: 'for',
-  hello: 'world',
+  [privateName]: "name",
+  [another]: "for",
+  hello: "world",
 }
 Object.getOwnPropertySymbols(tmp) // [Symbol(name), Symbol(another)]
 Object.getOwnPropertyNames(tmp) // ['hello']
@@ -474,15 +474,15 @@ Symbol.for(string)：对每个字符串键都执行幂等操作。
 后续使用相同字符串的调用同样会检查注册表，发现存在与该字符串对应的符号，然后就会返回该符号实例
 
 ```js
-let privateName1 = Symbol('name')
-let privateName2 = Symbol('name')
+let privateName1 = Symbol("name")
+let privateName2 = Symbol("name")
 privateName1 === privateName2 //false
 ```
 
 ```js
-const outData = Symbol.for('name')
+const outData = Symbol.for("name")
 function testSymbol() {
-  const innerData = Symbol.for('name')
+  const innerData = Symbol.for("name")
   console.log(innerData === outData) // true
 }
 testSymbol()
@@ -493,11 +493,11 @@ testSymbol()
 查询 for 生成的字符串
 
 ```js
-let privateName1 = Symbol.for('name')
+let privateName1 = Symbol.for("name")
 Symbol.keyFor(privateName1) // 'name'
-let test = Symbol('name')
+let test = Symbol("name")
 Symbol.keyFor(test) // undefined
-let notSymbol = 'hello'
+let notSymbol = "hello"
 Symbol.keyFor(notSymbol) // Uncaught TypeError: hello is not a symbol
 ```
 
@@ -506,12 +506,12 @@ Symbol.keyFor(notSymbol) // Uncaught TypeError: hello is not a symbol
 Symbol 不能转换成字符串或者数字，但可以变成 boolean
 
 ```js
-var smb = Symbol('hello')
+var smb = Symbol("hello")
 console.log(smb) //Symbol(hello)
 console.log(Boolean(smb)) //true
 
 console.log(String(smb)) //Symbol(hello)
-console.log('' + smb) //TypeError: Cannot convert a Symbol value to a string
+console.log("" + smb) //TypeError: Cannot convert a Symbol value to a string
 
 //上面代码报错就不会往下走了，这里为了方便放在一起
 console.log(1 + smb) //TypeError: Cannot convert a Symbol value to a number

@@ -60,8 +60,8 @@ in 关键字会包含继承的属性，同样`!==`也会包含继承的属性
 ```js
 var foo2 = {}
 
-foo2.bar2 = 'hello'
-'bar2' in foo2 //true
+foo2.bar2 = "hello"
+"bar2" in foo2 //true
 
 foo2.toString !== undefined // true
 ```
@@ -80,8 +80,8 @@ key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 ```js
 var test = {}
-test.hello = 'word'
-test.hasOwnProperty('hello') //true
+test.hello = "word"
+test.hasOwnProperty("hello") //true
 ```
 
 ## propertyIsEnumerable(key)
@@ -90,7 +90,7 @@ test.hasOwnProperty('hello') //true
 只有是自有属性并且可枚举，才会返回 true
 
 ```js
-test.propertyIsEnumerable('hello')
+test.propertyIsEnumerable("hello")
 ```
 
 ## isPrototypeOf(object)
@@ -118,7 +118,7 @@ Object.prototype.isPrototypeOf(test) //true
 - valueOf 返回原本对应的 string, number, boolean
 
 ```js
-var str = '123'
+var str = "123"
 str.toString() //"123"
 str.toLocaleString() //"123"
 str.valueOf() //"123"
@@ -148,11 +148,11 @@ let a = {
     return 0
   },
   toString() {
-    return '1'
+    return "1"
   },
   [Symbol.toPrimitive]() {
     return 2
-  }
+  },
 }
 1 + a //3
 ```
@@ -162,7 +162,7 @@ let a = {
 - 单纯的一个对象返回的是"[object object]"
 
   ```js
-  var x = { hello: 'world' }
+  var x = { hello: "world" }
   x.toString() //"[object Object]"
   ```
 
@@ -203,7 +203,11 @@ arr.valueOf() //[1, 2]
 类似数组的 from，或者说`Object.entries`的反转
 
 ```js
-const arr = [['0', 'a'], ['1', 'b'], ['2', 'c']]
+const arr = [
+  ["0", "a"],
+  ["1", "b"],
+  ["2", "c"],
+]
 Object.fromEntries(arr) // {0: 'a', 1: 'b', 2: 'c'}
 ```
 
@@ -212,7 +216,7 @@ Object.fromEntries(arr) // {0: 'a', 1: 'b', 2: 'c'}
 进行===比较，不会出现类型转换
 
 ```js
-Object.is(1, '1') //false
+Object.is(1, "1") //false
 ```
 
 和===不同的地方有两处：
@@ -235,7 +239,7 @@ Object.is(NaN, NaN) //true
 
 ```js
 let a = {
-  name: undefined
+  name: undefined,
 }
 b = Object.assign({}, a) // {name: undefined}
 ```
@@ -244,10 +248,10 @@ b = Object.assign({}, a) // {name: undefined}
 
 ```js
 let servant = {
-  saber: 'Altria',
-  lancer: ''
+  saber: "Altria",
+  lancer: "",
 }
-let { saber, archer = 'Emiya' } = servant
+let { saber, archer = "Emiya" } = servant
 console.log(saber) //"Altria"
 console.log(archer) //"Emiya"
 ```
@@ -255,7 +259,7 @@ console.log(archer) //"Emiya"
 ### 赋值给非同名
 
 ```js
-let { saber: Saber, archer: Arhcer = 'Emiya' } = servant
+let { saber: Saber, archer: Arhcer = "Emiya" } = servant
 console.log(Saber) //"Altria"
 console.log(Arhcer) // "Emiya"
 console.log(saber) //报错: saber is not defined
@@ -301,10 +305,10 @@ function myInstanceOf(left, right) {
 
 ```js
 let obj = {
-  name: 'Emma'
+  name: "Emma",
 }
 Object.preventExtensions(obj)
-obj.value = 'hi'
+obj.value = "hi"
 ```
 
 ![](../images/ad4aaade7530fec1fe550b5489bb1a64.png)
@@ -357,7 +361,7 @@ JSON 并不能序列化所有值。
 ```js
 var test = {
   a: undefined,
-  b: null
+  b: null,
 }
 JSON.parse(JSON.stringify(test))
 /* 
@@ -373,7 +377,7 @@ JSON.parse(JSON.stringify(test))
 ```js
 var test = {
   a: NaN,
-  b: 0
+  b: 0,
 }
 JSON.parse(JSON.stringify(test)) //{a: null, b: 0}
 ```
@@ -382,7 +386,7 @@ JSON.parse(JSON.stringify(test)) //{a: null, b: 0}
 
 ```js
 var test = {
-  a: Symbol('1')
+  a: Symbol("1"),
 }
 JSON.parse(JSON.stringify(test)) //{}
 ```
@@ -401,10 +405,10 @@ JSON.parse(JSON.stringify(date)) //"2019-09-29T08:42:13.409Z"
 ```js
 var test = {
   a: new Set([1, 2]),
-  b: function() {
-    console.log('1')
+  b: function () {
+    console.log("1")
   },
-  c: new Error('error')
+  c: new Error("error"),
 }
 console.log(JSON.parse(JSON.stringify(test)))
 /* 

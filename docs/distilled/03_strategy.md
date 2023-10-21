@@ -8,8 +8,8 @@
 
 ```js
 const list = []
-const seaFish = ['a', 'd', 'm']
-const freshFish = ['b', 'c', 'e', 'o', 'q']
+const seaFish = ["a", "d", "m"]
+const freshFish = ["b", "c", "e", "o", "q"]
 while (seaFish.length || freshFish.length) {
   if (!seaFish.length || seaFish[0] > freshFish[0]) {
     list.push(freshFish.shift())

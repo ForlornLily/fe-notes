@@ -24,15 +24,16 @@ const readonlyValues = new WeakSet()
 const nonReactiveValues = new WeakSet()
 
 //判断是否是对象
-export const isObject = val => val !== null && typeof val === 'object'
+export const isObject = (val) => val !== null && typeof val === "object"
 
 //toString判断对象的具体数据类型
-const observableValueRE = /^\[object (?:Object|Array|Map|Set|WeakMap|WeakSet)\]$/
+const observableValueRE =
+  /^\[object (?:Object|Array|Map|Set|WeakMap|WeakSet)\]$/
 export const objectToString = Object.prototype.toString
-export const toTypeString = value => objectToString.call(value)
+export const toTypeString = (value) => objectToString.call(value)
 
 //是否为观察对象
-const canObserve = value => {
+const canObserve = (value) => {
   return (
     !value._isVue &&
     !value._isVNode &&

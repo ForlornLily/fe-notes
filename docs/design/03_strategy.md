@@ -16,22 +16,22 @@ JS 是动态类型语言，没有这个限制，可以理解为具有相同的�
 
 ```html
 <form id="userForm">
-  <label>用户名：<input type="text" name="username"/></label>
-  <label>密码：<input type="password" name="password"/></label>
+  <label>用户名：<input type="text" name="username" /></label>
+  <label>密码：<input type="password" name="password" /></label>
   <button>提交</button>
 </form>
 <script>
-  const formEle = document.getElementById('userForm')
-  formEle.addEventListener('submit', e => {
+  const formEle = document.getElementById("userForm")
+  formEle.addEventListener("submit", (e) => {
     const username = formEle.username
     if (!username.value) {
-      console.log('用户名必输')
+      console.log("用户名必输")
       e.preventDefault()
       return false
     }
     const password = formEle.password
     if (password.value.length < 6) {
-      console.log('密码长度不能小于6位')
+      console.log("密码长度不能小于6位")
       e.preventDefault()
       return false
     }
@@ -56,20 +56,20 @@ const strategies = {
     if (value.length < length) {
       return errMsg
     }
-  }
+  },
 }
 //添加规则
 function Validator() {
   this.rules = []
 }
-Validator.prototype.add = function(dom, rule, errMsg) {
-  let arr = rule.split(':') //拆分"minLength: 6" 这种校验类型和值都需要的情况
+Validator.prototype.add = function (dom, rule, errMsg) {
+  let arr = rule.split(":") //拆分"minLength: 6" 这种校验类型和值都需要的情况
   const strategy = arr.shift() //获取校验类型，比如"isNotEmpty"
   arr.unshift(dom.value) //第一个参数是value
   arr.push(errMsg) //最后一个参数是错误提示
   this.rules.push(() => strategies[strategy].apply(null, arr))
 }
-Validator.prototype.start = function() {
+Validator.prototype.start = function () {
   const rules = this.rules,
     length = rules.length
   for (let i = 0; i < length; i++) {
@@ -81,13 +81,13 @@ Validator.prototype.start = function() {
 }
 
 //用户调用
-const formEle = document.getElementById('userForm')
-formEle.addEventListener('submit', e => {
+const formEle = document.getElementById("userForm")
+formEle.addEventListener("submit", (e) => {
   const username = formEle.username
   const password = formEle.password
   const validator = new Validator()
-  validator.add(username, 'isNotEmpty', '用户名必输')
-  validator.add(password, 'minLength: 6', '密码不能小于6位数')
+  validator.add(username, "isNotEmpty", "用户名必输")
+  validator.add(password, "minLength: 6", "密码不能小于6位数")
   const msg = validator.start()
   if (msg) {
     console.log(msg)
@@ -102,12 +102,12 @@ formEle.addEventListener('submit', e => {
 ```js
 validator.add(password, [
   {
-    strategy: 'isNotEmpty',
-    errMsg: '密码必填'
+    strategy: "isNotEmpty",
+    errMsg: "密码必填",
   },
   {
-    strategy: 'minLength: 6',
-    errMsg: '密码不能小于6位数'
-  }
+    strategy: "minLength: 6",
+    errMsg: "密码不能小于6位数",
+  },
 ])
 ```

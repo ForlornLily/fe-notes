@@ -70,7 +70,7 @@ class PriorityQueue extends Queue {
       if (priority < items[i].priority) {
         items.splice(i, 0, {
           element,
-          priority
+          priority,
         })
         added = true
         break
@@ -79,15 +79,15 @@ class PriorityQueue extends Queue {
     if (!added) {
       items.push({
         element,
-        priority
+        priority,
       })
     }
   }
 }
 let priority = new PriorityQueue()
-priority.enqueue('Archer', 2)
-priority.enqueue('Saber', 1)
-priority.enqueue('Lancer', 3)
+priority.enqueue("Archer", 2)
+priority.enqueue("Saber", 1)
+priority.enqueue("Lancer", 3)
 ```
 
 ## 双端队列
@@ -160,13 +160,13 @@ function cycleQue(list, number) {
   return items.dequeue()
 }
 let name = [
-  'Saber',
-  'Archer',
-  'Lancer',
-  'Rider',
-  'Caster',
-  'Assassin',
-  'Berserker'
+  "Saber",
+  "Archer",
+  "Lancer",
+  "Rider",
+  "Caster",
+  "Assassin",
+  "Berserker",
 ]
 console.log(cycleQue(name, 10))
 ```

@@ -7,8 +7,8 @@
 所以基本类型上加属性是获取不到的
 
 ```js
-var s1 = 'hello'
-s1.color = 'red'
+var s1 = "hello"
+s1.color = "red"
 alert(s1.color) //undefined
 ```
 
@@ -23,7 +23,7 @@ alert(s1.color) //undefined
 不建议显式地 new 基本包装类型
 
 ```js
-var value = '16'
+var value = "16"
 var number = Number(value)
 typeof number //"number"
 var obj = new Number(value)

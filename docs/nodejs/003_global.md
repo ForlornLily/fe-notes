@@ -19,6 +19,6 @@ console.log(require.main === module) // false 表示是通过 require 引入的
 判断 node 集群中当前服务器是否为主服务
 
 ```js
-const cluster = require('cluster')
+const cluster = require("cluster")
 // cluster.isMaster 为 true 表示是 master 服务
 ```

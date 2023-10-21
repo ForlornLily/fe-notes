@@ -54,30 +54,30 @@ npm install -g @vue/cli
 vue.config.js 常用配置
 
 ```js
-const path = require('path')
+const path = require("path")
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
-  publicPath: './',
+  publicPath: "./",
   lintOnSave: true,
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     //alias
     config.resolve.alias
-      .set('@', resolve('src'))
-      .set('static', resolve('src/static'))
+      .set("@", resolve("src"))
+      .set("static", resolve("src/static"))
   },
   devServer: {
     proxy: {
-      '/v1': {
-        target: 'www.baidu.com', //目标地址
+      "/v1": {
+        target: "www.baidu.com", //目标地址
         changeOrigin: true, //开启代理：在本地会创建一个虚拟服务端，这样服务端和服务端进行数据的交互就不会跨域
         pathRewrite: {
-          '^/v1': '/v1'
-        }
-      }
-    }
-  }
+          "^/v1": "/v1",
+        },
+      },
+    },
+  },
 }
 ```
 

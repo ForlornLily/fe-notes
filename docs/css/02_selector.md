@@ -53,7 +53,7 @@ general sibling combinator
 ## []属性选择器
 
 ```css
-input[type='submit'] {
+input[type="submit"] {
 }
 ```
 

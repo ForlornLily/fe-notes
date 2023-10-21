@@ -3,7 +3,9 @@
 [参考](https://github.com/RayJune/Elegant-JavaScript-Sorting-Algorithms)
 
 ## 冒泡排序
+
 依次比较，交换相邻的顺序
+
 ```ts
 function swapList(list: number[], left: number, right: number) {
   const tmp = list[left]
@@ -14,13 +16,13 @@ function swapList(list: number[], left: number, right: number) {
 function bubbleSort(list: number[]) {
   const length = list.length
   for (let i = 0; i < length; i += 1) {
-    for (let j =0; j < length - 1; j += 1) {
+    for (let j = 0; j < length - 1; j += 1) {
       if (list[j] > list[j + 1]) {
         swapList(list, j, j + 1)
       }
     }
   }
-  console.log('list', list)
+  console.log("list", list)
 }
 ```
 
@@ -49,7 +51,7 @@ function selectionSort(list: number[]) {
       swapList(list, i, min)
     }
   }
-  console.log('list', list)
+  console.log("list", list)
 }
 ```
 
@@ -58,7 +60,7 @@ function selectionSort(list: number[]) {
 - 运行时间和输入无关：第一遍获取到的最小元素，并不能为第二遍获取提供什么。
   这会导致一个已经排序好的数组，和一个乱序数组，消耗的时间是一样的
 - 数据移动是最少的：  
-  每次交换都会改变两个数组元素的值，最坏的情况下有多少个元素，就交换多少次，是线性关系（增长的数量级为N）
+  每次交换都会改变两个数组元素的值，最坏的情况下有多少个元素，就交换多少次，是线性关系（增长的数量级为 N）
 
 ### 复杂度为 O(n^2)
 
@@ -90,7 +92,7 @@ function insertSort(list: number[]) {
     }
     list[j] = minValue
   }
-  console.log('list', list)
+  console.log("list", list)
 }
 ```
 
@@ -123,7 +125,7 @@ function shellSort(list: number[]) {
     }
     gap = Math.floor(gap / 2)
   }
-  console.log('list', list)
+  console.log("list", list)
 }
 ```
 
@@ -296,6 +298,7 @@ function heapify(arr, index, size) {
 选择排序绝对没用吗？
 
 选择排序只需要 O(n) 次交换，这一点好于冒泡排序
+
 ## V8 中的排序
 
 用的`TimSort`，源码[array-sort.tq](https://github.com/v8/v8/blob/78f2610345fdd14ca401d920c140f8f461b631d1/third_party/v8/builtins/array-sort.tq#L5)  

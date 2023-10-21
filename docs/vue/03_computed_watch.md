@@ -25,36 +25,36 @@ computed: {
 </div>
 <script>
   let app = new Vue({
-    el: '#app',
+    el: "#app",
     data: {
-      eventname: 'click',
-      firstName: 'hello',
-      lastName: 'world'
+      eventname: "click",
+      firstName: "hello",
+      lastName: "world",
     },
     methods: {
       handleClick() {
         //改变fullName，进入computed的set，进而改变firstName和lastName
-        this.fullName = 'one two'
-      }
+        this.fullName = "one two"
+      },
     },
     computed: {
       fullName: {
         // getter
-        get: function() {
+        get: function () {
           //进入set之后由于firstName和lastName改变又会进get
           //但只进了一次
-          console.log('changed')
-          return this.firstName + ' ' + this.lastName
+          console.log("changed")
+          return this.firstName + " " + this.lastName
         },
         // setter
-        set: function(newValue) {
+        set: function (newValue) {
           //当fullName的值改变的时候进
-          var names = newValue.split(' ')
+          var names = newValue.split(" ")
           this.firstName = names[0]
           this.lastName = names[names.length - 1]
-        }
-      }
-    }
+        },
+      },
+    },
   })
 </script>
 ```

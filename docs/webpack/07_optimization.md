@@ -65,9 +65,9 @@ function Senhai() {}
 
 Senhai.prototype.servant = function () {}
 
-var a = 'Saber' + 'Alter',
+var a = "Saber" + "Alter",
   b
-if (a == 'QB') {
+if (a == "QB") {
   b = Array
 } else {
   b = Senhai
@@ -148,7 +148,7 @@ module.exports = {
   module.exports = {
     //...
     externals: {
-      jquery: 'jQuery',
+      jquery: "jQuery",
     },
   }
   ```
@@ -157,9 +157,9 @@ module.exports = {
 
   ```js
   //仍然可以import
-  import $ from 'jquery'
+  import $ from "jquery"
 
-  $('.my-element').animate(/* ... */)
+  $(".my-element").animate(/* ... */)
   ```
 
 - 其他:
@@ -180,9 +180,9 @@ new webpack.IgnorePlugin({
 })
 
 //只引入需要的语言
-import moment from 'moment'
-import 'moment/locale/zh-cn' // 手动引入中文语言包
-moment.locale('zh-cn')
+import moment from "moment"
+import "moment/locale/zh-cn" // 手动引入中文语言包
+moment.locale("zh-cn")
 ```
 
 ### dllplugin
@@ -225,25 +225,25 @@ module.exports = {
 3. webpack.config.js 中通过 `DLLReferencePlugin` 来使用 DllPlugin 生成的 DLL Bundle
 
 ```js
-const path = require('path')
-const webpack = require('webpack')
+const path = require("path")
+const webpack = require("webpack")
 module.exports = {
-  mode: 'production',
+  mode: "production",
   // 编译入口
   entry: {
-    main: './src/index.js',
+    main: "./src/index.js",
   },
   // 目标文件
   output: {
-    path: path.join(__dirname, 'dist/'),
-    filename: '[name].js',
+    path: path.join(__dirname, "dist/"),
+    filename: "[name].js",
   },
   // dll相关配置
   plugins: [
     new webpack.DllReferencePlugin({
       context: __dirname,
       // manifest就是我们第一步中打包出来的json文件
-      manifest: require('./dist/vendor-manifest.json'),
+      manifest: require("./dist/vendor-manifest.json"),
     }),
   ],
 }

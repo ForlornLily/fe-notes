@@ -13,16 +13,16 @@ npm install --save-dev html-webpack-plugin
 ```
 
 ```js
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const path = require("path")
 
 module.exports = {
-  entry: 'index.js',
+  entry: "index.js",
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'index_bundle.js'
+    path: path.resolve(__dirname, "./dist"),
+    filename: "index_bundle.js",
   },
-  plugins: [new HtmlWebpackPlugin()]
+  plugins: [new HtmlWebpackPlugin()],
 }
 ```
 
@@ -69,14 +69,14 @@ output: {
 
 ```js
 new HTMLWebpackPlugin({
-  filename: 'index.html',
-  template: './index.html',
-  chunks: ['foo'] //只引入需要的js
+  filename: "index.html",
+  template: "./index.html",
+  chunks: ["foo"], //只引入需要的js
 }),
   new HTMLWebpackPlugin({
-    filename: 'main.html',
-    template: './main.html',
-    chunks: ['bar'] //比如foo.js只在index.html用到, bar只在main.html用到
+    filename: "main.html",
+    template: "./main.html",
+    chunks: ["bar"], //比如foo.js只在index.html用到, bar只在main.html用到
   })
 ```
 
@@ -96,17 +96,18 @@ clean-webpack-plugin 只能清除根目录下的文件
 
 ```js
 new CleanWebpackPlugin({
-  cleanOnceBeforeBuildPatterns: ['**/*', '!static-files*']
+  cleanOnceBeforeBuildPatterns: ["**/*", "!static-files*"],
 })
 ```
 
 ## mini-css-extract-plugin
 
 抽取 CSS：[官网](https://webpack.js.org/plugins/mini-css-extract-plugin)  
-生产环境用 
+生产环境用
+
 ```js
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const isEnvProduction = process.env.NODE_ENV === 'development'  
+const isEnvProduction = process.env.NODE_ENV === 'development'
 
 module.exports = {
   plugins: [
@@ -139,15 +140,16 @@ module.exports = {
   }
 }
 ```
+
 ## css-minimizer-webpack-plugin
 
 压缩 css：用于生产环境。  
-类似的有 `optimize-css-assets-webpack-plugin`，但 webpack 5 以上官方建议用 `css-minimizer-webpack-plugin`  
-  
-``` js
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+类似的有 `optimize-css-assets-webpack-plugin`，但 webpack 5 以上官方建议用 `css-minimizer-webpack-plugin`
 
-const isEnvProduction = process.env.NODE_ENV === 'development'
+```js
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+
+const isEnvProduction = process.env.NODE_ENV === "development"
 
 const config = {
   optimization: {
@@ -155,11 +157,11 @@ const config = {
       name: (entrypoint) => `runtime-${entrypoint.name}`,
     },
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
       cacheGroups: {
         styles: {
           test: /\.(scss|css|less)$/,
-          chunks: 'all',
+          chunks: "all",
           enforce: true,
         },
         defaultVendors: {
@@ -169,10 +171,12 @@ const config = {
           name(module) {
             // 获取包名，比如 node_modules/packageName/not/this/part.js
             // 或者 node_modules/packageName
-            const pkgNameMatcher = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)
+            const pkgNameMatcher = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )
             let packageName = pkgNameMatcher && pkgNameMatcher[1]
             if (!packageName) {
-              return 'vendors'
+              return "vendors"
             }
             return `third_party.${packageName}`
           },
@@ -230,31 +234,34 @@ if (!isEnvProduction) {
   ]
 }
 ```
+
 ## terser-webpack-plugin
-压缩 js，用法见上。生产用   
-fork 了 `uglify-es`（uglify-es 已不再维护）  
+
+压缩 js，用法见上。生产用  
+fork 了 `uglify-es`（uglify-es 已不再维护）
 
 ## 内置
 
 直接 require('webpack')
 
 在 plugins 内使用 webpack.xxx
-``` js
-const webpack = require('webpack')
 
-const isEnvProduction = process.env.NODE_ENV === 'development'
+```js
+const webpack = require("webpack")
+
+const isEnvProduction = process.env.NODE_ENV === "development"
 
 const config = {
   plugins: [
     new webpack.ProgressPlugin({
       activeModules: true,
     }),
-  ]
+  ],
 }
 if (isEnvProduction) {
   config.plugins = config.plugins.concat([
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
+      "process.env.NODE_ENV": JSON.stringify("development"),
     }),
   ])
 }
@@ -313,39 +320,48 @@ npm install copy-webpack-plugin --save-dev
 比如把 src 下的 doc 文件夹全部复制到 dist 目录中的 doc 文件夹
 
 ```js
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   plugins: [
     new CopyPlugin([
-      { from: path.join(srcPath, 'doc'), to: path.join(distPath, 'doc') },
-      { from: 'other', to: 'public' }
-    ])
-  ]
+      { from: path.join(srcPath, "doc"), to: path.join(distPath, "doc") },
+      { from: "other", to: "public" },
+    ]),
+  ],
 }
 ```
 
 ## webpack-bundle-analyzer
-分析构建产物  
-``` js
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-// 省略  
+分析构建产物
+
+```js
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+
+// 省略
 config.plugins = config.plugins.concat(new BundleAnalyzerPlugin())
 ```
+
 ## eslint-webpack-plugin
+
 配合 [eslint](../eslint/README.md) 使用
 
 ## duplicate-package-checker-webpack-plugin
-警告是否一个包有多个版本  
+
+警告是否一个包有多个版本
 
 ## case-sensitive-paths-webpack-plugin
+
 保证路径正确，可能系统大小写不敏感，即使文件名大小写错误，也被引用。  
-这个插件确保引用文件的大小写一定和实际的文件名一致 
+这个插件确保引用文件的大小写一定和实际的文件名一致
 
 ## webpack-filter-warnings-plugin
-过滤掉某个 warning 。生产用   
-``` js
+
+过滤掉某个 warning 。生产用
+
+```js
 new FilterWarningsPlugin({
   // suppress conflicting order warnings from mini-css-extract-plugin.
   // ref: https://github.com/ant-design/ant-design/issues/14895
@@ -355,7 +371,7 @@ new FilterWarningsPlugin({
 ```
 
 ## 手写 plugin
-官网:[Writing a Plugin](https://webpack.js.org/contribute/writing-a-plugin/)  
 
-例子可以参考 antd 的 tools：[CleanUpStatsPlugin](https://github.com/ant-design/antd-tools/blob/master/lib/utils/CleanUpStatsPlugin.js)  
+官网:[Writing a Plugin](https://webpack.js.org/contribute/writing-a-plugin/)
 
+例子可以参考 antd 的 tools：[CleanUpStatsPlugin](https://github.com/ant-design/antd-tools/blob/master/lib/utils/CleanUpStatsPlugin.js)

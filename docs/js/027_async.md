@@ -30,20 +30,20 @@ JS 是单线程的。
 以 NodeJS 读取文件为例。readFile 会立刻进入任务队列，等到读取结束以后的，触发的回调才进入任务队列
 
 ```js
-readFile('example.txt', function (err, contents) {
+readFile("example.txt", function (err, contents) {
   if (err) {
     throw err
   }
   console.log(contents)
 })
-console.log('Hi!')
+console.log("Hi!")
 ```
 
 或者以 jQuery 的`$.ajax`为例，\$.ajax 会立刻进入任务队列，后台返回成功之后，`success`才进入任务队列
 
 ```js
 $.ajax({
-  url: '',
+  url: "",
   success: function (data) {
     console.log(data)
   },
@@ -74,30 +74,30 @@ Promise.then
 - 所有 setTimeout()的回调都会进入到 setTimeout 任务队列，所有 then()回调都会进入到 then 队列
 
 ```js
-console.log('1')
+console.log("1")
 setTimeout(function () {
-  console.log('2')
+  console.log("2")
   new Promise(function (resolve) {
-    console.log('4')
+    console.log("4")
     resolve()
   }).then(function () {
-    console.log('5')
+    console.log("5")
   })
 })
 new Promise(function (resolve) {
-  console.log('7')
+  console.log("7")
   resolve()
 }).then(function () {
-  console.log('8')
+  console.log("8")
 })
 
 setTimeout(function () {
-  console.log('9')
+  console.log("9")
   new Promise(function (resolve) {
-    console.log('11')
+    console.log("11")
     resolve()
   }).then(function () {
-    console.log('12')
+    console.log("12")
   })
 })
 /*
@@ -229,14 +229,14 @@ Access-Control-Expose-Headers 允许前端发送的额外请求头
 比如 NodeJS， [Express](https://forlornlily.github.io/server-notes/express/)
 
 ```js
-require('http')
+require("http")
   .createServer((req, res) => {
     res.writeHead(200, {
-      'Access-Control-Allow-Origin': 'http://localhost:8080',
+      "Access-Control-Allow-Origin": "http://localhost:8080",
     })
-    res.end('这是你要的数据：1111')
+    res.end("这是你要的数据：1111")
   })
-  .listen(3000, '127.0.0.1')
+  .listen(3000, "127.0.0.1")
 ```
 
 - 简单请求
@@ -311,7 +311,7 @@ script 不受限制，可以让服务器在 js 内返回内容
 ```html
 <script>
   function jsonpCallback(data) {
-    alert('获得 X 数据:' + data.x)
+    alert("获得 X 数据:" + data.x)
   }
 </script>
 <script src="http://127.0.0.1:3000?callback=jsonpCallback"></script>
@@ -336,29 +336,29 @@ webpack 内置，可以使用 proxy 进行代理
 - NodeJS demo
 
 ```js
-const url = require('url')
-const http = require('http')
-const https = require('https')
+const url = require("url")
+const http = require("http")
+const https = require("https")
 //访问topics去请求cnodejs的API
 const server = http
   .createServer((req, res) => {
     const path = url.parse(req.url).path.slice(1)
-    if (path === 'topics') {
-      https.get('https://cnodejs.org/api/v1/topics', (resp) => {
-        let data = ''
-        resp.on('data', (chunk) => {
+    if (path === "topics") {
+      https.get("https://cnodejs.org/api/v1/topics", (resp) => {
+        let data = ""
+        resp.on("data", (chunk) => {
           data += chunk
         })
-        resp.on('end', () => {
+        resp.on("end", () => {
           res.writeHead(200, {
-            'Content-Type': 'application/json; charset=utf-8',
+            "Content-Type": "application/json; charset=utf-8",
           })
           res.end(data)
         })
       })
     }
   })
-  .listen(3000, '127.0.0.1')
+  .listen(3000, "127.0.0.1")
 ```
 
 ### WebSocket
@@ -368,9 +368,9 @@ const server = http
 事件有 open, close, error, message。不支持 addEventListener
 
 ```js
-let socket = new WebSocket('ws:35.201.238.65')
+let socket = new WebSocket("ws:35.201.238.65")
 const messgae = {
-  hell: 'world',
+  hell: "world",
 }
 socket.send(JSON.stringify(messgae))
 socket.onmessage((msg) => {
@@ -396,7 +396,7 @@ xhr.onreadystatechange = function () {
 xhr.onerror = function () {
   //
 }
-xhr.open('GET', 'http://www.example.org/some.file', true) //true为异步，不写默认为true
+xhr.open("GET", "http://www.example.org/some.file", true) //true为异步，不写默认为true
 xhr.send(null) //发送给服务的参数。比如查询条件
 ```
 
@@ -466,8 +466,8 @@ let xhr = new XMLHttpRequest()
 export function ajax(options) {
   let {
     url,
-    type = 'GET',
-    responseType = 'text',
+    type = "GET",
+    responseType = "text",
     callback,
     data = null,
   } = options
@@ -537,13 +537,13 @@ catch 等于 then 的第二个调用
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  reject('hello') //可以是resolve
+  reject("hello") //可以是resolve
 })
 promise
   .catch((value) => {
     //resolve时改为then
     console.log(value) //"hello"
-    return value + 'world'
+    return value + "world"
   })
   .then((value) => {
     console.log(value) // "helloworld"
@@ -559,11 +559,11 @@ let p1 = new Promise(function (resolve, reject) {
   resolve(42)
 })
 let p2 = new Promise(function (resolve, reject) {
-  resolve('hello')
+  resolve("hello")
 })
 let p3 = new Promise(function (resolve, reject) {
   resolve({
-    hello: 'world',
+    hello: "world",
   })
 })
 let p4 = Promise.all([p1, p2, p3])
@@ -623,11 +623,11 @@ let p1 = new Promise(function (resolve, reject) {
   resolve(42)
 })
 let p2 = new Promise(function (resolve, reject) {
-  resolve('hello')
+  resolve("hello")
 })
 let p3 = new Promise(function (resolve, reject) {
   reject({
-    hello: 'world',
+    hello: "world",
   })
 })
 let p4 = Promise.race([p1, p2, p3])
@@ -647,11 +647,11 @@ p4.then((value) => {
 
 ```js
 var utils = {
-  pending: 'pending',
-  resolve: 'fullfilled',
-  reject: 'rejected',
+  pending: "pending",
+  resolve: "fullfilled",
+  reject: "rejected",
   isFucntion: function (obj) {
-    return typeof obj === 'function'
+    return typeof obj === "function"
   },
 }
 function MyPromise(fn) {
@@ -782,13 +782,13 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     })
   }
 }
-var test = '1'
+var test = "1"
 var promise = new MyPromise(function (resolve, reject) {
   resolve(test)
 })
 promise
   .then((value) => {
-    return value + 'world'
+    return value + "world"
   })
   .then((value) => {
     console.log(value)
@@ -822,16 +822,16 @@ Fetch 提供了对 Request 和 Response（以及其他与网络请求有关的�
 ```js
 fetch(url, {
   body: JSON.stringify({ answer: 42 }), // 请求头，和content-type格式要对应
-  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  credentials: 'same-origin', // include, same-origin, *omit
+  cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  credentials: "same-origin", // include, same-origin, *omit
   headers: {
-    'user-agent': 'Mozilla/4.0 MDN Example',
-    'content-type': 'application/json',
+    "user-agent": "Mozilla/4.0 MDN Example",
+    "content-type": "application/json",
   },
-  method: 'POST', // *GET, POST, PUT, DELETE, etc.
-  mode: 'cors', // no-cors, cors, *same-origin
-  redirect: 'follow', // manual, *follow, error
-  referrer: 'no-referrer', // *client, no-referrer
+  method: "POST", // *GET, POST, PUT, DELETE, etc.
+  mode: "cors", // no-cors, cors, *same-origin
+  redirect: "follow", // manual, *follow, error
+  referrer: "no-referrer", // *client, no-referrer
 }).then((response) => response.json()) // parses response to JSON
 ```
 
@@ -849,15 +849,15 @@ request.headers/response.headers
 
 ```js
 let myHeaders = new Headers({
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'text/plain',
+  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "text/plain",
 })
 ```
 
 - 增加：append(key, value)
 
 ```js
-myHeaders.append('Content-Type', 'text/plain')
+myHeaders.append("Content-Type", "text/plain")
 ```
 
 - 修改：set(key, value)
@@ -873,7 +873,7 @@ new Request(url, options)
 options 不传, 默认 method 是"GET",
 
 ```js
-const myRequest = new Request('http://localhost/flowers.jpg')
+const myRequest = new Request("http://localhost/flowers.jpg")
 fetch(myRequest).then((response) => response.json())
 ```
 
@@ -882,8 +882,8 @@ fetch(myRequest).then((response) => response.json())
 完整属性见[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Request)
 
 ```js
-const myRequest = new Request('http://localhost/api', {
-  method: 'POST',
+const myRequest = new Request("http://localhost/api", {
+  method: "POST",
   body: '{"foo":"bar"}',
 })
 ```
@@ -895,11 +895,11 @@ const myRequest = new Request('http://localhost/api', {
 在 service workder 内通常都是 new Response(响应内容, options);
 
 ```js
-new Response('<h1>Service Unavailable</h1>', {
+new Response("<h1>Service Unavailable</h1>", {
   status: 503,
-  statusText: 'Service Unavailable',
+  statusText: "Service Unavailable",
   headers: new Headers({
-    'Content-Type': 'text/html',
+    "Content-Type": "text/html",
   }),
 })
 ```
@@ -920,7 +920,7 @@ new Response('<h1>Service Unavailable</h1>', {
 
 ```js
 fetch(myRequest).then(function (response) {
-  if (response.headers.get('content-type') === 'application/json') {
+  if (response.headers.get("content-type") === "application/json") {
     return response.json().then(function (json) {
       // process your JSON further
     })
@@ -947,13 +947,13 @@ fetch(request).then(function (response) {
 
 ```js
 let myHeaders = new Headers({
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'text/plain',
+  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "text/plain",
 })
 fetch(url, {
-  method: 'GET',
+  method: "GET",
   headers: myHeaders,
-  mode: 'cors',
+  mode: "cors",
 }).then((res) => {
   // TODO
 })

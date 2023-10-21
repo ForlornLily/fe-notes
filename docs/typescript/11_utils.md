@@ -23,7 +23,7 @@ function updateTodo(fieldsToUpdate: Partial<Todo>) {
   return { ...fieldsToUpdate }
 }
 const todo2 = updateTodo({
-  title: 'hello' //description可以不传
+  title: "hello", //description可以不传
 })
 ```
 
@@ -41,8 +41,8 @@ function updateTodo(fieldsToUpdate: Required<Todo>) {
 }
 //属性必须都传
 const todo2 = updateTodo({
-  title: 'hello',
-  description: 'world'
+  title: "hello",
+  description: "world",
 })
 ```
 
@@ -60,7 +60,7 @@ interface servant {
   name: string
 }
 const saber: Readonly<servant> = {
-  name: 'Saber'
+  name: "Saber",
 }
 ```
 
@@ -73,12 +73,12 @@ interface PageInfo {
   title: string
 }
 
-type Page = 'home' | 'about' | 'contact'
+type Page = "home" | "about" | "contact"
 
 const x: Record<Page, PageInfo> = {
-  about: { title: '1' },
-  contact: { title: '2' },
-  home: { title: '3' }
+  about: { title: "1" },
+  contact: { title: "2" },
+  home: { title: "3" },
 }
 ```
 
@@ -93,11 +93,11 @@ interface Todo {
   completed: boolean
 }
 
-type TodoPreview = Pick<Todo, 'title' | 'completed'>
+type TodoPreview = Pick<Todo, "title" | "completed">
 //title和completed都要有
 const todo: TodoPreview = {
-  title: 'Clean room',
-  completed: false
+  title: "Clean room",
+  completed: false,
 }
 ```
 
@@ -112,11 +112,11 @@ interface Todo {
   completed: boolean
 }
 
-type TodoPreview = Omit<Todo, 'description'>
+type TodoPreview = Omit<Todo, "description">
 //title和completed都要有
 const todo: TodoPreview = {
-  title: 'Clean room',
-  completed: false
+  title: "Clean room",
+  completed: false,
 }
 ```
 
@@ -125,8 +125,8 @@ const todo: TodoPreview = {
 从 T 中排除 U
 
 ```ts
-type T0 = Exclude<'a' | 'b' | 'c', 'a'> // "b" | "c"
-type T1 = Exclude<'a' | 'b' | 'c', 'a' | 'b'> // "c"
+type T0 = Exclude<"a" | "b" | "c", "a"> // "b" | "c"
+type T1 = Exclude<"a" | "b" | "c", "a" | "b"> // "c"
 type T = Exclude<1 | 2, 1 | 3> // 2
 ```
 
@@ -173,11 +173,11 @@ type member = Readonly<Member>
 
 const data: member = {
   id: 1,
-  name: 'hello',
+  name: "hello",
   company: {
     id: 1,
-    department: 'hello'
-  }
+    department: "hello",
+  },
 }
 data.company.id = 2 //不报错，无法解析嵌套
 data.company = 2 //报错，因为只读

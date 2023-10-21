@@ -16,25 +16,25 @@
   :::
 
 ```js
-export var name = 'Nicholas'
+export var name = "Nicholas"
 export function setName(newName) {
   name = newName
 }
 ```
 
 ```js
-import { name, setName } from './example.js'
+import { name, setName } from "./example.js"
 console.log(name) // "Nicholas"
-setName('Greg')
+setName("Greg")
 console.log(name) // "Greg"
-name = 'Nicholas' // 报错
+name = "Nicholas" // 报错
 ```
 
 - import 一个模块 foo.js 的不同内容，foo.js 只会加载一次
 
 ```js
-import { sum } from './example.js'
-import { multiply } from './example.js'
+import { sum } from "./example.js"
+import { multiply } from "./example.js"
 ```
 
 example.js 只会被执行一次
@@ -43,7 +43,7 @@ example.js 只会被执行一次
 
 ```js
 function tryImport() {
-  import flag from './example.js' // 语法错误
+  import flag from "./example.js" // 语法错误
 }
 ```
 
@@ -70,7 +70,7 @@ export function add(a, b) {
 对应的 import
 
 ```js
-import { add } from './module.js'
+import { add } from "./module.js"
 ```
 
 ### 完整导入/命名空间导入(namespace import)
@@ -78,7 +78,7 @@ import { add } from './module.js'
 把整个 JS 做为一个完整模块
 
 ```js
-import * as module from './module.js'
+import * as module from "./module.js"
 ```
 
 模块内的 export 出的所有值都成为 module 的属性
@@ -95,22 +95,22 @@ export { sum as add }
 ```
 
 ```js
-import { add } from './example.js'
+import { add } from "./example.js"
 //也可以重命名为sum
-import { add as sum } from './example.js'
+import { add as sum } from "./example.js"
 ```
 
 ### 导出默认值 default(无花括号)
 
 ```js
-export let color = 'red'
-export default function(num1, num2) {
+export let color = "red"
+export default function (num1, num2) {
   return num1 + num2
 }
 
-import sum, { color } from './example.js'
+import sum, { color } from "./example.js"
 // 等价于
-import { default as sum, color } from 'example'
+import { default as sum, color } from "example"
 ```
 
 ### 将 import 的内容再导出
@@ -118,13 +118,13 @@ import { default as sum, color } from 'example'
 在 index.js 内引入 example.js，又导出 example
 
 ```js
-export { sum } from './example.js'
+export { sum } from "./example.js"
 ```
 
 完全导出
 
 ```js
-export * from './example.js'
+export * from "./example.js"
 ```
 
 ### 无绑定的导入
@@ -132,14 +132,14 @@ export * from './example.js'
 只导入某个 js，不导入特定内容。比如 pollyfill
 
 ```js
-import './pollyfill.js'
+import "./pollyfill.js"
 ```
 
 如果 pollyfill 内的函数修改了原型，比如给数组增加自定义的 pushAll 方法，也是会生效的
 
 ```js
 //pollyfill的内容，并没有export
-Array.prototype.pushAll = function() {}
+Array.prototype.pushAll = function () {}
 ```
 
 ## html 内引入模块
@@ -162,7 +162,7 @@ Array.prototype.pushAll = function() {}
 <script type="module" src="module1.js"></script>
 <!-- second -->
 <script type="module">
-  import { sum } from './example.js'
+  import { sum } from "./example.js"
   let result = sum(1, 2)
 </script>
 <!-- third -->
@@ -223,26 +223,26 @@ RequireJS 是对 AMD 规范的一个实现
 
 ```js
 //math.js
-define(function() {
-  var add = function(x, y) {
+define(function () {
+  var add = function (x, y) {
     console.log(x + y)
   }
   return {
-    add: add
+    add: add,
   }
 })
 //加载
-require(['math'], function(math) {
+require(["math"], function (math) {
   math.add(1, 2)
 })
 //如果还依赖其他模块，define的第一个参数是数组，指明依赖的模块
-define(['other'], function(other) {
+define(["other"], function (other) {
   let sth = other.doSth()
-  var add = function(x, y) {
+  var add = function (x, y) {
     sth(x + y)
   }
   return {
-    add: add
+    add: add,
   }
 })
 ```
@@ -270,24 +270,24 @@ console.log(a) // 2
 ```
 
 ```js
-;(function(global, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
+;(function (global, factory) {
+  if (typeof module === "object" && typeof module.exports === "object") {
     //CommonJS
     module.exports = global.document
       ? factory(global.document, true)
-      : function(w) {
+      : function (w) {
           //判断`document`对象是否存在，不存在就报错
           //...
         }
   } else {
     factory(global)
   }
-})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
   //window对象不存在，则为this, 比如NodeJS下this应该传入的是全局对象`global`
   //...
-  if (typeof define === 'function' && define.amd) {
+  if (typeof define === "function" && define.amd) {
     //AMD
-    define('jquery', [], function() {
+    define("jquery", [], function () {
       return jQuery
     })
   }

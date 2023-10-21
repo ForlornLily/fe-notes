@@ -6,8 +6,8 @@
 
 ```js
 const mama = {
-  name: 'Isabella',
-  job: 'sister'
+  name: "Isabella",
+  job: "sister",
 }
 function factory(o) {
   function plant() {}

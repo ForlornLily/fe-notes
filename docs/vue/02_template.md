@@ -24,19 +24,19 @@
 
 ```js
 let app = new Vue({
-  el: '#app',
+  el: "#app",
   data() {
     return {
-      message: 'hello'
+      message: "hello",
     }
   },
   filters: {
-    capitalize: function(value) {
-      if (!value) return ''
+    capitalize: function (value) {
+      if (!value) return ""
       value = value.toString()
       return value.toUpperCase()
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -47,18 +47,18 @@ let app = new Vue({
 :::
 
 ```js
-Vue.filter('capitalize', function(value) {
-  if (!value) return ''
+Vue.filter("capitalize", function (value) {
+  if (!value) return ""
   value = value.toString()
   return value.toUpperCase()
 })
 let app = new Vue({
-  el: '#app',
+  el: "#app",
   data() {
     return {
-      message: 'hello'
+      message: "hello",
     }
-  }
+  },
 })
 ```
 
@@ -136,7 +136,7 @@ filters: {
 
 ```js
 data: {
-  activeClass: 'active'
+  activeClass: "active"
 }
 ```
 
@@ -165,18 +165,18 @@ data: {
 
 ```js
 let app = new Vue({
-  el: '#app',
+  el: "#app",
   data: {
     isActive: true,
-    error: false
+    error: false,
   },
   computed: {
     classObject() {
       return {
-        active: this.isActive && !this.error
+        active: this.isActive && !this.error,
       }
-    }
-  }
+    },
+  },
 })
 ```
 
@@ -404,14 +404,14 @@ input 是触发 input 事件（值改变）
 <script>
   const MyComponent = {
     inheritAttrs: true,
-    props: ['test'],
-    template: `<div><slot></slot>66666<slot name="footer"></slot></div>`
+    props: ["test"],
+    template: `<div><slot></slot>66666<slot name="footer"></slot></div>`,
   }
   const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-      'text-document': MyComponent
-    }
+      "text-document": MyComponent,
+    },
   })
 </script>
 ```
@@ -440,20 +440,20 @@ input 是触发 input 事件（值改变）
 <script>
   const MyComponent = {
     inheritAttrs: true,
-    props: ['test'],
+    props: ["test"],
     //slot绑定属性，值是data内的属性
     template: `<div><slot :child-data="innerData"></slot>{{innerData}}</div>`,
     data() {
       return {
-        innerData: '123'
+        innerData: "123",
       }
-    }
+    },
   }
   const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-      'text-document': MyComponent
-    }
+      "text-document": MyComponent,
+    },
   })
 </script>
 ```
@@ -476,19 +476,19 @@ input 是触发 input 事件（值改变）
 <script>
   const MyComponent = {
     inheritAttrs: true,
-    props: ['test'],
+    props: ["test"],
     template: `<div><slot name="header"></slot>{{innerData}}</div>`,
     data() {
       return {
-        innerData: '123'
+        innerData: "123",
       }
-    }
+    },
   }
   const app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-      'text-document': MyComponent
-    }
+      "text-document": MyComponent,
+    },
   })
 </script>
 ```
@@ -505,15 +505,15 @@ input 是触发 input 事件（值改变）
 </div>
 <script>
   // 注册一个全局自定义指令 `v-focus`
-  Vue.directive('focus', {
+  Vue.directive("focus", {
     // 当被绑定的元素插入到 DOM 中时……
-    inserted: function(el) {
+    inserted: function (el) {
       // 聚焦元素
       el.focus()
-    }
+    },
   })
   const app = new Vue({
-    el: '#app'
+    el: "#app",
   })
 </script>
 ```
@@ -522,15 +522,15 @@ input 是触发 input 事件（值改变）
 
 ```js
 const app = new Vue({
-  el: '#app',
+  el: "#app",
   directives: {
     focus: {
       // 指令的定义
-      inserted: function(el) {
+      inserted: function (el) {
         el.focus()
-      }
-    }
-  }
+      },
+    },
+  },
 })
 ```
 

@@ -11,19 +11,19 @@ JSON 的属性必须是加双引号（单引号也不行），值可以是任意
 ```js
 var childArr = [
   {
-    name: 'Emma',
-    year: 12
+    name: "Emma",
+    year: 12,
   },
   {
-    name: 'Norma',
-    year: 12
+    name: "Norma",
+    year: 12,
   },
   {
-    name: 'Ray',
-    year: 12
-  }
+    name: "Ray",
+    year: 12,
+  },
 ]
-var result = JSON.stringify(childArr, ['name'])
+var result = JSON.stringify(childArr, ["name"])
 ```
 
 ![](../images/f7a29502341bb563b1c10cd772630fb9.png)

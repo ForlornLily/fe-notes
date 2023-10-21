@@ -1,6 +1,7 @@
 # dom
 
 ## ref
+
 尽量少用，只能不能用 props 处理的行为才用 ref（比如聚焦，滚动到某个元素）  
 [React.createRef](https://reactjs.org/docs/react-api.html#reactcreateref)  
 对应 Vue 的`ref`属性，即指向 DOM 元素的引用  
@@ -85,28 +86,33 @@ const onButtonClick = () => {
   inputEl.current.focus()
 }
 ```
+
 - 不要反复创建
-``` jsx
+
+```jsx
 // bad
-const playerRef = useRef(new VideoPlayer());
+const playerRef = useRef(new VideoPlayer())
 
 // better
-const playerRef = useRef(null);
+const playerRef = useRef(null)
 if (playerRef.current === null) {
-  playerRef.current = new VideoPlayer();
+  playerRef.current = new VideoPlayer()
 }
 ```
+
 - 不要在 render 时进行读写，可以写在 `useEffect` 或者事件里边
-``` jsx
+
+```jsx
 function MyComponent() {
   // ...
   // 🚩 Don't write a ref during rendering
-  myRef.current = 123;
+  myRef.current = 123
   // ...
   // 🚩 Don't read a ref during rendering
-  return <h1>{myOtherRef.current}</h1>;
+  return <h1>{myOtherRef.current}</h1>
 }
 ```
+
 ## useImperativeHandle
 
 useImperativeHandle 应当与 forwardRef 一起用
@@ -154,15 +160,15 @@ ReactDOM.createPortal(
 ```
 
 ```jsx
-import React, { useEffect, useRef, useState } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useEffect, useRef, useState } from "react"
+import ReactDOM from "react-dom"
 
 // html 上有一个根节点 "modal-root"
-const modalRoot = document.getElementById('modal-root')
+const modalRoot = document.getElementById("modal-root")
 
 function Modal(props) {
   const { children } = props
-  const ref = useRef(document.createElement('div'))
+  const ref = useRef(document.createElement("div"))
   useEffect(() => {
     modalRoot.appendChild(ref.current)
     return () => {
@@ -201,13 +207,15 @@ export default Parent
 ```
 
 ## flushSync
+
 尽量不要使用，存在性能损失  
 立即更新 DOM  
 一般用在非 React 实现的第三方库，需要实时获取 DOM 处理
-``` jsx
-import { flushSync } from 'react-dom';
+
+```jsx
+import { flushSync } from "react-dom"
 
 flushSync(() => {
-  setSomething(123);  // 立即调用这个函数并同步刷新 dom
-});
+  setSomething(123) // 立即调用这个函数并同步刷新 dom
+})
 ```
