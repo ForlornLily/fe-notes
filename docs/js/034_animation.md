@@ -23,8 +23,8 @@ canvas 是即时的，发生变化需要重新绘制。
 
 ```js
 //获取2D对象
-const canvasTarget = doc.getElementById('canvas')
-let ctx = canvasTarget.getContext('2d')
+const canvasTarget = doc.getElementById("canvas")
+let ctx = canvasTarget.getContext("2d")
 ```
 
 ### getContext 对象的属性
@@ -87,7 +87,7 @@ let img = new Image()
 img.onload = () => {
   ctx.drawImage(img, 100, 100)
 }
-img.src = 'https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg'
+img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg"
 ```
 
 配合图片和文字可以用 canvas 生成带水印的图片
@@ -120,12 +120,12 @@ addColorStop() 方法要和 createLinearGradient() 或 createRadialGradient() �
 规定 gradient 对象中的颜色和位置
 
 ```js
-var c = document.getElementById('myCanvas')
-var ctx = c.getContext('2d')
+var c = document.getElementById("myCanvas")
+var ctx = c.getContext("2d")
 
 var grd = ctx.createLinearGradient(0, 0, 170, 0)
-grd.addColorStop(0, 'black')
-grd.addColorStop(1, 'white')
+grd.addColorStop(0, "black")
+grd.addColorStop(1, "white")
 
 ctx.fillStyle = grd
 ctx.fillRect(20, 20, 150, 100)
@@ -136,8 +136,8 @@ ctx.fillRect(20, 20, 150, 100)
 用 stroke() 或 fill() 方法在画布上绘制实际的弧
 
 ```js
-var c = document.getElementById('myCanvas')
-var ctx = c.getContext('2d')
+var c = document.getElementById("myCanvas")
+var ctx = c.getContext("2d")
 ctx.beginPath()
 ctx.arc(100, 75, 50, 0, 2 * Math.PI)
 ctx.stroke()
@@ -152,6 +152,6 @@ ctx.stroke()
 canvas 对象生成的图像
 
 ```js
-var canvas = document.getElementById('canvas')
+var canvas = document.getElementById("canvas")
 var dataURL = canvas.toDataURL()
 ```

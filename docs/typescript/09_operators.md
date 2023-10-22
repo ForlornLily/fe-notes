@@ -18,7 +18,7 @@ function isString(str: number | string): str is string {
 
 ```ts
 function isString(str: number | string): str is string {
-  return typeof str === 'string'
+  return typeof str === "string"
 }
 function myMethod(param: any) {
   if (isString(param)) {
@@ -52,17 +52,17 @@ T extends U ? X : Y
 
 ```ts
 type TypeName<T> = T extends string
-  ? 'string'
+  ? "string"
   : T extends number
-  ? 'number'
+  ? "number"
   : T extends boolean
-  ? 'boolean'
+  ? "boolean"
   : T extends undefined
-  ? 'undefined'
+  ? "undefined"
   : T extends Function
-  ? 'function'
-  : 'object'
-type test = TypeName<'hello'> // "string"
+  ? "function"
+  : "object"
+type test = TypeName<"hello"> // "string"
 type T0 = TypeName<string | boolean> // "string" | "boolean"
 //等价于
 type T1 = TypeName<string> | TypeName<boolean>

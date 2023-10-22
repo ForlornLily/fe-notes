@@ -11,12 +11,12 @@
 即使拥有相同数量的属性，属性名和属性值相等
 
 ```js
-var obj = { servant: 'saber' }
+var obj = { servant: "saber" }
 var obj2 = obj
 obj === obj2 //true
 
-var servant = { servant: 'saber' }
-var fakeServant = { servant: 'saber' }
+var servant = { servant: "saber" }
+var fakeServant = { servant: "saber" }
 servant === fakeServant // false
 ```
 
@@ -90,11 +90,11 @@ while 适合迭代次数未知的情况。
 例:
 
 ```js
-var servant = 'Lancer'
-while (servant !== 'Saber') {
+var servant = "Lancer"
+while (servant !== "Saber") {
   if (seihai()) {
   } else {
-    servant = 'Saber'
+    servant = "Saber"
   }
 }
 ```
@@ -146,7 +146,7 @@ throw 用来抛出异常，try/catch 捕获异常
 ```js
 function jude(x) {
   if (x < 0) {
-    throw new Error('x不能小于0') //Uncaught Error: x不能小于0
+    throw new Error("x不能小于0") //Uncaught Error: x不能小于0
   }
   try {
     console.log(x)
@@ -163,7 +163,7 @@ try..catch 只能是同步的，无法用于异步代码模式。
 //报错，Uncaught (in promise)
 function f2() {
   try {
-    Promise.reject('出错了')
+    Promise.reject("出错了")
   } catch (e) {
     console.log(e)
   }
@@ -171,10 +171,10 @@ function f2() {
 //正常
 function f2() {
   try {
-    Promise.reject('出错了').catch(err => {
-      console.log('2', err)
+    Promise.reject("出错了").catch((err) => {
+      console.log("2", err)
     })
-    console.log('1')
+    console.log("1")
   } catch (e) {
     console.log(e)
   }
@@ -204,8 +204,8 @@ function factorial(n) {
 function memfactorial(n) {
   if (!memfactorial.cache) {
     memfactorial.cache = {
-      '0': 0,
-      '1': 1
+      0: 0,
+      1: 1,
     }
   }
   if (!memfactorial.cache.hasOwnProperty(n)) {

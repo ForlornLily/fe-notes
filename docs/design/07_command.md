@@ -14,27 +14,27 @@ command pattern：执行某些特定事情的指令
 ```js
 const openWechat = {
   excute() {
-    console.log('打开微信')
-  }
+    console.log("打开微信")
+  },
 }
 const openBrowser = {
   excute() {
-    console.log('打开浏览器')
-  }
+    console.log("打开浏览器")
+  },
 }
 const openSteam = {
   excute() {
-    console.log('打开steam')
-  }
+    console.log("打开steam")
+  },
 }
 
 function MacroCommand() {
   this.list = []
 }
-MacroCommand.prototype.add = function(fn) {
+MacroCommand.prototype.add = function (fn) {
   this.list.push(fn)
 }
-MacroCommand.prototype.excute = function() {
+MacroCommand.prototype.excute = function () {
   const list = this.list,
     length = list.length
   for (let i = 0; i < length; i++) {

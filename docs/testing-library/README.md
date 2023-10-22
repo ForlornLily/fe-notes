@@ -1,11 +1,14 @@
 # Testing Library
 
 UI 测试库  
-参考  
+参考
+
 - [Testing Library](https://testing-library.com/docs/)
 
 ## 推荐设计
-[Guiding Principles](https://testing-library.com/docs/guiding-principles)  
+
+[Guiding Principles](https://testing-library.com/docs/guiding-principles)
+
 - 用真实 DOM 代替组件实例。比如测试某个 state 是否生效，如果有类名变化，可以查询类名是否存在
 
 ## 常见 API

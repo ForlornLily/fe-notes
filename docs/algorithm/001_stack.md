@@ -25,23 +25,23 @@
 ```js
 function Stack() {
   let items = []
-  this.push = function(element) {
+  this.push = function (element) {
     items.push(element)
   }
-  this.pop = function() {
+  this.pop = function () {
     return items.pop()
   }
-  this.peek = function() {
+  this.peek = function () {
     return items[items.length - 1]
   }
-  this.size = function() {
+  this.size = function () {
     return items.length
   }
 
-  this.isEmpty = function() {
+  this.isEmpty = function () {
     return items.length == 0
   }
-  this.clear = function() {
+  this.clear = function () {
     items = []
   }
 }
@@ -80,7 +80,7 @@ class PrivateStack {
 }
 
 //最后将上面的代码用IIFE锁定作用域
-let PrivateStack = (function() {
+let PrivateStack = (function () {
   const items = new WeakMap()
   class Stack {
     constructor() {
@@ -96,9 +96,12 @@ let PrivateStack = (function() {
 })()
 var privateStack = new PrivateStack()
 ```
-### 单调栈  
+
+### 单调栈
+
 Monotone Stack：一种特殊的栈，要求元素依次递增或递减  
 应用：[子数组的最小值之和](../leetcode/907.md)
+
 ## 应用
 
 ### 十进制转二进制
@@ -113,7 +116,7 @@ Monotone Stack：一种特殊的栈，要求元素依次递增或递减
 function tranfer(number) {
   let stack = new Stack(),
     rem,
-    binaryString = ''
+    binaryString = ""
   while (number > 0) {
     rem = parseInt(number % 2)
     stack.push(rem)
@@ -153,9 +156,9 @@ let a = new Stack(),
   c = new Stack(),
   b = new Stack(),
   count = 0
-a.push('big')
-a.push('middle')
-a.push('small')
+a.push("big")
+a.push("middle")
+a.push("small")
 
 function move(size, source, dest, helper) {
   if (size > 0) {

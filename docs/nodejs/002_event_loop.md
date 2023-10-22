@@ -7,30 +7,30 @@
 :::
 
 ```js
-console.log('1')
+console.log("1")
 setTimeout(function () {
-  console.log('2')
+  console.log("2")
   new Promise(function (resolve) {
-    console.log('4')
+    console.log("4")
     resolve()
   }).then(function () {
-    console.log('5')
+    console.log("5")
   })
 })
 new Promise(function (resolve) {
-  console.log('7')
+  console.log("7")
   resolve()
 }).then(function () {
-  console.log('8')
+  console.log("8")
 })
 
 setTimeout(function () {
-  console.log('9')
+  console.log("9")
   new Promise(function (resolve) {
-    console.log('11')
+    console.log("11")
     resolve()
   }).then(function () {
-    console.log('12')
+    console.log("12")
   })
 })
 /*
@@ -49,58 +49,58 @@ task：setTimeout 、setInterval 、setImmediate 、io 文件操作、Promise
 
 ```js
 new Promise(function (resolve, reject) {
-  console.log('start')
+  console.log("start")
   resolve()
 })
   .then(() => {
-    console.log('promise1')
+    console.log("promise1")
   })
   .then(() => {
-    console.log('promise2')
+    console.log("promise2")
   })
 process.nextTick(() => {
-  console.log('nextTick')
+  console.log("nextTick")
 })
 Promise.resolve()
   .then(() => {
-    console.log('promise3')
+    console.log("promise3")
   })
   .then(() => {
-    console.log('promise4')
+    console.log("promise4")
   })
 process.nextTick(() => {
-  console.log('nextTick2')
+  console.log("nextTick2")
 })
 setTimeout(() => {
-  console.log('setTimeout')
+  console.log("setTimeout")
   new Promise(function (resolve, reject) {
-    console.log('setTimeout Promise')
+    console.log("setTimeout Promise")
     resolve()
   })
     .then(() => {
-      console.log('promise5')
+      console.log("promise5")
     })
     .then(() => {
-      console.log('promise6')
+      console.log("promise6")
     })
 })
 setTimeout(() => {
-  console.log('setTimeout2')
+  console.log("setTimeout2")
   new Promise(function (resolve, reject) {
-    console.log('setTimeout2 Promise')
+    console.log("setTimeout2 Promise")
     resolve()
   })
     .then(() => {
-      console.log('promise7')
+      console.log("promise7")
     })
     .then(() => {
-      console.log('promise8')
+      console.log("promise8")
     })
 })
 process.nextTick(() => {
-  console.log('nextTick3')
+  console.log("nextTick3")
 })
-console.log('end')
+console.log("end")
 /*
 NodeJS顺序
 start
@@ -147,12 +147,12 @@ server.on 就是一个监听器，每次有 request 事件发出的时候，就�
 on 监听，emit 触发，removeListener 删除监听
 
 ```js
-const EventEmitter = require('events').EventEmitter
+const EventEmitter = require("events").EventEmitter
 const myEvent = new EventEmitter()
-myEvent.on('join', (msg, msg2) => {
+myEvent.on("join", (msg, msg2) => {
   console.log(`${msg} + ${msg2}`)
 })
-myEvent.emit('join', 'hello', 'world')
+myEvent.emit("join", "hello", "world")
 //myEvent.removeListener ("join");
 ```
 
@@ -166,16 +166,16 @@ removeAllListeners 删除所有对应的监听器，用法同 removeListener
 只绑定一次，调用之后立即解绑
 
 ```js
-const events = require('events')
+const events = require("events")
 const instance = new events()
-instance.once('play', (data) => {
+instance.once("play", (data) => {
   console.log(data)
 })
-instance.on('play', (data) => {
-  console.log('second: ' + data)
+instance.on("play", (data) => {
+  console.log("second: " + data)
 })
-instance.emit('play', 'hello')
-instance.emit('play', 'hello')
+instance.emit("play", "hello")
+instance.emit("play", "hello")
 
 /* 
 hello 

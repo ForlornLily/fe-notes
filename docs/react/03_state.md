@@ -23,7 +23,7 @@ React 的数据是单向的，在 Vue 中通过`v-model`可以快速实现双向
 class NameForm extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { value: '' }
+    this.state = { value: "" }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -34,7 +34,7 @@ class NameForm extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value)
+    alert("A name was submitted: " + this.state.value)
     event.preventDefault()
   }
 
@@ -79,8 +79,10 @@ render() {
   );
 }
 ```
+
 value 是 `undefined` 将不受控，重置为 defaultValue
-``` ts
+
+```ts
 const [value, setValue] = useState<string| undefined>(undefined)
 
 <form>
@@ -88,6 +90,7 @@ const [value, setValue] = useState<string| undefined>(undefined)
   <button type='reset'>reset</button>
 </form>
 ```
+
 ### hooks
 
 用 hooks 可以省掉一些麻烦  
@@ -99,12 +102,12 @@ const [value, setValue] = useState<string| undefined>(undefined)
 - handleSubmit 只是一个函数表达式，直接调用即可，不需要`this`
 
 ```js
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
 export function NameForm(props) {
-  const [name, setName] = useState('')
+  const [name, setName] = useState("")
 
-  const handleSubmit = evt => {
+  const handleSubmit = (evt) => {
     evt.preventDefault()
     alert(`Submitting Name ${name}`)
   }
@@ -115,7 +118,7 @@ export function NameForm(props) {
         <input
           type="text"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
       </label>
       <input type="submit" value="Submit" />
@@ -128,7 +131,7 @@ export function NameForm(props) {
 
 官网[setState()](https://reactjs.org/docs/react-component.html#setstate)  
 setState 第一个值可以是对象，也可以 return 一个方法；使用方法的时候是 React 内部异步更新的。推荐用方法  
-第二个值返回的是 state 更新成功之后的回调 
+第二个值返回的是 state 更新成功之后的回调
 
 ```js
 const value = e.target.value

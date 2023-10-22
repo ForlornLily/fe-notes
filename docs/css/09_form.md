@@ -4,7 +4,7 @@
 <form>
   <fieldset>
     <legend>健康信息</legend>
-    <label>身高：<input type="text"/></label>
+    <label>身高：<input type="text" /></label>
     <label for="weight">体重：</label><input type="text" id="weight" />
   </fieldset>
 </form>

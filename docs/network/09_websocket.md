@@ -62,7 +62,7 @@ Sec-WebSocket-Key 是随机生成的 Base64 编码字符串
 ## 创建
 
 ```js
-var host = 'ws://' + href + ':6800'
+var host = "ws://" + href + ":6800"
 socket = new WebSocket(host)
 socket.onmessage = function () {}
 ```
@@ -72,30 +72,30 @@ socket.onmessage = function () {}
 响应代码 101 表示本次连接的 HTTP 协议即将被更改，更改后的协议就是 Upgrade: websocket
 
 ```js
-const http = require('http')
-const crypto = require('crypto')
+const http = require("http")
+const crypto = require("crypto")
 
 const server = http.createServer(function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' })
-  res.end(' Hello World n')
+  res.writeHead(200, { "Content-Type": "text/plain" })
+  res.end(" Hello World n")
 })
 server.listen(666)
 
 // 收到 upgrade 请求后，告知客户端允许切换协议
-server.on('upgrade', function (req, socket) {
-  let key = req.headers['sec-websocket-key']
-  const shasum = crypto.createHash('sha1')
+server.on("upgrade", function (req, socket) {
+  let key = req.headers["sec-websocket-key"]
+  const shasum = crypto.createHash("sha1")
   key = shasum
-    .update(key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
-    .digest('base64')
+    .update(key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
+    .digest("base64")
   var headers = [
-    'HTTP/1.1 101 Switching Protocols',
-    'Upgrade: websocket',
-    'Connection: Upgrade',
-    'Sec-WebSocket-Accept:' + key,
+    "HTTP/1.1 101 Switching Protocols",
+    "Upgrade: websocket",
+    "Connection: Upgrade",
+    "Sec-WebSocket-Accept:" + key,
   ]
-  socket.write(headers.concat('', '').join('\r\n'))
-  socket.on('data', (data) => console.log(data.toString()))
+  socket.write(headers.concat("", "").join("\r\n"))
+  socket.on("data", (data) => console.log(data.toString()))
 })
 ```
 

@@ -11,9 +11,9 @@ $(“#test”).abc()和$.trim()
 IIFE 并不是闭包
 
 ```js
-;(function($) {
-  $.fn.myFunction = function() {
-    return this.each(function() {
+;(function ($) {
+  $.fn.myFunction = function () {
+    return this.each(function () {
       //逻辑
     })
   }
@@ -42,7 +42,7 @@ IIFE 并不是闭包
 
 ```js
 var query = jQuery.noConflict(true)
-;(function($) {
+;(function ($) {
   // 用query表示jQuery
 })(query)
 //其他地方用$
@@ -56,7 +56,7 @@ var // Map over jQuery in case of overwrite
   // Map over the $ in case of overwrite
   _$ = window.$
 
-jQuery.noConflict = function(deep) {
+jQuery.noConflict = function (deep) {
   if (window.$ === jQuery) {
     window.$ = _$
   }

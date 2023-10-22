@@ -1,7 +1,8 @@
 # 概要
 
 本节大部分是[《精通 CSS：高级 Web 标准解决方案（第 3 版）》](http://www.ituring.com.cn/book/1910)的笔记  
-更推荐 [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML) 查询  
+更推荐 [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML) 查询
+
 ## progressive enhancement
 
 渐进增强。

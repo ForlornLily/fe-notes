@@ -23,7 +23,7 @@ function extend<T extends object, U extends object>(
   return obj
 }
 
-const x = extend({ a: 'hello' }, { b: 42 })
+const x = extend({ a: "hello" }, { b: 42 })
 
 const a = x.a
 const b = x.b
@@ -45,7 +45,7 @@ const b = x.b
 
 ```ts
 let myFavoriteNumber: string | number
-myFavoriteNumber = 'seven'
+myFavoriteNumber = "seven"
 console.log(myFavoriteNumber.length) // 5，不会报错
 myFavoriteNumber = 7
 console.log(myFavoriteNumber.length) // 编译时报错
@@ -89,9 +89,9 @@ function myCustom(x: unionName): void {
 比如指定 string 类型的值只能是"1", "2", "3"
 
 ```ts
-type str = '1' | '2' | '3'
+type str = "1" | "2" | "3"
 let x: str
-x = '4' //报错，因为x只能是1/2/3
+x = "4" //报错，因为x只能是1/2/3
 ```
 
 ### 数字字面量类型

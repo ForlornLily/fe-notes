@@ -64,8 +64,8 @@ class Collection {
   }
 }
 let set = new Collection()
-set.add('Saber')
-set.add('Archer')
+set.add("Saber")
+set.add("Archer")
 ```
 
 ## 多个集合常见操作
@@ -136,13 +136,13 @@ class Container extends Collection {
   }
 }
 let first = new Collection()
-first.add('1')
-first.add('2')
-first.add('3')
+first.add("1")
+first.add("2")
+first.add("3")
 let second = new Collection()
-second.add('1')
-second.add('3')
-second.add('4')
+second.add("1")
+second.add("3")
+second.add("4")
 let container = new Container()
 let result = container.union(first, second)
 let result2 = container.intersection(first, second)
@@ -185,6 +185,6 @@ class CollectionSet {
   }
 }
 let set2 = new CollectionSet()
-set2.add('Saber')
-set2.add('Archer')
+set2.add("Saber")
+set2.add("Archer")
 ```

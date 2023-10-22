@@ -7,8 +7,8 @@
 // 全局变量
 let EventBus = new Vue()
 //用全部变量的on和emit进行事件管理
-EventBus.$emit('received', 'from child')
-EventBus.$on('received', val => {
+EventBus.$emit("received", "from child")
+EventBus.$on("received", (val) => {
   //sth.
 })
 ```
@@ -17,8 +17,8 @@ EventBus.$on('received', val => {
 
 ```js
 var app = new Vue({
-  el: '#app',
-  bus: bus
+  el: "#app",
+  bus: bus,
 })
 
 // 使用 bus
@@ -35,12 +35,12 @@ app.$options.bus
   function MyStore(Vue, options) {
     const bus = new Vue({
       data: {
-        state: options.state
-      }
+        state: options.state,
+      },
     })
     this.install(Vue, bus)
   }
-  MyStore.prototype.install = function(Vue, bus) {
+  MyStore.prototype.install = function (Vue, bus) {
     //mixin的形式混入vuex
     Vue.mixin({
       beforeCreate() {
@@ -48,13 +48,13 @@ app.$options.bus
           //挂载到原型上
           Vue.prototype.$myStore = bus
         }
-      }
+      },
     })
   }
   const myStore = new MyStore(Vue, {
     state: {
-      count: 0
-    }
+      count: 0,
+    },
   })
   // 子组件 a
   const childA = {
@@ -62,26 +62,26 @@ app.$options.bus
     methods: {
       handleClick() {
         this.$myStore.state.count += 1
-      }
-    }
+      },
+    },
   }
 
   // 子组件 b
   const childB = {
-    template: '<div>count: {{ count }}</div>',
+    template: "<div>count: {{ count }}</div>",
     computed: {
       count() {
         return this.$myStore.state.count
-      }
-    }
+      },
+    },
   }
   var app = new Vue({
-    el: '#app',
+    el: "#app",
     components: {
-      'child-a': childA,
-      'child-b': childB
+      "child-a": childA,
+      "child-b": childB,
     },
-    myStore: myStore
+    myStore: myStore,
   })
 </script>
 ```

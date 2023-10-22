@@ -57,20 +57,20 @@ service worker 是一个特殊的 web Worker
 调用 register()方法，成功后就会进行下载和安装
 
 ```js
-if ('serviceWorker' in navigator) {
+if ("serviceWorker" in navigator) {
   navigator.serviceWorker
-    .register('/serviceworker.js')
+    .register("/serviceworker.js")
     .then(function (registration) {
       if (registration.installing) {
-        console.log('Service worker installing')
+        console.log("Service worker installing")
       } else if (registration.waiting) {
-        console.log('Service worker installed')
+        console.log("Service worker installed")
       } else if (registration.active) {
-        console.log('Service worker active')
+        console.log("Service worker active")
       }
     })
     .catch(function (err) {
-      console.log('Service worker registration failed:', err)
+      console.log("Service worker registration failed:", err)
     })
 }
 ```
@@ -90,8 +90,8 @@ if ('serviceWorker' in navigator) {
 也可以设置项目下的某一个子目录
 
 ```js
-navigator.serviceWorker.register('/serviceworker.js', {
-  scope: '/',
+navigator.serviceWorker.register("/serviceworker.js", {
+  scope: "/",
 })
 ```
 
@@ -148,7 +148,7 @@ navigator.serviceWorker.register('/serviceworker.js', {
 
 ```js
 //监听fetch事件
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   console.log(event)
 })
 ```
@@ -171,17 +171,17 @@ service worker 要处于激活状态
 
 ```js
 //fetch替换图片src
-self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/img/logo.png')) {
-    event.respondWith(fetch('/img/logo-flipped.png'))
+self.addEventListener("fetch", (event) => {
+  if (event.request.url.includes("/img/logo.png")) {
+    event.respondWith(fetch("/img/logo-flipped.png"))
   }
 })
 //Response对象
 event.respondWith(
   new Response(
-    'Welcome to the Gotham Imperial Hotel.\n' +
-      'There seems to be a problem with your connection.\n' +
-      'We look forward to telling you about our hotel as soon as you go online.'
+    "Welcome to the Gotham Imperial Hotel.\n" +
+      "There seems to be a problem with your connection.\n" +
+      "We look forward to telling you about our hotel as soon as you go online."
   )
 )
 ```
@@ -208,10 +208,10 @@ event.respondWith(
 所有依赖的核心 cache 被缓存之前都不会被安装
 
 ```js
-self.addEventListener('install', function (event) {
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open('gih-cache').then(function (cache) {
-      return cache.add('/index-offline.html')
+    caches.open("gih-cache").then(function (cache) {
+      return cache.add("/index-offline.html")
     })
   )
 })
@@ -231,13 +231,13 @@ Service Worker 之间缓存不共享。
 
 ```js
 var immutableRequests = [
-  '/vendor/bootstrap/3.3.7/bootstrap.min.css',
-  '/css/style-v355.css',
+  "/vendor/bootstrap/3.3.7/bootstrap.min.css",
+  "/css/style-v355.css",
 ]
-var mutableRequests = ['app-settings.json', 'index.html']
-self.addEventListener('install', function (event) {
+var mutableRequests = ["app-settings.json", "index.html"]
+self.addEventListener("install", function (event) {
   event.waitUntil(
-    caches.open('cache-v2').then(function (cache) {
+    caches.open("cache-v2").then(function (cache) {
       var newImmutableRequests = []
       return Promise.all(
         immutableRequests.map(function (url) {
@@ -277,15 +277,15 @@ self.addEventListener('install', function (event) {
 
 ```js
 // Register your service worker:
-navigator.serviceWorker.register('/sw.js')
+navigator.serviceWorker.register("/sw.js")
 // Then later, request a one-off sync:
 navigator.serviceWorker.ready.then(function (swRegistration) {
-  return swRegistration.sync.register('myFirstSync')
+  return swRegistration.sync.register("myFirstSync")
 })
 
 //在sw.js中
-self.addEventListener('sync', function (event) {
-  if (event.tag == 'myFirstSync') {
+self.addEventListener("sync", function (event) {
+  if (event.tag == "myFirstSync") {
     //doSomeStuff()返回Promise的reject或者resolve
     event.waitUntil(doSomeStuff())
   }
@@ -299,12 +299,12 @@ self.addEventListener('sync', function (event) {
 ```js
 //controller 获取控制当前页面的service worker
 navigator.serviceWorker.controller.postMessage({
-  arrival: '05/11/2022',
+  arrival: "05/11/2022",
   nights: 3,
   guests: 2,
 })
 //监听message 事件来捕获
-self.addEventListener('message', function (event) {
+self.addEventListener("message", function (event) {
   console.log(event.data)
 })
 ```
@@ -337,17 +337,17 @@ caches.open(cacheName).then(function(cache) {
 比如在 install 已经 add 的资源，在 fetch 中进行获取
 
 ```js
-self.addEventListener('fetch', function (event) {
+self.addEventListener("fetch", function (event) {
   event.respondWith(
     //如果获取失败，拿本地的缓存内容
     fetch(event.request).catch(function () {
-      return caches.match('/index-offline.html')
+      return caches.match("/index-offline.html")
     })
   )
 })
 // 在特定的缓存中寻找匹配的请求
-caches.open('my-cache').then(function (cache) {
-  return cache.match('logo.png')
+caches.open("my-cache").then(function (cache) {
+  return cache.match("logo.png")
 })
 ```
 
@@ -395,7 +395,7 @@ options 和 match 一样
 会缓存 Response.status 是任意值
 
 ```js
-caches.open('v1').then(function (cache) {
+caches.open("v1").then(function (cache) {
   cache.put(event.request, response)
 })
 ```
@@ -411,7 +411,7 @@ caches.open('v1').then(function (cache) {
 参数是个 url 的数组
 
 ```js
-var CACHED_URLS = ['/index-offline.html', '/img/logo-header.png']
+var CACHED_URLS = ["/index-offline.html", "/img/logo-header.png"]
 cache.addAll(CACHED_URLS)
 ```
 
@@ -511,18 +511,18 @@ scope：作用域，如果 url 跳到了作用域之外，那么 display 将会�
 ```js
 function notifyMe() {
   // Let's check if the browser supports notifications
-  if (!('Notification' in window)) {
-    alert('This browser does not support desktop notification')
-  } else if (Notification.permission === 'granted') {
+  if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification")
+  } else if (Notification.permission === "granted") {
     // 判断通知是否允许
     // If it's okay let's create a notification
-    var notification = new Notification('Hi there!')
-  } else if (Notification.permission !== 'denied') {
+    var notification = new Notification("Hi there!")
+  } else if (Notification.permission !== "denied") {
     // 请求允许通知
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
-      if (permission === 'granted') {
-        var notification = new Notification('Hi there!')
+      if (permission === "granted") {
+        var notification = new Notification("Hi there!")
       }
     })
   }
@@ -543,18 +543,18 @@ in window 条件就不满足)，就放在 service worker 中
 ```js
 var showNewReservationNotification = function () {
   navigator.serviceWorker.ready.then(function (registration) {
-    registration.showNotification('Reservation Received', {
-      body: 'Hi there!',
-      icon: '/img/reservation-gih.jpg',
-      badge: '/img/icon-hotel.png',
-      tag: 'new-reservation',
+    registration.showNotification("Reservation Received", {
+      body: "Hi there!",
+      icon: "/img/reservation-gih.jpg",
+      badge: "/img/icon-hotel.png",
+      tag: "new-reservation",
     })
   })
 }
 var offerNotification = function () {
-  if ('Notification' in window && 'serviceWorker' in navigator) {
+  if ("Notification" in window && "serviceWorker" in navigator) {
     Notification.requestPermission().then(function (permission) {
-      if (permission === 'granted') {
+      if (permission === "granted") {
         showNewReservationNotification()
       }
     })

@@ -7,35 +7,36 @@
 loader 内的 use 具有顺序，从后往前
 
 ## 图片/字体
-``` js
+
+```js
 module.exports = {
   module: {
     rules: [
       {
         test: /\.(ts(x?)|js(x?))$/,
         exclude: /node_modules/,
-        loader: 'swc-loader',
+        loader: "swc-loader",
       },
       {
         test: /\.css$/,
         use: [
-          isEnvProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+          isEnvProduction ? "style-loader" : MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 1,
               sourceMap: true,
               modules: {
                 auto: true,
-                localIdentName: '[local]__[hash:base64:5]',
+                localIdentName: "[local]__[hash:base64:5]",
               },
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               postcssOptions: {
-                config: path.resolve(__dirname, './postcss.config.js'),
+                config: path.resolve(__dirname, "./postcss.config.js"),
               },
               sourceMap: true,
             },
@@ -45,25 +46,25 @@ module.exports = {
       {
         test: /\.less?$/,
         use: [
-          isEnvProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+          isEnvProduction ? "style-loader" : MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               importLoaders: 2,
               sourceMap: true,
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               postcssOptions: {
-                config: path.resolve(__dirname, './postcss.config.js'),
+                config: path.resolve(__dirname, "./postcss.config.js"),
               },
               sourceMap: true,
             },
           },
           {
-            loader: 'less-loader',
+            loader: "less-loader",
             options: {
               sourceMap: true,
               lessOptions: {
@@ -76,9 +77,9 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif)(\?.*)?$/,
         generator: {
-          filename: 'img/[name].[contenthash:7][ext]',
+          filename: "img/[name].[contenthash:7][ext]",
         },
-        type: 'asset',
+        type: "asset",
         parser: {
           dataUrlCondition: {
             maxSize: 4 * 1024,
@@ -88,9 +89,9 @@ module.exports = {
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         generator: {
-          filename: 'fonts/[name].[contenthash:7][ext]',
+          filename: "fonts/[name].[contenthash:7][ext]",
         },
-        type: 'asset',
+        type: "asset",
         parser: {
           dataUrlCondition: {
             maxSize: 4 * 1024,
@@ -101,7 +102,9 @@ module.exports = {
   },
 }
 ```
+
 ### file-loader
+
 Webpack 5 已废弃，[file-loader](https://v4.webpack.js.org/loaders/file-loader/)，改用 [Asset Modules](https://webpack.js.org/guides/asset-modules/)  
 通常用来处理图片和字体，实际上任何类型都可以
 
@@ -112,26 +115,26 @@ file-loader 本质上把文件挪到打包后的目录，并返回 webpack 一�
 更多 options 见官网
 
 ```js
-const path = require('path')
+const path = require("path")
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: "./src/index.js",
   },
   module: {
     rules: [
       {
         test: /.js$/,
         use: {
-          loader: 'file-loader',
+          loader: "file-loader",
           options: {
             //loader的配置
-            name: '[name].[ext]', //和源文件一样的名字，一样的后缀
-            outputPath: 'images/' //打包后放置的文件夹
-          }
-        }
-      }
-    ]
-  }
+            name: "[name].[ext]", //和源文件一样的名字，一样的后缀
+            outputPath: "images/", //打包后放置的文件夹
+          },
+        },
+      },
+    ],
+  },
 }
 ```
 
@@ -146,6 +149,7 @@ module.exports = {
 ![](../images/f67281503a4de57e61fb11cc530bcb89.png)
 
 ### url-loader
+
 Webpack 5 已废弃
 把文件转成 base64。通常就用在图片
 
@@ -212,54 +216,55 @@ SCSS 源代码会先交给 sass-loader 把 SCSS 转换成 CSS；
 把 css-loader 输出的 CSS 给 style-loader，转成 style 标签
 
 以 create-react-app 为例
-``` js
-const path = require('path');
 
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+```js
+const path = require("path")
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 // style files regexes
-const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
-const sassModuleRegex = /\.module\.(scss|sass)$/;
-const isEnvDevelopment = webpackEnv === 'development';
-const isEnvProduction = webpackEnv === 'production';
+const cssRegex = /\.css$/
+const cssModuleRegex = /\.module\.css$/
+const sassRegex = /\.(scss|sass)$/
+const sassModuleRegex = /\.module\.(scss|sass)$/
+const isEnvDevelopment = webpackEnv === "development"
+const isEnvProduction = webpackEnv === "production"
 
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
   const loaders = [
-    isEnvDevelopment && require.resolve('style-loader'),
+    isEnvDevelopment && require.resolve("style-loader"),
     isEnvProduction && {
       loader: MiniCssExtractPlugin.loader,
       // css is located in `static/css`, use '../../' to locate index.html folder
       // in production `paths.publicUrlOrPath` can be a relative path
-      options: paths.publicUrlOrPath.startsWith('.')
-        ? { publicPath: '../../' }
+      options: paths.publicUrlOrPath.startsWith(".")
+        ? { publicPath: "../../" }
         : {},
     },
     {
-      loader: require.resolve('css-loader'),
+      loader: require.resolve("css-loader"),
       options: cssOptions,
     },
     {
       // Options for PostCSS as we reference these options twice
       // Adds vendor prefixing based on your specified browser support in
       // package.json
-      loader: require.resolve('postcss-loader'),
+      loader: require.resolve("postcss-loader"),
       options: {
         postcssOptions: {
           // Necessary for external CSS imports to work
           // https://github.com/facebook/create-react-app/issues/2677
-          ident: 'postcss',
+          ident: "postcss",
           config: false,
           plugins: !useTailwind
             ? [
-                'postcss-flexbugs-fixes',
+                "postcss-flexbugs-fixes",
                 [
-                  'postcss-preset-env',
+                  "postcss-preset-env",
                   {
                     autoprefixer: {
-                      flexbox: 'no-2009',
+                      flexbox: "no-2009",
                     },
                     stage: 3,
                   },
@@ -267,16 +272,16 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
                 // Adds PostCSS Normalize as the reset css with default options,
                 // so that it honors browserslist config in package.json
                 // which in turn let's users customize the target behavior as per their needs.
-                'postcss-normalize',
+                "postcss-normalize",
               ]
             : [
-                'tailwindcss',
-                'postcss-flexbugs-fixes',
+                "tailwindcss",
+                "postcss-flexbugs-fixes",
                 [
-                  'postcss-preset-env',
+                  "postcss-preset-env",
                   {
                     autoprefixer: {
-                      flexbox: 'no-2009',
+                      flexbox: "no-2009",
                     },
                     stage: 3,
                   },
@@ -286,11 +291,11 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       },
     },
-  ].filter(Boolean);
+  ].filter(Boolean)
   if (preProcessor) {
     loaders.push(
       {
-        loader: require.resolve('resolve-url-loader'),
+        loader: require.resolve("resolve-url-loader"),
         options: {
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
           root: paths.appSrc,
@@ -302,13 +307,14 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           sourceMap: true,
         },
       }
-    );
+    )
   }
-  return loaders;
-};
+  return loaders
+}
 ```
-``` js
-[
+
+```js
+;[
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
   // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -321,11 +327,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     exclude: cssModuleRegex,
     use: getStyleLoaders({
       importLoaders: 1,
-      sourceMap: isEnvProduction
-        ? shouldUseSourceMap
-        : isEnvDevelopment,
+      sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       modules: {
-        mode: 'icss',
+        mode: "icss",
       },
     }),
     // Don't consider CSS imports dead code even if the
@@ -340,11 +344,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     test: cssModuleRegex,
     use: getStyleLoaders({
       importLoaders: 1,
-      sourceMap: isEnvProduction
-        ? shouldUseSourceMap
-        : isEnvDevelopment,
+      sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       modules: {
-        mode: 'local',
+        mode: "local",
         getLocalIdent: getCSSModuleLocalIdent,
       },
     }),
@@ -358,14 +360,12 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     use: getStyleLoaders(
       {
         importLoaders: 3,
-        sourceMap: isEnvProduction
-          ? shouldUseSourceMap
-          : isEnvDevelopment,
+        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         modules: {
-          mode: 'icss',
+          mode: "icss",
         },
       },
-      'sass-loader'
+      "sass-loader"
     ),
     // Don't consider CSS imports dead code even if the
     // containing package claims to have no side effects.
@@ -380,15 +380,13 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     use: getStyleLoaders(
       {
         importLoaders: 3,
-        sourceMap: isEnvProduction
-          ? shouldUseSourceMap
-          : isEnvDevelopment,
+        sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         modules: {
-          mode: 'local',
+          mode: "local",
           getLocalIdent: getCSSModuleLocalIdent,
         },
       },
-      'sass-loader'
+      "sass-loader"
     ),
   },
 ]
@@ -407,11 +405,13 @@ postcss-loader
 配置文件内引入 autoprefixer
 
 ![](../images/e836eac321ee3cb45f975b378338d650.png)
+
 ## JS
 
 ### swc
+
 [swc-loader](https://swc.rs/docs/usage/swc-loader)  
-和 babel 一样的定位，基于 Rust，速度更快些  
+和 babel 一样的定位，基于 Rust，速度更快些
 
 ### babel
 
@@ -468,7 +468,7 @@ npm i @babel/plugin-proposal-class-properties @babel/plugin-transform-block-scop
 在需要兼容的页面的 JS 顶部引入
 
 ```js
-import '@babel/polyfill'
+import "@babel/polyfill"
 ```
 
 ![](../images/c9f03d94b0a9c0f0f4bb38dc79a23251.png)
@@ -530,11 +530,11 @@ The polyfill is provided as a convenience but you should use it with
 options: {
   presets: [
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
-        useBuiltIns: 'usage'
-      }
-    ]
+        useBuiltIns: "usage",
+      },
+    ],
   ]
 }
 ```
@@ -549,14 +549,14 @@ options: {
 options: {
   presets: [
     [
-      '@babel/preset-env',
+      "@babel/preset-env",
       {
-        useBuiltIns: 'usage',
+        useBuiltIns: "usage",
         targets: {
-          ie: '10' //最低版本
-        }
-      }
-    ]
+          ie: "10", //最低版本
+        },
+      },
+    ],
   ]
 }
 ```

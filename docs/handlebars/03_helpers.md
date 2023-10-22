@@ -5,17 +5,17 @@
 调用 `registerHelper` 方法进行注册，`unregisterHelper` 注销
 
 ```js
-Handlebars.registerHelper('loop', (arr) => {
-  let result = ''
+Handlebars.registerHelper("loop", (arr) => {
+  let result = ""
   arr.forEach((value) => {
-    result += ' ' + value
+    result += " " + value
   })
   return result
   // return new Handlebars.SafeString(result)
 })
 const template = Handlebars.compile(`{{loop people }}`)
 const result = template({
-  people: ['Saber & ', 'Lancer', 'Archer'],
+  people: ["Saber & ", "Lancer", "Archer"],
 }) // Saber &amp;  Lancer Archer
 ```
 
@@ -28,13 +28,13 @@ const result = template({
 ## 多个参数
 
 ```js
-Handlebars.registerHelper('introduce', (str, name) => {
+Handlebars.registerHelper("introduce", (str, name) => {
   return `${str} ${name}`
 })
 
 const template = Handlebars.compile(`{{introduce "Her name is" name}}`)
 const result = template({
-  name: 'Saber',
+  name: "Saber",
 }) // Her name is Saber
 ```
 
@@ -43,15 +43,15 @@ const result = template({
 完整内容见[API](http://handlebarsjs.com/api-reference/helpers.html)
 
 ```js
-Handlebars.registerHelper('introduce', (target, options) => {
+Handlebars.registerHelper("introduce", (target, options) => {
   // options 会包含额外的内容
 })
 
 const template = Handlebars.compile(`{{introduce servant}}`)
 const result = template({
   servant: {
-    type: 'Saber',
-    name: 'Altria',
+    type: "Saber",
+    name: "Altria",
   },
 })
 ```
@@ -62,14 +62,14 @@ const result = template({
 如果想用变量名，加上 `./` 或者 `this.`
 
 ```js
-Handlebars.registerHelper('introduce', (str, name, options) => {
+Handlebars.registerHelper("introduce", (str, name, options) => {
   return `${str}`
 })
 
 const template = Handlebars.compile(`{{introduce ./introduce}}`)
 // 等价于 const template = Handlebars.compile(`{{introduce this.introduce}}`);
 const result = template({
-  introduce: 'Saber',
+  introduce: "Saber",
 }) // Saber
 ```
 
@@ -78,25 +78,25 @@ const result = template({
 指定生效范围
 
 ```js
-Handlebars.registerHelper('outer', (str, name) => {
+Handlebars.registerHelper("outer", (str, name) => {
   return `${str} ${name}`
 })
-Handlebars.registerHelper('inner', (str, options) => {
+Handlebars.registerHelper("inner", (str, options) => {
   return `${str} name is`
 })
 const template = Handlebars.compile(`{{outer (inner "Her") name}}`)
 const result = template({
-  name: 'Saber',
+  name: "Saber",
 }) // Her name is Saber
 ```
 
 ## this
 
 ```js
-Handlebars.registerHelper('bold', function (options) {
+Handlebars.registerHelper("bold", function (options) {
   // this 是 { body: "hello" }
   return new Handlebars.SafeString(
-    '<div class="mybold">' + options.fn(this) + '</div>'
+    '<div class="mybold">' + options.fn(this) + "</div>"
   )
 })
 const template = Handlebars.compile(
@@ -105,7 +105,7 @@ const template = Handlebars.compile(
   </div>`
 )
 const result = template({
-  body: 'hello',
+  body: "hello",
 })
 ```
 
@@ -124,8 +124,8 @@ const template = Handlebars.compile(
 )
 const result = template({
   servant: {
-    name: 'Altria',
-    class: 'Saber',
+    name: "Altria",
+    class: "Saber",
   },
 })
 /* 
@@ -207,7 +207,7 @@ const template = Handlebars.compile(
 )
 const result = template({
   users: [{ id: 11 }, { id: 22 }, { id: 33 }],
-  infos: ['a', 'b', 'c'],
+  infos: ["a", "b", "c"],
 })
 /* 
   结果
@@ -231,22 +231,22 @@ const template = Handlebars.compile(
 const result = template({
   persons: [
     {
-      name: 'Nils',
-      'resident-in': 'darmstadt',
+      name: "Nils",
+      "resident-in": "darmstadt",
     },
     {
-      name: 'Yehuda',
-      'resident-in': 'san-francisco',
+      name: "Yehuda",
+      "resident-in": "san-francisco",
     },
   ],
   cities: {
     darmstadt: {
-      name: 'Darmstadt',
-      country: 'Germany',
+      name: "Darmstadt",
+      country: "Germany",
     },
-    'san-francisco': {
-      name: 'San Francisco',
-      country: 'USA',
+    "san-francisco": {
+      name: "San Francisco",
+      country: "USA",
     },
   },
 })
@@ -271,9 +271,9 @@ const template = Handlebars.compile(
 )
 const result = template({
   array: [
-    { firstname: 'Saber' },
-    { firstname: 'Lancer' },
-    { secondname: 'Alter' },
+    { firstname: "Saber" },
+    { firstname: "Lancer" },
+    { secondname: "Alter" },
   ],
 })
 /* 
@@ -303,7 +303,7 @@ const result = template({
   user: [
     {
       userId: 1,
-      userName: 'hello',
+      userName: "hello",
     },
   ],
 })

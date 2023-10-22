@@ -27,7 +27,7 @@ class Factory {
     return this.name
   }
 }
-let person = new Factory('John', 13)
+let person = new Factory("John", 13)
 console.log(person.serialNumber) //正常
 console.log(person.name) //报错，name是private，只能在Factory访问
 ```
@@ -42,7 +42,7 @@ class Animal {
   }
 }
 
-new Animal('Cat').#name // 报错
+new Animal("Cat").#name // 报错
 ```
 
 ## 抽象类 abstract
@@ -61,7 +61,7 @@ abstract class Factory {
     this.name = name
   }
 }
-let person = new Factory('John') //报错，不允许new
+let person = new Factory("John") //报错，不允许new
 ```
 
 ```ts
@@ -86,7 +86,7 @@ class Plant extends Factory {
     console.log(this.number)
   }
 }
-let child = new Plant('Emma', '1')
+let child = new Plant("Emma", "1")
 child.sayName() //"Emma"
 child.sayNumber() //"1"
 ```
@@ -131,9 +131,9 @@ class Magica implements Contract {
     this.name = name
   }
 }
-let servant = new Saber('Altria')
+let servant = new Saber("Altria")
 console.log(servant.name) //Altria
-let girl = new Magica('momo')
+let girl = new Magica("momo")
 girl.appoint() //momo appoint mahou with QB
 ```
 
@@ -165,7 +165,7 @@ class Servant implements Spell {
     this.name = name
   }
 }
-let saber = new Servant('Altria')
+let saber = new Servant("Altria")
 saber.appoint()
 console.log(saber.command())
 ```
@@ -201,7 +201,7 @@ class Servant {
     this.name = name
   }
 }
-let girl = new Magica('madoka')
-const servant = new Servant('saber')
+let girl = new Magica("madoka")
+const servant = new Servant("saber")
 girl = servant //不能赋值，因为两者具有private属性，尽管都叫name
 ```

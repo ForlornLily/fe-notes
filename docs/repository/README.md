@@ -86,7 +86,7 @@ sidebar: auto
 
 - jest
 - cypress
-- [playwright](https://github.com/microsoft/playwright)  
+- [playwright](https://github.com/microsoft/playwright)
 
 ## Linux
 

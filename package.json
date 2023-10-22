@@ -6,35 +6,26 @@
   "author": "Forlorn",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "dev": "set NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs",
-    "lint": "prettier --write 'docs/**/*.md'",
+    "lint": "lint-staged",
     "release": "node scripts/release.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run release && git add . && lint-staged"
-    }
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "preserve": "never"
-  },
-  "devDependencies": {},
   "dependencies": {
     "gray-matter": "^4.0.2",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
     "markdown-it-include": "^1.1.1",
     "markdown-toc": "^1.2.0",
     "prettier": "^2.0.5",
     "vuepress": "^1.5.2"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^15.0.2"
   }
 }

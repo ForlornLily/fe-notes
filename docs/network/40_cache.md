@@ -84,15 +84,15 @@ Cache-Control: no-cache
 - no-store 才是告诉浏览器不要缓存它，即不使用强制缓存，也不使用协商缓存
 
 ```js
-var http = require('http')
-var fs = require('fs')
+var http = require("http")
+var fs = require("fs")
 http
-  .createServer(function(req, res) {
-    if (req.url === '/cache.png') {
-      fs.readFile('./cache.png', function(err, file) {
-        res.setHeader('Cache-Control', 'max-age=' + 5) //缓存五秒
-        res.setHeader('Content-Type', 'images/png')
-        res.writeHead('200', 'Not Modified')
+  .createServer(function (req, res) {
+    if (req.url === "/cache.png") {
+      fs.readFile("./cache.png", function (err, file) {
+        res.setHeader("Cache-Control", "max-age=" + 5) //缓存五秒
+        res.setHeader("Content-Type", "images/png")
+        res.writeHead("200", "Not Modified")
         res.end(file)
       })
     }
@@ -170,27 +170,27 @@ Cache-control: public
     如果 ETag 是一致的，则直接返回 304 知会客户端直接使用本地缓存即可
 
 ```js
-var http = require('http')
-var fs = require('fs')
+var http = require("http")
+var fs = require("fs")
 http
-  .createServer(function(req, res) {
-    if (req.url === '/cache.png') {
-      fs.readFile('./cache.png', function(err, file) {
-        if (!req.headers['if-none-match']) {
-          res.setHeader('Cache-Control', 'max-age=' + 5)
-          res.setHeader('Content-Type', 'images/png')
-          res.setHeader('Etag', 'ffff')
-          res.writeHead('200', 'Not Modified')
+  .createServer(function (req, res) {
+    if (req.url === "/cache.png") {
+      fs.readFile("./cache.png", function (err, file) {
+        if (!req.headers["if-none-match"]) {
+          res.setHeader("Cache-Control", "max-age=" + 5)
+          res.setHeader("Content-Type", "images/png")
+          res.setHeader("Etag", "ffff")
+          res.writeHead("200", "Not Modified")
           res.end(file)
         } else {
-          if (req.headers['if-none-match'] === 'ffff') {
-            res.writeHead('304', 'Not Modified')
+          if (req.headers["if-none-match"] === "ffff") {
+            res.writeHead("304", "Not Modified")
             res.end()
           } else {
-            res.setHeader('Cache-Control', 'max-age=' + 5)
-            res.setHeader('Content-Type', 'images/png')
-            res.setHeader('Etag', 'ffff')
-            res.writeHead('200', 'Not Modified')
+            res.setHeader("Cache-Control", "max-age=" + 5)
+            res.setHeader("Content-Type", "images/png")
+            res.setHeader("Etag", "ffff")
+            res.writeHead("200", "Not Modified")
             res.end(file)
           }
         }
