@@ -14,7 +14,7 @@
 参考：
 
 - [从 URL 输入到页面展现到底发生什么？](https://github.com/ljianshu/Blog/issues/24)
-- [一文串联 HTTP、TCP、IP、以太网](https://mp.weixin.qq.com/s/t3WM5oGr54-H-7I-7wd3nA?scene=25)  
+- [一文串联 HTTP、TCP、IP、以太网](https://mp.weixin.qq.com/s/t3WM5oGr54-H-7I-7wd3nA?scene=25)
 
 1.  首先做 DNS 查询，如果这一步做了智能 DNS 解析的话，会提供访问速度最快的 IP 地址回来  
     DNS 缓存：参考掘金[「真 ® 全栈之路 - DNS 篇」故事从输入 URL 开始.....](https://juejin.im/post/5ceebb7251882507266414b7)
