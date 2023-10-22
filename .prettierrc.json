@@ -1,4 +1,5 @@
 {
   "semi": false,
-  "quoteProps": "as-needed"
+  "quoteProps": "as-needed",
+  "trailingComma": "es5"
 }
