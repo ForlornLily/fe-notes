@@ -22,65 +22,9 @@ function f() {
 }
 ```
 
-也就是[变量提升](#变量提升-hoisting)
+也就是[变量提升](./003_syntax.md#var-变量提升)
 
-## 变量
-
-区分大小写
-
-必须以`$`或者`_`或者字母开头。后面可以跟字母、数字、`$`和`_`
-
-驼峰式命名变量
-
-不建议赋值时给不同的数据类型
-
-声明对象的时候可以给 null
-
-### 弱类型(weak typing)
-
-允许变量在任意时刻持有任意类型的值
-
-### 变量提升(Hoisting)
-
-在代码的任何部分被执行之前，所有的声明（变量和函数声明），都会首先被处理。函数表达式不会
-
-`var a = 2;`实际上认为这是两个语句：`var a;` 和 `a = 2;`
-
-- 声明，在编译阶段被处理的。
-
-- 赋值，为了执行阶段而留在原处
-
-- 提升是以作用域为单位（见下方的[函数表达式](#函数表达式)）
-
-var 声明的变量，都会在所在函数的顶部。不在函数内部，就认为是全局作用域的顶部
-
-```js
-function hoisting() {
-  var condition = true
-  console.log(value) // undefined
-  if (condition) {
-    var value = "hello"
-    console.log(value) // hello
-  }
-  console.log(value) // hello
-}
-//等价于
-var value
-console.log(value) // undefined
-if (condition) {
-  value = "hello"
-  console.log(value) // hello
-}
-```
-
-[为什么要变量提升](https://segmentfault.com/q/1010000013591021)
-
-- 解析和预编译过程中的声明提升可以提高性能，让函数可以在执行时预先为变量分配栈空间  
-  比如函数声明本身是不会变的，没有必要每次执行的时候都重新解析一边声明
-
-- 声明提升还可以提高 JS 代码的容错性，使一些不规范的代码也可以正常执行
-
-#### 函数优先
+## 函数优先
 
 函数声明是在普通变量之前被提升的
 
@@ -108,7 +52,7 @@ function test() {
 test() //TypeError: test is not a function
 ```
 
-### 函数表达式
+## 函数表达式
 
 - 以`function`开头的是函数声明，必须要给函数名
 
@@ -167,39 +111,6 @@ var a = 2
 console.log(a) // 2
 ```
 
-### 块级声明
-
-- 不会有变量提升；（暂时性死区 The Temporal Dead Zone，简称 TDZ）
-
-**块级**中（即 `{}`）：会把变量放进这个区域，直到执行声明变量的语句，才会从 TDZ 移除。
-
-在这之前任何访问这个变量都会变成 runtime error（也就是访问 TDZ 里面的变量都会报错）
-
-```js
-function hoisting() {
-  var condition = true
-  let value = "world"
-  if (condition) {
-    console.log(value) // 报错
-    let value = "hello"
-  }
-}
-```
-
-```js
-let value = "world"
-if (condition) {
-  let value = "hello"
-  console.log(value) // hello
-}
-```
-
-```js
-//暂时性死区
-let result = typeof value //报错
-let value = "world"
-```
-
 ```js
 let params = (function () {
   params = {
@@ -209,24 +120,6 @@ let params = (function () {
 })()
 console.log(params.a) //ReferenceError: Cannot access 'params' before initialization
 ```
-
-```js
-//不在块级
-var condition = true
-let result = typeof value //不报错，因为不在块级作用域内
-if (condition) {
-  let value = "world"
-}
-```
-
-- 不可以在一个块级中（{}内）重复声明，let/const 已经声明一个变量的情况下，再用 var/let/const 都会报错。顺序调换先用 var 再用 let 也会报错
-
-```js
-var value = "world"
-let value = "hello" // ReferenceError: value is not defined
-```
-
-- 在全局声明也不会成为`window`的属性
 
 #### 循环中的 let
 

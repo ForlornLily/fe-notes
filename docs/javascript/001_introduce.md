@@ -22,7 +22,7 @@ API
 
 控制浏览器显示页面以外的部分。  
 提供和浏览器做交互的方法和接口  
-比如弹出浏览器新窗口，提供浏览器详细信息（`navigator`），加载页面的信息（`location`），显示器（`screen`），`cookies`，`XMLHttpRequest`等自定义对象
+比如弹出浏览器新窗口，提供浏览器详细信息（`navigator`），加载页面的信息（`location`），显示器（`screen`），`cookies`，`performance`，`XMLHttpRequest`等自定义对象
 
 ## 解释型语言(interpreted)
 
