@@ -11,7 +11,9 @@
 - transition-timing-function: 默认是 ease
 
 ```css
-transition: box-shadow 0.15s, transform 0.15s;
+transition:
+  box-shadow 0.15s,
+  transform 0.15s;
 ```
 
 等价于

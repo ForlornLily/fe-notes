@@ -16,7 +16,7 @@
 function change<
   T extends { new (...args: any[]): {} } & {
     innerValue: number
-  }
+  },
 >(constructor: T) {
   constructor.innerValue = 100
   return class Proxy extends constructor {
