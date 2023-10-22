@@ -24,6 +24,8 @@
 
 客户端进行[范围请求](./04_message.md#范围请求)，服务端成功执行这部分的 get 请求，并返回包含 Content-Range 返回指定的内容
 
+- 201 Created：一般用在 post 请求，表示该请求已经被成功创建
+
 ## 3xx 重定向
 
 [AJAX 不能捕获](../trick/04_http.md)

@@ -18,4 +18,8 @@
 
 ## TODO
 
-- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)，[为什么要 Fiber](https://zhuanlan.zhihu.com/p/493232443)
+- [React Fiber 是什么](https://zhuanlan.zhihu.com/p/26027085)
+- [为什么要 Fiber](https://zhuanlan.zhihu.com/p/493232443)
+- [这可能是最通俗的 React Fiber(时间分片) 打开方式](https://juejin.cn/post/6844903975112671239)
+- 并发：能执行多个任务，不一定同时
+- 并行：同时处理多个任务
