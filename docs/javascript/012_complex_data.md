@@ -23,8 +23,17 @@ var test = Object.create(Object.prototype)
 优先用点表示法
 
 点或者方括号的层次越多，也就是嵌套的内容越多，寻找的时候消耗性能越大
+每个 Object 实例都有如下属性和方法。
 
-除了名字和值外，每个属性还有一些与之相关的特性(attribute)：可写 writable, 可枚举 enumerable, 可配置 configurable，见[面向对象](./021_oop.md)
+- [constructor](#constructor)：用于创建当前对象的函数
+- [hasOwnProperty](#hasownproperty)：用于判断当前对象实例（不是原型）上是否存在给定的属
+  性
+- [isPrototypeOf](#isprototypeof)：用于判断当前对象是否为另一个对象的原型
+- [propertyIsEnumerable](#propertyisenumerable)：用于判断给定的属性是否可以使用
+- toLocaleString()：返回对象的字符串表示，该字符串反映对象所在的本地化执行环境。
+- toString()：返回对象的字符串表示。
+- valueOf()：返回对象对应的字符串、数值或布尔值表示。通常与 toString() 的返回值相同。
+  除了名字和值外，每个属性还有一些与之相关的特性(attribute)：可写 writable, 可枚举 enumerable, 可配置 configurable，见[面向对象](./021_oop.md)
 
 ### 原型
 
@@ -74,9 +83,9 @@ for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先�
 
 也可以单独使用 `key in object`，包括 enumerable 为 false
 
-## hasOwnproperty(key)
+## hasOwnproperty
 
-key 是个字符串，判断 key 是否存在当前属性，不包括继承
+hasOwnproperty(key)：key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 ```js
 var test = {}
@@ -84,18 +93,18 @@ test.hello = "word"
 test.hasOwnProperty("hello") //true
 ```
 
-## propertyIsEnumerable(key)
+## propertyIsEnumerable
 
-可以看成是 hasOwnproperty 的增强版:  
+propertyIsEnumerable(key)：可以看成是 hasOwnproperty 的增强版:  
 只有是自有属性并且可枚举，才会返回 true
 
 ```js
 test.propertyIsEnumerable("hello")
 ```
 
-## isPrototypeOf(object)
+## isPrototypeOf
 
-对象是否存在于另一个对象的原型链上
+isPrototypeOf(object)：对象是否存在于另一个对象的原型链上
 
 如果实例内部的`[[Prototype]]`指向调用 isPrototypeOf 的对象，那么为 true
 

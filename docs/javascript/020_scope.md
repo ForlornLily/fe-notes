@@ -121,49 +121,6 @@ let params = (function () {
 console.log(params.a) //ReferenceError: Cannot access 'params' before initialization
 ```
 
-#### 循环中的 let
-
-每次迭代都会创建一个同名变量并初始化
-
-```js
-function a() {
-  for (let i = 0; i < 5; i++) {
-    this.i = i
-    setTimeout(function () {
-      console.log(i)
-    }, 0)
-    console.log(this.i)
-  }
-}
-
-a() // 0 1 2 3 4 0 1 2 3 4
-```
-
-#### const
-
-- 声明的时候必须赋值
-
-```js
-const values  // Uncaught SyntaxError: Missing initializer in const declaration
-```
-
-- 改变自身的值会报错。不可以改变引用本身，但是可以改变引用内部的值
-
-```js
-const values = {}
-values = 12 // Uncaught TypeError: Assignment to constant variable.
-
-values.name = "hi" // 正常赋值
-```
-
-#### 循环中的 const
-
-for 循环会报错
-
-for(const key in obj)不会报错
-
-for of 也不会
-
 ## 变量复制
 
 - 简单数据类型：在变量对象上建一个新值，并把值复制，分配到新变量上

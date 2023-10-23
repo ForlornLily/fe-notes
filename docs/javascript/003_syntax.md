@@ -43,8 +43,9 @@ doSomething() // Uncaught ReferenceError: test is not defined
 
 - var 声明的变量，都会在所在函数的顶部。不在函数内部，就认为是全局作用域的顶部
 - 全局变量会成为 window 的属性
-- 同一个变量可以声明多次（严格模式下也支持）  
-  在代码的任何部分被执行之前，所有的声明（变量和函数声明），都会首先被处理。函数表达式不会
+- 同一个变量可以声明多次（严格模式下也支持）
+
+在代码的任何部分被执行之前，所有的声明（变量和函数声明），都会首先被处理。函数表达式不会
 
 `var a = 2;`实际上认为这是两个语句：`var a;` 和 `a = 2;`
 
@@ -52,7 +53,7 @@ doSomething() // Uncaught ReferenceError: test is not defined
 
 - 赋值，为了执行阶段而留在原处
 
-- 提升是以作用域为单位（见[函数表达式](./004_scope.md#函数表达式)）
+- 提升是以作用域为单位（见[函数表达式](./020_scope.md#函数表达式)）
 
 ```js
 function hoisting() {
@@ -127,7 +128,44 @@ var value = "world"
 let value = "hello" // Uncaught SyntaxError: Identifier 'value' has already been declared
 ```
 
+### for
+
+每次迭代都会创建一个同名变量并初始化
+
+```js
+function a() {
+  for (let i = 0; i < 5; i++) {
+    this.i = i
+    setTimeout(function () {
+      console.log(i)
+    }, 0)
+    console.log(this.i)
+  }
+}
+
+a() // 0 1 2 3 4 0 1 2 3 4
+```
+
 ## const
 
 - 声明的时候必须赋值
 - 改变自身的值会报错。不可以改变引用本身，但是可以改变引用内部的值
+
+```js
+const values  // Uncaught SyntaxError: Missing initializer in const declaration
+```
+
+```js
+const values = {}
+values = 12 // Uncaught TypeError: Assignment to constant variable.
+
+values.name = "hi" // 正常赋值
+```
+
+### for
+
+for 循环会报错（因为 `i++` 相当于在改自身的值）
+
+for(const key in obj)不会报错
+
+for of 也不会
