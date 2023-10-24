@@ -71,7 +71,7 @@ for (var i = item.length; i--; ) {
 }
 ```
 
-当 i—到 0 的时候，因为 0 是`falsy`，循环就会停止
+当 i— 到 0 的时候，因为 0 是`falsy`，循环就会停止
 
 while 和 do-while 同理
 
@@ -96,6 +96,43 @@ while (servant !== "Saber") {
   } else {
     servant = "Saber"
   }
+}
+```
+
+### for-in
+
+迭代：不能保证返回对象属性的顺序，不包含 key 是 `Symbol` 的值，包含`prototype`上的值
+
+```js
+const symbolName = Symbol("hello")
+Object.prototype.b = 2
+const test = {
+  a: "1",
+  [symbolName]: "world",
+}
+let tmp = {}
+for (let key in test) {
+  tmp[key] = test[key]
+}
+console.log(tmp) //{a: '1', b: 2}
+```
+
+### for-of
+
+用 `for..of` 直接遍历某个集合时，不同集合有不同的迭代器  
+用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。  
+可以使用 `break`、`continue`、`return` 或者 `throw` 中断  
+值是 next()返回的 value; done 是 true 的时候结束
+
+数组和 Set 是 values
+
+Map 是 entries
+
+```js
+let arr = [11, 22, 33]
+for (let key of arr) {
+  //等价于key of arr.values()
+  console.log(key)
 }
 ```
 
@@ -214,3 +251,7 @@ function memfactorial(n) {
   return memfactorial.cache[n]
 }
 ```
+
+## 函数
+
+完整内容见 [Function](./025_function.md)

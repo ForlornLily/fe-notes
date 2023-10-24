@@ -360,25 +360,6 @@ for (let key of keys) {
 }
 ```
 
-#### 默认的迭代器
-
-用`for..of`直接遍历某个集合时，不同集合有不同的迭代器  
-用于可迭代对象（不能循环普通的对象，需要通过和 Object.keys()搭配使用）。  
-可以使用 `break`、`continue`、[return](#提前退出-return) 或者 [throw](#抛出错误-throw) 中断  
-值是 next()返回的 value; done 是 true 的时候结束
-
-数组和 Set 是 values
-
-Map 是 entries
-
-```js
-let arr = [11, 22, 33]
-for (let key of arr) {
-  //等价于key of arr.values()
-  console.log(key)
-}
-```
-
 ### NodeList（DOM）的迭代器
 
 NodeList 是一个类数组，迭代表现和数组一样

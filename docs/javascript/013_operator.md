@@ -165,7 +165,9 @@ NaN 和 Infinity 会被当做 0 来处理
 
 !null, !NaN, !undefined 是 true.
 
-![](../images/a96badab0e2d4233c9580a4544b5db1f.png)
+```js
+Boolean(NaN) // false
+```
 
 !!和 Boolean 结果一致
 
@@ -173,22 +175,24 @@ NaN 和 Infinity 会被当做 0 来处理
 
 短路操作，只要第一个是 false，就会返回 false
 
-- false && 其他: 返回`false`
+- false && 其他: 返回 `false`
 
-- 对象 1&& 其他: 返回其他
+- 对象 1 && 其他: 返回其他
 
-- 其他&& 对象: 其他为 true 才返回对象
+- 其他 && 对象: 其他为 true 才返回对象
 
 - 对象 1 && 对象 2: 返回对象 2
 
-![](../images/c77f1482693aa3f13bdb9f9a6ef346d2.png)
-![](../images/65285e41045935d709c6d05c24a5d44d.png)
+```js
+0 && {} // 0
+1 && {} // {}
+```
 
-- null && 其他 返回`null`
+- null && 其他 返回 `null`
 
-- NaN && 其他 返回`NaN`
+- NaN && 其他 返回 `NaN`
 
-- undefined && 其他 返回`undefined`
+- undefined && 其他 返回 `undefined`
 
 ### 逻辑或 OR ||
 
@@ -204,13 +208,17 @@ NaN 和 Infinity 会被当做 0 来处理
 
 - 对象 1 \|\| 对象 2: 返回对象 1
 
-![](../images/ee3af84c19cdd05c6363bf76cc4771e3.png)
+```js
+const test = { a: 2 } || 1 //  {a: 2}
+```
 
 - null \|\| null 返回 null，
 
 - NaN, undefined 同理
 
 ## 算术运算
+
+乘性操作符：乘法、除法和取模。不是数值，先根据 Number 规则进行转换
 
 ### 转换规则概览
 
@@ -230,10 +238,11 @@ Infinity 和 0，返回 NaN
 
 Infinity 和不是 0，返回 Infinity，符号看非 0 数值的符号
 
-![](../images/ef121b2d50825ca1fbf039bbfd060e57.png)
-![](../images/36a0b3ba385cb2dc1bf50138e8097e3c.png)
-
-不是数值，先根据 Number 规则进行转换，再遵循上述规则
+```js
+Infinity * -Infinity // -Infinity
+Infinity * 1 // Infinity
+Infinity * -1 // -Infinity
+```
 
 ### 除法
 
@@ -267,13 +276,33 @@ squared **= 2 // 9
 
 ### 加法
 
+加性操作符，即加法和减法操作符  
 有一个 NaN，返回 NaN
 
 Infinity 见下方
 
-![](../images/b0708c08212e2ef0237ed5fce1fec055.png)
-![](../images/6cafa2d5874244fffd3b7cd997f58e1a.png)
-![](../images/499ead26468f13e2332b21c0f79b0a35.png)
+```js
+Infinity + Infinity // Infinity
+Infinity +
+  -Infinity - // NaN
+  Infinity +
+  -Infinity - // -Infinity
+  Infinity +
+  1 // -Infinity
+```
+
+```js
+;+0 +
+  (-0)(
+    // 0
+    -0
+  ) +
+  (-0)(
+    // -0
+    +0
+  ) +
+  +0 // 0
+```
 
 如果有一个字符串，进行字符串拼接
 
@@ -293,7 +322,7 @@ Infinity 见下方
 
 数字运算与加法一样
 
-### 比较
+## 关系操作符
 
 - 比较：大于，小于，大于等于，小于等于
 
@@ -309,13 +338,13 @@ Infinity 见下方
 
 布尔也转数值
 
-### 等于
+## 相等操作符
 
 `==`进行转换
 
 `===`不转
 
-#### 双等号
+### 双等号
 
 - 布尔值，先转成数字 0 或者 1
 
@@ -336,9 +365,13 @@ NaN == NaN // false
 
 - 都是对象，比较两个对象是否指向同一个对象。否则为 false
 
-#### 三等号
+### 三等号
 
 数据类型不同就是 false
+
+## 条件操作符
+
+即 `boolean_expression ? true_value : false_value`
 
 ## delete 运算符
 
