@@ -1,12 +1,13 @@
 # 内置的工具类型
 
 提供了一些快捷方式
-官网[Utility Types](http://www.typescriptlang.org/docs/handbook/utility-types.html)  
+官网[Utility Types](http://www.typescriptlang.org/docs/handbook/utility-types.html)
+
 参考
 
 - [TS 一些工具泛型的使用及其实现](https://zhuanlan.zhihu.com/p/40311981)
 
-## Partial<T>
+## Partial&lt;T>
 
 传入的类型属性全都是可选的，等价于
 
@@ -27,7 +28,7 @@ const todo2 = updateTodo({
 })
 ```
 
-## Required<T>
+## Required&lt;T>
 
 和`Partial<T>`相反，所有都是必须的
 
@@ -46,7 +47,7 @@ const todo2 = updateTodo({
 })
 ```
 
-## Readonly<T>
+## Readonly&lt;T>
 
 只读，不允许再次赋值
 等价于
@@ -64,7 +65,7 @@ const saber: Readonly<servant> = {
 }
 ```
 
-## Record<K,T>
+## Record&lt;K,T>
 
 将 K 中所有的属性的值转化为 T 类型
 
@@ -82,7 +83,7 @@ const x: Record<Page, PageInfo> = {
 }
 ```
 
-## Pick<T,K>
+## Pick&lt;T,K>
 
 从类型 T 中挑选部分属性 K 来构造类型
 
@@ -101,7 +102,7 @@ const todo: TodoPreview = {
 }
 ```
 
-## Omit<T,K>
+## Omit&lt;T,K>
 
 从类型 T 中获取所有属性，然后从中剔除 K 属性后构造一个类型
 
@@ -120,7 +121,7 @@ const todo: TodoPreview = {
 }
 ```
 
-## Exclude<T,U>
+## Exclude&lt;T,U>
 
 从 T 中排除 U
 
@@ -130,11 +131,11 @@ type T1 = Exclude<"a" | "b" | "c", "a" | "b"> // "c"
 type T = Exclude<1 | 2, 1 | 3> // 2
 ```
 
-## Extract<T,U>
+## Extract&lt;T,U>
 
 从 T 中提取出 U
 
-## NonNullable<T>
+## NonNullable&lt;T>
 
 从类型 T 中剔除 null 和 undefined，然后构造一个类型
 
@@ -142,7 +143,7 @@ type T = Exclude<1 | 2, 1 | 3> // 2
 type T1 = NonNullable<string[] | null | undefined> // string[]
 ```
 
-## ReturnType<T>
+## ReturnType&lt;T>
 
 `T`是一个函数类型，把 T 的返回类型作为类型
 
