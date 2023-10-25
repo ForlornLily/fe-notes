@@ -63,6 +63,10 @@ git clone https://github.com/libgit2/libgit2 mylibgit
 
 ![](../images/d54eda919985a10c386c3c634a10f829.png)
 
+### git commit --no-verify
+跳过 pre-commit    
+`git commit --no-verify -m "lint"`  
+
 ## git diff
 
 unstaged 和 staging area 比较
