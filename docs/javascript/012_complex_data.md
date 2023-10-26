@@ -37,7 +37,7 @@ var test = Object.create(Object.prototype)
 
 ### 原型
 
-原型的应用见[函数](./012_function.md)和[面向对象](./021_oop.md)
+原型的应用见[函数](./025_function.md)和[面向对象](./040_oop.md)
 
 每一个对象（除了`null`）都会和另一个对象关联。  
 "另一个对象"就是原型，每个对象从原型继承属性

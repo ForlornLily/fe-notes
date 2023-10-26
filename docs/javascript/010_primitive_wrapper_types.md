@@ -27,8 +27,8 @@ var test3 = new BigInt("10") //报错，BigInt is not a constructor
 1. 创建 String 的一个实例
 2. 调用方法
 3. 销毁该实例。  
-   上面的 `substring` 等价于
 
+上面的 `substring` 等价于
 ```js
 var s4 = new String("emma")
 var s2 = s1.substring(2)
@@ -107,9 +107,19 @@ test.substring(1, 3) //"el"
 test.substr(1, 3) //"ell"
 ```
 
-### 位置 indexOf, lasetIndexOf
+### 位置 indexOf, lastIndexOf
 
 与 Array 类似
+### 迭代  
+```js
+const message = "hello"
+const stringIterator = message[Symbol.iterator]()
+stringIterator.next() // {value: 'h', done: false}
+```
+一般用 `for...of` 访问，支持迭代后可以解构
+``` js
+[...message]  // ['h', 'e', 'l', 'l', 'o']
+```
 
 ### trim()
 
@@ -121,7 +131,7 @@ function trim(str) {
 
 ### 大小写转换
 
-toLowerCase /toUpperCase
+toLowerCase / toUpperCase
 
 toLocaleLowerCase/ toLocaleUpperCase
 
@@ -139,6 +149,10 @@ test.search(/l/) //2
 replace 用于替换，默认只替换第一个匹配。第二个参数可以是一个函数
 
 ![](../images/df6747904e7b81d4447709c71b6ca95b.png)
+```js
+const test = "hello, cat"
+const result = test.replace(/(.at)/g, "world $1") // 'hello, world cat'
+```
 
 ```js
 function htmlEscape(text) {
@@ -162,6 +176,14 @@ let result = htmlEscape('<p class="greeting">Hello world!</p>')
 split 参数也可以是正则
 :::
 
+### localeCompare
+和另一个字符串比较，返回 -1（前面）、0（相等）、1（后面）  
+不同国家可能不一样  
+``` js
+"a".localeCompare("b") // -1
+"ac".localeCompare("a")  // 1
+"A".localeCompare("a") // 1
+```
 ## 基本包装类型和复杂类型的区别
 
 差别在于生命周期。

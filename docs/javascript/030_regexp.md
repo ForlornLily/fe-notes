@@ -1,11 +1,11 @@
 # RegExp
 
 Regular expression  
-`/正则表达式/匹配模式`，第二条斜线后面可以跟一个或多个字母，修饰匹配模式的含义
+`/正则表达式/匹配模式`，第二条斜线后面可以跟一个或多个字母，修饰[匹配模式](#匹配模式)的含义
 
 test 方法：返回 true/false
 
-exec: 返回匹配的数组
+exec: RegExp实例方法，返回匹配的数组
 
 - 如果**配置了 g 标记**，每次调用 exec()都会在字符串中向前搜索下一个匹配项
 
@@ -183,7 +183,7 @@ reg.test("saber") //true
 reg.test("sabber") //false
 ```
 
-## 匹配模式 m i g
+## 匹配模式
 
 g: global，全局模式，表示查找字符串的全部内容，而不是找到第一个匹配的内容就结束。  
 i: ignoreCase，不区分大小写，表示在查找匹配时忽略 pattern 和字符串的大小写。  
@@ -213,6 +213,21 @@ console.log(pattern.lastIndex) // 8
 
 u: unicode，Unicode 模式，启用 Unicode 匹配。  
 s: dotAll 模式，表示元字符.匹配任何字符(包括\n 或\r)。
+## 实例属性
+每个 RegExp 实例都有下列属性  
+- global：布尔值，表示是否设置了 g 标记
+``` js
+const pattern = /.at/g
+pattern.global  // true
+```
+- ignoreCase，布尔值，是否设置了 i
+- unicode，对应 u
+- sticky：对应 y
+- lastIndex
+- multiline：对应 m
+- dotAll：对应 s
+- source
+- flags
 
 ## 分组()
 
