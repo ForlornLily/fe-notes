@@ -8,7 +8,7 @@
 
 函数 parseInt()
 
-构造函数 Number, String, Boolean, Object, Array, Function, Date, RegExp
+构造函数 Number, String, Boolean, Object, Array, Function, Date, RegExp，ReferenceError 
 
 对象 Math, JSON
 

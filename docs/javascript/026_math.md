@@ -1,8 +1,8 @@
 # Math
-
+完整的内置方法见 [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)  
 ## 最大最小值：max/min
 
-## 舍入：ceil, floor, round
+## 舍入
 
 - ceil：向上取整
 
@@ -24,14 +24,18 @@ Math.floor(18) //18
 Math.round("18.5") //19
 Math.round("18.5b") //NaN
 ```
-
+- fround：最接近的单精度(32 位)浮点值
+``` js
+Math.fround(18.5)  // 18.5
+Math.fround("18.5b")  // NaN
+Math.fround(18.1) // 18.100000381469727
+Math.fround(18.9)  // 18.899999618530273
+```
 包含非数字都会是 NaN
 
 ## random
 
 包括 0，不包括 1 的随机数
-
-![](../images/2a677be65674cd728a7b4d0fc395b1b8.png)
 
 ## 幂运算
 

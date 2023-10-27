@@ -100,14 +100,11 @@ servant.unshift("Lancer", "Rider") //3
 
 `reverse`翻转数组顺序
 
-`sort`不传参，把每一项都调用 toString()方法，根据字符串编码排序。最小的在最前面
+`sort`不传参，把每一项都调用 String()方法，根据字符串编码排序。最小的在最前面
 
 ```js
-;[2, 11, 3].sort() //[11, 2, 3]
+[2, 11, 3].sort() //[11, 2, 3]
 ```
-
-![](../images/264e0b6ed0ff28510c7084e85d345465.png)
-![](../images/3b76dc777cb0251330a7557e151e417e.png)
 
 传参的情况下：必须是一个函数。函数接受两个参数，分别是相邻的值。
 
@@ -138,7 +135,8 @@ arr.fill(1) // arr变成[1, 1, 1]
 
 - fill(params, start, end)
 
-不包括 end(end**大于**start 才有效)，不写 end 一直到数组最后一项
+不包括 end(end**大于**start 才有效)，不写 end 一直到数组最后一项  
+start 或者 end 超出范围则不生效    
 
 ```js
 var arr = [4, 5, 6, 7]
@@ -147,7 +145,11 @@ arr.fill(666, 2) //arr变成[4, 5, 666, 666]
 var arr2 = [4, 5, 6, 7]
 arr2.fill(666, 2, 3) //arr变成[4, 5, 666, 7]
 ```
-
+```js
+var arr = [2, 3, 4]
+arr.fill(1, 100, 101)  //  [2, 3, 4]
+arr.fill(1, 100)  //  [2, 3, 4]
+```
 ### copyWithin(start, index, end)
 
 用数组内的值填充
@@ -221,7 +223,7 @@ console.log(temp) //6
 
 - every: 每项内返回 true 才是 true,。遇到 false 就停止循环
 
-`break`只能在循环里面用，不能在迭代里
+`break` 不生效
 
 ```js
 const arr = [1, 2, 3, 4]
@@ -234,11 +236,9 @@ function every() {
   console.log({
     i,
     result,
-  })
+  }) // {i: 1, result: false}
 }
 ```
-
-![](../images/17496d5428a033454e2a0b693436c53e.png)
 
 - some: 有一项返回 true 就是 true。有一项是 true 就停止循环
 
@@ -275,12 +275,28 @@ function filter() {
   })
 }
 ```
-
-![](../images/867eab1912fbbf4f43c227265cdd1c1e.png)
+结果
+``` js
+{
+    "i": 4,
+    "result": [
+        {
+            "id": 2,
+            "name": "Archer"
+        },
+        {
+            "id": 3,
+            "name": "Rider"
+        },
+        {
+            "id": 4,
+            "name": "Lancer"
+        }
+    ]
+}
+```
 
 - map: 所有返回值组成一个数组
-
-![](../images/8421e42be8033ae8a1b890d70a716e6c.png)
 
 - forEach: 没有返回值
 
@@ -320,11 +336,9 @@ function reduce() {
   })
   console.log({
     result,
-  })
+  }) // {result: 10}
 }
 ```
-
-![](../images/5e7b33cedaa1adb1cad56be56687678e.png)
 
 ```js
 function unique(arr, initialValue) {
@@ -523,10 +537,22 @@ let numbers = translate(1, 2, 3)
 console.log(numbers) // 2,3,4
 ```
 
-## ArrayBuffer
+## 迭代器方法  
 
-[参考](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_10.html)
-ArrayBuffer 是 canvas 绘图的重要部分
+- keys：索引
+``` js
+const iterator = ["1", 2, "3"].keys()   // Array Iterator {}
+iterator.next()  // {value: 0, done: false}
+```
+- values
+- entries  
+
+``` js
+const array = ["hello", "world", "js"]
+for(const key of array) {
+  console.log(key)
+} // "hello" "world" "js"
+```
 
 ## 数组去重
 
@@ -546,17 +572,8 @@ ArrayBuffer 是 canvas 绘图的重要部分
 
 参考[[译] 深入 JavaScript 数组：进化与性能](http://www.wemlion.com/post/javascript-array-evolution-performance/)  
 广义上的数据结构`Array`是一串**连续**的内存位置，用来保存某些值  
-但 JS 内的数组不是连续存放的，正如[对象](./008_object.md)所说，是从字符串到值的映射，即类似哈希映射的方式  
+但 JS 内的数组不是连续存放的，是从字符串到值的映射，即类似哈希映射的方式  
 因为数组内的每一项都可以是不同的数据类型（Number, String,...）  
 对于读取操作，哈希表的效率并不高，而修改删除的效率比较高  
 现代 JS 引擎为了保证数组存取的高效，当数组内数据类型相同的时候会使用顺序存储，数据类型不同时，就仍然为不连续存储。  
 如果想让数组在数据类型不同时仍然使用连续存储，可以使用类型化数组 ArrayBuffer。
-
-## SharedArrayBuffer
-
-参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer)
-
-## Atomics 对象
-
-Atomics 对象提供了一组静态方法用来对 SharedArrayBuffer 对象进行原子操作  
-Atomics 不是构造函数，因此不能使用 `new` 操作符调用，也不能将其当作函数直接调用
