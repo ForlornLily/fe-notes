@@ -33,7 +33,7 @@ var test = Object.create(Object.prototype)
 - toLocaleString()：返回对象的字符串表示，该字符串反映对象所在的本地化执行环境。
 - toString()：返回对象的字符串表示。
 - valueOf()：返回对象对应的字符串、数值或布尔值表示。通常与 toString() 的返回值相同。
-  除了名字和值外，每个属性还有一些与之相关的特性(attribute)：可写 writable, 可枚举 enumerable, 可配置 configurable，见[面向对象](./021_oop.md)
+  除了名字和值外，每个属性还有一些与之相关的特性(attribute)：可写 writable, 可枚举 enumerable, 可配置 configurable，见[面向对象](./040_oop.md)
 
 ### 原型
 
@@ -82,6 +82,16 @@ foo2.toString !== undefined // true
 for 循环的时候 key 并不是顺序的，如果要按顺序，可以事先自己写个 key 的数组
 
 也可以单独使用 `key in object`，包括 enumerable 为 false
+
+## getOwnPropertyNames / getOwnPropertySymbols
+
+Object.getOwnPropertyNames(obj)：列出所有实例属性，无论是否可以枚举，不包括继承和 Symbol  
+Symbol 用 getOwnPropertySymbols
+
+## 枚举顺序
+
+- for-in 循环和 Object.keys() 顺序不固定
+- Object.getOwnPropertyNames()、Object.getOwnPropertySymbols()和 Object.assign() 固定  
 
 ## hasOwnproperty
 
@@ -202,7 +212,7 @@ arr.valueOf() //[1, 2]
 
 ### Object.values/Object.entries
 
-和[可迭代对象](./030_iterators.md)的用法类似
+和[可迭代对象](./038_iterators.md)的用法类似
 
 ## Object.fromEntries
 
