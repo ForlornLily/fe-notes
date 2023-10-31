@@ -14,10 +14,9 @@ var num3 = function (num1, num2) {
   //函数表达式
   return num1 + num2
 }
-```
 
-![](../images/bded4a9871b6f3a9be3cfacb42bf9fb3.png)
-![](../images/675bbade6302423b2a34f04fad671708.png)
+sum2 instanceof Object // true
+```
 
 解析器会先解析函数声明，而函数表达式只有解析到那一行代码执行了才会解释
 
@@ -31,7 +30,7 @@ var num3 = function (num1, num2) {
 ### arguments
 
 ECMAScript 的参数在内部是用一个数组来表示的。通过`arguments`对象来访问  
-`arguments`是指向**实参**的引用
+`arguments`是指向**实参**的引用（实际传入的参数）
 
 arguments 不是 Array 的实例，是一个类数组对象，可以用 length 获取长度
 
@@ -126,7 +125,11 @@ obj.f1()
 obj.f2()
 ```
 
-## 函数都包含的属性: length, prototype
+## 函数都包含的属性
+
+- length
+- prototype
+- name
 
 ### length
 
@@ -298,6 +301,29 @@ person1.__proto__ === Person.prototype //true
 Person.__proto__ === Function.prototype //true
 Person.prototype.__proto__.constructor === Object // true
 Person.prototype.__proto__.constructor.constructor === Function //true
+```
+
+### name
+
+只读，包含函数的信息，一般是字符串的变量名
+
+- 构造函数的 name 是 "anonymous"
+- bind 会有个 "bound" 前缀
+
+```js
+function hello() {}
+hello.name // 'hello'
+hello.bind({ test: 1 }).name // 'bound hello'
+const test = function () {}
+test
+  .name(
+    // 'test'
+    () => {}
+  )
+  .name(
+    // ''
+    new Function()
+  ).name // 'anonymous'
 ```
 
 ## 自定义函数属性
@@ -504,6 +530,7 @@ Math.max(...values, 8)
 - 没有 `this`、`super`、`arguments`
 
 - 不能用 new 调用，没有原型
+- 没有大括号包裹的，只能有一行代码，且相当于 return 这行代码的值
 
 ## 高阶函数
 

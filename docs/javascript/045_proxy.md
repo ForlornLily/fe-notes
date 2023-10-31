@@ -1,4 +1,4 @@
-# 代理 proxy 与反射 Reflection 的 API
+# 代理与反射
 
 代理允许拦截 JS 的底层操作
 
