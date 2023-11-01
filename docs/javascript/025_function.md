@@ -22,21 +22,25 @@ sum2 instanceof Object // true
 
 所以函数声明具有变量提升
 
-## 函数内部的两个特殊对象: arguments, this
+## 函数内部特殊对象
 
-函数调用会为形参提供实参的值。  
-除了实参之外，还有一个值——本次调用的上下文——也就是`this`关键字的值
+- arguments
+- this
+- new.target
 
 ### arguments
 
 ECMAScript 的参数在内部是用一个数组来表示的。通过`arguments`对象来访问  
-`arguments`是指向**实参**的引用（实际传入的参数）
+`arguments`是指向**实参**的引用（实际传入的参数），即使形参有默认值也不会受影响
 
 arguments 不是 Array 的实例，是一个类数组对象，可以用 length 获取长度
 
 顺序和形参一致，并且可以改变形参
 
 ### this
+
+- 在标准函数中，this 引用的是把函数当成方法**调用**的上下文对象
+- 在箭头函数中，this 引用的是**定义**箭头函数的上下文
 
 当函数被保存为一个对象的属性时，称之为方法。
 
@@ -123,6 +127,19 @@ const obj = {
 }
 obj.f1()
 obj.f2()
+```
+
+### new.target
+
+箭头函数没有 new.target  
+普通函数为 undefined，通过 `new` 关键字调用的会指向构造函数
+
+```js
+function test() {
+  console.log(new.target)
+}
+test() // undefined
+new test() // 指向 test 本身
 ```
 
 ## 函数都包含的属性
