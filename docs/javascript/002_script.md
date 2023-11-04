@@ -114,7 +114,7 @@ window.addEventListener("load", function () {
 
 ### src 跨域
 
-即 src 不受[同源策略](./027_async.md#同源策略)的限制
+即 src 不受[同源策略](./050_async.md#同源策略)的限制
 
 ### crossorigin
 
