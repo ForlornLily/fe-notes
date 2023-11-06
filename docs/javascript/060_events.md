@@ -124,6 +124,10 @@ this 始终等于 currentTarget，等于 addEventListener 绑定的对象
 
 要避免在里面做大量计算
 
+### scroll
+
+略
+
 ## 焦点事件: focus/blur, focusin/focusout
 
 focus/blur 不会冒泡
@@ -135,6 +139,8 @@ focusin 和 focus 功能一样
 focusout 和 blur 一样
 
 ## 鼠标事件
+
+为了更好的无障碍阅读，鼠标点击用 click（屏幕阅读器无法触发 mousedown），避免使用 dbclick、mouseover
 
 ### click/dblclick
 
@@ -158,9 +164,15 @@ mousedown+mouseup 等于 click，任何一个被取消都不会触发 click
 
 鼠标移动的时候触发
 
+### 修饰键
+
+- shiftKey
+- ctrlKey
+- altKey
+- metaKey：⌘ Command 和 ⊞ Windows
+
 ### 拖放
 
-见红宝书 22.5 节
 拖拽分为两部分：
 
 1. 被拖拽的物体。设置`draggable`属性为`true`（默认`auto`，由浏览器根据标签决定）。  
@@ -253,7 +265,20 @@ function handle_drop(e) {
 可以输入字符类的文字被按下时触发的 keypress（比如 a,b,空格,
 123 等等，tab 等不会触发）
 
-先 keydown 再 keypress
+先 keydown 再 keypress  
+持续按住会重复触发 keydown、keypress
+
+### key
+
+用 key 代替了 keyCode，是一个字符串，比如按下 ctrl 是 `"Control"`
+
+## 合成事件
+
+同时按下多个键才能输入一个字符（比如日语/中文输入法）
+
+- compositionstart
+- compositionupdate
+- compositionend
 
 ## contextmenu
 
