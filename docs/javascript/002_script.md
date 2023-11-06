@@ -94,6 +94,11 @@ HTML document 加载和解析后触发。不会等待 style, img 加载。`load`
 
 完全加载。script 不论是 defer 还是 async，肯定都在 load 之前执行。
 
+### readyState  
+document.readyState：
+- loading，正在加载
+- complete，加载完成
+
 ### 踩坑
 
 `document.body`无法触发`load`事件；但可以触发`DOMContentLoaded`  
