@@ -1,6 +1,8 @@
 # 动画
 
 ## 函数 requestAnimationFrame(function)
+原本用 setTimeout / setInterval 执行动画的下一帧，缺点是时间间隔不稳定  
+requestAnimationFrame 同样会返回一个 ID，可以用 cancelAnimationFrame 取消   
 
 ## Canvas
 
@@ -130,9 +132,18 @@ grd.addColorStop(1, "white")
 ctx.fillStyle = grd
 ctx.fillRect(20, 20, 150, 100)
 ```
+### 绘制路径 
+绘制路径，必须首先调用 beginPath()方法，通过以下创建路径（没有具体的图形，用 stroke 等创建图形）   
+closePath 结束本次路径  
+- arc
+- arcTo
+- bezierCurveTo
+- lineTo：直线
+- moveTo：移动
+- quadraticCurveTo
+- rect：矩阵
 
 ### 绘制圆 arc((x,y,r,sAngle,eAngle,counterclockwise)
-
 用 stroke() 或 fill() 方法在画布上绘制实际的弧
 
 ```js
@@ -142,7 +153,21 @@ ctx.beginPath()
 ctx.arc(100, 75, 50, 0, 2 * Math.PI)
 ctx.stroke()
 ```
-
+### clip
+剪切当前路径  
+```js
+const c = document.getElementById("myCanvas");
+const ctx = c.getContext("2d");
+ctx.rect(50, 20, 200, 120);
+ctx.stroke();
+// ctx.clip();
+ctx.fillStyle = "red";
+ctx.fillRect(0, 0, 150, 100);
+```  
+没有 clip    
+![no_clip](../images/no_clip.png)  
+加了 clip  
+![clip](../images/clip.png)
 ### setTransform
 
 `ctx.transform(a, b, c, d, e, f);`
