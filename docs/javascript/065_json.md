@@ -2,7 +2,7 @@
 
 JSON 的属性必须是加双引号（单引号也不行），值可以是任意类型
 
-## JSON.Stringfy(内容, 过滤, 缩进)
+## JSON.stringify(内容, 过滤, 缩进)
 
 对象转字符串
 
@@ -23,10 +23,8 @@ var childArr = [
     year: 12,
   },
 ]
-var result = JSON.stringify(childArr, ["name"])
+var result = JSON.stringify(childArr, ["name"])  // '[{"name":"Emma"},{"name":"Norma"},{"name":"Ray"}]'
 ```
-
-![](../images/f7a29502341bb563b1c10cd772630fb9.png)
 
 缩进可以提高可读性  
 只缩进不过滤
