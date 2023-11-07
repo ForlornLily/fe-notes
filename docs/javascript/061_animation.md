@@ -74,31 +74,11 @@ maxWidth：最大宽度。如果字符串内容超过最大宽，会进行字体
 
 `ctx.fillText("hello world", 100, 100);`
 
-### 绘制图片 drawImage
-
-`ctx.drawImage(image, dx, dy, dWidth, dHeight);`
-
-dx, dy 坐标
-
-dWidth, dHeight 表示指定图片宽高，不写就默认图片自身大小
-
-创建图片需要 new 一个 image 对象，在 onload 内进行绘制，确保图片加载后可以读取到内容
-
-```js
-let img = new Image()
-img.onload = () => {
-  ctx.drawImage(img, 100, 100)
-}
-img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg"
-```
-
-配合图片和文字可以用 canvas 生成带水印的图片
-
-### 旋转整个画布 rotate
+### 变换
 
 canvas 本身不会变，变的只是内容
 
-默认以（0, 0）为旋转中心点，顺时针旋转
+- rotate：默认以（0, 0）为旋转中心点，顺时针旋转
 
 反复调用就会叠加，不会清除之前的内容
 
@@ -110,11 +90,16 @@ ctx.fillRect(70, 0, 100, 30)
 ```
 
 ![](../images/186a9d87445d1050d0d202329d80232c.png)
+- scale
+- translate
+- transform
+- setTransform  
 
-### 绘制渐变 createLinearGradient(x0,y0,x1,y1)
+### 暂存  
+- save
+- restore：恢复到 save 的内容    
+但只针对变换，其他如 fillStyle、fillText 无效
 
-- x0/y0 渐变开始点的 x, y 坐标
-- x1/y1 渐变结束点的 x, y 坐标
 
 ### addColorStop(stop, color)
 
@@ -168,9 +153,26 @@ ctx.fillRect(0, 0, 150, 100);
 ![no_clip](../images/no_clip.png)  
 加了 clip  
 ![clip](../images/clip.png)
-### setTransform
 
-`ctx.transform(a, b, c, d, e, f);`
+### 绘制图片 drawImage
+
+`ctx.drawImage(image, dx, dy, dWidth, dHeight);`
+
+dx, dy 坐标
+
+dWidth, dHeight 表示指定图片宽高，不写就默认图片自身大小
+
+创建图片需要 new 一个 image 对象，在 onload 内进行绘制，确保图片加载后可以读取到内容
+
+```js
+let img = new Image()
+img.onload = () => {
+  ctx.drawImage(img, 100, 100)
+}
+img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg"
+```
+
+配合图片和文字可以用 canvas 生成带水印的图片
 
 ### toDataURL
 
@@ -180,3 +182,40 @@ canvas 对象生成的图像
 var canvas = document.getElementById("canvas")
 var dataURL = canvas.toDataURL()
 ```
+### 图案 createPattern  
+
+用来复制，有点像 background 的 repeat  
+
+### 阴影  
+- shadowColor
+- shadowOffsetX
+- shadowOffsetY
+- shadowBlur  
+
+### 绘制渐变 createLinearGradient(x0,y0,x1,y1)
+
+- x0/y0 渐变开始点的 x, y 坐标
+- x1/y1 渐变结束点的 x, y 坐标
+
+### 获取部分图像
+
+getImageData，putImageData
+``` js
+const test = document.getElementById("test")
+const context = test.getContext("2d")
+context.fillText("hello", 50, 50)
+context.fillStyle = "red";
+
+context.fillRect(0, 0, 100, 200);
+
+const imageData = context.getImageData(0, 0, 100, 200)
+context.putImageData(imageData, 200, 200);
+```
+### 合成
+
+- globalAlpha：透明度，0 ~ 1
+```js
+context.globalAlpha = 0.1
+```
+
+- globalCompositeOperation：重叠方式，比如 source-over，新图形绘制在原有图形上面
