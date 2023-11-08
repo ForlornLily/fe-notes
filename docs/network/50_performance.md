@@ -109,7 +109,7 @@
 
 ### webpack 打包优化
 
-见[优化：optimization](../webpack4/07_optimization.md)或者官网[Build Performance](https://webpack.js.org/guides/build-performance/)  
+见[优化：optimization](../webpack/07_optimization.md)或者官网[Build Performance](https://webpack.js.org/guides/build-performance/)  
 常用的有
 
 - tree shaking
@@ -248,7 +248,7 @@ var name = foo[i++]
 
 ### 节流与防抖
 
-见[函数防抖与节流](../js/022_bom.md#函数防抖与节流)
+见[函数防抖与节流](../javascript/053_dom.md#函数防抖与节流)
 
 ## 浏览器加载过程
 
@@ -411,7 +411,8 @@ lighthouse https://www.baidu.com
 
 `window.performance`  
 参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance)
-
+- performance.now()：相对时间，距离打开页面的时间
+- performance.timeOrigin：打开页面的时间
 ### 常见指标
 
 - FP：[First paint](https://developer.mozilla.org/en-US/docs/Glossary/First_paint)：渲染出第一个像素点。FP 一般在 HTML 解析完成或者解析一部分时候触发。

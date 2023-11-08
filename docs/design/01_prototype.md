@@ -23,4 +23,4 @@ const base2 = Object.create(mama)
 ## 原型链
 
 当对象本身无法完成响应某个请求时，会把该请求委托给自己的构造器原型  
-更多原型链的内容参考[原型](../js/006_complex_data.md#原型)
+更多原型链的内容参考[原型](../javascript/012_complex_data.md#原型)

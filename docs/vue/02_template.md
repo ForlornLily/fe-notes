@@ -218,7 +218,7 @@ let app = new Vue({
 
 - .prevent
 
-- .capture: 对应 [addEventListener](../js/024_events.md) 的 capture 是 true
+- .capture: 对应 [addEventListener](../javascript/060_events.md) 的 capture 是 true
 
 - .self: 只有点击的元素自身才会触发。子元素冒泡到该元素不会触发
 

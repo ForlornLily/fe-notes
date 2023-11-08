@@ -30,7 +30,7 @@ localStorage
 
 ### 日期 NaN
 
-见[Date](../js/010_date.md);
+见[Date](../javascript/024_date.md);
 
 ### fixed 定位
 

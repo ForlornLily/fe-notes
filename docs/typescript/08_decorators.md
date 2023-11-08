@@ -126,7 +126,7 @@ c.world = "sing" // -> prev: baz, next: sing
 ## 访问器属性装饰器
 
 函数装饰器一样的三个参数：类的构造函数（constructor），属性名，属性的描述
-即访问器属性，详见[访问器属性](../js/021_oop.md#访问器属性) 即 `getter`、`setter`、`configurable`、`Enumerable`
+即访问器属性，详见[访问器属性](../javascript/040_oop.md#访问器属性) 即 `getter`、`setter`、`configurable`、`Enumerable`
 
 ```ts
 function doublePrice(

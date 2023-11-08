@@ -395,7 +395,7 @@ export default class Watcher {
 
 ### nextTick
 
-有关异步、任务队列见[单线程与异步编程](../js/027_async.md)  
+有关异步、任务队列见[单线程与异步编程](../javascript/050_async.md)  
 比如修改 data 内的某个值，做了个`for`循环，data 内的值不是实时更新的，而是异步的。  
 Vue 实现了一个 `nextTick` 函数，传入一个 callback ，这个 callback 会被存储到一个队列中，在下一个 tick 时触发队列中的所有 callback 事件  
 用 Promise、setTimeout、setImmediate 等方式在 task/microtask 中创建一个事件，目的是在当前调用栈执行完毕以后（不一定立即）才会去执行这个事件  
@@ -500,7 +500,7 @@ export function proxy(target, sourceKey, key) {
 
 ## proxy
 
-Vue3.x 会使用[proxy](../js/031_proxy.md)代替 Object.defineProperty  
+Vue3.x 会使用[proxy](../javascript/045_proxy.md)代替 Object.defineProperty  
 Object.defineProperty 缺陷:  
 只能对属性进行数据劫持，所以需要深度遍历整个对象 ，对于数组不能监听到数据的变化  
 Vue2.x 能进行数组的监测，是用了 hack 的办法，重写了 push、pop、shift、unshift、splice、sort、reverse

@@ -5,7 +5,7 @@ Vue3.x 中的[reactive.ts](https://github.com/vuejs/vue-next/blob/master/package
 
 ## proxy
 
-基础内容见[proxy](../js/031_proxy.md)
+基础内容见[proxy](../javascript/045_proxy.md)
 
 ## reactive.ts
 
