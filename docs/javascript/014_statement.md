@@ -194,7 +194,7 @@ function jude(x) {
 ```
 
 try..catch 只能是同步的，无法用于异步代码模式。  
-参考[try/catch 无法捕获 promise.reject 的问题](https://segmentfault.com/q/1010000014905440)
+参考[try/catch 无法捕获 promise.reject 的问题](https://segmentfault.com/q/1010000014905440)，[try-catch 捕获不到哪些异常和错误](https://www.xiabingbao.com/post/error/try-catch-cant-error.html)
 
 ```js
 //报错，Uncaught (in promise)
