@@ -1,7 +1,10 @@
 # JSON
 
-JSON 的属性必须是加双引号（单引号也不行），值可以是任意类型
-
+JSON 的属性必须是加双引号（单引号也不行）  
+值可以是 
+- 简单类型：number、string、boolean、null
+- 普通对象：key 是简单类型
+- 数组
 ## JSON.stringify(内容, 过滤, 缩进)
 
 对象转字符串
@@ -36,4 +39,43 @@ JSON.stringify(childArr, undefined, 2)
 ## JSON.parse
 
 JSON 字符串转对象  
-[序列化限制](./006_complex_data.md#序列化对象)
+[序列化限制](./012_complex_data.md#序列化对象)  
+可以传入第二个参数 
+```js
+const test = JSON.stringify([
+  {
+    name: "Emma",
+    year: 12,
+  },
+  {
+    name: "Norma",
+    year: 12,
+  },
+  {
+    name: "Ray",
+    year: 12,
+  },
+])
+JSON.parse(test, (key, value) => {
+  if(key === "name") {
+    return `${value}_extra`
+  }
+  return value
+})
+```
+``` json
+[
+    {
+        "name": "Emma_extra",
+        "year": 12
+    },
+    {
+        "name": "Norma_extra",
+        "year": 12
+    },
+    {
+        "name": "Ray_extra",
+        "year": 12
+    }
+]
+```

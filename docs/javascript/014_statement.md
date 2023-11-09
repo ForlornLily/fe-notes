@@ -1,5 +1,7 @@
 # 语句
 
+try catch 见[错误处理](./063_error.md)
+
 ## 关系表达式
 
 ### 对象不相等
@@ -175,48 +177,6 @@ return results[value]
 - 多用位运算
 
 - 多用原生方法，比如 Math 自带的
-
-## throw 和 try catch
-
-throw 用来抛出异常，try/catch 捕获异常
-
-```js
-function jude(x) {
-  if (x < 0) {
-    throw new Error("x不能小于0") //Uncaught Error: x不能小于0
-  }
-  try {
-    console.log(x)
-  } catch (e) {
-    console.log(e)
-  }
-}
-```
-
-try..catch 只能是同步的，无法用于异步代码模式。  
-参考[try/catch 无法捕获 promise.reject 的问题](https://segmentfault.com/q/1010000014905440)，[try-catch 捕获不到哪些异常和错误](https://www.xiabingbao.com/post/error/try-catch-cant-error.html)
-
-```js
-//报错，Uncaught (in promise)
-function f2() {
-  try {
-    Promise.reject("出错了")
-  } catch (e) {
-    console.log(e)
-  }
-}
-//正常
-function f2() {
-  try {
-    Promise.reject("出错了").catch((err) => {
-      console.log("2", err)
-    })
-    console.log("1")
-  } catch (e) {
-    console.log(e)
-  }
-}
-```
 
 ## 递归，迭代和缓存
 
