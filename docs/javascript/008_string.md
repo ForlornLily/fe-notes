@@ -3,9 +3,9 @@
 0 或者多个 16 位 Unicode 字符组成
 
 ```js
-var txt = "a \u03a3" //"a Σ"
-txt.length //3
-"我".length //1
+var txt = "a \u03a3"; //"a Σ"
+txt.length; //3
+"我".length; //1
 ```
 
 字符串是不可变的（immutable）。
@@ -13,8 +13,8 @@ txt.length //3
 如果定义一个变量，之后又用新的字符串赋值。那会销毁原本的字符串，再用新字符串填充这个变量
 
 ```js
-var lang = "Java"
-lang = lang + "Script"
+var lang = "Java";
+lang = lang + "Script";
 ```
 
 先创建一个可以容纳 10 个字符的新字符串，然后填充 Java 和 Script，最后销毁原本的 Java 和 Script 两个字符串
@@ -73,22 +73,22 @@ Template Literals：会包含空格，可能导致 length 变多
 ### 标签函数
 
 ```js
-let a = 1
-let b = 2
+let a = 1;
+let b = 2;
 
 function testFunction(data, ...restParams) {
-  console.log("data", data) // ['', ', ', '', raw: Array(3)]
-  console.log(...restParams) // 1 2
+  console.log("data", data); // ['', ', ', '', raw: Array(3)]
+  console.log(...restParams); // 1 2
 }
-const result = testFunction`${a}, ${b}`
-console.log("result", result) // result undefined
+const result = testFunction`${a}, ${b}`;
+console.log("result", result); // result undefined
 ```
 
 ### raw
 
 ```js
-console.log(`\u00A9`) // ©
-console.log(String.raw`\u00A9`) // \u00A9
+console.log(`\u00A9`); // ©
+console.log(String.raw`\u00A9`); // \u00A9
 ```
 
 ### trim()方法
@@ -108,23 +108,23 @@ console.log(String.raw`\u00A9`) // \u00A9
 position 不写默认是 0;
 
 ```js
-"hello world".includes("world", 4) //true
+"hello world".includes("world", 4); //true
 ```
 
 - ES5 实现
 
 ```js
 function includes(str, start) {
-  start = Number(start)
+  start = Number(start);
   if (isNaN(start) || start < 0) {
-    start = 0
+    start = 0;
   }
   if (start + str.length > this.length) {
-    return false
+    return false;
   }
-  return this.indexOf(str, start) > -1
+  return this.indexOf(str, start) > -1;
 }
-includes.apply("hello world", ["world", 4])
+includes.apply("hello world", ["world", 4]);
 ```
 
 ### startsWith
@@ -133,16 +133,16 @@ includes.apply("hello world", ["world", 4])
 
 ```js
 function startsWith(str, start) {
-  start = Number(start)
+  start = Number(start);
   if (isNaN(start) || start < 0) {
-    start = 0
+    start = 0;
   }
   if (start + str.length > this.length) {
-    return false
+    return false;
   }
-  return this.substring(start, start + str.length) == str
+  return this.substring(start, start + str.length) == str;
 }
-startsWith.apply("hello world", ["ello", "1"]) //true
+startsWith.apply("hello world", ["ello", "1"]); //true
 ```
 
 ### endsWith(string, length)
@@ -151,13 +151,13 @@ startsWith.apply("hello world", ["ello", "1"]) //true
 
 ```js
 function endsWidth(str, length) {
-  length = Number(length)
+  length = Number(length);
   if (isNaN(length) || length < 0 || length > this.length) {
-    length = this.length
+    length = this.length;
   }
-  return this.substring(length - str.length, length) == str
+  return this.substring(length - str.length, length) == str;
 }
-endsWidth.apply("hello world", ["world"])
+endsWidth.apply("hello world", ["world"]);
 ```
 
 ## repeat()
@@ -165,7 +165,7 @@ endsWidth.apply("hello world", ["world"])
 将字符串重复指定次数。比如格式化的时候重复空格
 
 ```js
-var test = "hello".repeat(2) //"hellohello"
+var test = "hello".repeat(2); //"hellohello"
 ```
 
 ## padStart
@@ -179,12 +179,12 @@ var test = "hello".repeat(2) //"hellohello"
   - 如果 padString 本身的长度大于 str.length + targetLength, 则忽略溢出的部分
 
 ```js
-var test = "abc"
-test.padStart(6) //"   abc"
-test.padStart(1, "d") //"abc"
-test.padStart(-6, "d") // "abc"
-test.padStart(6, "d") //"dddabc"
-test.padStart(6, "defg") //"defabc"，忽略了"g"
+var test = "abc";
+test.padStart(6); //"   abc"
+test.padStart(1, "d"); //"abc"
+test.padStart(-6, "d"); // "abc"
+test.padStart(6, "d"); //"dddabc"
+test.padStart(6, "defg"); //"defabc"，忽略了"g"
 ```
 
 ## padEnd
@@ -193,10 +193,10 @@ test.padStart(6, "defg") //"defabc"，忽略了"g"
 和 padStart 类似
 
 ```js
-var test = "abc"
-test.padEnd(6) //"abc   "
-test.padEnd(1, "d") //"abc"
-test.padEnd(-6, "d") // "abc"
-test.padEnd(6, "d") //"abcddd"
-test.padEnd(6, "defg") //"abcdef"，忽略了"g"
+var test = "abc";
+test.padEnd(6); //"abc   "
+test.padEnd(1, "d"); //"abc"
+test.padEnd(-6, "d"); // "abc"
+test.padEnd(6, "d"); //"abcddd"
+test.padEnd(6, "defg"); //"abcdef"，忽略了"g"
 ```

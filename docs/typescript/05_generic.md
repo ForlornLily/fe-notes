@@ -9,13 +9,13 @@
 
 ```ts
 function createArray(length: number, value: string): any[] {
-  let result = []
+  let result = [];
   for (let i = 0; i < length; i++) {
-    result.push(value)
+    result.push(value);
   }
-  return result
+  return result;
 }
-let currentClass = createArray(2, "Saber") // ["Saber", "Saber"]
+let currentClass = createArray(2, "Saber"); // ["Saber", "Saber"]
 ```
 
 泛型可以在调用函数的时候指定传入类型和返回类型
@@ -26,14 +26,14 @@ let currentClass = createArray(2, "Saber") // ["Saber", "Saber"]
 //T相当于一个占位符，所有用到T的数据类型都是一样的
 //在实现createArray时并不知道`T`的具体类型，调用的时候就可以处理任意类型的数据
 function createArray<T>(length: number, value: T): Array<T> {
-  let result: T[] = []
+  let result: T[] = [];
   for (let i = 0; i < length; i++) {
-    result.push(value)
+    result.push(value);
   }
-  return result
+  return result;
 }
 //T都是string类型
-let currentClass = createArray<string>(2, "Saber") // ["Saber", "Saber"]
+let currentClass = createArray<string>(2, "Saber"); // ["Saber", "Saber"]
 ```
 
 ## 泛型约束
@@ -42,8 +42,8 @@ let currentClass = createArray<string>(2, "Saber") // ["Saber", "Saber"]
 
 ```ts
 function loggingIdentity<T>(arg: T): T {
-  console.log(arg.length) //报错，不一定有length属性
-  return arg
+  console.log(arg.length); //报错，不一定有length属性
+  return arg;
 }
 ```
 
@@ -51,25 +51,25 @@ function loggingIdentity<T>(arg: T): T {
 
 ```ts
 interface Lengthwise {
-  length: number
+  length: number;
 }
 
 function loggingIdentity<T extends Lengthwise>(arg: T): T {
-  console.log(arg.length)
-  return arg
+  console.log(arg.length);
+  return arg;
 }
-loggingIdentity("hello") //通过
-loggingIdentity(1) //报错，number不具有length属性
-loggingIdentity({ length: 10, value: 3 }) //通过
+loggingIdentity("hello"); //通过
+loggingIdentity(1); //报错，number不具有length属性
+loggingIdentity({ length: 10, value: 3 }); //通过
 ```
 
 ## 多个参数
 
 ```ts
 function swap<T, U>(tuple: [T, U]): [U, T] {
-  return [tuple[1], tuple[0]]
+  return [tuple[1], tuple[0]];
 }
-swap([7, "seven"]) // ['seven', 7]
+swap([7, "seven"]); // ['seven', 7]
 ```
 
 ### 继承约束
@@ -77,13 +77,13 @@ swap([7, "seven"]) // ['seven', 7]
 ```ts
 function copy<T extends U, U>(target: T, source: U): T {
   for (let key in source) {
-    target[key] = (<T>source)[key]
+    target[key] = (<T>source)[key];
   }
-  return target
+  return target;
 }
-let x = { a: 1, b: 2, c: 3 }
-copy(x, { b: 666, c: 888 })
-copy(x, { b: "123" }) //报错，类型不匹配
+let x = { a: 1, b: 2, c: 3 };
+copy(x, { b: 666, c: 888 });
+copy(x, { b: "123" }); //报错，类型不匹配
 ```
 
 ## 泛型接口
@@ -92,53 +92,53 @@ copy(x, { b: "123" }) //报错，类型不匹配
 
 ```ts
 interface customFun {
-  (x: string, y: string): void
+  (x: string, y: string): void;
 }
-let myFun: customFun
+let myFun: customFun;
 myFun = (a: string, b: string): void => {
-  console.log(`${a}, ${b}`)
-}
+  console.log(`${a}, ${b}`);
+};
 ```
 
 接口内也可以使用泛型
 
 ```ts
 interface customFun {
-  <T>(x: T, y: T): void
+  <T>(x: T, y: T): void;
 }
-let myFun: customFun
+let myFun: customFun;
 myFun = <T>(a: T, b: T): void => {
-  console.log(`${a}, ${b}`)
-}
-myFun<string>("hello", "wolrd")
+  console.log(`${a}, ${b}`);
+};
+myFun<string>("hello", "wolrd");
 ```
 
 进一步，把泛型提升到接口名上
 
 ```ts
 interface customFun<T> {
-  (x: T, y: T): void
+  (x: T, y: T): void;
 }
-let myFun: customFun<number>
+let myFun: customFun<number>;
 myFun = <T>(a: T, b: T): void => {
-  console.log(`${a}, ${b}`)
-}
-myFun(1, 2)
+  console.log(`${a}, ${b}`);
+};
+myFun(1, 2);
 ```
 
 ## 泛型类
 
 ```ts
 class GenericNumber<T> {
-  zeroValue: T
-  add: (x: T, y: T) => T
+  zeroValue: T;
+  add: (x: T, y: T) => T;
 }
 
-let myGenericNumber = new GenericNumber<number>()
-myGenericNumber.zeroValue = 0
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function (x, y) {
-  return x + y
-}
+  return x + y;
+};
 ```
 
 ## 默认类型
@@ -148,10 +148,10 @@ myGenericNumber.add = function (x, y) {
 ```ts
 //指定T默认类型是string
 function createArray<T = string>(length: number, value: T): Array<T> {
-  let result: T[] = []
+  let result: T[] = [];
   for (let i = 0; i < length; i++) {
-    result[i] = value
+    result[i] = value;
   }
-  return result
+  return result;
 }
 ```

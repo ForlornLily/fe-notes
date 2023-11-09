@@ -13,8 +13,8 @@ npm install --save-dev html-webpack-plugin
 ```
 
 ```js
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
 
 module.exports = {
   entry: "index.js",
@@ -23,7 +23,7 @@ module.exports = {
     filename: "index_bundle.js",
   },
   plugins: [new HtmlWebpackPlugin()],
-}
+};
 ```
 
 在文件打包后自动在 output 目录生成 html 文件，并引入 js
@@ -77,7 +77,7 @@ new HTMLWebpackPlugin({
     filename: "main.html",
     template: "./main.html",
     chunks: ["bar"], //比如foo.js只在index.html用到, bar只在main.html用到
-  })
+  });
 ```
 
 ## clean-webpack-plugin
@@ -97,7 +97,7 @@ clean-webpack-plugin 只能清除根目录下的文件
 ```js
 new CleanWebpackPlugin({
   cleanOnceBeforeBuildPatterns: ["**/*", "!static-files*"],
-})
+});
 ```
 
 ## mini-css-extract-plugin
@@ -147,9 +147,9 @@ module.exports = {
 类似的有 `optimize-css-assets-webpack-plugin`，但 webpack 5 以上官方建议用 `css-minimizer-webpack-plugin`
 
 ```js
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
-const isEnvProduction = process.env.NODE_ENV === "development"
+const isEnvProduction = process.env.NODE_ENV === "development";
 
 const config = {
   optimization: {
@@ -173,20 +173,20 @@ const config = {
             // 或者 node_modules/packageName
             const pkgNameMatcher = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-            )
-            let packageName = pkgNameMatcher && pkgNameMatcher[1]
+            );
+            let packageName = pkgNameMatcher && pkgNameMatcher[1];
             if (!packageName) {
-              return "vendors"
+              return "vendors";
             }
-            return `third_party.${packageName}`
+            return `third_party.${packageName}`;
           },
         },
       },
     },
   },
-}
+};
 if (!isEnvProduction) {
-  config.optimization.minimize = true
+  config.optimization.minimize = true;
   config.optimization.minimizer = [
     // This is only used in production mode
     new TerserPlugin({
@@ -231,7 +231,7 @@ if (!isEnvProduction) {
     }),
     // This is only used in production mode
     new CssMinimizerPlugin(),
-  ]
+  ];
 }
 ```
 
@@ -247,9 +247,9 @@ fork 了 `uglify-es`（uglify-es 已不再维护）
 在 plugins 内使用 webpack.xxx
 
 ```js
-const webpack = require("webpack")
+const webpack = require("webpack");
 
-const isEnvProduction = process.env.NODE_ENV === "development"
+const isEnvProduction = process.env.NODE_ENV === "development";
 
 const config = {
   plugins: [
@@ -257,13 +257,13 @@ const config = {
       activeModules: true,
     }),
   ],
-}
+};
 if (isEnvProduction) {
   config.plugins = config.plugins.concat([
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
     }),
-  ])
+  ]);
 }
 ```
 
@@ -320,7 +320,7 @@ npm install copy-webpack-plugin --save-dev
 比如把 src 下的 doc 文件夹全部复制到 dist 目录中的 doc 文件夹
 
 ```js
-const CopyPlugin = require("copy-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   plugins: [
@@ -329,7 +329,7 @@ module.exports = {
       { from: "other", to: "public" },
     ]),
   ],
-}
+};
 ```
 
 ## webpack-bundle-analyzer
@@ -338,10 +338,10 @@ module.exports = {
 
 ```js
 const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 // 省略
-config.plugins = config.plugins.concat(new BundleAnalyzerPlugin())
+config.plugins = config.plugins.concat(new BundleAnalyzerPlugin());
 ```
 
 ## eslint-webpack-plugin

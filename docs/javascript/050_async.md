@@ -32,11 +32,11 @@ JS 是单线程的。
 ```js
 readFile("example.txt", function (err, contents) {
   if (err) {
-    throw err
+    throw err;
   }
-  console.log(contents)
-})
-console.log("Hi!")
+  console.log(contents);
+});
+console.log("Hi!");
 ```
 
 或者以 jQuery 的`$.ajax`为例，\$.ajax 会立刻进入任务队列，后台返回成功之后，`success`才进入任务队列
@@ -45,9 +45,9 @@ console.log("Hi!")
 $.ajax({
   url: "",
   success: function (data) {
-    console.log(data)
+    console.log(data);
   },
-})
+});
 ```
 
 ### task 与 microtask
@@ -74,32 +74,32 @@ Promise.then
 - 所有 setTimeout()的回调都会进入到 setTimeout 任务队列，所有 then()回调都会进入到 then 队列
 
 ```js
-console.log("1")
+console.log("1");
 setTimeout(function () {
-  console.log("2")
+  console.log("2");
   new Promise(function (resolve) {
-    console.log("4")
-    resolve()
+    console.log("4");
+    resolve();
   }).then(function () {
-    console.log("5")
-  })
-})
+    console.log("5");
+  });
+});
 new Promise(function (resolve) {
-  console.log("7")
-  resolve()
+  console.log("7");
+  resolve();
 }).then(function () {
-  console.log("8")
-})
+  console.log("8");
+});
 
 setTimeout(function () {
-  console.log("9")
+  console.log("9");
   new Promise(function (resolve) {
-    console.log("11")
-    resolve()
+    console.log("11");
+    resolve();
   }).then(function () {
-    console.log("12")
-  })
-})
+    console.log("12");
+  });
+});
 /*
 浏览器结果  1 7 8 2 4 5 9 11 12
 解释：
@@ -233,10 +233,10 @@ require("http")
   .createServer((req, res) => {
     res.writeHead(200, {
       "Access-Control-Allow-Origin": "http://localhost:8080",
-    })
-    res.end("这是你要的数据：1111")
+    });
+    res.end("这是你要的数据：1111");
   })
-  .listen(3000, "127.0.0.1")
+  .listen(3000, "127.0.0.1");
 ```
 
 - 简单请求
@@ -284,8 +284,8 @@ CORS 请求默认不发送 Cookie 和 HTTP 认证信息
 2.  XMLHttpRequest 设置 withCredentials 为 true
 
 ```js
-var xhr = new XMLHttpRequest()
-xhr.withCredentials = true
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 ```
 
 3.  Access-Control-Allow-Origin 不可以是`*`，必须是具体的域名
@@ -311,7 +311,7 @@ script 不受限制，可以让服务器在 js 内返回内容
 ```html
 <script>
   function jsonpCallback(data) {
-    alert("获得 X 数据:" + data.x)
+    alert("获得 X 数据:" + data.x);
   }
 </script>
 <script src="http://127.0.0.1:3000?callback=jsonpCallback"></script>
@@ -336,29 +336,29 @@ webpack 内置，可以使用 proxy 进行代理
 - NodeJS demo
 
 ```js
-const url = require("url")
-const http = require("http")
-const https = require("https")
+const url = require("url");
+const http = require("http");
+const https = require("https");
 //访问topics去请求cnodejs的API
 const server = http
   .createServer((req, res) => {
-    const path = url.parse(req.url).path.slice(1)
+    const path = url.parse(req.url).path.slice(1);
     if (path === "topics") {
       https.get("https://cnodejs.org/api/v1/topics", (resp) => {
-        let data = ""
+        let data = "";
         resp.on("data", (chunk) => {
-          data += chunk
-        })
+          data += chunk;
+        });
         resp.on("end", () => {
           res.writeHead(200, {
             "Content-Type": "application/json; charset=utf-8",
-          })
-          res.end(data)
-        })
-      })
+          });
+          res.end(data);
+        });
+      });
     }
   })
-  .listen(3000, "127.0.0.1")
+  .listen(3000, "127.0.0.1");
 ```
 
 ### WebSocket
@@ -369,14 +369,14 @@ const server = http
 手动调用 close() 关闭
 
 ```js
-let socket = new WebSocket("ws:35.201.238.65")
+let socket = new WebSocket("ws:35.201.238.65");
 const message = {
   hell: "world",
-}
-socket.send(JSON.stringify(message))
+};
+socket.send(JSON.stringify(message));
 socket.onmessage((msg) => {
-  console.log(msg)
-})
+  console.log(msg);
+});
 ```
 
 ## XMLHttpRequest
@@ -385,21 +385,21 @@ socket.onmessage((msg) => {
 Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）
 
 ```js
-let xhr = new XMLHttpRequest()
+let xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4) {
     // 4表示整个请求过程已经完毕.
     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
       // 200 表示一个成功的请求
-      alert(xhr.responseText) // 文本形式的内容
+      alert(xhr.responseText); // 文本形式的内容
     }
   }
-}
+};
 xhr.onerror = function () {
   //
-}
-xhr.open("GET", "http://www.example.org/some.file", true) //true为异步，不写默认为true
-xhr.send(null) //发送给服务的参数。比如查询条件
+};
+xhr.open("GET", "http://www.example.org/some.file", true); //true为异步，不写默认为true
+xhr.send(null); //发送给服务的参数。比如查询条件
 ```
 
 ### 属性
@@ -464,7 +464,7 @@ send 可以是字符串.send("hello")，也可以是对象{key: value}
 ### demo
 
 ```js
-let xhr = new XMLHttpRequest()
+let xhr = new XMLHttpRequest();
 export function ajax(options) {
   let {
     url,
@@ -472,12 +472,12 @@ export function ajax(options) {
     responseType = "text",
     callback,
     data = null,
-  } = options
+  } = options;
   if (!url) {
-    return false
+    return false;
   }
-  xhr.abort()
-  xhr.responseType = responseType
+  xhr.abort();
+  xhr.responseType = responseType;
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       // 4表示整个请求过程已经完毕.
@@ -486,18 +486,18 @@ export function ajax(options) {
         callback({
           success: true,
           data: xhr.response,
-        })
+        });
       }
     }
-  }
+  };
   xhr.onerror = (err) => {
     callback({
       success: false,
       data: err,
-    })
-  }
-  xhr.open(type, url, true) //true为异步，不写默认为true
-  xhr.send(data)
+    });
+  };
+  xhr.open(type, url, true); //true为异步，不写默认为true
+  xhr.send(data);
 }
 ```
 
@@ -539,17 +539,17 @@ catch 等于 then 的第二个调用
 
 ```js
 const promise = new Promise((resolve, reject) => {
-  reject("hello") //可以是resolve
-})
+  reject("hello"); //可以是resolve
+});
 promise
   .catch((value) => {
     //resolve时改为then
-    console.log(value) //"hello"
-    return value + "world"
+    console.log(value); //"hello"
+    return value + "world";
   })
   .then((value) => {
-    console.log(value) // "helloworld"
-  })
+    console.log(value); // "helloworld"
+  });
 ```
 
 ### Promise.all()
@@ -558,20 +558,20 @@ promise
 
 ```js
 let p1 = new Promise(function (resolve, reject) {
-  resolve(42)
-})
+  resolve(42);
+});
 let p2 = new Promise(function (resolve, reject) {
-  resolve("hello")
-})
+  resolve("hello");
+});
 let p3 = new Promise(function (resolve, reject) {
   resolve({
     hello: "world",
-  })
-})
-let p4 = Promise.all([p1, p2, p3])
+  });
+});
+let p4 = Promise.all([p1, p2, p3]);
 p4.then((value) => {
-  console.log(value)
-})
+  console.log(value);
+});
 ```
 
 手写 all
@@ -580,34 +580,34 @@ p4.then((value) => {
 function PromiseAll(arrs) {
   return new Promise((resolve, reject) => {
     const list = [...arrs],
-      length = list.length
+      length = list.length;
     let count = 0,
-      result = []
+      result = [];
     for (let i = 0; i < length; i++) {
       list[i]
         .then((value) => {
-          count++
-          result[i] = value
+          count++;
+          result[i] = value;
           if (count == length) {
-            return resolve(result)
+            return resolve(result);
           }
         })
         .catch((value) => {
-          reject(value)
-        })
+          reject(value);
+        });
     }
-  })
+  });
 }
 var p1 = Promise.resolve(1),
   p2 = Promise.reject(2),
-  p3 = Promise.resolve(3)
+  p3 = Promise.resolve(3);
 PromiseAll([p1, p2, p3])
   .then((res) => {
-    console.log(res)
+    console.log(res);
   })
   .catch((value) => {
-    console.log(value)
-  })
+    console.log(value);
+  });
 ```
 
 ![](../images/fea81858e524697d399be5ef28e73c64.png)
@@ -622,22 +622,22 @@ PromiseAll([p1, p2, p3])
 
 ```js
 let p1 = new Promise(function (resolve, reject) {
-  resolve(42)
-})
+  resolve(42);
+});
 let p2 = new Promise(function (resolve, reject) {
-  resolve("hello")
-})
+  resolve("hello");
+});
 let p3 = new Promise(function (resolve, reject) {
   reject({
     hello: "world",
-  })
-})
-let p4 = Promise.race([p1, p2, p3])
+  });
+});
+let p4 = Promise.race([p1, p2, p3]);
 p4.then((value) => {
-  console.log(value) //42，不是数组
+  console.log(value); //42，不是数组
 }).catch((value) => {
-  console.log(value) //不进
-})
+  console.log(value); //不进
+});
 ```
 
 ### 手写 promise.then
@@ -653,24 +653,24 @@ var utils = {
   resolve: "fullfilled",
   reject: "rejected",
   isFucntion: function (obj) {
-    return typeof obj === "function"
+    return typeof obj === "function";
   },
-}
+};
 function MyPromise(fn) {
-  var that = this
-  that.value = void 0
-  that.state = utils.pending
-  that.resolveHandles = [] //then执行的回调，可以链式回调，所以用数组触发
-  that.rejectHandles = [] //catch执行的回调
+  var that = this;
+  that.value = void 0;
+  that.state = utils.pending;
+  that.resolveHandles = []; //then执行的回调，可以链式回调，所以用数组触发
+  that.rejectHandles = []; //catch执行的回调
   try {
     /* 执行fn的过程中有可能出错，用try/catch块进行异常处理
     比如
     var promise = new MyPromise(function (resolve, reject) {
       throw new Error("出错")
     }) */
-    fn(handleResolve, handleReject) // 执行fn
+    fn(handleResolve, handleReject); // 执行fn
   } catch (e) {
-    handleReject(e)
+    handleReject(e);
   }
   function handleResolve(value) {
     if (that.state === utils.pending) {
@@ -679,23 +679,23 @@ function MyPromise(fn) {
           resolve(test)
           reject(test)//不应该进reject，不处理状态的话就会进handleReject了
       }) */
-      that.state = utils.resolve
-      that.value = value
+      that.state = utils.resolve;
+      that.value = value;
       var handles = that.resolveHandles,
-        length = handles.length
+        length = handles.length;
       for (var i = 0; i < length; i++) {
-        handles[i](value)
+        handles[i](value);
       }
     }
   }
   function handleReject(value) {
     if (that.state === utils.pending) {
-      that.state = utils.reject
-      that.value = value
+      that.state = utils.reject;
+      that.value = value;
       var handles = that.handleReject,
-        length = handles.length
+        length = handles.length;
       for (var i = 0; i < length; i++) {
-        handles[i](value)
+        handles[i](value);
       }
     }
   }
@@ -707,20 +707,20 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     onFulfilled = utils.isFucntion(onFulfilled)
       ? onFulfilled
       : function (value) {
-          return value
+          return value;
         },
     onRejected = utils.isFucntion(onFulfilled)
       ? onFulfilled
       : function (error) {
-          throw error
-        }
+          throw error;
+        };
   if (that.state === utils.resolve) {
     //onFulfilled(that.value)
     //返回的仍然是Promise对象
     return new MyPromise(function (resolve, reject) {
       //仍然用try catch进行异常处理
       try {
-        var result = onFulfilled(that.value)
+        var result = onFulfilled(that.value);
         if (result instanceof MyPromise) {
           /* 处理以下情况，第二次的then值是第一次then 返回的值
           promise.then(value => {
@@ -729,30 +729,30 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
           .then(value => {
             console.log(value) 
           }) */
-          result.then(resolve, reject)
+          result.then(resolve, reject);
         } else {
-          resolve(result)
+          resolve(result);
         }
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-    })
+    });
   }
   if (that.state === utils.reject) {
     //onRejected(that.value)
     //同上
     return new MyPromise(function (resolve, reject) {
       try {
-        var result = onRejected(that.value)
+        var result = onRejected(that.value);
         if (result instanceof MyPromise) {
-          result.then(resolve, reject)
+          result.then(resolve, reject);
         } else {
-          resolve(result)
+          resolve(result);
         }
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-    })
+    });
   }
   if (that.state === utils.pending) {
     /* that.resolveHandles.push(onFulfilled)
@@ -760,41 +760,41 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     //不确定到底是reject还是resolve，都push进去
     that.resolveHandles.push(function (value) {
       try {
-        var result = onFulfilled(that.value)
+        var result = onFulfilled(that.value);
         if (result instanceof MyPromise) {
-          result.then(resolve, reject)
+          result.then(resolve, reject);
         } else {
-          resolve(result)
+          resolve(result);
         }
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-    })
+    });
     that.rejectHandles.push(function (value) {
       try {
-        var result = onRejected(that.value)
+        var result = onRejected(that.value);
         if (result instanceof MyPromise) {
-          result.then(resolve, reject)
+          result.then(resolve, reject);
         } else {
-          resolve(result)
+          resolve(result);
         }
       } catch (e) {
-        reject(e)
+        reject(e);
       }
-    })
+    });
   }
-}
-var test = "1"
+};
+var test = "1";
 var promise = new MyPromise(function (resolve, reject) {
-  resolve(test)
-})
+  resolve(test);
+});
 promise
   .then((value) => {
-    return value + "world"
+    return value + "world";
   })
   .then((value) => {
-    console.log(value)
-  })
+    console.log(value);
+  });
 ```
 
 ### promise.finally
@@ -838,7 +838,7 @@ fetch(url, {
   mode: "cors", // no-cors, cors, *same-origin
   redirect: "follow", // manual, *follow, error
   referrer: "no-referrer", // *client, no-referrer
-}).then((response) => response.json()) // parses response to JSON
+}).then((response) => response.json()); // parses response to JSON
 ```
 
 #### credentials
@@ -857,21 +857,21 @@ request.headers/response.headers
 let myHeaders = new Headers({
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "text/plain",
-})
+});
 ```
 
 - 增加：append(key, value)
 
 ```js
-myHeaders.append("Content-Type", "text/plain")
+myHeaders.append("Content-Type", "text/plain");
 ```
 
 append 同一个 key 多次，相当于 set，会用逗号分割多个值
 
 ```js
-myHeaders.append("hello", "world")
-myHeaders.append("hello", "world2")
-myHeaders.get("hello") // 'world, world2'
+myHeaders.append("hello", "world");
+myHeaders.append("hello", "world2");
+myHeaders.get("hello"); // 'world, world2'
 ```
 
 - 修改：set(key, value)
@@ -887,8 +887,8 @@ new Request(url, options)
 options 不传, 默认 method 是"GET",
 
 ```js
-const myRequest = new Request("http://localhost/flowers.jpg")
-fetch(myRequest).then((response) => response.json())
+const myRequest = new Request("http://localhost/flowers.jpg");
+fetch(myRequest).then((response) => response.json());
 ```
 
 可以调用 clone 复制 `myRequest.close()`
@@ -901,7 +901,7 @@ fetch(myRequest).then((response) => response.json())
 const myRequest = new Request("http://localhost/api", {
   method: "POST",
   body: '{"foo":"bar"}',
-})
+});
 ```
 
 ### Response
@@ -917,7 +917,7 @@ new Response("<h1>Service Unavailable</h1>", {
   headers: new Headers({
     "Content-Type": "text/html",
   }),
-})
+});
 ```
 
 #### options
@@ -940,11 +940,11 @@ fetch(myRequest).then(function (response) {
   if (response.headers.get("content-type") === "application/json") {
     return response.json().then(function (json) {
       // process your JSON further
-    })
+    });
   } else {
-    console.log("Oops, we haven't got JSON!")
+    console.log("Oops, we haven't got JSON!");
   }
-})
+});
 ```
 
 #### response.clone()
@@ -953,9 +953,9 @@ fetch(myRequest).then(function (response) {
 
 ```js
 fetch(request).then(function (response) {
-  cache.put(request, response.clone())
-  return response
-})
+  cache.put(request, response.clone());
+  return response;
+});
 ```
 
 ### 跨域
@@ -966,14 +966,14 @@ fetch(request).then(function (response) {
 let myHeaders = new Headers({
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "text/plain",
-})
+});
 fetch(url, {
   method: "GET",
   headers: myHeaders,
   mode: "cors",
 }).then((res) => {
   // TODO
-})
+});
 ```
 
 ### 中断
@@ -981,10 +981,10 @@ fetch(url, {
 用 AbortController 构造函数，fetch 中用 signal 绑定
 
 ```js
-const abortController = new AbortController()
+const abortController = new AbortController();
 fetch(url, {
   signal: abortController.signal,
-})
+});
 
 // 中断：abortController.abort()
 ```

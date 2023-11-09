@@ -17,32 +17,32 @@ TypeScript 可以使用三种访问修饰符
 
 ```ts
 class Factory {
-  private name: string
-  public serialNumber: number
+  private name: string;
+  public serialNumber: number;
   public constructor(name, serialNumber) {
-    this.name = name
-    this.serialNumber = serialNumber
+    this.name = name;
+    this.serialNumber = serialNumber;
   }
   public sayName(): string {
-    return this.name
+    return this.name;
   }
 }
-let person = new Factory("John", 13)
-console.log(person.serialNumber) //正常
-console.log(person.name) //报错，name是private，只能在Factory访问
+let person = new Factory("John", 13);
+console.log(person.serialNumber); //正常
+console.log(person.name); //报错，name是private，只能在Factory访问
 ```
 
 TS 3.8 支持新的 private 语法 `#`
 
 ```ts
 class Animal {
-  #name: string
+  #name: string;
   constructor(theName: string) {
-    this.#name = theName
+    this.#name = theName;
   }
 }
 
-new Animal("Cat").#name // 报错
+new Animal("Cat").#name; // 报错
 ```
 
 ## 抽象类 abstract
@@ -56,39 +56,39 @@ new Animal("Cat").#name // 报错
 
 ```ts
 abstract class Factory {
-  public name: string
+  public name: string;
   public constructor(name: string) {
-    this.name = name
+    this.name = name;
   }
 }
-let person = new Factory("John") //报错，不允许new
+let person = new Factory("John"); //报错，不允许new
 ```
 
 ```ts
 abstract class Factory {
-  protected name: string
+  protected name: string;
   public constructor(name: string) {
-    this.name = name
+    this.name = name;
   }
   public sayName() {
     //不是抽象类，不需要子类实现
-    console.log(this.name)
+    console.log(this.name);
   }
-  public abstract sayNumber(): void //sayNumber必须在子类中被实现
+  public abstract sayNumber(): void; //sayNumber必须在子类中被实现
 }
 class Plant extends Factory {
-  public number: string
+  public number: string;
   public constructor(name: string, number: string) {
-    super(name)
-    this.number = number
+    super(name);
+    this.number = number;
   }
   public sayNumber() {
-    console.log(this.number)
+    console.log(this.number);
   }
 }
-let child = new Plant("Emma", "1")
-child.sayName() //"Emma"
-child.sayNumber() //"1"
+let child = new Plant("Emma", "1");
+child.sayName(); //"Emma"
+child.sayNumber(); //"1"
 ```
 
 ## 类的接口(interface)和实现（implements）
@@ -104,37 +104,37 @@ child.sayNumber() //"1"
 ```ts
 //契约
 interface Contract {
-  appoint(): void
-  name: string
+  appoint(): void;
+  name: string;
 }
 class Servant {
-  public name
+  public name;
   constructor(name) {
-    this.name = name
+    this.name = name;
   }
 }
 class Saber extends Servant implements Contract {
-  public name
+  public name;
   appoint() {
-    console.log(`${this.name} appoint saber class with master`)
+    console.log(`${this.name} appoint saber class with master`);
   }
   constructor(name) {
-    super(name)
+    super(name);
   }
 }
 class Magica implements Contract {
-  name: string
+  name: string;
   appoint() {
-    console.log(`${this.name} appoint mahou with QB`)
+    console.log(`${this.name} appoint mahou with QB`);
   }
   constructor(name) {
-    this.name = name
+    this.name = name;
   }
 }
-let servant = new Saber("Altria")
-console.log(servant.name) //Altria
-let girl = new Magica("momo")
-girl.appoint() //momo appoint mahou with QB
+let servant = new Saber("Altria");
+console.log(servant.name); //Altria
+let girl = new Magica("momo");
+girl.appoint(); //momo appoint mahou with QB
 ```
 
 ### 继承 extends
@@ -146,41 +146,41 @@ girl.appoint() //momo appoint mahou with QB
 ```ts
 //契约
 interface Contract {
-  appoint(): void
-  name: string
+  appoint(): void;
+  name: string;
 }
 //令咒
 interface Spell extends Contract {
-  command(): string
+  command(): string;
 }
 class Servant implements Spell {
-  name: string
+  name: string;
   appoint() {
-    console.log(`servant ${this.name} is appoint with master`)
+    console.log(`servant ${this.name} is appoint with master`);
   }
   command() {
-    return `command servant ${this.name} to do sth.`
+    return `command servant ${this.name} to do sth.`;
   }
   constructor(name) {
-    this.name = name
+    this.name = name;
   }
 }
-let saber = new Servant("Altria")
-saber.appoint()
-console.log(saber.command())
+let saber = new Servant("Altria");
+saber.appoint();
+console.log(saber.command());
 ```
 
 继承类
 
 ```ts
 class Point {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 interface Point3d extends Point {
-  z: number
+  z: number;
 }
-let point3d: Point3d = { x: 1, y: 2, z: 3 }
+let point3d: Point3d = { x: 1, y: 2, z: 3 };
 ```
 
 ## 比较
@@ -190,18 +190,18 @@ let point3d: Point3d = { x: 1, y: 2, z: 3 }
 
 ```ts
 class Magica {
-  private name: string
+  private name: string;
   constructor(name: string) {
-    this.name = name
+    this.name = name;
   }
 }
 class Servant {
-  private name: string
+  private name: string;
   constructor(name: string) {
-    this.name = name
+    this.name = name;
   }
 }
-let girl = new Magica("madoka")
-const servant = new Servant("saber")
-girl = servant //不能赋值，因为两者具有private属性，尽管都叫name
+let girl = new Magica("madoka");
+const servant = new Servant("saber");
+girl = servant; //不能赋值，因为两者具有private属性，尽管都叫name
 ```

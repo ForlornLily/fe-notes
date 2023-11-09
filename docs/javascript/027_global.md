@@ -33,7 +33,7 @@
 ```js
 eval(
   `function test() {console.log("hello")}; test() //# sourceURL=www.baidu.com`
-)
+);
 ```
 
 同样也可以指定 `sourceMappingURL`

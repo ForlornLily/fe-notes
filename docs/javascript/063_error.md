@@ -7,12 +7,12 @@ throw 用来抛出异常，try/catch 捕获异常
 ```js
 function jude(x) {
   if (x < 0) {
-    throw new Error("x不能小于0") //Uncaught Error: x不能小于0
+    throw new Error("x不能小于0"); //Uncaught Error: x不能小于0
   }
   try {
-    console.log(x)
+    console.log(x);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 ```
@@ -24,20 +24,20 @@ try..catch 只能是同步的，无法用于异步代码模式。
 //报错，Uncaught (in promise)
 function f2() {
   try {
-    Promise.reject("出错了")
+    Promise.reject("出错了");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 //正常
 function f2() {
   try {
     Promise.reject("出错了").catch((err) => {
-      console.log("2", err)
-    })
-    console.log("1")
+      console.log("2", err);
+    });
+    console.log("1");
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
 }
 ```
@@ -49,14 +49,14 @@ try catch 一定会执行 finally，哪怕 return
 ```js
 function testFinally() {
   try {
-    return "try"
+    return "try";
   } catch (error) {
-    return "error"
+    return "error";
   } finally {
-    return "finally"
+    return "finally";
   }
 }
-testFinally() // 'finally'
+testFinally(); // 'finally'
 ```
 
 ## 错误类型
@@ -81,11 +81,11 @@ try catch 了就不会触发 error
 image 也支持 error
 
 ```js
-const image = new Image()
+const image = new Image();
 image.addEventListener("load", (event) => {
-  console.log("Image loaded!")
-})
+  console.log("Image loaded!");
+});
 image.addEventListener("error", (event) => {
-  console.log("Image not loaded!")
-})
+  console.log("Image not loaded!");
+});
 ```

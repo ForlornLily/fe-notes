@@ -23,8 +23,8 @@ pages/dashboard/settings/username.js 对应路由/dashboard/settings/username
 内部必须是单个元素包裹，不可以直接字符串
 
 ```js
-import React from "react"
-import Link from "next/link"
+import React from "react";
+import Link from "next/link";
 function HomePage() {
   return (
     <div className="wrapper">
@@ -32,7 +32,7 @@ function HomePage() {
         <a>About</a>
       </Link>
     </div>
-  )
+  );
 }
 ```
 
@@ -56,12 +56,12 @@ href 指向具体页面，as 表示显示在 url 内的路径。浏览器显示�
 比如从上面的"/about/1"跳过来的路由，显示如下
 
 ```js
-import React from "react"
-import { useRouter } from "next/router"
+import React from "react";
+import { useRouter } from "next/router";
 function DynaticPage() {
-  const router = useRouter()
-  console.log(router)
-  return <div>hello</div>
+  const router = useRouter();
+  console.log(router);
+  return <div>hello</div>;
 }
 ```
 
@@ -72,17 +72,17 @@ function DynaticPage() {
 将路由参数传给组件
 
 ```js
-import React from "react"
-import { withRouter } from "next/router"
+import React from "react";
+import { withRouter } from "next/router";
 function HomePage({ router }) {
-  console.log(router) //router对象和useRouter()一样
+  console.log(router); //router对象和useRouter()一样
   return (
     <div className="wrapper">
       <a>About</a>
     </div>
-  )
+  );
 }
-export default withRouter(HomePage)
+export default withRouter(HomePage);
 ```
 
 ### Router
@@ -94,7 +94,7 @@ export default withRouter(HomePage)
 有 push, replace
 
 ```js
-import Router from "next/router"
+import Router from "next/router";
 function HomePage() {
   const jumpAbout = () => {
     //跳到/about?id=1
@@ -103,18 +103,18 @@ function HomePage() {
       query: {
         id: 1,
       },
-    })
-  }
+    });
+  };
   return (
     <div className="wrapper" onClick={jumpAbout}>
       click me
     </div>
-  )
+  );
 }
 const jumpAbout = () => {
   //跳到/about，但浏览器地址栏显示是"/alias"
-  Router.push("/about", "/alias")
-}
+  Router.push("/about", "/alias");
+};
 ```
 
 #### beforePopState
@@ -125,15 +125,15 @@ const jumpAbout = () => {
 但是刷新或者调用 Router.push 仍然会渲染，只影响浏览器的前进后退键
 
 ```js
-import Router from "next/router"
+import Router from "next/router";
 function HomePage() {
   useEffect(() => {
     // 路由拦截，会影响浏览器前进后退的渲染结果
     Router.beforePopState(({ url, as, options }: any) => {
-      return false
-    })
-  })
-  return <div className="wrapper">click me</div>
+      return false;
+    });
+  });
+  return <div className="wrapper">click me</div>;
 }
 ```
 
@@ -144,11 +144,11 @@ function HomePage() {
 比如绑定`routeChangeStart`(路由开始变化时触发)
 
 ```js
-import Router from "next/router"
+import Router from "next/router";
 function handleRouteChange(params) {
-  console.log(params)
+  console.log(params);
 }
-Router.events.on("routeChangeStart", handleRouteChange)
+Router.events.on("routeChangeStart", handleRouteChange);
 ```
 
 ### Shallow
@@ -159,27 +159,27 @@ Router.events.on("routeChangeStart", handleRouteChange)
 设置 shallow 为 true 后，可以保留之前的 state
 
 ```js
-import React, { useEffect } from "react"
-import { NextPage } from "next"
-import { useRouter } from "next/router"
+import React, { useEffect } from "react";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 
 interface Props {
   stars?: string;
 }
 const HomePage: NextPage<Props> = ({ stars }) => {
-  const router = useRouter()
+  const router = useRouter();
   const jumpAbout = () => {
-    router.push("/home?id=111", undefined, { shallow: true })
-  }
+    router.push("/home?id=111", undefined, { shallow: true });
+  };
   return (
     <div className="wrapper" onClick={jumpAbout}>
       <img src="/test.jpg" alt="test" />
     </div>
-  )
-}
+  );
+};
 HomePage.getInitialProps = async (ctx) => {
-  console.log("111")
-  return { stars: "hello" }
-}
-export default HomePage
+  console.log("111");
+  return { stars: "hello" };
+};
+export default HomePage;
 ```

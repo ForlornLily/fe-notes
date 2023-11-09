@@ -6,27 +6,27 @@
 - [Automatic batching for fewer renders in React 18](https://github.com/reactwg/react-18/discussions/21)
 
 ```tsx
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 export default function App() {
-  const [count, setCount] = useState<number>(0)
-  const [flag, setBoolean] = useState<boolean>(false)
-  console.log("app render", React.version, count, flag)
+  const [count, setCount] = useState<number>(0);
+  const [flag, setBoolean] = useState<boolean>(false);
+  console.log("app render", React.version, count, flag);
 
   function handlePromise() {
     Promise.resolve().then(() => {
-      console.log("before")
-      setCount((prev) => prev + 1)
-      setBoolean((prev) => !prev)
-      console.log("after")
-    })
+      console.log("before");
+      setCount((prev) => prev + 1);
+      setBoolean((prev) => !prev);
+      console.log("after");
+    });
   }
 
   return (
     <>
       <button onClick={() => handlePromise()}>click</button>
     </>
-  )
+  );
 }
 ```
 
@@ -55,28 +55,28 @@ Class 组件也会有影响
 ```jsx
 handleClick = () => {
   setTimeout(() => {
-    this.setState(({ count }) => ({ count: count + 1 }))
+    this.setState(({ count }) => ({ count: count + 1 }));
 
     // { count: 1, flag: false }
-    console.log(this.state)
+    console.log(this.state);
 
-    this.setState(({ flag }) => ({ flag: !flag }))
-  })
-}
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
 ```
 
 ```jsx
 // 18 下拿到的仍然是旧值
 handleClick = () => {
   setTimeout(() => {
-    this.setState(({ count }) => ({ count: count + 1 }))
+    this.setState(({ count }) => ({ count: count + 1 }));
 
     // { count: 0, flag: false }
-    console.log(this.state)
+    console.log(this.state);
 
-    this.setState(({ flag }) => ({ flag: !flag }))
-  })
-}
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
 ```
 
 解决方式是 [flushSync](./09_dom.md#flushSync)
@@ -85,13 +85,13 @@ handleClick = () => {
 handleClick = () => {
   setTimeout(() => {
     ReactDOM.flushSync(() => {
-      this.setState(({ count }) => ({ count: count + 1 }))
-    })
+      this.setState(({ count }) => ({ count: count + 1 }));
+    });
 
     // { count: 1, flag: false }
-    console.log(this.state)
+    console.log(this.state);
 
-    this.setState(({ flag }) => ({ flag: !flag }))
-  })
-}
+    this.setState(({ flag }) => ({ flag: !flag }));
+  });
+};
 ```

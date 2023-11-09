@@ -20,15 +20,15 @@
 - function
 
 ```js
-var test = Symbol("1")
-console.log(typeof test) // "symbol"
+var test = Symbol("1");
+console.log(typeof test); // "symbol"
 class Hello {
   constructor(value) {
-    this.value = value
+    this.value = value;
   }
 }
-console.log(typeof Hello) // "function"
-console.log(typeof notDeclared) // "undefined"
+console.log(typeof Hello); // "function"
+console.log(typeof notDeclared); // "undefined"
 ```
 
 如果一个变量没有被声明，用 typeof 还是返回"undefined"，而不是报错
@@ -39,9 +39,9 @@ console.log(typeof notDeclared) // "undefined"
 `Object.prototype.toString.call(value)`
 
 ```js
-let target = {}
-let proxy = new Proxy(target, {})
-Object.prototype.toString.call(proxy) //"[object Object]"
+let target = {};
+let proxy = new Proxy(target, {});
+Object.prototype.toString.call(proxy); //"[object Object]"
 ```
 
 返回的是"[object Number]"

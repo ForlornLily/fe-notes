@@ -13,15 +13,15 @@ function Home() {
     <div>
       <CommonDialog title="world">hello</CommonDialog>
     </div>
-  )
+  );
 }
 function CommonDialog(props) {
-  const { title } = props
+  const { title } = props;
   return (
     <div>
       <h1>通用标题: {title}</h1>
       {props.children}
     </div>
-  )
+  );
 }
 ```

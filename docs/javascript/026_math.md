@@ -9,31 +9,31 @@
 - ceil：向上取整
 
 ```js
-Math.ceil(18.9) //19
-Math.ceil(18) //18
+Math.ceil(18.9); //19
+Math.ceil(18); //18
 ```
 
 - floor：向下
 
 ```js
-Math.floor(18.9) //18
-Math.floor(18) //18
+Math.floor(18.9); //18
+Math.floor(18); //18
 ```
 
 - round：四舍五入
 
 ```js
-Math.round("18.5") //19
-Math.round("18.5b") //NaN
+Math.round("18.5"); //19
+Math.round("18.5b"); //NaN
 ```
 
 - fround：最接近的单精度(32 位)浮点值
 
 ```js
-Math.fround(18.5) // 18.5
-Math.fround("18.5b") // NaN
-Math.fround(18.1) // 18.100000381469727
-Math.fround(18.9) // 18.899999618530273
+Math.fround(18.5); // 18.5
+Math.fround("18.5b"); // NaN
+Math.fround(18.1); // 18.100000381469727
+Math.fround(18.9); // 18.899999618530273
 ```
 
 包含非数字都会是 NaN
@@ -49,13 +49,13 @@ Math.fround(18.9) // 18.899999618530273
 可以用 pow 函数，也可以用`**`
 
 ```js
-Math.pow(5, 2)
+Math.pow(5, 2);
 //等价于
-5 ** 2
+5 ** 2;
 ```
 
 ```js
-2 * 5 ** 2 //50
+2 * 5 ** 2; //50
 ```
 
 左边只能用++或者--的一元运算符，否则会产生歧义。

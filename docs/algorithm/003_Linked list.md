@@ -37,115 +37,115 @@
 ```js
 class Node {
   constructor(element) {
-    this.element = element
-    this.next = null
+    this.element = element;
+    this.next = null;
   }
 }
 //单向链表
 class List {
   constructor() {
-    this.length = 0
-    this.head = null
+    this.length = 0;
+    this.head = null;
   }
   indexOf(element) {
     let current = this.head,
       index = -1,
-      length = this.length
+      length = this.length;
     for (let i = 0; i < length; i++) {
       if (element === current.element) {
-        index = i
-        break
+        index = i;
+        break;
       } else {
-        current = current.next
+        current = current.next;
       }
     }
-    return index
+    return index;
   }
   isEmpty() {
-    return this.length === 0
+    return this.length === 0;
   }
   size() {
-    return this.length
+    return this.length;
   }
   toString() {
     let current = this.head,
-      string = ""
+      string = "";
     while (current) {
-      string += current.element + (current.next ? ", " : "")
-      current = current.next
+      string += current.element + (current.next ? ", " : "");
+      current = current.next;
     }
-    return string
+    return string;
   }
   getHead() {
-    return this.head
+    return this.head;
   }
   append(element) {
     let current,
-      node = new Node(element)
+      node = new Node(element);
     if (this.head === null) {
       //如果head为null，说明是第一个节点
-      this.head = node
+      this.head = node;
     } else {
-      current = this.head
+      current = this.head;
       while (current.next) {
-        current = current.next
+        current = current.next;
       }
       //让新增节点成为最后一个
-      current.next = node
+      current.next = node;
     }
-    this.length++
+    this.length++;
   }
   insert(position, element) {
     if (position < 0 || position > this.length) {
-      return false
+      return false;
     }
     let node = new Node(element),
       current = this.head,
       previous,
-      index = 0
+      index = 0;
     if (position === 0) {
       //如果是做为头插入
-      node.next = current
-      this.head = node
+      node.next = current;
+      this.head = node;
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = node
-      node.next = current
+      previous.next = node;
+      node.next = current;
     }
-    this.length++
-    return true
+    this.length++;
+    return true;
   }
   removeAt(position) {
     if (position < 0 || position >= this.length) {
-      return null
+      return null;
     }
     let current = this.head,
       previous = null,
-      index = 0
+      index = 0;
     if (position === 0) {
       //移除第一个
-      this.head = current.next
+      this.head = current.next;
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = current.next
+      previous.next = current.next;
     }
-    this.length--
-    return current.element
+    this.length--;
+    return current.element;
   }
   remove(element) {
-    let index = this.indexOf(element)
-    return this.removeAt(index)
+    let index = this.indexOf(element);
+    return this.removeAt(index);
   }
 }
-let list = new List()
-list.append("one")
-list.append("two")
+let list = new List();
+list.append("one");
+list.append("two");
 ```
 
 ## 双向链表
@@ -159,107 +159,107 @@ prev element next
 ```js
 class DoubleNode {
   constructor(element) {
-    this.element = element
-    this.next = null
-    this.prev = null
+    this.element = element;
+    this.next = null;
+    this.prev = null;
   }
 }
 //双向链表大部分和单向一致，只是多了prev指针
 //indexOf, isEmpty, size, getHead, toString, remove继承单向的就行
 class DoubleList extends List {
   constructor() {
-    super()
-    this.head = null
-    this.tail = null
-    this.length = 0
+    super();
+    this.head = null;
+    this.tail = null;
+    this.length = 0;
   }
   append(element) {
     let current,
-      node = new DoubleNode(element)
+      node = new DoubleNode(element);
     if (this.head === null) {
       //如果head为null，说明是第一个节点
-      this.head = node
+      this.head = node;
     } else {
       //让新增节点成为最后一个
-      current = this.tail
-      current.next = node
-      node.prev = current
+      current = this.tail;
+      current.next = node;
+      node.prev = current;
     }
-    this.tail = node
-    this.length++
+    this.tail = node;
+    this.length++;
   }
   insert(position, element) {
     if (position < 0 || position > this.length) {
-      return false
+      return false;
     }
     let node = new DoubleNode(element),
       current = this.head,
       previous,
-      index = 0
+      index = 0;
     if (position === 0) {
       //如果是做为头插入
       if (!current) {
         //如果head不存在
-        this.append(element)
+        this.append(element);
       } else {
-        node.next = current
-        this.head.prev = node
-        this.head = node
-        this.length++
+        node.next = current;
+        this.head.prev = node;
+        this.head = node;
+        this.length++;
       }
     } else if (position === this.length) {
       //位于最后相当于append
-      this.append(element)
+      this.append(element);
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = node
-      current.prev = node
-      node.next = current
-      node.prev = previous
-      this.length++
+      previous.next = node;
+      current.prev = node;
+      node.next = current;
+      node.prev = previous;
+      this.length++;
     }
-    return true
+    return true;
   }
   removeAt(position) {
     if (position < 0 || position >= this.length) {
-      return null
+      return null;
     }
     let current = this.head,
       previous = null,
       index = 0,
-      length = this.length
+      length = this.length;
     if (position === 0) {
       //移除第一个
-      this.head = current.next
+      this.head = current.next;
       if (length === 1) {
         //如果本身只剩1项，更新tail
-        this.tail = null
+        this.tail = null;
       } else {
-        this.head.prev = null
+        this.head.prev = null;
       }
     } else if (position === length - 1) {
       //删除最后一项，需要更新tail
-      current = this.tail
-      this.tail = current.prev
-      this.tail.next = null
+      current = this.tail;
+      this.tail = current.prev;
+      this.tail.next = null;
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = current.next
-      current.next.prev = previous
+      previous.next = current.next;
+      current.next.prev = previous;
     }
-    this.length--
-    return current.element
+    this.length--;
+    return current.element;
   }
 }
-let dbList = new DoubleList()
-dbList.append("1")
-dbList.append("2")
+let dbList = new DoubleList();
+dbList.append("1");
+dbList.append("2");
 ```
 
 ## 循环链表
@@ -273,95 +273,95 @@ dbList.append("2")
 ```js
 class CircleList extends List {
   constructor() {
-    super()
+    super();
   }
   append(element) {
     let current,
       head = this.head,
-      node = new Node(element)
+      node = new Node(element);
     if (this.head === null) {
       //如果head为null，说明是第一个节点
-      this.head = node
+      this.head = node;
     } else {
-      current = this.head
+      current = this.head;
       while (current && current.next && current.next !== head) {
-        current = current.next
+        current = current.next;
       }
       //让新增节点成为最后一个
-      current.next = node
+      current.next = node;
     }
     //最后一个元素的next指向第一个元素head
-    node.next = head
-    this.length++
+    node.next = head;
+    this.length++;
   }
   insert(position, element) {
     if (position < 0 || position > this.length) {
-      return false
+      return false;
     }
     let node = new Node(element),
       current = this.head,
       previous,
-      index = 0
+      index = 0;
     if (position === 0) {
       //如果是做为头插入
-      node.next = current
+      node.next = current;
       //更新最后一个值的next
       while (current.next !== this.head) {
-        current = current.next
+        current = current.next;
       }
-      this.head = node
-      current.next = this.head
+      this.head = node;
+      current.next = this.head;
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = node
-      node.next = current
+      previous.next = node;
+      node.next = current;
     }
-    this.length++
-    return true
+    this.length++;
+    return true;
   }
   removeAt(position) {
     if (position < 0 || position >= this.length) {
-      return null
+      return null;
     }
-    this.length--
-    const head = this.head
+    this.length--;
+    const head = this.head;
     let current = this.head,
       previous = null,
-      index = 0
+      index = 0;
     if (position === 0) {
       //移除第一个
-      this.head = this.head.next
+      this.head = this.head.next;
       //更新最后一个的next
       while (current.next !== head) {
-        current = current.next
+        current = current.next;
       }
-      current.next = this.head
-      return head.element
+      current.next = this.head;
+      return head.element;
     } else {
       while (index++ < position) {
-        previous = current
-        current = current.next
+        previous = current;
+        current = current.next;
       }
-      previous.next = current.next
-      return current.element
+      previous.next = current.next;
+      return current.element;
     }
   }
   toString() {
     let current = this.head,
-      string = current.element
+      string = current.element;
     while (current && current.next !== this.head) {
-      current = current.next
-      string += ", " + current.element
+      current = current.next;
+      string += ", " + current.element;
     }
-    return string
+    return string;
   }
 }
-let circleList = new CircleList()
-circleList.append("√")
-circleList.append("○")
+let circleList = new CircleList();
+circleList.append("√");
+circleList.append("○");
 ```
 
 ## 时间复杂度

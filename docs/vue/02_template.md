@@ -28,16 +28,16 @@ let app = new Vue({
   data() {
     return {
       message: "hello",
-    }
+    };
   },
   filters: {
     capitalize: function (value) {
-      if (!value) return ""
-      value = value.toString()
-      return value.toUpperCase()
+      if (!value) return "";
+      value = value.toString();
+      return value.toUpperCase();
     },
   },
-})
+});
 ```
 
 #### 全局注册 Vue.filter
@@ -48,18 +48,18 @@ let app = new Vue({
 
 ```js
 Vue.filter("capitalize", function (value) {
-  if (!value) return ""
-  value = value.toString()
-  return value.toUpperCase()
-})
+  if (!value) return "";
+  value = value.toString();
+  return value.toUpperCase();
+});
 let app = new Vue({
   el: "#app",
   data() {
     return {
       message: "hello",
-    }
+    };
   },
-})
+});
 ```
 
 #### 传参
@@ -136,7 +136,7 @@ filters: {
 
 ```js
 data: {
-  activeClass: "active"
+  activeClass: "active";
 }
 ```
 
@@ -174,10 +174,10 @@ let app = new Vue({
     classObject() {
       return {
         active: this.isActive && !this.error,
-      }
+      };
     },
   },
-})
+});
 ```
 
 ### 过滤器 filters
@@ -406,13 +406,13 @@ input 是触发 input 事件（值改变）
     inheritAttrs: true,
     props: ["test"],
     template: `<div><slot></slot>66666<slot name="footer"></slot></div>`,
-  }
+  };
   const app = new Vue({
     el: "#app",
     components: {
       "text-document": MyComponent,
     },
-  })
+  });
 </script>
 ```
 
@@ -446,15 +446,15 @@ input 是触发 input 事件（值改变）
     data() {
       return {
         innerData: "123",
-      }
+      };
     },
-  }
+  };
   const app = new Vue({
     el: "#app",
     components: {
       "text-document": MyComponent,
     },
-  })
+  });
 </script>
 ```
 
@@ -481,15 +481,15 @@ input 是触发 input 事件（值改变）
     data() {
       return {
         innerData: "123",
-      }
+      };
     },
-  }
+  };
   const app = new Vue({
     el: "#app",
     components: {
       "text-document": MyComponent,
     },
-  })
+  });
 </script>
 ```
 
@@ -509,12 +509,12 @@ input 是触发 input 事件（值改变）
     // 当被绑定的元素插入到 DOM 中时……
     inserted: function (el) {
       // 聚焦元素
-      el.focus()
+      el.focus();
     },
-  })
+  });
   const app = new Vue({
     el: "#app",
-  })
+  });
 </script>
 ```
 
@@ -527,11 +527,11 @@ const app = new Vue({
     focus: {
       // 指令的定义
       inserted: function (el) {
-        el.focus()
+        el.focus();
       },
     },
   },
-})
+});
 ```
 
 ### 钩子函数

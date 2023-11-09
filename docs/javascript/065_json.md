@@ -27,15 +27,15 @@ var childArr = [
     name: "Ray",
     year: 12,
   },
-]
-var result = JSON.stringify(childArr, ["name"]) // '[{"name":"Emma"},{"name":"Norma"},{"name":"Ray"}]'
+];
+var result = JSON.stringify(childArr, ["name"]); // '[{"name":"Emma"},{"name":"Norma"},{"name":"Ray"}]'
 ```
 
 缩进可以提高可读性  
 只缩进不过滤
 
 ```js
-JSON.stringify(childArr, undefined, 2)
+JSON.stringify(childArr, undefined, 2);
 ```
 
 ## JSON.parse
@@ -58,13 +58,13 @@ const test = JSON.stringify([
     name: "Ray",
     year: 12,
   },
-])
+]);
 JSON.parse(test, (key, value) => {
   if (key === "name") {
-    return `${value}_extra`
+    return `${value}_extra`;
   }
-  return value
-})
+  return value;
+});
 ```
 
 ```json

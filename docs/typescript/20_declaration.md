@@ -18,19 +18,19 @@
 
 ```ts
 interface Alarm {
-  price: number
-  alert(s: string): string
+  price: number;
+  alert(s: string): string;
 }
 interface Alarm {
-  weight: number
-  alert(s: string, n: number): string
+  weight: number;
+  alert(s: string, n: number): string;
 }
 //等价于
 interface Alarm {
-  price: number
-  weight: number
-  alert(s: string): string
-  alert(s: string, n: number): string
+  price: number;
+  weight: number;
+  alert(s: string): string;
+  alert(s: string, n: number): string;
 }
 ```
 
@@ -38,11 +38,11 @@ interface Alarm {
 
 ```ts
 interface Alarm {
-  price: number
+  price: number;
 }
 interface Alarm {
-  price: string // 类型不一致，会报错
-  weight: number
+  price: string; // 类型不一致，会报错
+  weight: number;
 }
 ```
 
@@ -53,24 +53,24 @@ interface Alarm {
 比如在 ts 内使用 jQuery
 
 ```js
-$(".awesome").show() // Error: cannot find name `$`
+$(".awesome").show(); // Error: cannot find name `$`
 ```
 
 需要先声明一个全局变量代表 jQuery
 
 ```ts
-declare var $: any
-$(".awesome").show() // Okay!
+declare var $: any;
+$(".awesome").show(); // Okay!
 ```
 
 或者更具体一些
 
 ```ts
 declare var $: {
-  (selector: string): any
-}
-$(".awesome").show() // Okay!
-$(123).show() // Error: selector needs to be a string
+  (selector: string): any;
+};
+$(".awesome").show(); // Okay!
+$(123).show(); // Error: selector needs to be a string
 ```
 
 declare var 并没有声明变量，在编译后的 js 文件里这一句话是不存在的。
@@ -98,8 +98,8 @@ declare var 并没有声明变量，在编译后的 js 文件里这一句话是�
 
 ```ts
 declare module "*.module.less" {
-  const classes: { [key: string]: string }
-  export default classes
+  const classes: { [key: string]: string };
+  export default classes;
 }
 ```
 
@@ -144,17 +144,17 @@ const 表示此时的全局变量是一个常量，不允许再去修改它的�
 ```ts
 // src/Animal.d.ts
 declare class Animal {
-  name: string
-  constructor(name: string)
-  sayHi(): string
+  name: string;
+  constructor(name: string);
+  sayHi(): string;
 }
 
 declare class Animal {
-  name: string
-  constructor(name: string)
+  name: string;
+  constructor(name: string);
   sayHi() {
     //报错，不能声明具体实现
-    return `My name is ${this.name}`
+    return `My name is ${this.name}`;
   }
 }
 ```

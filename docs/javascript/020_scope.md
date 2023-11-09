@@ -12,27 +12,27 @@
 函数声明是在普通变量之前被提升的（仅针对 var，const 和 let 以及 class 因为暂时性死区 会直接报错）
 
 ```js
-foo() // 1
-var foo
+foo(); // 1
+var foo;
 function foo() {
-  console.log(1)
+  console.log(1);
 }
-foo() //1
+foo(); //1
 foo = function () {
-  console.log(2)
-}
-foo() //2
+  console.log(2);
+};
+foo(); //2
 ```
 
 如果变量被赋值，那赋值会覆盖掉声明
 
 ```js
-test() // 1
-var test = 2
+test(); // 1
+var test = 2;
 function test() {
-  console.log(1)
+  console.log(1);
 }
-test() //TypeError: test is not a function
+test(); //TypeError: test is not a function
 ```
 
 ## 函数表达式
@@ -48,11 +48,11 @@ test() //TypeError: test is not a function
 下面的函数会报错。表达式的名称标识符在外围作用域中也是不可用
 
 ```js
-bar() //报错， ReferenceError
+bar(); //报错， ReferenceError
 var foo = function bar() {
   // ...
-}
-bar() //还是报错， ReferenceError
+};
+bar(); //还是报错， ReferenceError
 ```
 
 ### IIFEs
@@ -62,10 +62,10 @@ immediately-invoked function expressions: 立即调用函数表达式
 最常见的形式是一个匿名函数表达式。
 
 ```js
-;(function () {
-  var a = 3
-  console.log(a) // 3
-})()
+(function () {
+  var a = 3;
+  console.log(a); // 3
+})();
 ```
 
 #### 写法
@@ -83,25 +83,25 @@ immediately-invoked function expressions: 立即调用函数表达式
 #### 传入参数
 
 ```js
-var a = 2
-;(function IIFE(global, param) {
+var a = 2;
+(function IIFE(global, param) {
   //传入window对象，命名为global
-  var a = 3
-  console.log(a) // 3
-  console.log(global.a) // 2
-  console.log(param) //2
-})(window, a)
-console.log(a) // 2
+  var a = 3;
+  console.log(a); // 3
+  console.log(global.a); // 2
+  console.log(param); //2
+})(window, a);
+console.log(a); // 2
 ```
 
 ```js
 let params = (function () {
   params = {
     a: 1,
-  }
-  return params
-})()
-console.log(params.a) //ReferenceError: Cannot access 'params' before initialization
+  };
+  return params;
+})();
+console.log(params.a); //ReferenceError: Cannot access 'params' before initialization
 ```
 
 ## 变量复制
@@ -124,19 +124,19 @@ const b = a
 
 ```js
 function test(person) {
-  person.age = 26
+  person.age = 26;
   person = {
     name: "yyy",
     age: 30,
-  }
-  return person
+  };
+  return person;
 }
 const p1 = {
   name: "xxx",
   age: 25,
-}
-const p2 = test(p1) // {name: 'yyy', age: 30}
-console.log(p1) //{name: 'xxx', age: 26}
+};
+const p2 = test(p1); // {name: 'yyy', age: 30}
+console.log(p1); //{name: 'xxx', age: 26}
 ```
 
 ![https://user-gold-cdn.xitu.io/2018/11/14/16712ce155afef8c?imageslim](../images/ff3d7e13ddcf58cc80688cde4a5485c1.png)
@@ -166,13 +166,13 @@ console.log(p1) //{name: 'xxx', age: 26}
 不包括`prototype`上的值
 
 ```js
-Object.prototype.b = 2
+Object.prototype.b = 2;
 var test = {
   a: "1",
-}
-let tmp = {}
-Object.assign(tmp, test)
-console.log(tmp) // {a: '1'}
+};
+let tmp = {};
+Object.assign(tmp, test);
+console.log(tmp); // {a: '1'}
 ```
 
 #### 展开运算符
@@ -180,12 +180,12 @@ console.log(tmp) // {a: '1'}
 不包括`prototype`上的值
 
 ```js
-Object.prototype.b = 2
+Object.prototype.b = 2;
 var test = {
   a: "1",
-}
-let tmp = { ...test }
-console.log(tmp) //{a: '1'}
+};
+let tmp = { ...test };
+console.log(tmp); //{a: '1'}
 ```
 
 #### slice 和 concat
@@ -223,32 +223,32 @@ const deepCopy = {
     "BigInt",
   ], //Object.prototype.toString返回的所有类型
   type(obj: any) {
-    return Object.prototype.toString.call(obj).slice(8, -1)
+    return Object.prototype.toString.call(obj).slice(8, -1);
   },
   createType() {
-    const types = this.types
-    let i = types.length - 1
+    const types = this.types;
+    let i = types.length - 1;
     do {
       this["is" + types[i]] = function (elem: unknown) {
-        return this.type.call(elem) == types[i]
-      }
-    } while (--i >= 0)
+        return this.type.call(elem) == types[i];
+      };
+    } while (--i >= 0);
   },
   copy(obj: any) {
     if (!this.isFunction) {
-      this.createType() //如果还没有调用过createType
-      return this.copy(obj)
+      this.createType(); //如果还没有调用过createType
+      return this.copy(obj);
     }
     if (this.isFunction(obj)) {
-      return new Function("return " + obj.toString())()
+      return new Function("return " + obj.toString())();
     }
     if (obj === null || typeof obj !== "object") {
-      return obj
+      return obj;
     }
     let target: any = this.isArray(obj) ? [] : {},
-      value
+      value;
     for (let key in obj) {
-      value = obj[key]
+      value = obj[key];
       if (value === obj) {
         //避免循环引用
         /*  例如
@@ -256,19 +256,19 @@ const deepCopy = {
            value: {}
          };
          obj.value.value = obj; */
-        continue
+        continue;
       }
       if (this.isArray(value) || this.isObject(value)) {
-        target[key] = this.copy(value)
+        target[key] = this.copy(value);
       } else if (this.isFunction(value)) {
-        target[key] = new Function("return " + value.toString())()
+        target[key] = new Function("return " + value.toString())();
       } else {
-        target[key] = value
+        target[key] = value;
       }
     }
-    return target
+    return target;
   },
-}
+};
 ```
 
 不考虑 proxy 的 ES6 版本
@@ -296,39 +296,39 @@ const PRIMITIVE_TYPE = [
   "boolean",
   "undefined",
   "symbol",
-]
+];
 
 function getToStringType(target: any) {
-  return Object.prototype.toString.call(target).slice(8, -1)
+  return Object.prototype.toString.call(target).slice(8, -1);
 }
 
 function isNormalObjectType(target: any) {
-  const result = getToStringType(target)
-  return result === "Object"
+  const result = getToStringType(target);
+  return result === "Object";
 }
 
 /**
  * 获取需要特殊处理的类型
  */
 export function getType(target: any): CloneType {
-  const type = typeof target
+  const type = typeof target;
   if (PRIMITIVE_TYPE.includes(type)) {
-    return CloneType.PRIMITIVE
+    return CloneType.PRIMITIVE;
   }
   if (type === "function") {
-    return CloneType.FUNCTION
+    return CloneType.FUNCTION;
   }
   if (type === null) {
-    return CloneType.NULL
+    return CloneType.NULL;
   }
   if (Array.isArray(target)) {
-    return CloneType.ARRAY
+    return CloneType.ARRAY;
   }
-  return isNormalObjectType(target) ? CloneType.OBJECT : CloneType.UNKNOWN
+  return isNormalObjectType(target) ? CloneType.OBJECT : CloneType.UNKNOWN;
 }
 
 function createFunction(target: Function): Function {
-  return new Function("return " + target.toString())()
+  return new Function("return " + target.toString())();
 }
 
 function copyDeep(target: any, cache = new Map()) {
@@ -339,29 +339,29 @@ function copyDeep(target: any, cache = new Map()) {
   };
   obj.value.value = obj; */
   if (cache.has(target)) {
-    return cache.get(target)
+    return cache.get(target);
   }
-  const type = getType(target)
+  const type = getType(target);
   if ([CloneType.NULL, CloneType.PRIMITIVE, CloneType.UNKNOWN].includes(type)) {
-    cache.set(target, target)
-    return target
+    cache.set(target, target);
+    return target;
   }
   if (type === CloneType.FUNCTION) {
-    const functionResult = createFunction(target)
-    cache.set(target, functionResult)
-    return functionResult
+    const functionResult = createFunction(target);
+    cache.set(target, functionResult);
+    return functionResult;
   }
-  const result: any = type === CloneType.ARRAY ? [] : {}
-  cache.set(target, result)
+  const result: any = type === CloneType.ARRAY ? [] : {};
+  cache.set(target, result);
   for (const key in target) {
     // 递归不考虑继承
     if (target.hasOwnProperty(key)) {
-      result[key] = copyDeep(target[key], cache)
+      result[key] = copyDeep(target[key], cache);
     } else {
-      result[key] = target[key]
+      result[key] = target[key];
     }
   }
-  return result
+  return result;
 }
 ```
 
@@ -372,13 +372,13 @@ function copyDeep(target: any, cache = new Map()) {
 ```js
 function setName(obj) {
   // obj 是个临时变量
-  obj.name = "Nicholas"
-  obj = {}
-  obj.name = "Greg"
+  obj.name = "Nicholas";
+  obj = {};
+  obj.name = "Greg";
 }
-let person = {}
-setName(person)
-console.log(person.name) // Nicholas
+let person = {};
+setName(person);
+console.log(person.name); // Nicholas
 ```
 
 ## 函数作用域
@@ -388,11 +388,11 @@ console.log(person.name) // Nicholas
 但只有执行到赋值语句时，才会有值。
 
 ```js
-var test = "world"
+var test = "world";
 function f() {
-  console.log(test) //undefined
-  var test = "hello"
-  console.log(test) // "hello"
+  console.log(test); //undefined
+  var test = "hello";
+  console.log(test); // "hello"
 }
 ```
 
@@ -462,13 +462,13 @@ JS 引擎通过栈的结构去处理上下文
 
 ```js
 function multiply(x, y) {
-  return x * y
+  return x * y;
 }
 function printSquare(x) {
-  var s = multiply(x, x)
-  console.log(s)
+  var s = multiply(x, x);
+  console.log(s);
 }
-printSquare(5)
+printSquare(5);
 ```
 
 ![](../images/stack.jpg)
@@ -478,15 +478,15 @@ printSquare(5)
 
 ```js
 function fun3() {
-  console.log("fun3")
+  console.log("fun3");
 }
 function fun2() {
-  fun3()
+  fun3();
 }
 function fun1() {
-  fun2()
+  fun2();
 }
-fun1()
+fun1();
 ```
 
 执行 fun1 的时候其实
@@ -540,12 +540,12 @@ AO = VO + function parameters + arguments
 
 ```js
 function foo(a) {
-  var b = 2
+  var b = 2;
   function c() {}
-  var d = function () {}
-  b = 3
+  var d = function () {};
+  b = 3;
 }
-foo(1)
+foo(1);
 ```
 
 进入 foo 的时候
@@ -630,15 +630,15 @@ AO = {
 ```js
 class A {
   say() {
-    console.log(A)
+    console.log(A);
   }
 }
 
-var B = A
-A = null
+var B = A;
+A = null;
 
-var a = new B()
-a.say()
+var a = new B();
+a.say();
 /* 
   结果
   class A {
@@ -656,15 +656,15 @@ a.say()
 
 ```js
 function test() {
-  var a = 1
+  var a = 1;
   return function () {
-    a++
-    console.log(a)
-  }
+    a++;
+    console.log(a);
+  };
 }
-var fun = test()
-fun() // 2
-fun() // 3
+var fun = test();
+fun(); // 2
+fun(); // 3
 ```
 
 上面的 fun 是一个匿名函数，可以访问 test() 被调用时产生的环境  
@@ -680,17 +680,17 @@ for 循环里面的函数，作用域链保存的是 anno 的活动对象，都�
 
 ```js
 function anno() {
-  var arr = []
+  var arr = [];
   for (var i = 0; i < 3; i++) {
     arr[i] = () => {
-      return i
-    }
+      return i;
+    };
   }
-  return arr
+  return arr;
 }
-var result = anno()
-console.log(result[0]()) //3
-console.log(result[1]()) //3
+var result = anno();
+console.log(result[0]()); //3
+console.log(result[1]()); //3
 ```
 
 如果 var 改为 let，那么就会输出对应的 0，1，2

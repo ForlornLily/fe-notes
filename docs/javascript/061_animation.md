@@ -26,8 +26,8 @@ canvas 是即时的，发生变化需要重新绘制。
 
 ```js
 //获取2D对象
-const canvasTarget = doc.getElementById("canvas")
-let ctx = canvasTarget.getContext("2d")
+const canvasTarget = doc.getElementById("canvas");
+let ctx = canvasTarget.getContext("2d");
 ```
 
 ### getContext 对象的属性
@@ -84,10 +84,10 @@ canvas 本身不会变，变的只是内容
 反复调用就会叠加，不会清除之前的内容
 
 ```js
-ctx.rotate((45 * Math.PI) / 180)
-ctx.fillRect(70, 0, 100, 30)
-ctx.rotate((30 * Math.PI) / 180)
-ctx.fillRect(70, 0, 100, 30)
+ctx.rotate((45 * Math.PI) / 180);
+ctx.fillRect(70, 0, 100, 30);
+ctx.rotate((30 * Math.PI) / 180);
+ctx.fillRect(70, 0, 100, 30);
 ```
 
 ![](../images/186a9d87445d1050d0d202329d80232c.png)
@@ -109,15 +109,15 @@ addColorStop() 方法要和 createLinearGradient() 或 createRadialGradient() �
 规定 gradient 对象中的颜色和位置
 
 ```js
-var c = document.getElementById("myCanvas")
-var ctx = c.getContext("2d")
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
 
-var grd = ctx.createLinearGradient(0, 0, 170, 0)
-grd.addColorStop(0, "black")
-grd.addColorStop(1, "white")
+var grd = ctx.createLinearGradient(0, 0, 170, 0);
+grd.addColorStop(0, "black");
+grd.addColorStop(1, "white");
 
-ctx.fillStyle = grd
-ctx.fillRect(20, 20, 150, 100)
+ctx.fillStyle = grd;
+ctx.fillRect(20, 20, 150, 100);
 ```
 
 ### 绘制路径
@@ -138,11 +138,11 @@ closePath 结束本次路径
 用 stroke() 或 fill() 方法在画布上绘制实际的弧
 
 ```js
-var c = document.getElementById("myCanvas")
-var ctx = c.getContext("2d")
-ctx.beginPath()
-ctx.arc(100, 75, 50, 0, 2 * Math.PI)
-ctx.stroke()
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.beginPath();
+ctx.arc(100, 75, 50, 0, 2 * Math.PI);
+ctx.stroke();
 ```
 
 ### clip
@@ -150,13 +150,13 @@ ctx.stroke()
 剪切当前路径
 
 ```js
-const c = document.getElementById("myCanvas")
-const ctx = c.getContext("2d")
-ctx.rect(50, 20, 200, 120)
-ctx.stroke()
+const c = document.getElementById("myCanvas");
+const ctx = c.getContext("2d");
+ctx.rect(50, 20, 200, 120);
+ctx.stroke();
 // ctx.clip();
-ctx.fillStyle = "red"
-ctx.fillRect(0, 0, 150, 100)
+ctx.fillStyle = "red";
+ctx.fillRect(0, 0, 150, 100);
 ```
 
 没有 clip  
@@ -175,11 +175,11 @@ dWidth, dHeight 表示指定图片宽高，不写就默认图片自身大小
 创建图片需要 new 一个 image 对象，在 onload 内进行绘制，确保图片加载后可以读取到内容
 
 ```js
-let img = new Image()
+let img = new Image();
 img.onload = () => {
-  ctx.drawImage(img, 100, 100)
-}
-img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg"
+  ctx.drawImage(img, 100, 100);
+};
+img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg";
 ```
 
 配合图片和文字可以用 canvas 生成带水印的图片
@@ -189,8 +189,8 @@ img.src = "https://mdn.mozillademos.org/files/225/Canvas_drawimage.jpg"
 canvas 对象生成的图像
 
 ```js
-var canvas = document.getElementById("canvas")
-var dataURL = canvas.toDataURL()
+var canvas = document.getElementById("canvas");
+var dataURL = canvas.toDataURL();
 ```
 
 ### 图案 createPattern
@@ -214,15 +214,15 @@ var dataURL = canvas.toDataURL()
 getImageData，putImageData
 
 ```js
-const test = document.getElementById("test")
-const context = test.getContext("2d")
-context.fillText("hello", 50, 50)
-context.fillStyle = "red"
+const test = document.getElementById("test");
+const context = test.getContext("2d");
+context.fillText("hello", 50, 50);
+context.fillStyle = "red";
 
-context.fillRect(0, 0, 100, 200)
+context.fillRect(0, 0, 100, 200);
 
-const imageData = context.getImageData(0, 0, 100, 200)
-context.putImageData(imageData, 200, 200)
+const imageData = context.getImageData(0, 0, 100, 200);
+context.putImageData(imageData, 200, 200);
 ```
 
 ### 合成
@@ -230,7 +230,7 @@ context.putImageData(imageData, 200, 200)
 - globalAlpha：透明度，0 ~ 1
 
 ```js
-context.globalAlpha = 0.1
+context.globalAlpha = 0.1;
 ```
 
 - globalCompositeOperation：重叠方式，比如 source-over，新图形绘制在原有图形上面

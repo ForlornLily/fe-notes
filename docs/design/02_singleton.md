@@ -9,23 +9,23 @@ Singleton Pattern：保证一个类只存在一个实例
 用一个变量存储实例，如果变量存在则不再创建
 
 ```ts
-let instance: Singleton
+let instance: Singleton;
 class Singleton {
-  private name: string
+  private name: string;
   constructor(name: string) {
     if (instance) {
-      throw new Error("只能一个实例")
+      throw new Error("只能一个实例");
     }
-    instance = this
-    this.name = name
+    instance = this;
+    this.name = name;
   }
   getName() {
-    return this.name
+    return this.name;
   }
 }
 
-const singleName = new Singleton("hello")
-const singleNameSecond = new Singleton("word") // Uncaught Error: 只能一个实例
+const singleName = new Singleton("hello");
+const singleNameSecond = new Singleton("word"); // Uncaught Error: 只能一个实例
 ```
 
 ## 惰性单例
@@ -40,16 +40,16 @@ const singleNameSecond = new Singleton("word") // Uncaught Error: 只能一个�
 
 ```js
 const getSingle = function (fn) {
-  let result
+  let result;
   return function () {
-    return result || (result = fn.apply(this, arguments))
-  }
-}
+    return result || (result = fn.apply(this, arguments));
+  };
+};
 
 function test(name) {
-  return name
+  return name;
 }
-const closureTest = getSingle(test)
-const testA = closureTest("hello")
-const testB = closureTest("world") // "hello"
+const closureTest = getSingle(test);
+const testA = closureTest("hello");
+const testB = closureTest("world"); // "hello"
 ```

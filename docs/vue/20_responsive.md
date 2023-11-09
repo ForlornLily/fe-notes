@@ -29,9 +29,9 @@ Vue 本质上只是个构造函数，`new Vue`的时候通过调用`_init`开始
 //src\core\instance\index.js
 function Vue(options) {
   if (process.env.NODE_ENV !== "production" && !(this instanceof Vue)) {
-    warn("Vue is a constructor and should be called with the `new` keyword")
+    warn("Vue is a constructor and should be called with the `new` keyword");
   }
-  this._init(options)
+  this._init(options);
 }
 ```
 
@@ -42,19 +42,19 @@ function Vue(options) {
 //src\core\instance\init.js
 Vue.prototype._init = function (options) {
   //...
-  initLifecycle(vm) //建立父子组件关系，在当前实例上添加一些属性和生命周期标识。如：$children、$refs、_isMounted
-  initEvents(vm) //事件，比如$on
-  initRender(vm) //初始化$slots, $attrs, $listeners
-  callHook(vm, "beforeCreate") //调用钩子
-  initInjections(vm) //初始化inject
-  initState(vm) //数据绑定，包括props、methods、data、computed 和 watch
-  initProvide(vm)
-  callHook(vm, "created")
+  initLifecycle(vm); //建立父子组件关系，在当前实例上添加一些属性和生命周期标识。如：$children、$refs、_isMounted
+  initEvents(vm); //事件，比如$on
+  initRender(vm); //初始化$slots, $attrs, $listeners
+  callHook(vm, "beforeCreate"); //调用钩子
+  initInjections(vm); //初始化inject
+  initState(vm); //数据绑定，包括props、methods、data、computed 和 watch
+  initProvide(vm);
+  callHook(vm, "created");
   //...
   if (vm.$options.el) {
-    vm.$mount(vm.$options.el)
+    vm.$mount(vm.$options.el);
   }
-}
+};
 ```
 
 ## Object.defineProperty
@@ -70,14 +70,14 @@ Vue.prototype._init = function (options) {
 
 ```js
 function MyVue(options) {
-  this.data = options.data
-  this.observe()
+  this.data = options.data;
+  this.observe();
 }
 MyVue.prototype.observe = function () {
-  const data = this.data
+  const data = this.data;
   for (let key in data) {
     if (data.hasOwnProperty(key)) {
-      handle(data, key, data[key])
+      handle(data, key, data[key]);
     }
   }
   function handle(obj, key, value) {
@@ -85,26 +85,26 @@ MyVue.prototype.observe = function () {
       configurable: true,
       enumerable: true,
       get() {
-        return value
+        return value;
       },
       set(newValue) {
         if (newValue === value) {
-          return
+          return;
         }
-        callback(key, newValue)
+        callback(key, newValue);
       },
-    })
+    });
   }
-}
+};
 function callback(key, value) {
-  console.log(`属性${key}改变了，新值是${value}`)
+  console.log(`属性${key}改变了，新值是${value}`);
 }
 const app = new MyVue({
   data: {
     hello: "world",
   },
-})
-app.data.hello = "test" //属性hello改变了，新值是test
+});
+app.data.hello = "test"; //属性hello改变了，新值是test
 ```
 
 另一个例子：输入框和变量双向绑定
@@ -115,20 +115,20 @@ app.data.hello = "test" //属性hello改变了，新值是test
 <script>
   const doc = document,
     inputEl = doc.getElementById("test"),
-    spanEl = doc.getElementById("display")
-  var obj = {}
+    spanEl = doc.getElementById("display");
+  var obj = {};
   Object.defineProperty(obj, "hello", {
     set(newValue) {
-      inputEl.value = newValue
-      spanEl.innerHTML = newValue
+      inputEl.value = newValue;
+      spanEl.innerHTML = newValue;
     },
     get() {
-      return inputEl.value
+      return inputEl.value;
     },
-  })
+  });
   inputEl.addEventListener("change", (e) => {
-    obj.hello = e.target.value
-  })
+    obj.hello = e.target.value;
+  });
 </script>
 ```
 
@@ -171,36 +171,36 @@ Vue 中响应式对象中的**每一个属性**都对应一个 dep
 ```js
 //data每一个属性有各自的dep
 function Dep() {
-  this.subs = []
+  this.subs = [];
 }
 Dep.prototype.add = function (target) {
-  this.subs.push(target)
-}
+  this.subs.push(target);
+};
 Dep.prototype.notify = function () {
   const data = this.subs,
-    length = data.length
+    length = data.length;
   for (let i = 0; i < length; i++) {
-    data[i].update()
+    data[i].update();
   }
-}
+};
 
 function Watcher() {
-  Dep.target = this
+  Dep.target = this;
 }
 Watcher.prototype.update = function () {
-  console.log("更新逻辑")
-}
+  console.log("更新逻辑");
+};
 function MyVue(options) {
-  this.data = options.data
-  this.observe()
-  new Watcher() //一个Vue实例只有一个Watcher实例
+  this.data = options.data;
+  this.observe();
+  new Watcher(); //一个Vue实例只有一个Watcher实例
 }
 MyVue.prototype.observe = function () {
-  const data = this.data
-  const dep = new Dep()
+  const data = this.data;
+  const dep = new Dep();
   for (let key in data) {
     if (data.hasOwnProperty(key)) {
-      handle(data, key, data[key])
+      handle(data, key, data[key]);
     }
   }
   function handle(obj, key, value) {
@@ -210,24 +210,24 @@ MyVue.prototype.observe = function () {
       get() {
         //依赖收集
         //这里省略了去重逻辑：如果一个属性触发多次get，其实应该在Watcher内进行去重的
-        dep.add(Dep.target)
-        return value
+        dep.add(Dep.target);
+        return value;
       },
       set(newValue) {
         if (newValue === value) {
-          return
+          return;
         }
         //更新逻辑
-        dep.notify()
+        dep.notify();
       },
-    })
+    });
   }
-}
+};
 const app = new MyVue({
   data: {
     hello: "world",
   },
-})
+});
 ```
 
 ### Vue 中的 dep.js
@@ -236,35 +236,35 @@ const app = new MyVue({
 //src\core\observer\dep.js
 //忽略静态类型检查
 export default class Dep {
-  static target
-  id
-  subs
+  static target;
+  id;
+  subs;
 
   constructor() {
-    this.id = uid++
-    this.subs = []
+    this.id = uid++;
+    this.subs = [];
   }
 
   addSub(sub) {
-    this.subs.push(sub)
+    this.subs.push(sub);
   }
 
   removeSub(sub) {
-    remove(this.subs, sub)
+    remove(this.subs, sub);
   }
 
   depend() {
     if (Dep.target) {
-      Dep.target.addDep(this)
+      Dep.target.addDep(this);
     }
   }
 
   notify() {
     // stabilize the subscriber list first
-    const subs = this.subs.slice()
+    const subs = this.subs.slice();
     //...
     for (let i = 0, l = subs.length; i < l; i++) {
-      subs[i].update()
+      subs[i].update();
     }
   }
 }
@@ -283,14 +283,14 @@ export default class Watcher {
   //内部变量
   //...
   constructor(vm, expOrFn, cb, options, isRenderWatcher) {
-    this.vm = vm
+    this.vm = vm;
     if (isRenderWatcher) {
-      vm._watcher = this
+      vm._watcher = this;
     }
-    vm._watchers.push(this)
+    vm._watchers.push(this);
     //...
-    this.cb = cb
-    this.id = ++uid // 唯一值
+    this.cb = cb;
+    this.id = ++uid; // 唯一值
     //...
   }
 
@@ -299,40 +299,40 @@ export default class Watcher {
    */
   get() {
     //将自身watcher观察者实例设置给Dep.target，用以依赖收集。
-    pushTarget(this)
-    let value
-    const vm = this.vm
+    pushTarget(this);
+    let value;
+    const vm = this.vm;
     try {
-      value = this.getter.call(vm, vm)
+      value = this.getter.call(vm, vm);
     } catch (e) {
       if (this.user) {
-        handleError(e, vm, `getter for watcher "${this.expression}"`)
+        handleError(e, vm, `getter for watcher "${this.expression}"`);
       } else {
-        throw e
+        throw e;
       }
     } finally {
       // "touch" every property so they are all tracked as
       // dependencies for deep watching
       if (this.deep) {
-        traverse(value) //内部会去递归每一个对象, 触发它们的getter，使得对象或数组的每一个成员都被依赖收集
+        traverse(value); //内部会去递归每一个对象, 触发它们的getter，使得对象或数组的每一个成员都被依赖收集
       }
-      popTarget()
-      this.cleanupDeps() //清除之前的依赖
+      popTarget();
+      this.cleanupDeps(); //清除之前的依赖
     }
-    return value
+    return value;
   }
 
   /**
    * Add a dependency to this directive.
    */
   addDep(dep: Dep) {
-    const id = dep.id
+    const id = dep.id;
     if (!this.newDepIds.has(id)) {
       //去重
-      this.newDepIds.add(id)
-      this.newDeps.push(dep)
+      this.newDepIds.add(id);
+      this.newDeps.push(dep);
       if (!this.depIds.has(id)) {
-        dep.addSub(this)
+        dep.addSub(this);
       }
     }
   }
@@ -341,11 +341,11 @@ export default class Watcher {
    * Clean up for dependency collection.
    */
   cleanupDeps() {
-    let i = this.deps.length
+    let i = this.deps.length;
     while (i--) {
-      const dep = this.deps[i]
+      const dep = this.deps[i];
       if (!this.newDepIds.has(dep.id)) {
-        dep.removeSub(this)
+        dep.removeSub(this);
       }
     }
     //...
@@ -358,11 +358,11 @@ export default class Watcher {
   update() {
     /* istanbul ignore else */
     if (this.lazy) {
-      this.dirty = true
+      this.dirty = true;
     } else if (this.sync) {
-      this.run() //同步则执行run直接渲染视图
+      this.run(); //同步则执行run直接渲染视图
     } else {
-      queueWatcher(this) //异步推送到观察者队列中，nextTick时调用
+      queueWatcher(this); //异步推送到观察者队列中，nextTick时调用
     }
   }
 
@@ -372,11 +372,11 @@ export default class Watcher {
    */
   run() {
     //...
-    const value = this.get() //即Dep.target
+    const value = this.get(); //即Dep.target
     //...
-    const oldValue = this.value
+    const oldValue = this.value;
     //...
-    this.cb.call(this.vm, value, oldValue)
+    this.cb.call(this.vm, value, oldValue);
     //...
   }
 
@@ -385,9 +385,9 @@ export default class Watcher {
    */
   depend() {
     //收集该watcher的所有deps依赖
-    let i = this.deps.length
+    let i = this.deps.length;
     while (i--) {
-      this.deps[i].depend()
+      this.deps[i].depend();
     }
   }
 }
@@ -413,9 +413,9 @@ Watcher 会有用唯一 id, 放置被反复 push。setter 方法被触发 100 �
 //src\core\instance\init.js
 Vue.prototype._init = function (options) {
   //...
-  initState(vm) //data属性内数据绑定
+  initState(vm); //data属性内数据绑定
   //...
-}
+};
 ```
 
 initState 有一个`initData`方法: 主要是初始化 data 中的数据，将数据进行 Observer，监听数据的变化  
@@ -435,9 +435,9 @@ Observer 为数据加上响应式属性进行双向绑定。
     data: {
       message: "Hello Vue!",
     },
-  })
-  console.log(app.message) //"Hello Vue!"
-  console.log(app._data.message) //"Hello Vue!"
+  });
+  console.log(app.message); //"Hello Vue!"
+  console.log(app._data.message); //"Hello Vue!"
 </script>
 ```
 
@@ -446,24 +446,24 @@ Observer 为数据加上响应式属性进行双向绑定。
 export function initState(vm) {
   //...
   if (opts.data) {
-    initData(vm)
+    initData(vm);
   } else {
-    observe((vm._data = {}), true /* asRootData */)
+    observe((vm._data = {}), true /* asRootData */);
   }
   //...
 }
 //initData
 function initData(vm) {
-  let data = vm.$options.data
-  data = vm._data = typeof data === "function" ? getData(data, vm) : data || {}
+  let data = vm.$options.data;
+  data = vm._data = typeof data === "function" ? getData(data, vm) : data || {};
   //...
   // proxy data on instance
-  const keys = Object.keys(data)
-  const props = vm.$options.props
-  const methods = vm.$options.methods
-  let i = keys.length
+  const keys = Object.keys(data);
+  const props = vm.$options.props;
+  const methods = vm.$options.methods;
+  let i = keys.length;
   while (i--) {
-    const key = keys[i]
+    const key = keys[i];
     //...
     //保证data中的key不与props中的key重复, props优先
     if (props && hasOwn(props, key)) {
@@ -472,13 +472,13 @@ function initData(vm) {
           `The data property "${key}" is already declared as a prop. ` +
             `Use prop default value instead.`,
           vm
-        )
+        );
     } else if (!isReserved(key)) {
-      proxy(vm, `_data`, key) //将data上面的属性代理到了vm实例上
+      proxy(vm, `_data`, key); //将data上面的属性代理到了vm实例上
     }
   }
   // observe data
-  observe(data, true /* asRootData */)
+  observe(data, true /* asRootData */);
 }
 //proxy
 const sharedPropertyDefinition = {
@@ -486,15 +486,15 @@ const sharedPropertyDefinition = {
   configurable: true,
   get: noop,
   set: noop,
-}
+};
 export function proxy(target, sourceKey, key) {
   sharedPropertyDefinition.get = function proxyGetter() {
-    return this[sourceKey][key]
-  }
+    return this[sourceKey][key];
+  };
   sharedPropertyDefinition.set = function proxySetter(val) {
-    this[sourceKey][key] = val
-  }
-  Object.defineProperty(target, key, sharedPropertyDefinition)
+    this[sourceKey][key] = val;
+  };
+  Object.defineProperty(target, key, sharedPropertyDefinition);
 }
 ```
 
@@ -508,8 +508,8 @@ Vue2.x 能进行数组的监测，是用了 hack 的办法，重写了 push、po
 ```js
 //src\core\observer\array.js
 //部分代码
-const arrayProto = Array.prototype
-export const arrayMethods = Object.create(arrayProto)
+const arrayProto = Array.prototype;
+export const arrayMethods = Object.create(arrayProto);
 
 const methodsToPatch = [
   "push",
@@ -519,27 +519,27 @@ const methodsToPatch = [
   "splice",
   "sort",
   "reverse",
-]
+];
 methodsToPatch.forEach(function (method) {
   // cache original method
-  const original = arrayProto[method]
+  const original = arrayProto[method];
   def(arrayMethods, method, function mutator(...args) {
-    const result = original.apply(this, args)
-    const ob = this.__ob__
-    let inserted
+    const result = original.apply(this, args);
+    const ob = this.__ob__;
+    let inserted;
     switch (method) {
       case "push":
       case "unshift":
-        inserted = args
-        break
+        inserted = args;
+        break;
       case "splice":
-        inserted = args.slice(2)
-        break
+        inserted = args.slice(2);
+        break;
     }
-    if (inserted) ob.observeArray(inserted)
+    if (inserted) ob.observeArray(inserted);
     // 触发更新
-    ob.dep.notify()
-    return result
-  })
-})
+    ob.dep.notify();
+    return result;
+  });
+});
 ```

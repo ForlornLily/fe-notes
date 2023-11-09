@@ -5,7 +5,7 @@
 没有兼容问题的是
 
 ```js
-new Date(yyyy, MM, dd, HH, mm, ss) //月份要减1。比如设3月，MM是2
+new Date(yyyy, MM, dd, HH, mm, ss); //月份要减1。比如设3月，MM是2
 ```
 
 计算的是 1970.01.01 开始经过的毫秒数
@@ -15,14 +15,14 @@ new Date(yyyy, MM, dd, HH, mm, ss) //月份要减1。比如设3月，MM是2
 `new Date()` 相当于调用 `Date.parse`，传入一个字符串，标准格式是 `月/日/年`
 
 ```js
-Date.parse("2023-10-26") // 1698278400000
-Date.parse("2023-10-26 18:11:11") // 1698315071000
+Date.parse("2023-10-26"); // 1698278400000
+Date.parse("2023-10-26 18:11:11"); // 1698315071000
 ```
 
 ## 常用方法
 
 ```js
-var d = new Date(time)
+var d = new Date(time);
 return {
   time: d.getTime(),
   year: d.getFullYear().toString().padStart(2, "0"),
@@ -32,7 +32,7 @@ return {
   minute: d.getMinutes().toString().padStart(2, "0"),
   second: d.getSeconds().toString().padStart(2, "0"),
   week: "周" + "日一二三四五六".charAt(d.getDay()),
-}
+};
 ```
 
 ## 兼容性
@@ -44,13 +44,13 @@ return {
 注意月份要减 1
 
 ```js
-value = value.split(/\D/)
+value = value.split(/\D/);
 for (var i = 0; i < 6; i++) {
   if (i == 1) {
-    value[i] = value[i] ? Number(value[i]) - 1 : "" //月份需要减1
+    value[i] = value[i] ? Number(value[i]) - 1 : ""; //月份需要减1
   } else {
-    value[i] = value[i] ? Number(value[i]) : ""
+    value[i] = value[i] ? Number(value[i]) : "";
   }
 }
-d = new Date(value[0], value[1], value[2], value[3], value[4], value[5])
+d = new Date(value[0], value[1], value[2], value[3], value[4], value[5]);
 ```

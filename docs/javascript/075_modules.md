@@ -16,25 +16,25 @@
   :::
 
 ```js
-export var name = "Nicholas"
+export var name = "Nicholas";
 export function setName(newName) {
-  name = newName
+  name = newName;
 }
 ```
 
 ```js
-import { name, setName } from "./example.js"
-console.log(name) // "Nicholas"
-setName("Greg")
-console.log(name) // "Greg"
-name = "Nicholas" // 报错
+import { name, setName } from "./example.js";
+console.log(name); // "Nicholas"
+setName("Greg");
+console.log(name); // "Greg"
+name = "Nicholas"; // 报错
 ```
 
 - import 一个模块 foo.js 的不同内容，foo.js 只会加载一次
 
 ```js
-import { sum } from "./example.js"
-import { multiply } from "./example.js"
+import { sum } from "./example.js";
+import { multiply } from "./example.js";
 ```
 
 example.js 只会被执行一次
@@ -43,7 +43,7 @@ example.js 只会被执行一次
 
 ```js
 function tryImport() {
-  import flag from "./example.js" // 语法错误
+  import flag from "./example.js"; // 语法错误
 }
 ```
 
@@ -63,14 +63,14 @@ function tryImport() {
 
 ```js
 export function add(a, b) {
-  return a + b
+  return a + b;
 }
 ```
 
 对应的 import
 
 ```js
-import { add } from "./module.js"
+import { add } from "./module.js";
 ```
 
 ### 完整导入/命名空间导入(namespace import)
@@ -78,7 +78,7 @@ import { add } from "./module.js"
 把整个 JS 做为一个完整模块
 
 ```js
-import * as module from "./module.js"
+import * as module from "./module.js";
 ```
 
 模块内的 export 出的所有值都成为 module 的属性
@@ -89,28 +89,28 @@ import * as module from "./module.js"
 
 ```js
 function sum(num1, num2) {
-  return num1 + num2
+  return num1 + num2;
 }
-export { sum as add }
+export { sum as add };
 ```
 
 ```js
-import { add } from "./example.js"
+import { add } from "./example.js";
 //也可以重命名为sum
-import { add as sum } from "./example.js"
+import { add as sum } from "./example.js";
 ```
 
 ### 导出默认值 default(无花括号)
 
 ```js
-export let color = "red"
+export let color = "red";
 export default function (num1, num2) {
-  return num1 + num2
+  return num1 + num2;
 }
 
-import sum, { color } from "./example.js"
+import sum, { color } from "./example.js";
 // 等价于
-import { default as sum, color } from "example"
+import { default as sum, color } from "example";
 ```
 
 ### 将 import 的内容再导出
@@ -118,13 +118,13 @@ import { default as sum, color } from "example"
 在 index.js 内引入 example.js，又导出 example
 
 ```js
-export { sum } from "./example.js"
+export { sum } from "./example.js";
 ```
 
 完全导出
 
 ```js
-export * from "./example.js"
+export * from "./example.js";
 ```
 
 ### 无绑定的导入
@@ -132,14 +132,14 @@ export * from "./example.js"
 只导入某个 js，不导入特定内容。比如 pollyfill
 
 ```js
-import "./pollyfill.js"
+import "./pollyfill.js";
 ```
 
 如果 pollyfill 内的函数修改了原型，比如给数组增加自定义的 pushAll 方法，也是会生效的
 
 ```js
 //pollyfill的内容，并没有export
-Array.prototype.pushAll = function () {}
+Array.prototype.pushAll = function () {};
 ```
 
 ## html 内引入模块
@@ -162,8 +162,8 @@ Array.prototype.pushAll = function () {}
 <script type="module" src="module1.js"></script>
 <!-- second -->
 <script type="module">
-  import { sum } from "./example.js"
-  let result = sum(1, 2)
+  import { sum } from "./example.js";
+  let result = sum(1, 2);
 </script>
 <!-- third -->
 <script type="module" src="module2.js"></script>
@@ -225,26 +225,26 @@ RequireJS 是对 AMD 规范的一个实现
 //math.js
 define(function () {
   var add = function (x, y) {
-    console.log(x + y)
-  }
+    console.log(x + y);
+  };
   return {
     add: add,
-  }
-})
+  };
+});
 //加载
 require(["math"], function (math) {
-  math.add(1, 2)
-})
+  math.add(1, 2);
+});
 //如果还依赖其他模块，define的第一个参数是数组，指明依赖的模块
 define(["other"], function (other) {
-  let sth = other.doSth()
+  let sth = other.doSth();
   var add = function (x, y) {
-    sth(x + y)
-  }
+    sth(x + y);
+  };
   return {
     add: add,
-  }
-})
+  };
+});
 ```
 
 ## UMD
@@ -258,19 +258,19 @@ AMD 和 CommonJS 的揉和，会先判断当前环境是否支持 CommonJS
 简单的 IIFEs
 
 ```js
-var a = 2
-;(function IIFE(global, param) {
+var a = 2;
+(function IIFE(global, param) {
   //传入window对象，命名为global
-  var a = 3
-  console.log(a) // 3
-  console.log(global.a) // 2
-  console.log(param) //2
-})(window, a)
-console.log(a) // 2
+  var a = 3;
+  console.log(a); // 3
+  console.log(global.a); // 2
+  console.log(param); //2
+})(window, a);
+console.log(a); // 2
 ```
 
 ```js
-;(function (global, factory) {
+(function (global, factory) {
   if (typeof module === "object" && typeof module.exports === "object") {
     //CommonJS
     module.exports = global.document
@@ -278,9 +278,9 @@ console.log(a) // 2
       : function (w) {
           //判断`document`对象是否存在，不存在就报错
           //...
-        }
+        };
   } else {
-    factory(global)
+    factory(global);
   }
 })(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
   //window对象不存在，则为this, 比如NodeJS下this应该传入的是全局对象`global`
@@ -288,15 +288,15 @@ console.log(a) // 2
   if (typeof define === "function" && define.amd) {
     //AMD
     define("jquery", [], function () {
-      return jQuery
-    })
+      return jQuery;
+    });
   }
   //...
   // 不支持 CommonJS，也不支持 AMD，则将 jQuery 暴露为全局变量
   // 由于 factory(global) 没有传入 noGlobal，所以 !noGlobal 为 true
   if (!noGlobal) {
-    window.jQuery = window.$ = jQuery
+    window.jQuery = window.$ = jQuery;
   }
-  return jQuery
-})
+  return jQuery;
+});
 ```

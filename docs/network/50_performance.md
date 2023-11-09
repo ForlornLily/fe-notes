@@ -172,17 +172,17 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
 比如
 
 ```js
-var name = "hello"
+var name = "hello";
 function sayName() {
-  console.log(name) //用到了全局变量name
+  console.log(name); //用到了全局变量name
 }
 //修改为
 var nameObj = {
   name: "hello",
   sayName() {
-    console.log(this.name)
+    console.log(this.name);
   },
-}
+};
 ```
 
 ### 避免和 null 比较
@@ -196,7 +196,7 @@ var nameObj = {
 ```js
 const Constants = {
   INVALID_MESSAGE: "错误",
-}
+};
 ```
 
 适用场景
@@ -228,20 +228,20 @@ const Constants = {
 单条语句多个操作快，避免多个语句，每个语句只有一个操作。
 
 ```js
-var foo = 5
-var bar = true
+var foo = 5;
+var bar = true;
 //改成
 var foo = 5,
-  bar = true
+  bar = true;
 ```
 
 #### 迭代值（自增、自减）
 
 ```js
-var name = foo[i]
-i++
+var name = foo[i];
+i++;
 //改成
-var name = foo[i++]
+var name = foo[i++];
 ```
 
 ### 用数组和对象字面量代替构造函数

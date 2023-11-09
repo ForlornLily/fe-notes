@@ -8,16 +8,16 @@
 const mama = {
   name: "Isabella",
   job: "sister",
-}
+};
 function factory(o) {
   function plant() {}
-  plant.prototype = o
-  return new plant()
+  plant.prototype = o;
+  return new plant();
 }
-const base = factory(mama)
+const base = factory(mama);
 
 //改用 create
-const base2 = Object.create(mama)
+const base2 = Object.create(mama);
 ```
 
 ## 原型链

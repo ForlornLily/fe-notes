@@ -12,14 +12,14 @@ Number, String, Boolean 是构造函数，但 Symbol 和 BigInt 不是，不能`
 比如
 
 ```js
-var s1 = "emma"
-var s2 = s1.substring(2)
+var s1 = "emma";
+var s2 = s1.substring(2);
 
-var s3 = new String("Noman")
-typeof s3 //"object"
+var s3 = new String("Noman");
+typeof s3; //"object"
 
-var test2 = new Symbol("1") //报错，Symbol不是构造函数
-var test3 = new BigInt("10") //报错，BigInt is not a constructor
+var test2 = new Symbol("1"); //报错，Symbol不是构造函数
+var test3 = new BigInt("10"); //报错，BigInt is not a constructor
 ```
 
 实际上调用`s1.substring`的后台会经过以下步骤
@@ -31,9 +31,9 @@ var test3 = new BigInt("10") //报错，BigInt is not a constructor
 上面的 `substring` 等价于
 
 ```js
-var s4 = new String("emma")
-var s2 = s1.substring(2)
-s4 = null
+var s4 = new String("emma");
+var s2 = s1.substring(2);
+s4 = null;
 ```
 
 ## Number 包装类型的方法
@@ -43,10 +43,10 @@ s4 = null
 返回指定小数位的字符串
 
 ```js
-var num = 10
-num.toFixed(2) //"10.00"
-var num2 = 10.103
-num2.toFixed(2) //"10.10"
+var num = 10;
+num.toFixed(2); //"10.00"
+var num2 = 10.103;
+num2.toFixed(2); //"10.10"
 ```
 
 ### 返回指数
@@ -65,10 +65,10 @@ num2.toFixed(2) //"10.10"
 返回指定位置的字符，或者编码
 
 ```js
-var test = "hello"
-test.charAt(2) //"l"
-test.charCodeAt(2) //108
-test[4] //"o"
+var test = "hello";
+test.charAt(2); //"l"
+test.charCodeAt(2); //108
+test[4]; //"o"
 ```
 
 ### 字符操作：concat
@@ -102,10 +102,10 @@ concat 拼接字符串。更多的时候还是用`+`比较方便
 传负数的时候,slice 和 substring 会不同
 
 ```js
-var test = "hello"
-test.slice(1, 3) //"el"
-test.substring(1, 3) //"el"
-test.substr(1, 3) //"ell"
+var test = "hello";
+test.slice(1, 3); //"el"
+test.substring(1, 3); //"el"
+test.substr(1, 3); //"ell"
 ```
 
 ### 位置 indexOf, lastIndexOf
@@ -115,22 +115,22 @@ test.substr(1, 3) //"ell"
 ### 迭代
 
 ```js
-const message = "hello"
-const stringIterator = message[Symbol.iterator]()
-stringIterator.next() // {value: 'h', done: false}
+const message = "hello";
+const stringIterator = message[Symbol.iterator]();
+stringIterator.next(); // {value: 'h', done: false}
 ```
 
 一般用 `for...of` 访问，支持迭代后可以解构
 
 ```js
-;[...message] // ['h', 'e', 'l', 'l', 'o']
+[...message]; // ['h', 'e', 'l', 'l', 'o']
 ```
 
 ### trim()
 
 ```js
 function trim(str) {
-  return str.replace(/(^\s*)|(\s*$)/g, "")
+  return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 ```
 
@@ -147,8 +147,8 @@ toLocaleLowerCase/ toLocaleUpperCase
 match 和 exec()一样, search 返回的是第一个匹配的索引
 
 ```js
-var test = "hello"
-test.search(/l/) //2
+var test = "hello";
+test.search(/l/); //2
 ```
 
 ![](../images/b57dd2c0331cfb00e45609a42986fd04.png)
@@ -158,8 +158,8 @@ replace 用于替换，默认只替换第一个匹配。第二个参数可以是
 ![](../images/df6747904e7b81d4447709c71b6ca95b.png)
 
 ```js
-const test = "hello, cat"
-const result = test.replace(/(.at)/g, "world $1") // 'hello, world cat'
+const test = "hello, cat";
+const result = test.replace(/(.at)/g, "world $1"); // 'hello, world cat'
 ```
 
 ```js
@@ -167,15 +167,15 @@ function htmlEscape(text) {
   return text.replace(/[<>"&]/g, (match, pos, originText) => {
     switch (match) {
       case "<":
-        return "&lt;"
+        return "&lt;";
       case '"':
-        return "&quot;"
+        return "&quot;";
       default:
-        return originText[pos]
+        return originText[pos];
     }
-  })
+  });
 }
-let result = htmlEscape('<p class="greeting">Hello world!</p>')
+let result = htmlEscape('<p class="greeting">Hello world!</p>');
 /* 结果：
 "&lt;p class=&quot;greeting&quot;>Hello world!&lt;/p>" */
 ```
@@ -190,9 +190,9 @@ split 参数也可以是正则
 不同国家可能不一样
 
 ```js
-"a".localeCompare("b") // -1
-"ac".localeCompare("a") // 1
-"A".localeCompare("a") // 1
+"a".localeCompare("b"); // -1
+"ac".localeCompare("a"); // 1
+"A".localeCompare("a"); // 1
 ```
 
 ## 基本包装类型和复杂类型的区别
@@ -204,9 +204,9 @@ split 参数也可以是正则
 所以基本类型上加属性是获取不到的
 
 ```js
-var s1 = "hello"
-s1.color = "red"
-alert(s1.color) //undefined
+var s1 = "hello";
+s1.color = "red";
+alert(s1.color); //undefined
 ```
 
 过程：
@@ -220,9 +220,9 @@ alert(s1.color) //undefined
 不建议显式地 new 基本包装类型
 
 ```js
-var value = "16"
-var number = Number(value)
-typeof number //"number"
-var obj = new Number(value)
-typeof obj //"object"
+var value = "16";
+var number = Number(value);
+typeof number; //"number"
+var obj = new Number(value);
+typeof obj; //"object"
 ```

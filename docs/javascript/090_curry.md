@@ -15,24 +15,24 @@
 
 ```js
 function curry(fn) {
-  const that = this
+  const that = this;
   function inner(...args) {
-    const length = args.length
+    const length = args.length;
     if (length === fn.length) {
       //传入参数等于函数的形参
-      return fn.call(that, ...args)
+      return fn.call(that, ...args);
     }
     return function (...inerArgs) {
-      return inner.call(that, ...args, ...inerArgs)
-    }
+      return inner.call(that, ...args, ...inerArgs);
+    };
   }
-  return inner
+  return inner;
 }
 
 function test(a, b, c) {
-  console.log(a, b, c)
+  console.log(a, b, c);
 }
-const f1 = curry(test)(1)
-const f2 = f1(2)
-f2(3) //1 2 3
+const f1 = curry(test)(1);
+const f2 = f1(2);
+f2(3); //1 2 3
 ```

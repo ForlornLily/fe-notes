@@ -14,10 +14,10 @@ ref 和 `key` 一样不是 prop 属性，React 对其做了特殊处理，不会
 ```js
 class MyComponent extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.inputRef = React.createRef()
-    this.handleChange = this.handleChange.bind(this)
+    this.inputRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
   }
 
   render() {
@@ -28,17 +28,17 @@ class MyComponent extends React.Component {
         {/* 使用函数 */}
         <input ref={(e) => (this.input = e)} onChange={this.handleChange} />
       </div>
-    )
+    );
   }
 
   componentDidMount() {
     //注意current
-    this.inputRef.current.focus()
+    this.inputRef.current.focus();
   }
 
   handleChange() {
     //直接指向，不需要current
-    console.log(this.input)
+    console.log(this.input);
   }
 }
 ```
@@ -50,23 +50,23 @@ class MyComponent extends React.Component {
 ```js
 const CustomInput = React.forwardRef((props, ref) => {
   //把 CustomInput 的 ref 传递给子组件
-  return <input ref={ref} />
-})
+  return <input ref={ref} />;
+});
 class App extends React.Component {
   constructor(props) {
-    super(props)
-    this.inputRef = React.createRef()
+    super(props);
+    this.inputRef = React.createRef();
   }
   render() {
     return (
       <div>
         <CustomInput type="text" ref={this.inputRef} />
       </div>
-    )
+    );
   }
   componentDidMount() {
     //注意current
-    this.inputRef.current.focus()
+    this.inputRef.current.focus();
   }
 }
 ```
@@ -76,27 +76,27 @@ class App extends React.Component {
 hooks 用法。返回的是个对象，可以用`current`存储任意变量
 
 ```js
-const refContainer = useRef(initialValue)
+const refContainer = useRef(initialValue);
 ```
 
 ```js
-const inputEl = useRef(null)
+const inputEl = useRef(null);
 const onButtonClick = () => {
   // `current` 指向已挂载到 DOM 上的文本输入元素
-  inputEl.current.focus()
-}
+  inputEl.current.focus();
+};
 ```
 
 - 不要反复创建
 
 ```jsx
 // bad
-const playerRef = useRef(new VideoPlayer())
+const playerRef = useRef(new VideoPlayer());
 
 // better
-const playerRef = useRef(null)
+const playerRef = useRef(null);
 if (playerRef.current === null) {
-  playerRef.current = new VideoPlayer()
+  playerRef.current = new VideoPlayer();
 }
 ```
 
@@ -106,10 +106,10 @@ if (playerRef.current === null) {
 function MyComponent() {
   // ...
   // 🚩 Don't write a ref during rendering
-  myRef.current = 123
+  myRef.current = 123;
   // ...
   // 🚩 Don't read a ref during rendering
-  return <h1>{myOtherRef.current}</h1>
+  return <h1>{myOtherRef.current}</h1>;
 }
 ```
 
@@ -137,7 +137,7 @@ FancyInput = forwardRef(FancyInput);
 卸载组件，废弃，用 [createRoot](./11_client.md#createRoot)
 
 ```js
-ReactDOM.unmountComponentAtNode(container)
+ReactDOM.unmountComponentAtNode(container);
 ```
 
 ## Portals
@@ -149,7 +149,7 @@ ReactDOM.unmountComponentAtNode(container)
 ReactDOM.createPortal(
   child, //元素
   container //指定的DOM
-)
+);
 ```
 
 ### demo
@@ -160,29 +160,29 @@ ReactDOM.createPortal(
 ```
 
 ```jsx
-import React, { useEffect, useRef, useState } from "react"
-import ReactDOM from "react-dom"
+import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 
 // html 上有一个根节点 "modal-root"
-const modalRoot = document.getElementById("modal-root")
+const modalRoot = document.getElementById("modal-root");
 
 function Modal(props) {
-  const { children } = props
-  const ref = useRef(document.createElement("div"))
+  const { children } = props;
+  const ref = useRef(document.createElement("div"));
   useEffect(() => {
-    modalRoot.appendChild(ref.current)
+    modalRoot.appendChild(ref.current);
     return () => {
-      modalRoot.removeChild(ref.current)
-    }
-  }, [])
-  return ReactDOM.createPortal(children, ref.current)
+      modalRoot.removeChild(ref.current);
+    };
+  }, []);
+  return ReactDOM.createPortal(children, ref.current);
 }
 
 function Parent() {
-  const [clicks, setClicks] = useState(0)
+  const [clicks, setClicks] = useState(0);
   const handleClick = () => {
-    setClicks(clicks + 1)
-  }
+    setClicks(clicks + 1);
+  };
   return (
     <div onClick={handleClick}>
       <p>Number of clicks: {clicks}</p>
@@ -190,7 +190,7 @@ function Parent() {
         <Child />
       </Modal>
     </div>
-  )
+  );
 }
 
 function Child() {
@@ -200,10 +200,10 @@ function Child() {
     <div className="modal">
       <button>Click</button>
     </div>
-  )
+  );
 }
 
-export default Parent
+export default Parent;
 ```
 
 ## flushSync
@@ -213,9 +213,9 @@ export default Parent
 一般用在非 React 实现的第三方库，需要实时获取 DOM 处理
 
 ```jsx
-import { flushSync } from "react-dom"
+import { flushSync } from "react-dom";
 
 flushSync(() => {
-  setSomething(123) // 立即调用这个函数并同步刷新 dom
-})
+  setSomething(123); // 立即调用这个函数并同步刷新 dom
+});
 ```

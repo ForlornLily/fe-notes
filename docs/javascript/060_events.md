@@ -24,9 +24,9 @@ JS 和 HTML 之间交互是通过事件实现的
 
 ```js
 var handler = function () {
-  console.log(1)
-}
-target.addEventListener("click", handler, { capture: true })
+  console.log(1);
+};
+target.addEventListener("click", handler, { capture: true });
 ```
 
 ::: warning
@@ -50,27 +50,27 @@ target.addEventListener("click", handler, { capture: true })
 ```
 
 ```js
-const doc = document
-let target = doc.querySelector(".wrapper")
-let child = target.querySelector(".content")
+const doc = document;
+let target = doc.querySelector(".wrapper");
+let child = target.querySelector(".content");
 target.addEventListener(
   "click",
   function (e) {
-    console.log(1)
+    console.log(1);
   },
   {
     capture: false,
   }
-)
+);
 child.addEventListener(
   "click",
   function (e) {
-    console.log(2)
+    console.log(2);
   },
   {
     capture: false,
   }
-)
+);
 ```
 
 点击的时候
@@ -212,51 +212,51 @@ mousedown+mouseup 等于 click，任何一个被取消都不会触发 click
 ```
 
 ```js
-var dragSrc = document.getElementById("txt")
-dragSrc.ondragstart = handle_start
-dragSrc.ondrag = handle_drag
-dragSrc.ondragend = handle_end
+var dragSrc = document.getElementById("txt");
+dragSrc.ondragstart = handle_start;
+dragSrc.ondrag = handle_drag;
+dragSrc.ondragend = handle_end;
 function handle_start(e) {
-  console.log("dragstart-在元素开始被拖动时候触发")
+  console.log("dragstart-在元素开始被拖动时候触发");
 }
 function handle_drag() {
-  console.log("drag-在元素被拖动时候反复触发")
+  console.log("drag-在元素被拖动时候反复触发");
 }
 function handle_end() {
-  console.log("dragend-在拖动操作完成时触发")
+  console.log("dragend-在拖动操作完成时触发");
 }
 
-var target = document.getElementById("target")
-target.ondragenter = handle_enter
-target.ondragover = handle_over
-target.ondragleave = handle_leave
+var target = document.getElementById("target");
+target.ondragenter = handle_enter;
+target.ondragover = handle_over;
+target.ondragleave = handle_leave;
 
-target.ondrop = handle_drop
+target.ondrop = handle_drop;
 
 function handle_enter(e) {
-  console.log("handle_enter-当元素进入目的地时触发")
+  console.log("handle_enter-当元素进入目的地时触发");
   // 阻止浏览器默认行为
-  e.preventDefault()
+  e.preventDefault();
 }
 
 function handle_over(e) {
-  console.log("handle_over-当元素在目的地时触发")
+  console.log("handle_over-当元素在目的地时触发");
   // 阻止浏览器默认行为
-  e.preventDefault()
+  e.preventDefault();
 }
 
 function handle_leave(e) {
-  console.log("handle_leave-当元素离开目的地时触发")
+  console.log("handle_leave-当元素离开目的地时触发");
   // 阻止浏览器默认行为
   // e.preventDefault()
 }
 
 function handle_drop(e) {
-  console.log("handle_drop-当元素在目的地放下时触发")
-  var t = Date.now()
-  target.innerHTML = ""
-  target.append(t + "-拖放触发的事件。")
-  e.preventDefault()
+  console.log("handle_drop-当元素在目的地放下时触发");
+  var t = Date.now();
+  target.innerHTML = "";
+  target.append(t + "-拖放触发的事件。");
+  e.preventDefault();
 }
 ```
 
@@ -310,15 +310,15 @@ createEvent 已经被废弃
 
 ```js
 var handler = function (e) {
-  console.log(e)
-}
-target1.addEventListener("customhandler", handler)
+  console.log(e);
+};
+target1.addEventListener("customhandler", handler);
 const customEvent = new CustomEvent("customhandler", {
   detail: {
     hello: "world",
   },
-})
-target1.dispatchEvent(customEvent) //dispatchEvent触发
+});
+target1.dispatchEvent(customEvent); //dispatchEvent触发
 ```
 
 ![](../images/024f81df9c8931531594023e0e4fdd82.png)
@@ -333,56 +333,56 @@ target1.dispatchEvent(customEvent) //dispatchEvent触发
 
 ```js
 function EventTarget() {
-  this.handler = {}
+  this.handler = {};
 }
 EventTarget.prototype = {
   constructor: EventTarget,
   addHandler(type, handler) {
     //增加事件
     if (typeof this.handler[type] == "undefined") {
-      this.handler[type] = []
+      this.handler[type] = [];
     }
-    this.handler[type].push(handler) //可能有很多方法，把方法做为数组
+    this.handler[type].push(handler); //可能有很多方法，把方法做为数组
   },
   fire(event) {
     //触发事件，传入触发的事件名和参数
     if (!event.target) {
       //如果没有传入事件对象，把实例做为对象
-      event.target = this
+      event.target = this;
     }
     //事件方法做为数组存在
-    const handlers = this.handler[event.type]
+    const handlers = this.handler[event.type];
     //if (handlers instanceof Array) {
     if (Array.isArray(handlers)) {
-      const length = handlers.length
+      const length = handlers.length;
       for (let k = 0; k < length; k++) {
-        handlers[k](event)
+        handlers[k](event);
       }
     }
   },
   removeHander(type, handler) {
     //删除事件
-    const handlers = this.handler[type]
+    const handlers = this.handler[type];
     //if (handlers instanceof Array) {
     if (Array.isArray(handlers)) {
-      const length = handlers.length
+      const length = handlers.length;
       for (let k = 0; k < length; k++) {
         if (handlers[k] == handler) {
-          this.handler[type].splice(k, 1)
-          break
+          this.handler[type].splice(k, 1);
+          break;
         }
       }
     }
   },
-}
-let event = new EventTarget()
+};
+let event = new EventTarget();
 function hello() {
-  console.log("hi")
+  console.log("hi");
 }
-event.addHandler("click", hello)
+event.addHandler("click", hello);
 event.fire({
   type: "click",
-})
+});
 ```
 
 ES6 版
@@ -390,31 +390,31 @@ ES6 版
 ```ts
 class CustomEventTarget {
   private handler: {
-    [key: string]: Function[]
-  }
+    [key: string]: Function[];
+  };
   constructor() {
-    this.handler = {}
+    this.handler = {};
   }
   addHandler(type: string, handler: Function) {
-    this.handler[type] = this.handler[type] || []
-    this.handler[type].push(handler)
+    this.handler[type] = this.handler[type] || [];
+    this.handler[type].push(handler);
   }
   remove(type: string, handler: Function) {
-    const list = this.handler[type] || []
+    const list = this.handler[type] || [];
     for (let i = 0; i < list.length; i += 1) {
       if (list[i] === handler) {
-        this.handler[type].splice(i, 1)
-        break
+        this.handler[type].splice(i, 1);
+        break;
       }
     }
   }
   fire(event: { type: string }) {
     if (!event || !event.type) {
-      return
+      return;
     }
-    const list = this.handler[event.type] || []
+    const list = this.handler[event.type] || [];
     for (let i = 0; i < list.length; i += 1) {
-      list[i](event)
+      list[i](event);
     }
   }
 }

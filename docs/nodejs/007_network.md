@@ -14,17 +14,17 @@ Node 提供了一些模块用来处理网络请求
 可以用 Node 建立一个服务器
 
 ```js
-const net = require("net")
+const net = require("net");
 
 const server = net.createServer((socket) => {
-  socket.write("hello")
+  socket.write("hello");
 
-  socket.on("end", () => console.log("end"))
-})
+  socket.on("end", () => console.log("end"));
+});
 
-server.on("connection", () => console.log("connect"))
+server.on("connection", () => console.log("connect"));
 
-server.listen(666, () => console.log("server open"))
+server.listen(666, () => console.log("server open"));
 ```
 
 windows 下打开 cmd，输入
@@ -41,34 +41,34 @@ Node 也可以自己建立客户端
 
 ```js
 // server 端
-const net = require("net")
+const net = require("net");
 
 const server = net.createServer((socket) => {
-  socket.write("hello")
+  socket.write("hello");
 
   // data 是 Buffer 对象
-  socket.on("data", (data) => console.log(data.toString())) // "hey"
-})
-server.listen(666, () => console.log("server open"))
+  socket.on("data", (data) => console.log(data.toString())); // "hey"
+});
+server.listen(666, () => console.log("server open"));
 ```
 
 ```js
 // client 端
-const net = require("net")
+const net = require("net");
 
 const client = net.connect(
   {
     port: 666,
   },
   () => {
-    console.log("connect")
-    client.write("hey")
+    console.log("connect");
+    client.write("hey");
   }
-)
+);
 
-client.on("data", (data) => console.log(data.toString())) // "hello"
+client.on("data", (data) => console.log(data.toString())); // "hello"
 
-client.on("end", () => console.log("end"))
+client.on("end", () => console.log("end"));
 ```
 
 ### 事件
@@ -94,29 +94,29 @@ client.on("end", () => console.log("end"))
 
 ```js
 // 服务端
-const dgram = require("dgram")
-const socket = dgram.createSocket("udp4")
+const dgram = require("dgram");
+const socket = dgram.createSocket("udp4");
 
 socket.on("message", (msg, remoteInfo) => {
-  console.log(`${msg} from ${remoteInfo.port}`) // port: 发送者端口
+  console.log(`${msg} from ${remoteInfo.port}`); // port: 发送者端口
   // hello from 62094
-})
+});
 
-socket.on("listening", () => console.log("listening"))
+socket.on("listening", () => console.log("listening"));
 
-socket.bind(666) // 绑定 666 端口
+socket.bind(666); // 绑定 666 端口
 ```
 
 ```js
 // 客户端
-const dgram = require("dgram")
-const socket = dgram.createSocket("udp4")
+const dgram = require("dgram");
+const socket = dgram.createSocket("udp4");
 
 // 向 666 端口发送信息
 socket.send("hello", 666, () => {
-  console.log("send")
-  socket.close()
-})
+  console.log("send");
+  socket.close();
+});
 ```
 
 ## HTTP

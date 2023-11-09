@@ -10,8 +10,8 @@
 - 数组是对象的一种，访问索引(索引的值是 0~2^32 - 1 范围内的非负整数)可以认为是特殊的属性名，那么访问不存在的值也只是返回`undefined`
 
 ```js
-var a = ["hello"]
-a[-1] // undefined, 不会报错
+var a = ["hello"];
+a[-1]; // undefined, 不会报错
 ```
 
 ## length
@@ -22,9 +22,9 @@ a[-1] // undefined, 不会报错
 2. 明确指定 length 属性<当前长度，数组项会被删除
 
 ```js
-var arr = [1, 2, 3, 4, 5]
-arr.length = 3
-console.log(arr) // [1,2,3]
+var arr = [1, 2, 3, 4, 5];
+arr.length = 3;
+console.log(arr); // [1,2,3]
 ```
 
 ## Array.isArray()
@@ -32,9 +32,9 @@ console.log(arr) // [1,2,3]
 判断值是不是数组
 
 ```js
-var arr = [1, 2]
-arr instanceof Array //true
-Array.isArray(arr) //true
+var arr = [1, 2];
+arr instanceof Array; //true
+Array.isArray(arr); //true
 ```
 
 ## Array 的 toString()和 valueOf()
@@ -42,8 +42,8 @@ Array.isArray(arr) //true
 - toString 实际上调用的是数组里面每一项值的 toSting()方法，再用`,`拼接起来，返回一串字符串
 
 ```js
-var arr = [5, "2", { x: 1 }]
-arr.toString() //"5,2,[object Object]"
+var arr = [5, "2", { x: 1 }];
+arr.toString(); //"5,2,[object Object]"
 ```
 
 - valueOf 调用每一项的 valueOf()  
@@ -63,9 +63,9 @@ arguments, DOM 相关的对象
 不会改变数组的长度，只不过对应索引的值变成了`undefined`
 
 ```js
-var arr = [1, 2, 3, 4, 5]
-delete arr[2]
-console.log(arr[2]) // undefined
+var arr = [1, 2, 3, 4, 5];
+delete arr[2];
+console.log(arr[2]); // undefined
 ```
 
 ### 栈方法 pop/push
@@ -77,9 +77,9 @@ console.log(arr[2]) // undefined
 `push`返回数组长度
 
 ```js
-var tmp = []
-tmp.push("hello") //1
-tmp.pop() //"hello"
+var tmp = [];
+tmp.push("hello"); //1
+tmp.pop(); //"hello"
 ```
 
 ### 队列方法 shift/unshift
@@ -91,9 +91,9 @@ tmp.pop() //"hello"
 `unshift` 数组前端添加项，返回数组的长度
 
 ```js
-var servant = ["Saber", "Archer"]
-servant.shift() //"Saber"
-servant.unshift("Lancer", "Rider") //3
+var servant = ["Saber", "Archer"];
+servant.shift(); //"Saber"
+servant.unshift("Lancer", "Rider"); //3
 ```
 
 ### 重排序 reverse/sort
@@ -103,7 +103,7 @@ servant.unshift("Lancer", "Rider") //3
 `sort`不传参，把每一项都调用 String()方法，根据字符串编码排序。最小的在最前面
 
 ```js
-;[2, 11, 3].sort() //[11, 2, 3]
+[2, 11, 3].sort(); //[11, 2, 3]
 ```
 
 传参的情况下：必须是一个函数。函数接受两个参数，分别是相邻的值。
@@ -129,8 +129,8 @@ amount 为 0，不删除。大于 0，删除
 - 只有一个参数：改变数组所有值为这个参数
 
 ```js
-var arr = [2, 3, 4]
-arr.fill(1) // arr变成[1, 1, 1]
+var arr = [2, 3, 4];
+arr.fill(1); // arr变成[1, 1, 1]
 ```
 
 - fill(params, start, end)
@@ -139,17 +139,17 @@ arr.fill(1) // arr变成[1, 1, 1]
 start 或者 end 超出范围则不生效
 
 ```js
-var arr = [4, 5, 6, 7]
-arr.fill(666, 2) //arr变成[4, 5, 666, 666]
+var arr = [4, 5, 6, 7];
+arr.fill(666, 2); //arr变成[4, 5, 666, 666]
 
-var arr2 = [4, 5, 6, 7]
-arr2.fill(666, 2, 3) //arr变成[4, 5, 666, 7]
+var arr2 = [4, 5, 6, 7];
+arr2.fill(666, 2, 3); //arr变成[4, 5, 666, 7]
 ```
 
 ```js
-var arr = [2, 3, 4]
-arr.fill(1, 100, 101) //  [2, 3, 4]
-arr.fill(1, 100) //  [2, 3, 4]
+var arr = [2, 3, 4];
+arr.fill(1, 100, 101); //  [2, 3, 4]
+arr.fill(1, 100); //  [2, 3, 4]
 ```
 
 ### copyWithin(start, index, end)
@@ -163,8 +163,8 @@ arr.fill(1, 100) //  [2, 3, 4]
 比如下面复制的是[2,3,4,5,6], 从索引是 2（也就是值是 3 的地方开始）
 
 ```js
-var arr = [1, 2, 3, 4, 5, 6]
-arr.copyWithin(2, 1) //arr变成[1, 2, 2, 3, 4, 5]
+var arr = [1, 2, 3, 4, 5, 6];
+arr.copyWithin(2, 1); //arr变成[1, 2, 2, 3, 4, 5]
 ```
 
 ## 不修改数组的方法
@@ -193,9 +193,9 @@ arr.copyWithin(2, 1) //arr变成[1, 2, 2, 3, 4, 5]
 indexOf 从开头找起，lastIndexOf 从末尾
 
 ```js
-var arr = [1, 2, 3]
-arr.indexOf(2) //1
-arr.indexOf("2") //-1
+var arr = [1, 2, 3];
+arr.indexOf(2); //1
+arr.indexOf("2"); //-1
 ```
 
 ### 检索方法 find, findIndex
@@ -209,16 +209,16 @@ indexOf 只能查找特定的单个值，ES6 新增的属性可以进行检索�
 - 只返回第一个匹配的值
 
 ```js
-const arr = [3, 6, 7, 9]
+const arr = [3, 6, 7, 9];
 let obj = {
   getNum(value) {
-    return value > 5
+    return value > 5;
   },
-}
+};
 let temp = arr.find((value, index, arr) => {
-  return obj.getNum(value)
-}, obj)
-console.log(temp) //6
+  return obj.getNum(value);
+}, obj);
+console.log(temp); //6
 ```
 
 ### 迭代: every, filter, forEach, map, some
@@ -228,17 +228,17 @@ console.log(temp) //6
 `break` 不生效
 
 ```js
-const arr = [1, 2, 3, 4]
+const arr = [1, 2, 3, 4];
 function every() {
-  let i = 0
+  let i = 0;
   const result = arr.every((item, index, arr) => {
-    i++
-    return item > 1
-  })
+    i++;
+    return item > 1;
+  });
   console.log({
     i,
     result,
-  }) // {i: 1, result: false}
+  }); // {i: 1, result: false}
 }
 ```
 
@@ -264,17 +264,17 @@ const arr = [
     id: 4,
     name: "Lancer",
   },
-]
+];
 function filter() {
-  let i = 0
+  let i = 0;
   const result = arr.filter((item, index, arr) => {
-    i++
-    return item.id > 1
-  })
+    i++;
+    return item.id > 1;
+  });
   console.log({
     i,
     result,
-  })
+  });
 }
 ```
 
@@ -305,11 +305,11 @@ function filter() {
 - forEach: 没有返回值
 
 ```js
-const arr = [1, 2, 3, 4]
+const arr = [1, 2, 3, 4];
 let result = arr.forEach((item) => {
-  return item
-})
-console.log(result) //undefined
+  return item;
+});
+console.log(result); //undefined
 ```
 
 ::: tip
@@ -317,10 +317,10 @@ console.log(result) //undefined
 :::
 
 ```js
-const arr = [1, 2, 3, 4]
-arr.filter() //报错，TypeError: undefined is not a function
-arr.map(1) //报错，TypeError: 1 is not a function
-arr.forEach() //报错，TypeError: undefined is not a function
+const arr = [1, 2, 3, 4];
+arr.filter(); //报错，TypeError: undefined is not a function
+arr.map(1); //报错，TypeError: 1 is not a function
+arr.forEach(); //报错，TypeError: undefined is not a function
 ```
 
 ### 缩小方法: reduce, reduceRight
@@ -332,33 +332,33 @@ reduceRight 和 reduce 反向相反，从最后一项开始。
 prev 是上一个 return 的值
 
 ```js
-const arr = [1, 2, 3, 4]
+const arr = [1, 2, 3, 4];
 function reduce() {
   const result = arr.reduce((prev, cur, index, arr) => {
-    console.log(prev)
-    return prev + cur
-  })
+    console.log(prev);
+    return prev + cur;
+  });
   console.log({
     result,
-  }) // {result: 10}
+  }); // {result: 10}
 }
 ```
 
 ```js
 function unique(arr, initialValue) {
-  let hash = {}
+  let hash = {};
   return arr.reduce(function (previousValue, currentValue, index, array) {
     if (!hash[currentValue]) {
-      hash[currentValue] = true
-      previousValue.push(currentValue)
+      hash[currentValue] = true;
+      previousValue.push(currentValue);
     }
-    return previousValue
-  }, initialValue)
+    return previousValue;
+  }, initialValue);
 }
 
-const uniqueArr = unique([1, 2, 2, 4, 4, 6, 1], [])
+const uniqueArr = unique([1, 2, 2, 4, 4, 6, 1], []);
 
-console.log(uniqueArr) // [1, 2, 4, 6]
+console.log(uniqueArr); // [1, 2, 4, 6]
 ```
 
 ### 比较 includes
@@ -378,16 +378,16 @@ console.log(uniqueArr) // [1, 2, 4, 6]
 ```js
 var str = "sth.",
   newStr,
-  append = 100
+  append = 100;
 while (append--) {
-  newStr += str
+  newStr += str;
 }
 //改用join
-var arr = []
+var arr = [];
 while (append--) {
-  arr[append] = str
+  arr[append] = str;
 }
-newStr = arr.join()
+newStr = arr.join();
 ```
 
 ### flat
@@ -396,16 +396,16 @@ newStr = arr.join()
 最常见的应用就是数组降维
 
 ```js
-var test = [1, 2, [3, 4, [5, 6]], [7, 8]]
-test.flat() //[1, 2, 3, 4, [5,6], 7, 8]
-test.flat(2) //[1, 2, 3, 4, 5, 6, 7, 8]
+var test = [1, 2, [3, 4, [5, 6]], [7, 8]];
+test.flat(); //[1, 2, 3, 4, [5,6], 7, 8]
+test.flat(2); //[1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
 还可以去掉空项
 
 ```js
-var test = [1, 2, null, undefined, 0, "", , 8]
-test.flat() //[1, 2, null, undefined, 0, "", 8]
+var test = [1, 2, null, undefined, 0, "", , 8];
+test.flat(); //[1, 2, null, undefined, 0, "", 8]
 ```
 
 ### flatMap
@@ -414,12 +414,12 @@ test.flat() //[1, 2, null, undefined, 0, "", 8]
 flatMap 只会降维一层
 
 ```js
-var test1 = [1, 2]
-test1.flatMap((item) => item * 2) // [2, 4], 与map一致
-var test3 = [1, [2, 3]]
-test3.flatMap((item) => [item * 2]) // [2, NaN]
-var test2 = [1, [2]]
-test2.flatMap((item) => [item * 2]) // [2, 4]
+var test1 = [1, 2];
+test1.flatMap((item) => item * 2); // [2, 4], 与map一致
+var test3 = [1, [2, 3]];
+test3.flatMap((item) => [item * 2]); // [2, NaN]
+var test2 = [1, [2]];
+test2.flatMap((item) => [item * 2]); // [2, 4]
 ```
 
 ## 数组解构
@@ -427,11 +427,11 @@ test2.flatMap((item) => [item * 2]) // [2, 4]
 类似对象解构
 
 ```js
-let servantClass = ["saber", "lancer"]
-let [first, second, third = "rider"] = servantClass
-console.log(first) //"saber"
-console.log(second) // "lancer"
-console.log(third) //"rider"
+let servantClass = ["saber", "lancer"];
+let [first, second, third = "rider"] = servantClass;
+console.log(first); //"saber"
+console.log(second); // "lancer"
+console.log(third); //"rider"
 ```
 
 ## new Array 和 Array.of
@@ -439,28 +439,28 @@ console.log(third) //"rider"
 - new 的时候如果传入的值只有一个，是 Number 类型，会认为是 length
 
 ```js
-let items = new Array(2)
-console.log(items.length) // 2
-console.log(items[0]) // undefined
-console.log(items[1]) // undefined
+let items = new Array(2);
+console.log(items.length); // 2
+console.log(items[0]); // undefined
+console.log(items[1]); // undefined
 ```
 
 - 传入其他认为是数组项
 
 ```js
-let items = new Array("2")
-console.log(items.length) // 1
-console.log(items[0]) // "2"
-console.log(items[1]) // undefined
+let items = new Array("2");
+console.log(items.length); // 1
+console.log(items[0]); // "2"
+console.log(items[1]); // undefined
 ```
 
 - 传入多个值不论什么类型都认为是数组项
 
 ```js
-let items = new Array(1, 3)
-console.log(items.length) // 2
-console.log(items[0]) // 1
-console.log(items[1]) // 3
+let items = new Array(1, 3);
+console.log(items.length); // 2
+console.log(items[0]); // 1
+console.log(items[1]); // 3
 ```
 
 ::: tip
@@ -468,9 +468,9 @@ Array.of 则不论是什么都认为是数组项
 :::
 
 ```js
-let items = Array.of(2)
-console.log(items.length) // 1
-console.log(items[0]) // 2
+let items = Array.of(2);
+console.log(items.length); // 1
+console.log(items[0]); // 2
 ```
 
 ## Array.from(): 可迭代对象或者类数组对象转为数组
@@ -483,8 +483,8 @@ console.log(items[0]) // 2
 var test = {
   0: "a",
   1: "b",
-}
-console.log(Array.from(test)) //[]
+};
+console.log(Array.from(test)); //[]
 ```
 
 ```js
@@ -492,9 +492,9 @@ var test2 = {
   0: "a",
   1: "b",
   length: 2,
-}
+};
 
-console.log(Array.from(test2)) //['a', 'b']
+console.log(Array.from(test2)); //['a', 'b']
 ```
 
 ```js
@@ -503,12 +503,12 @@ var arrayLike = {
   1: "b",
   length: 2,
   *[Symbol.iterator]() {
-    yield this[1]
-    yield this[0]
+    yield this[1];
+    yield this[0];
   },
-}
+};
 
-console.log(Array.from(arrayLike)) // ['b', 'a']，优先级比length高
+console.log(Array.from(arrayLike)); // ['b', 'a']，优先级比length高
 ```
 
 ### 映射
@@ -517,10 +517,10 @@ console.log(Array.from(arrayLike)) // ['b', 'a']，优先级比length高
 
 ```js
 function translate() {
-  return Array.from(arguments, (value) => value + 1)
+  return Array.from(arguments, (value) => value + 1);
 }
-let numbers = translate(1, 2, 3)
-console.log(numbers) // 2,3,4
+let numbers = translate(1, 2, 3);
+console.log(numbers); // 2,3,4
 ```
 
 ### 传入 this
@@ -531,14 +531,14 @@ console.log(numbers) // 2,3,4
 let helper = {
   diff: 1,
   add(value) {
-    return value + this.diff
+    return value + this.diff;
   },
-}
+};
 function translate() {
-  return Array.from(arguments, helper.add, helper)
+  return Array.from(arguments, helper.add, helper);
 }
-let numbers = translate(1, 2, 3)
-console.log(numbers) // 2,3,4
+let numbers = translate(1, 2, 3);
+console.log(numbers); // 2,3,4
 ```
 
 ## 迭代器方法
@@ -546,17 +546,17 @@ console.log(numbers) // 2,3,4
 - keys：索引
 
 ```js
-const iterator = ["1", 2, "3"].keys() // Array Iterator {}
-iterator.next() // {value: 0, done: false}
+const iterator = ["1", 2, "3"].keys(); // Array Iterator {}
+iterator.next(); // {value: 0, done: false}
 ```
 
 - values
 - entries
 
 ```js
-const array = ["hello", "world", "js"]
+const array = ["hello", "world", "js"];
 for (const key of array) {
-  console.log(key)
+  console.log(key);
 } // "hello" "world" "js"
 ```
 

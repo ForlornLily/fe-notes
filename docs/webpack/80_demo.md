@@ -13,7 +13,7 @@
 ```js
 const ast = parser.parse(content, {
   sourceType: "module", //ES6 module形式
-})
+});
 ```
 
 其中 ast.program.body 如下
@@ -25,42 +25,42 @@ const ast = parser.parse(content, {
 ### demo
 
 ```js
-const fs = require("fs")
-const path = require("path")
-const parser = require("@babel/parser") //解析字符串
-const traverse = require("@babel/traverse").default //对AST进行解析
-const babel = require("@babel/core") //将AST转成浏览器可以允许的代码
+const fs = require("fs");
+const path = require("path");
+const parser = require("@babel/parser"); //解析字符串
+const traverse = require("@babel/traverse").default; //对AST进行解析
+const babel = require("@babel/core"); //将AST转成浏览器可以允许的代码
 
 const moduleAnalyser = (filename) => {
-  const content = fs.readFileSync(filename, "utf-8")
+  const content = fs.readFileSync(filename, "utf-8");
   const ast = parser.parse(content, {
     sourceType: "module", //ES6 module形式
-  })
-  const dependencies = {}
+  });
+  const dependencies = {};
   traverse(ast, {
     ImportDeclaration({ node }) {
       //分析依赖: 找到type是ImportDeclaration的节点
-      const dirname = path.dirname(filename)
+      const dirname = path.dirname(filename);
       //node.source.value: 依赖的文件名，即import xx from "sth.js"的sth.js
       // 此时的sth是相对路径，转成绝对路径
-      const newFile = "./" + path.join(dirname, node.source.value)
+      const newFile = "./" + path.join(dirname, node.source.value);
       // 对象内的键值对是 相对路径: 绝对路径
       // 例如dependencies["./sth.js"] =  ["./src/sth.js"]
-      dependencies[node.source.value] = newFile
+      dependencies[node.source.value] = newFile;
     },
-  })
+  });
   const { code } = babel.transformFromAst(ast, null, {
     presets: ["@babel/preset-env"], //ES6转ES5
-  })
+  });
   return {
     filename,
     dependencies,
     code,
-  }
-}
+  };
+};
 
-const moduleInfo = moduleAnalyser("./src/index.js")
-console.log(moduleInfo)
+const moduleInfo = moduleAnalyser("./src/index.js");
+console.log(moduleInfo);
 ```
 
 ## 遍历所有依赖
@@ -71,28 +71,28 @@ console.log(moduleInfo)
 
 ```js
 const makeDependenciesGraph = (entry) => {
-  const entryModule = moduleAnalyser(entry)
-  const graphArray = [entryModule]
+  const entryModule = moduleAnalyser(entry);
+  const graphArray = [entryModule];
   for (let i = 0; i < graphArray.length; i++) {
-    const item = graphArray[i]
-    const { dependencies } = item
+    const item = graphArray[i];
+    const { dependencies } = item;
     if (dependencies) {
       for (let j in dependencies) {
-        graphArray.push(moduleAnalyser(dependencies[j]))
+        graphArray.push(moduleAnalyser(dependencies[j]));
       }
     }
   }
-  const graph = {}
+  const graph = {};
   graphArray.forEach((item) => {
     graph[item.filename] = {
       dependencies: item.dependencies,
       code: item.code,
-    }
-  })
-  return graph
-}
+    };
+  });
+  return graph;
+};
 
-const graghInfo = makeDependenciesGraph("./src/index.js")
+const graghInfo = makeDependenciesGraph("./src/index.js");
 ```
 
 ## 生成函数
@@ -103,7 +103,7 @@ const graghInfo = makeDependenciesGraph("./src/index.js")
 
 ```js
 const generateCode = (entry) => {
-  const graph = JSON.stringify(makeDependenciesGraph(entry))
+  const graph = JSON.stringify(makeDependenciesGraph(entry));
   return `
     (function(graph){
       function require(module) { 
@@ -118,8 +118,8 @@ const generateCode = (entry) => {
       };
       require('${entry}')
     })(${graph});
-  `
-}
+  `;
+};
 
-const code = generateCode("./src/index.js")
+const code = generateCode("./src/index.js");
 ```

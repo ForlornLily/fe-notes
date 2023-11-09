@@ -9,11 +9,11 @@
 前置时：先修改本身的值，再进行后续运算
 
 ```js
-var age = 10
-var result = --age + 10 //19
+var age = 10;
+var result = --age + 10; //19
 
-var age2 = 10
-var result2 = age2-- + 10 //20
+var age2 = 10;
+var result2 = age2-- + 10; //20
 ```
 
 #### 转换规则
@@ -61,15 +61,15 @@ ECMAScript 内所有数字都根据 IEEE-754 64 位格式存储
 位操作的速度快得多。因为位操作是在数值的底层表示上完成的。
 
 ```js
-let num1 = 25 // 二进制00000000000000000000000000011001
-let num2 = ~num1 // 二进制11111111111111111111111111100110
-console.log(num2) // -26
+let num1 = 25; // 二进制00000000000000000000000000011001
+let num2 = ~num1; // 二进制11111111111111111111111111100110
+console.log(num2); // -26
 ```
 
 ```js
-let num1 = 25
-let num2 = -num1 - 1
-console.log(num2)
+let num1 = 25;
+let num2 = -num1 - 1;
+console.log(num2);
 ```
 
 ### 按位与 AND &
@@ -79,7 +79,7 @@ console.log(num2)
 然后把值变成 10 进制
 
 ```js
-25 & 3 // 1
+25 & 3; // 1
 ```
 
 ```
@@ -111,7 +111,7 @@ XOR = 0000 0000 0000 0000 0000 0000 0001 1010
 ### 左移&lt;&lt; 有符号右移&gt;&gt; 无符号右移&gt;&gt;&gt;
 
 ```js
-2 << 5 //64
+2 << 5; //64
 ```
 
 向左移动 5 位，后面补 0
@@ -121,7 +121,7 @@ XOR = 0000 0000 0000 0000 0000 0000 0001 1010
 ![](../images/4713287f9d063e6eeaffa57c2aa870b6.png)
 
 ```js
-64 >> 5 //2
+64 >> 5; //2
 ```
 
 于左移正好相反
@@ -132,7 +132,7 @@ XOR = 0000 0000 0000 0000 0000 0000 0001 1010
 ![](../images/51ee974fac349825fc1fd9a4626863a0.png)
 
 ```js
-64 >>> 5 // 2
+64 >>> 5; // 2
 ```
 
 用 0 填充
@@ -166,7 +166,7 @@ NaN 和 Infinity 会被当做 0 来处理
 !null, !NaN, !undefined 是 true.
 
 ```js
-Boolean(NaN) // false
+Boolean(NaN); // false
 ```
 
 !!和 Boolean 结果一致
@@ -184,8 +184,8 @@ Boolean(NaN) // false
 - 对象 1 && 对象 2: 返回对象 2
 
 ```js
-0 && {} // 0
-1 && {} // {}
+0 && {}; // 0
+1 && {}; // {}
 ```
 
 - null && 其他 返回 `null`
@@ -209,7 +209,7 @@ Boolean(NaN) // false
 - 对象 1 \|\| 对象 2: 返回对象 1
 
 ```js
-const test = { a: 2 } || 1 //  {a: 2}
+const test = { a: 2 } || 1; //  {a: 2}
 ```
 
 - null \|\| null 返回 null，
@@ -239,9 +239,9 @@ Infinity 和 0，返回 NaN
 Infinity 和不是 0，返回 Infinity，符号看非 0 数值的符号
 
 ```js
-Infinity * -Infinity // -Infinity
-Infinity * 1 // Infinity
-Infinity * -1 // -Infinity
+Infinity * -Infinity; // -Infinity
+Infinity * 1; // Infinity
+Infinity * -1; // -Infinity
 ```
 
 ### 除法
@@ -269,9 +269,9 @@ Infinity%Infinity ,返回 NaN
 Math.pow() 或者 操作符\*\*
 
 ```js
-2 ** 3 // 8
-let squared = 3
-squared **= 2 // 9
+2 ** 3; // 8
+let squared = 3;
+squared **= 2; // 9
 ```
 
 ### 加法
@@ -282,17 +282,17 @@ squared **= 2 // 9
 Infinity 见下方
 
 ```js
-Infinity + Infinity // Infinity
+Infinity + Infinity; // Infinity
 Infinity +
   -Infinity - // NaN
   Infinity +
   -Infinity - // -Infinity
   Infinity +
-  1 // -Infinity
+  1; // -Infinity
 ```
 
 ```js
-;+0 +
++0 +
   (-0)(
     // 0
     -0
@@ -301,7 +301,7 @@ Infinity +
     // -0
     +0
   ) +
-  +0 // 0
+  +0; // 0
 ```
 
 如果有一个字符串，进行字符串拼接
@@ -331,7 +331,7 @@ Infinity +
 两个都是字符串，比较编码值。左边起先比第一个，一样再比第二个
 
 ```js
-"hello" > "H" // true
+"hello" > "H"; // true
 ```
 
 对象: 对象的比较都是引用的比较。先调 valueOf，再调 toString
@@ -357,8 +357,8 @@ Infinity +
 - 有一个 NaN，返回 false
 
 ```js
-NaN === NaN // false
-NaN == NaN // false
+NaN === NaN; // false
+NaN == NaN; // false
 ```
 
 - 一个是对象，另一个不是对象。这个对象先调 valueOf 返回基本类型
@@ -382,8 +382,8 @@ delete 只能删除自有属性，不能删除继承属性
 逗号也可以赋值。取最后一项
 
 ```js
-var num = (1, 2, 3)
-console.log(num) // 3
+var num = (1, 2, 3);
+console.log(num); // 3
 ```
 
 ## 空值合并运算符
@@ -392,7 +392,7 @@ Nullish coalescing operator：即双问号 `??`
 不是 null 或 undefined 时取当前值，否则取后者
 
 ```js
-const test = 0 ?? 1 // 0
+const test = 0 ?? 1; // 0
 ```
 
 ## 优先级

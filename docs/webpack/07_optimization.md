@@ -63,20 +63,20 @@ ES6 module 的特点
 ```js
 function Senhai() {}
 
-Senhai.prototype.servant = function () {}
+Senhai.prototype.servant = function () {};
 
 var a = "Saber" + "Alter",
-  b
+  b;
 if (a == "QB") {
-  b = Array
+  b = Array;
 } else {
-  b = Senhai
+  b = Senhai;
 }
 b.prototype.unique = function () {
   // 将 array 中的重复元素去除
-}
+};
 
-export default Senhai
+export default Senhai;
 ```
 
 ## Code Spliting: splitChunks
@@ -132,7 +132,7 @@ module.exports = {
   module: {
     noParse: /jquery|lodash/,
   },
-}
+};
 ```
 
 - 减少[resolve](./04_loader.md#自定义loader)
@@ -150,16 +150,16 @@ module.exports = {
     externals: {
       jquery: "jQuery",
     },
-  }
+  };
   ```
 
   在业务内仍然可以使用
 
   ```js
   //仍然可以import
-  import $ from "jquery"
+  import $ from "jquery";
 
-  $(".my-element").animate(/* ... */)
+  $(".my-element").animate(/* ... */);
   ```
 
 - 其他:
@@ -177,12 +177,12 @@ module.exports = {
 new webpack.IgnorePlugin({
   resourceRegExp: /^\.\/locale$/,
   contextRegExp: /moment$/,
-})
+});
 
 //只引入需要的语言
-import moment from "moment"
-import "moment/locale/zh-cn" // 手动引入中文语言包
-moment.locale("zh-cn")
+import moment from "moment";
+import "moment/locale/zh-cn"; // 手动引入中文语言包
+moment.locale("zh-cn");
 ```
 
 ### dllplugin
@@ -225,8 +225,8 @@ module.exports = {
 3. webpack.config.js 中通过 `DLLReferencePlugin` 来使用 DllPlugin 生成的 DLL Bundle
 
 ```js
-const path = require("path")
-const webpack = require("webpack")
+const path = require("path");
+const webpack = require("webpack");
 module.exports = {
   mode: "production",
   // 编译入口
@@ -246,5 +246,5 @@ module.exports = {
       manifest: require("./dist/vendor-manifest.json"),
     }),
   ],
-}
+};
 ```

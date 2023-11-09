@@ -11,8 +11,8 @@
 [参考](https://sagittarius-rev.gitbooks.io/understanding-ecmascript-6-zh-ver/content/chapter_10.html)
 
 ```js
-const buf = new ArrayBuffer(16)
-buf.byteLength // 16
+const buf = new ArrayBuffer(16);
+buf.byteLength; // 16
 ```
 
 一经创建就不能再调整大小。不过，可以使用 slice() 复制
@@ -23,9 +23,9 @@ buf.byteLength // 16
 
 ```js
 // 在内存中分配两个字节并声明一个DataView
-const buf = new ArrayBuffer(2)
-const view = new DataView(buf)
-view.getInt8(0) // 0
+const buf = new ArrayBuffer(2);
+const view = new DataView(buf);
+view.getInt8(0); // 0
 ```
 
 ## SharedArrayBuffer

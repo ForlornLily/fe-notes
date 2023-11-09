@@ -5,7 +5,7 @@
 用于 SSR
 
 ```js
-import ReactDOMServer from "react-dom/server"
+import ReactDOMServer from "react-dom/server";
 ```
 
 ## renderToString
@@ -14,9 +14,9 @@ renderToString 返回的是 HTML 字符串，不支持 stream
 如果客户端对应的元素还调用了`hydrate()`，那么`hydrate`只会进行事件绑定，不会重新渲染 DOM
 
 ```js
-import { renderToString } from "react-dom/server"
+import { renderToString } from "react-dom/server";
 
-const html = renderToString(<MyIcon />)
+const html = renderToString(<MyIcon />);
 ```
 
 ```js
@@ -32,14 +32,14 @@ export const render = (req) => {
         {Route}
       </StaticRouter>
     </Provider>
-  )
+  );
   return `<html>
     <body>
       <div id="root">${content}</div>
       <script src="/index.js"></script>
     <body>
-    </html>`
-}
+    </html>`;
+};
 ```
 
 ## renderToStaticMarkup
@@ -64,17 +64,17 @@ export const render = (req) => {
 
 ```js
 // 已废弃
-ReactDOMServer.renderToNodeStream(element)
+ReactDOMServer.renderToNodeStream(element);
 ```
 
 ```js
-import { renderToPipeableStream } from "react-dom/server"
+import { renderToPipeableStream } from "react-dom/server";
 
 const { pipe } = renderToPipeableStream(<App />, {
   bootstrapScripts: ["/main.js"],
   onShellReady() {
-    response.setHeader("content-type", "text/html")
-    pipe(response)
+    response.setHeader("content-type", "text/html");
+    pipe(response);
   },
   onShellError(error) {
     // 组件渲染失败，同样会触发 onError
@@ -82,7 +82,7 @@ const { pipe } = renderToPipeableStream(<App />, {
   onError(error) {
     // 所有失败都进
   },
-})
+});
 ```
 
 ## renderToStaticNodeStream

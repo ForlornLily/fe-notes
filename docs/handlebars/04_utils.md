@@ -11,9 +11,9 @@
 - 除了 `0` 之外，和 JavaScript 的 `falsy` 一致：即 null, undefined, "", NaN
 
 ```js
-const isEmpty = Handlebars.Utils.isEmpty
-console.log(isEmpty(0)) // false
-console.log(isEmpty("")) // true
+const isEmpty = Handlebars.Utils.isEmpty;
+console.log(isEmpty(0)); // false
+console.log(isEmpty("")); // true
 ```
 
 ## extend

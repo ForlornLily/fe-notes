@@ -12,12 +12,12 @@ complex data
 对象不能存在同名的属性名(key);
 
 ```js
-var foo = new Object() //通过构造函数创建
+var foo = new Object(); //通过构造函数创建
 
-var test = {} //通过对象字面量创建（推荐）
+var test = {}; //通过对象字面量创建（推荐）
 
 //等价于
-var test = Object.create(Object.prototype)
+var test = Object.create(Object.prototype);
 ```
 
 优先用点表示法
@@ -56,10 +56,10 @@ var test = Object.create(Object.prototype)
 创建当前对象的函数
 
 ```js
-var foo = new Object()
-foo.constructor === Object //true
-var test = {}
-test.constructor === Object //true
+var foo = new Object();
+foo.constructor === Object; //true
+var test = {};
+test.constructor === Object; //true
 ```
 
 ## in 关键字
@@ -67,12 +67,12 @@ test.constructor === Object //true
 in 关键字会包含继承的属性，同样`!==`也会包含继承的属性
 
 ```js
-var foo2 = {}
+var foo2 = {};
 
-foo2.bar2 = "hello"
-"bar2" in foo2 //true
+foo2.bar2 = "hello";
+"bar2" in foo2; //true
 
-foo2.toString !== undefined // true
+foo2.toString !== undefined; // true
 ```
 
 ### for...in
@@ -98,9 +98,9 @@ Symbol 用 getOwnPropertySymbols
 hasOwnproperty(key)：key 是个字符串，判断 key 是否存在当前属性，不包括继承
 
 ```js
-var test = {}
-test.hello = "word"
-test.hasOwnProperty("hello") //true
+var test = {};
+test.hello = "word";
+test.hasOwnProperty("hello"); //true
 ```
 
 ## propertyIsEnumerable
@@ -109,7 +109,7 @@ propertyIsEnumerable(key)：可以看成是 hasOwnproperty 的增强版:
 只有是自有属性并且可枚举，才会返回 true
 
 ```js
-test.propertyIsEnumerable("hello")
+test.propertyIsEnumerable("hello");
 ```
 
 ## isPrototypeOf
@@ -123,9 +123,9 @@ isPrototypeOf(object)：对象是否存在于另一个对象的原型链上
 构造函数的 prototype 指向原型对象
 
 ```js
-var test = {}
-Object.isPrototypeOf(test) //false
-Object.prototype.isPrototypeOf(test) //true
+var test = {};
+Object.isPrototypeOf(test); //false
+Object.prototype.isPrototypeOf(test); //true
 ```
 
 ## toLocaleString()/toString()/valueOf()
@@ -137,14 +137,14 @@ Object.prototype.isPrototypeOf(test) //true
 - valueOf 返回原本对应的 string, number, boolean
 
 ```js
-var str = "123"
-str.toString() //"123"
-str.toLocaleString() //"123"
-str.valueOf() //"123"
-var date = new Date()
-date.toString() //"Thu Oct 10 2019 15:10:43 GMT+0800 (中国标准时间)"
-date.toLocaleString() //"2019/10/10 下午3:10:43"
-date.valueOf() //1570691443220
+var str = "123";
+str.toString(); //"123"
+str.toLocaleString(); //"123"
+str.valueOf(); //"123"
+var date = new Date();
+date.toString(); //"Thu Oct 10 2019 15:10:43 GMT+0800 (中国标准时间)"
+date.toLocaleString(); //"2019/10/10 下午3:10:43"
+date.valueOf(); //1570691443220
 ```
 
 ## 对象转原始类型规则
@@ -162,16 +162,16 @@ date.valueOf() //1570691443220
 ```js
 let a = {
   valueOf() {
-    return 0
+    return 0;
   },
   toString() {
-    return "1"
+    return "1";
   },
   [Symbol.toPrimitive]() {
-    return 2
+    return 2;
   },
-}
-1 + a //3
+};
+1 + a; //3
 ```
 
 ### toString
@@ -179,16 +179,16 @@ let a = {
 - 单纯的一个对象返回的是"[object object]"
 
   ```js
-  var x = { hello: "world" }
-  x.toString() //"[object Object]"
+  var x = { hello: "world" };
+  x.toString(); //"[object Object]"
   ```
 
 - 数组：将每一项调用 toString()，然后用逗号分隔拼接
   ```js
-  var y = [1, 2, 3]
-  y.toString() //"1,2,3"
-  var z = [{ a: 1 }, 2]
-  z.toString() //"[object Object],2"
+  var y = [1, 2, 3];
+  y.toString(); //"1,2,3"
+  var z = [{ a: 1 }, 2];
+  z.toString(); //"[object Object],2"
   ```
 - 函数：返回定义函数的表达式
 - Date/RegExp: 返回字符串
@@ -200,8 +200,8 @@ let a = {
 Date 返回毫秒数
 
 ```js
-var arr = [1, 2]
-arr.valueOf() //[1, 2]
+var arr = [1, 2];
+arr.valueOf(); //[1, 2]
 ```
 
 ## 遍历
@@ -224,8 +224,8 @@ const arr = [
   ["0", "a"],
   ["1", "b"],
   ["2", "c"],
-]
-Object.fromEntries(arr) // {0: 'a', 1: 'b', 2: 'c'}
+];
+Object.fromEntries(arr); // {0: 'a', 1: 'b', 2: 'c'}
 ```
 
 ## 比较：Object.is(key1, key2)
@@ -233,7 +233,7 @@ Object.fromEntries(arr) // {0: 'a', 1: 'b', 2: 'c'}
 进行===比较，不会出现类型转换
 
 ```js
-Object.is(1, "1") //false
+Object.is(1, "1"); //false
 ```
 
 和===不同的地方有两处：
@@ -241,13 +241,13 @@ Object.is(1, "1") //false
 \+0 和-0，NaN 和 NaN
 
 ```js
-;+0 === -0 //true
++0 === -0; //true
 
-Object.is(+0, -0) //false
+Object.is(+0, -0); //false
 
-NaN === NaN //false
+NaN === NaN; //false
 
-Object.is(NaN, NaN) //true
+Object.is(NaN, NaN); //true
 ```
 
 ## 合并：Object.assign()
@@ -257,8 +257,8 @@ Object.is(NaN, NaN) //true
 ```js
 let a = {
   name: undefined,
-}
-b = Object.assign({}, a) // {name: undefined}
+};
+b = Object.assign({}, a); // {name: undefined}
 ```
 
 ## 解构
@@ -267,19 +267,19 @@ b = Object.assign({}, a) // {name: undefined}
 let servant = {
   saber: "Altria",
   lancer: "",
-}
-let { saber, archer = "Emiya" } = servant
-console.log(saber) //"Altria"
-console.log(archer) //"Emiya"
+};
+let { saber, archer = "Emiya" } = servant;
+console.log(saber); //"Altria"
+console.log(archer); //"Emiya"
 ```
 
 ### 赋值给非同名
 
 ```js
-let { saber: Saber, archer: Arhcer = "Emiya" } = servant
-console.log(Saber) //"Altria"
-console.log(Arhcer) // "Emiya"
-console.log(saber) //报错: saber is not defined
+let { saber: Saber, archer: Arhcer = "Emiya" } = servant;
+console.log(Saber); //"Altria"
+console.log(Arhcer); // "Emiya"
+console.log(saber); //报错: saber is not defined
 ```
 
 ## instanceof 操作符
@@ -287,27 +287,27 @@ console.log(saber) //报错: saber is not defined
 基本类型都会返回 false,因为他们都不是对象
 
 ```js
-1 instanceof Number //false
-var test = {}
-test instanceof Object //true
+1 instanceof Number; //false
+var test = {};
+test instanceof Object; //true
 ```
 
 ### 手写
 
 ```js
 function myInstanceOf(left, right) {
-  const rightProto = right.prototype
-  let leftProto = left.__proto__
+  const rightProto = right.prototype;
+  let leftProto = left.__proto__;
   if (leftProto === null) {
-    return false
+    return false;
   }
   while (leftProto) {
     if (leftProto === rightProto) {
-      return true
+      return true;
     }
-    leftProto = leftProto.__proto__
+    leftProto = leftProto.__proto__;
   }
-  return false
+  return false;
 }
 ```
 
@@ -323,9 +323,9 @@ function myInstanceOf(left, right) {
 ```js
 let obj = {
   name: "Emma",
-}
-Object.preventExtensions(obj)
-obj.value = "hi"
+};
+Object.preventExtensions(obj);
+obj.value = "hi";
 ```
 
 ![](../images/ad4aaade7530fec1fe550b5489bb1a64.png)
@@ -379,8 +379,8 @@ JSON 并不能序列化所有值。
 var test = {
   a: undefined,
   b: null,
-}
-JSON.parse(JSON.stringify(test))
+};
+JSON.parse(JSON.stringify(test));
 /* 
   结果
   {
@@ -395,8 +395,8 @@ JSON.parse(JSON.stringify(test))
 var test = {
   a: NaN,
   b: 0,
-}
-JSON.parse(JSON.stringify(test)) //{a: null, b: 0}
+};
+JSON.parse(JSON.stringify(test)); //{a: null, b: 0}
 ```
 
 - symbol: 不能序列化和还原
@@ -404,17 +404,17 @@ JSON.parse(JSON.stringify(test)) //{a: null, b: 0}
 ```js
 var test = {
   a: Symbol("1"),
-}
-JSON.parse(JSON.stringify(test)) //{}
+};
+JSON.parse(JSON.stringify(test)); //{}
 ```
 
 - BigInt 不能：TypeError: Do not know how to serialize a BigInt
 - Date 类型,JSON.parse() 仍然是字符串，不会还原成原本的日期对象
 
 ```js
-var date = new Date()
-JSON.stringify(date) // "2019-09-29T08:42:13.409Z"
-JSON.parse(JSON.stringify(date)) //"2019-09-29T08:42:13.409Z"
+var date = new Date();
+JSON.stringify(date); // "2019-09-29T08:42:13.409Z"
+JSON.parse(JSON.stringify(date)); //"2019-09-29T08:42:13.409Z"
 ```
 
 - 只能序列化和还原普通对象，Set、Map、RegExp、Error 等构造函数的实例都变成`{}`，函数不能序列化和还原
@@ -423,11 +423,11 @@ JSON.parse(JSON.stringify(date)) //"2019-09-29T08:42:13.409Z"
 var test = {
   a: new Set([1, 2]),
   b: function () {
-    console.log("1")
+    console.log("1");
   },
   c: new Error("error"),
-}
-console.log(JSON.parse(JSON.stringify(test)))
+};
+console.log(JSON.parse(JSON.stringify(test)));
 /* 
   {
     a: {}

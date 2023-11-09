@@ -31,17 +31,17 @@ JS 的数据类型很多都内置了实现：
 `for...of`会先调 Symbol.iterator 方法，Symbol.iterator 返回一个迭代器，然后 next()被调用
 
 ```ts
-const str = "hello, world"
-console.log(str[Symbol.iterator]()) // StringIterator {}
+const str = "hello, world";
+console.log(str[Symbol.iterator]()); // StringIterator {}
 ```
 
 ```js
 function isIterable(object) {
-  return typeof object[Symbol.iterator] === "function"
+  return typeof object[Symbol.iterator] === "function";
 }
-isIterable("12345") //true
-isIterable([1, 2, 3]) //true
-isIterable(new WeakMap()) //false
+isIterable("12345"); //true
+isIterable([1, 2, 3]); //true
+isIterable(new WeakMap()); //false
 ```
 
 实际用的时候不需要特意调用 `Symbol.iterator`，支持可迭代协议的类型都自动支持以下特性
@@ -53,9 +53,9 @@ isIterable(new WeakMap()) //false
 - 创建 Set
 
 ```ts
-const str = "hello"
-const data = new Set(str)
-console.log(data) // Set(4) {'h', 'e', 'l', 'o'}
+const str = "hello";
+const data = new Set(str);
+console.log(data); // Set(4) {'h', 'e', 'l', 'o'}
 ```
 
 - yield\*操作符，在生成器中使用
@@ -71,12 +71,12 @@ next()调用时返回一个对象，对象有两个属性：
 - done 代表是否完成，是个布尔值。 true 时表示没有下一个 value 可以 return 了
 
 ```ts
-const str = "hello"
-const test = str[Symbol.iterator]()
-const second = str[Symbol.iterator]()
-console.log(test.next()) // {value: 'h', done: false}
+const str = "hello";
+const test = str[Symbol.iterator]();
+const second = str[Symbol.iterator]();
+console.log(test.next()); // {value: 'h', done: false}
 // 互相独立
-console.log(second.next()) // {value: 'h', done: false}
+console.log(second.next()); // {value: 'h', done: false}
 ```
 
 ### 简单实现
@@ -86,54 +86,54 @@ console.log(second.next()) // {value: 'h', done: false}
 
 ```ts
 function Iterators(items: string[]) {
-  var i = 0
+  var i = 0;
   return {
     next: function () {
-      var done = items.length < i
-      var value = !done ? items[i++] : undefined
+      var done = items.length < i;
+      var value = !done ? items[i++] : undefined;
       return {
         done: done,
         value: value,
-      }
+      };
     },
-  }
+  };
 }
-const test = Iterators(["hello", "world"])
-console.log(test.next()) // {done: false, value: 'hello'}
-console.log(test.next()) // {done: false, value: 'world'}
-console.log(test.next()) // {done: false, value: undefined}
-console.log(test.next()) // {done: true, value: undefined}
+const test = Iterators(["hello", "world"]);
+console.log(test.next()); // {done: false, value: 'hello'}
+console.log(test.next()); // {done: false, value: 'world'}
+console.log(test.next()); // {done: false, value: undefined}
+console.log(test.next()); // {done: true, value: undefined}
 ```
 
 ```ts
 class Counter {
-  private items: string[]
+  private items: string[];
   constructor(items: string[]) {
-    this.items = items
+    this.items = items;
   }
   [Symbol.iterator]() {
-    let count = 0
-    const items = this.items
-    const length = items.length
+    let count = 0;
+    const items = this.items;
+    const length = items.length;
     return {
       next(): {
-        done: boolean
-        value: string | undefined
+        done: boolean;
+        value: string | undefined;
       } {
-        const value = items[count]
-        count += 1
+        const value = items[count];
+        count += 1;
         if (count <= length) {
-          return { done: false, value }
+          return { done: false, value };
         } else {
-          return { done: true, value: undefined }
+          return { done: true, value: undefined };
         }
       },
-    }
+    };
   }
 }
-let counter = new Counter(["hello", "world"])
+let counter = new Counter(["hello", "world"]);
 for (let i of counter) {
-  console.log(i)
+  console.log(i);
 }
 ```
 
@@ -150,11 +150,11 @@ for (let i of counter) {
 // 生成器函数声明
 function* generatorFn() {}
 // 生成器函数表达式
-let generatorFn = function* () {}
+let generatorFn = function* () {};
 // 作为对象字面量方法的生成器函数
 let foo = {
   *generatorFn() {},
-}
+};
 // 作为类实例方法的生成器函数
 class Foo {
   *generatorFn() {}
@@ -169,10 +169,10 @@ class Bar {
 
 ```ts
 function* generators() {
-  return "hello"
+  return "hello";
 }
-const test = generators()
-console.log(test.next()) // {value: 'hello', done: true}
+const test = generators();
+console.log(test.next()); // {value: 'hello', done: true}
 ```
 
 - 可以使用`yield`关键字， yield 后面指定了 value 的值
@@ -181,29 +181,29 @@ console.log(test.next()) // {value: 'hello', done: true}
 
 ```ts
 function* createIterator(): Generator<string, void, string> {
-  let first = yield "hello"
-  let second = yield first + " world" //2赋值给了first
-  let third = yield second //3赋值给了second
+  let first = yield "hello";
+  let second = yield first + " world"; //2赋值给了first
+  let third = yield second; //3赋值给了second
 }
-let iterators = createIterator()
-console.log(iterators.next("1")) // {value: 'hello', done: false}
-console.log(iterators.next("2")) //  {value: '2 world', done: false}
-console.log(iterators.next("3")) // {value: '3', done: false}
-console.log(iterators.next("4")) // {value: undefined, done: true}
+let iterators = createIterator();
+console.log(iterators.next("1")); // {value: 'hello', done: false}
+console.log(iterators.next("2")); //  {value: '2 world', done: false}
+console.log(iterators.next("3")); // {value: '3', done: false}
+console.log(iterators.next("4")); // {value: undefined, done: true}
 ```
 
 ```ts
 function* createIterator(): Generator<string, string, string> {
-  let first = yield "hello"
-  return "finished"
-  let second = yield first + " world"
-  let third = yield second
+  let first = yield "hello";
+  return "finished";
+  let second = yield first + " world";
+  let third = yield second;
 }
-let iterators = createIterator()
-console.log(iterators.next("first")) // {value: 'hello', done: false}
-console.log(iterators.next("second")) //  {value: 'finished', done: true}
-console.log(iterators.next("third")) // {value: undefined, done: true}
-console.log(iterators.next("last")) // {value: undefined, done: true}
+let iterators = createIterator();
+console.log(iterators.next("first")); // {value: 'hello', done: false}
+console.log(iterators.next("second")); //  {value: 'finished', done: true}
+console.log(iterators.next("third")); // {value: undefined, done: true}
+console.log(iterators.next("last")); // {value: undefined, done: true}
 ```
 
 ::: warning
@@ -214,7 +214,7 @@ yield 只能放在生成器中，生成器内如果嵌套了函数，也不能�
 // 无效
 function* invalidGeneratorFnA() {
   function a() {
-    yield
+    yield;
   }
 }
 ```
@@ -235,12 +235,12 @@ function *generators(items) {
 
 ```ts
 function* generatorFn() {
-  yield* [1, 2]
-  yield* [3, 4]
-  yield* [5, 6]
+  yield* [1, 2];
+  yield* [3, 4];
+  yield* [5, 6];
 }
 for (const x of generatorFn()) {
-  console.log(x) // 一次一个值，1 2 3 4 5 6，而不是 [1, 2] [3,4] [5,6]
+  console.log(x); // 一次一个值，1 2 3 4 5 6，而不是 [1, 2] [3,4] [5,6]
 }
 ```
 
@@ -254,18 +254,18 @@ function* iterArr(
   if (Array.isArray(arr)) {
     // 内节点
     for (let i = 0; i < arr.length; i++) {
-      yield* iterArr(arr[i] as (string | string[])[]) // (*) 递归
+      yield* iterArr(arr[i] as (string | string[])[]); // (*) 递归
     }
   } else {
     // 离开
-    yield arr
+    yield arr;
   }
 }
 // 使用 for-of 遍历：
-const arr = ["a", ["b", "c"], ["d", "e"]]
-const result = iterArr(arr)
+const arr = ["a", ["b", "c"], ["d", "e"]];
+const result = iterArr(arr);
 for (const x of iterArr(arr)) {
-  console.log(x) // a  b  c  d  e
+  console.log(x); // a  b  c  d  e
 }
 ```
 
@@ -277,31 +277,31 @@ for (const x of iterArr(arr)) {
 
 ```ts
 function* createIterator(): Generator<string, void | string, string> {
-  let first = yield "hello"
-  let second = yield first + " world" //2赋值给了first
-  let third = yield second //3赋值给了second
+  let first = yield "hello";
+  let second = yield first + " world"; //2赋值给了first
+  let third = yield second; //3赋值给了second
 }
-let iterators = createIterator()
-console.log(iterators.next("1")) // {value: 'hello', done: false}
-console.log(iterators.return("2")) //  {value: '2', done: true}
-console.log(iterators.next("3")) // {value: undefined, done: true}
-console.log(iterators.next("4")) // {value: undefined, done: true}
+let iterators = createIterator();
+console.log(iterators.next("1")); // {value: 'hello', done: false}
+console.log(iterators.return("2")); //  {value: '2', done: true}
+console.log(iterators.next("3")); // {value: undefined, done: true}
+console.log(iterators.next("4")); // {value: undefined, done: true}
 ```
 
 #### throw
 
 ```ts
 function* createIterator(): Generator<string, void | string, string> {
-  let first = yield "hello"
-  let second = yield first + " world" //2赋值给了first
-  let third = yield second //3赋值给了second
+  let first = yield "hello";
+  let second = yield first + " world"; //2赋值给了first
+  let third = yield second; //3赋值给了second
 }
-let iterators = createIterator()
-console.log(iterators.next("1")) // {value: 'hello', done: false}
-console.log(iterators.next("2")) //  {value: '2 world', done: false}
-console.log(iterators.throw(new Error("error"))) // Uncaught Error: error
+let iterators = createIterator();
+console.log(iterators.next("1")); // {value: 'hello', done: false}
+console.log(iterators.next("2")); //  {value: '2 world', done: false}
+console.log(iterators.throw(new Error("error"))); // Uncaught Error: error
 // 直接报错，不会往下走
-console.log(iterators.next("4"))
+console.log(iterators.next("4"));
 ```
 
 如果在生成器里边 try catch 了就能继续往下走
@@ -309,16 +309,16 @@ console.log(iterators.next("4"))
 ```ts
 function* createIterator(): Generator<string, void | string, string> {
   try {
-    let first = yield "hello"
-    let second = yield first + " world" //2赋值给了first
-    let third = yield second //3赋值给了second
+    let first = yield "hello";
+    let second = yield first + " world"; //2赋值给了first
+    let third = yield second; //3赋值给了second
   } catch {}
 }
-let iterators = createIterator()
-console.log(iterators.next("1")) // {value: 'hello', done: false}
-console.log(iterators.throw(new Error("error"))) // {value: undefined, done: true}
-console.log(iterators.next("2")) //  {value: undefined, done: true}
-console.log(iterators.next("4")) // {value: undefined, done: true}
+let iterators = createIterator();
+console.log(iterators.next("1")); // {value: 'hello', done: false}
+console.log(iterators.throw(new Error("error"))); // {value: undefined, done: true}
+console.log(iterators.next("2")); //  {value: undefined, done: true}
+console.log(iterators.next("4")); // {value: undefined, done: true}
 ```
 
 ## 内置的迭代器(Built-in Iterators)
@@ -334,18 +334,18 @@ console.log(iterators.next("4")) // {value: undefined, done: true}
 - entries 输出键值对的集合
 
 ```js
-let values = [11, 22, 33]
-let keys = values.keys()
+let values = [11, 22, 33];
+let keys = values.keys();
 for (let key of keys) {
-  console.log(key) //依次输出索引0, 1, 2
+  console.log(key); //依次输出索引0, 1, 2
 }
 ```
 
 ```js
-let values = new Set([11, 22, 33])
-let keys = values.keys()
+let values = new Set([11, 22, 33]);
+let keys = values.keys();
 for (let key of keys) {
-  console.log(key) //依次11, 22, 33
+  console.log(key); //依次11, 22, 33
 }
 ```
 
@@ -353,10 +353,10 @@ for (let key of keys) {
 let values = new Map([
   [11, "hello"],
   [22, "world"],
-])
-let keys = values.entries()
+]);
+let keys = values.entries();
 for (let key of keys) {
-  console.log(key)
+  console.log(key);
 }
 ```
 
@@ -370,23 +370,23 @@ NodeList 是一个类数组，迭代表现和数组一样
 
 ```ts
 function* createStr() {
-  yield "hello"
-  yield "world"
+  yield "hello";
+  yield "world";
 }
 function* createNum() {
-  yield 1
-  yield 2
+  yield 1;
+  yield 2;
 }
 function* createIterator() {
-  yield* createNum()
-  yield* createStr()
+  yield* createNum();
+  yield* createStr();
 }
-let iterators = createIterator()
-console.log(iterators.next()) // {value: 1, done: false}
-console.log(iterators.next()) // {value: 2, done: false}
-console.log(iterators.next()) // {value: 'hello', done: false}
-console.log(iterators.next()) // {value: 'world', done: false}
-console.log(iterators.next()) // {value: undefined, done: true}
+let iterators = createIterator();
+console.log(iterators.next()); // {value: 1, done: false}
+console.log(iterators.next()); // {value: 2, done: false}
+console.log(iterators.next()); // {value: 'hello', done: false}
+console.log(iterators.next()); // {value: 'world', done: false}
+console.log(iterators.next()); // {value: undefined, done: true}
 ```
 
 ## await/async
@@ -404,19 +404,19 @@ console.log(iterators.next()) // {value: undefined, done: true}
 
 ```js
 async function async1() {
-  console.log("async1 start")
-  await async2()
-  console.log("async1 end")
-  console.log("a1 end2")
+  console.log("async1 start");
+  await async2();
+  console.log("async1 end");
+  console.log("a1 end2");
 }
 
 //等价于
 async function async1() {
-  console.log("async1 start")
+  console.log("async1 start");
   Promise.resolve(async2()).then(() => {
-    console.log("async1 end")
-    console.log("a1 end2")
-  })
+    console.log("async1 end");
+    console.log("a1 end2");
+  });
 }
 ```
 
@@ -424,58 +424,58 @@ async function async1() {
 
 ```js
 async function myMethod() {
-  let y = await 20
-  console.log(y)
+  let y = await 20;
+  console.log(y);
 }
-myMethod() //20
+myMethod(); //20
 function promise(params) {
   return new Promise((resolve, reject) => {
-    resolve(params)
-  })
+    resolve(params);
+  });
 }
 async function secondMethod() {
-  let y = await promise("hello")
-  console.log(y)
+  let y = await promise("hello");
+  console.log(y);
 }
-secondMethod() //"hello"
+secondMethod(); //"hello"
 ```
 
 ### 例子
 
 ```js
 async function a1() {
-  console.log("a1 start")
-  await a2()
-  console.log("a1 end")
+  console.log("a1 start");
+  await a2();
+  console.log("a1 end");
 }
 async function a2() {
-  console.log("a2")
+  console.log("a2");
 }
 
-console.log("script start")
+console.log("script start");
 
 setTimeout(() => {
-  console.log("setTimeout")
-}, 0)
+  console.log("setTimeout");
+}, 0);
 
 Promise.resolve().then(() => {
-  console.log("promise1")
-})
+  console.log("promise1");
+});
 
-a1()
+a1();
 
 let promise2 = new Promise((resolve) => {
-  resolve("promise2.then")
-  console.log("promise2")
-})
+  resolve("promise2.then");
+  console.log("promise2");
+});
 
 promise2.then((res) => {
-  console.log(res)
+  console.log(res);
   Promise.resolve().then(() => {
-    console.log("promise3")
-  })
-})
-console.log("script end")
+    console.log("promise3");
+  });
+});
+console.log("script end");
 ```
 
 结果
@@ -500,7 +500,7 @@ setTimeout
 ```js
 async function process(array) {
   for await (let i of array) {
-    doSomething(i)
+    doSomething(i);
   }
 }
 ```

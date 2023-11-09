@@ -12,18 +12,18 @@
 ```ts
 //is没有作用
 function isString(str: number | string): str is string {
-  return str.length //报错，不是交集的属性
+  return str.length; //报错，不是交集的属性
 }
 ```
 
 ```ts
 function isString(str: number | string): str is string {
-  return typeof str === "string"
+  return typeof str === "string";
 }
 function myMethod(param: any) {
   if (isString(param)) {
     //不报错
-    console.log(param.length)
+    console.log(param.length);
   }
 }
 ```
@@ -34,10 +34,10 @@ function myMethod(param: any) {
 
 ```ts
 interface Arr {
-  hello: string
-  name: string
+  hello: string;
+  name: string;
 }
-type index = keyof Arr //"hello" | "name"
+type index = keyof Arr; //"hello" | "name"
 ```
 
 ## extends
@@ -61,11 +61,11 @@ type TypeName<T> = T extends string
   ? "undefined"
   : T extends Function
   ? "function"
-  : "object"
-type test = TypeName<"hello"> // "string"
-type T0 = TypeName<string | boolean> // "string" | "boolean"
+  : "object";
+type test = TypeName<"hello">; // "string"
+type T0 = TypeName<string | boolean>; // "string" | "boolean"
 //等价于
-type T1 = TypeName<string> | TypeName<boolean>
+type T1 = TypeName<string> | TypeName<boolean>;
 ```
 
 ## infer
@@ -75,31 +75,31 @@ type T1 = TypeName<string> | TypeName<boolean>
 
 ```ts
 //infer P 表示待推断的函数参数
-type ParamType<T> = T extends (param: infer P) => any ? P : T
+type ParamType<T> = T extends (param: infer P) => any ? P : T;
 
 interface User {
-  name: string
-  age: number
+  name: string;
+  age: number;
 }
-type Func = (user: User) => any
+type Func = (user: User) => any;
 
-type Param = ParamType<Func> // User
-type AA = ParamType<string> // string
+type Param = ParamType<Func>; // User
+type AA = ParamType<string>; // string
 ```
 
 例子: turple 转 union, `[string, number] -> string | number`
 
 ```ts
-type TTuple = [string, number]
-type TArray = Array<string | number>
+type TTuple = [string, number];
+type TArray = Array<string | number>;
 
-type Res = TTuple extends TArray ? true : false // true
-type ResO = TArray extends TTuple ? true : false // false
+type Res = TTuple extends TArray ? true : false; // true
+type ResO = TArray extends TTuple ? true : false; // false
 ```
 
 ```ts
-type ElementOf<T> = T extends Array<infer P> ? P : never
+type ElementOf<T> = T extends Array<infer P> ? P : never;
 
-type TTuple = [string, number]
-type ToUnion = ElementOf<TTuple>
+type TTuple = [string, number];
+type ToUnion = ElementOf<TTuple>;
 ```

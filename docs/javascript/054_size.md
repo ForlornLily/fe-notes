@@ -58,8 +58,8 @@ scrollHeight 也就是被实际内容撑出来的高度
 ```
 
 ```js
-document.querySelector(".wrapper").clientHeight // 200
-document.querySelector(".wrapper").scrollHeight // 300
+document.querySelector(".wrapper").clientHeight; // 200
+document.querySelector(".wrapper").scrollHeight; // 300
 ```
 
 ## getBoundingClientRect()

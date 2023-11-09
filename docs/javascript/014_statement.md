@@ -13,13 +13,13 @@ try catch 见[错误处理](./063_error.md)
 即使拥有相同数量的属性，属性名和属性值相等
 
 ```js
-var obj = { servant: "saber" }
-var obj2 = obj
-obj === obj2 //true
+var obj = { servant: "saber" };
+var obj2 = obj;
+obj === obj2; //true
 
-var servant = { servant: "saber" }
-var fakeServant = { servant: "saber" }
-servant === fakeServant // false
+var servant = { servant: "saber" };
+var fakeServant = { servant: "saber" };
+servant === fakeServant; // false
 ```
 
 ## if
@@ -92,11 +92,11 @@ while 适合迭代次数未知的情况。
 例:
 
 ```js
-var servant = "Lancer"
+var servant = "Lancer";
 while (servant !== "Saber") {
   if (seihai()) {
   } else {
-    servant = "Saber"
+    servant = "Saber";
   }
 }
 ```
@@ -106,17 +106,17 @@ while (servant !== "Saber") {
 迭代：不能保证返回对象属性的顺序，不包含 key 是 `Symbol` 的值，包含`prototype`上的值
 
 ```js
-const symbolName = Symbol("hello")
-Object.prototype.b = 2
+const symbolName = Symbol("hello");
+Object.prototype.b = 2;
 const test = {
   a: "1",
   [symbolName]: "world",
-}
-let tmp = {}
+};
+let tmp = {};
 for (let key in test) {
-  tmp[key] = test[key]
+  tmp[key] = test[key];
 }
-console.log(tmp) //{a: '1', b: 2}
+console.log(tmp); //{a: '1', b: 2}
 ```
 
 ### for-of
@@ -131,10 +131,10 @@ console.log(tmp) //{a: '1', b: 2}
 Map 是 entries
 
 ```js
-let arr = [11, 22, 33]
+let arr = [11, 22, 33];
 for (let key of arr) {
   //等价于key of arr.values()
-  console.log(key)
+  console.log(key);
 }
 ```
 
@@ -147,12 +147,12 @@ for (let key of arr) {
 尽可能用 do-while
 
 ```js
-let i = arr.length - 1
+let i = arr.length - 1;
 //数组为空时没必要进循环
 if (i > -1) {
   do {
     //sth
-  } while (--i >= 0)
+  } while (--i >= 0);
 }
 ```
 
@@ -163,15 +163,15 @@ if (i > -1) {
 ```js
 switch (value) {
   case 0:
-    return value0
+    return value0;
   case 1:
-    return value1
+    return value1;
   default:
-    return value10
+    return value10;
 }
 //改成数组
-var results = [value0, value1, value10]
-return results[value]
+var results = [value0, value1, value10];
+return results[value];
 ```
 
 - 多用位运算
@@ -192,9 +192,9 @@ return results[value]
 //递归实现阶乘：
 function factorial(n) {
   if (n == 0) {
-    return 1
+    return 1;
   } else {
-    return n * factorial(n - 1)
+    return n * factorial(n - 1);
   }
 }
 //阶乘先做个缓存
@@ -203,12 +203,12 @@ function memfactorial(n) {
     memfactorial.cache = {
       0: 0,
       1: 1,
-    }
+    };
   }
   if (!memfactorial.cache.hasOwnProperty(n)) {
-    memfactorial.cache[n] = n * memfactorial(n - 1)
+    memfactorial.cache[n] = n * memfactorial(n - 1);
   }
-  return memfactorial.cache[n]
+  return memfactorial.cache[n];
 }
 ```
 

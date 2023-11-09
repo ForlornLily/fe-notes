@@ -18,7 +18,7 @@ process.argv：数组。第一个是 node 进程，第二个是 JS 路径，第�
 获取 NodeJS 版本
 
 ```js
-process.version //v12.16.1
+process.version; //v12.16.1
 ```
 
 ## pid
@@ -26,7 +26,7 @@ process.version //v12.16.1
 获取当前进程的 pid
 
 ```js
-process.pid //17004
+process.pid; //17004
 ```
 
 ## process.env
@@ -41,7 +41,7 @@ process.pid //17004
 获取当前的工作目录
 
 ```js
-process.cwd() //D:\project\express-ts
+process.cwd(); //D:\project\express-ts
 ```
 
 ## exit
@@ -51,9 +51,9 @@ process.cwd() //D:\project\express-ts
 
 ```js
 process.on("exit", (code) => {
-  console.log(code) //666
-})
-process.exit(666)
+  console.log(code); //666
+});
+process.exit(666);
 ```
 
 ## 流
@@ -64,23 +64,23 @@ process 中流操作是**同步**的，和其他[stream](./006_stream.md)不同
 `process.stderr`: 错误。`console.error`就是通过`stderr`实现的
 
 ```js
-process.stdin.setEncoding("utf8")
+process.stdin.setEncoding("utf8");
 
 process.stdin.on("readable", () => {
-  let chunk
+  let chunk;
   // 使用循环确保我们读取所有的可用数据。
   while ((chunk = process.stdin.read()) !== null) {
     if (chunk === "\n") {
-      process.stdin.emit("end")
-      return
+      process.stdin.emit("end");
+      return;
     }
-    process.stdout.write(`收到数据: ${chunk}`)
+    process.stdout.write(`收到数据: ${chunk}`);
   }
-})
+});
 
 process.stdin.on("end", () => {
-  process.stdout.write("结束监听")
-})
+  process.stdout.write("结束监听");
+});
 ```
 
 ## 监听未驳回的异常
@@ -89,8 +89,8 @@ process.stdin.on("end", () => {
 
 ```js
 process.on("uncaughtException", (err) => {
-  console.error("UNCAUGHT EXCEPTION\n", err.stack)
+  console.error("UNCAUGHT EXCEPTION\n", err.stack);
   // 在这里做一些必要的清理工作，例如关闭数据库连接
-  process.exit(1)
-})
+  process.exit(1);
+});
 ```

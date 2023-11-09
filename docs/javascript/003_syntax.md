@@ -17,7 +17,7 @@
 ## 严格模式
 
 ```js
-"use strict"
+"use strict";
 ```
 
 严格模式下
@@ -26,11 +26,11 @@
 
 ```js
 function doSomething() {
-  "use strict"
+  "use strict";
   // 函数体
-  test = "hello"
+  test = "hello";
 }
-doSomething() // Uncaught ReferenceError: test is not defined
+doSomething(); // Uncaught ReferenceError: test is not defined
 ```
 
 2. 不能定义名为 eval 和 arguments 的变量
@@ -59,20 +59,20 @@ var 声明的变量，变量会被自动添加到最接近的上下文
 
 ```js
 function hoisting() {
-  var condition = true
-  console.log(value) // undefined
+  var condition = true;
+  console.log(value); // undefined
   if (condition) {
-    var value = "hello"
-    console.log(value) // hello
+    var value = "hello";
+    console.log(value); // hello
   }
-  console.log(value) // hello
+  console.log(value); // hello
 }
 //等价于
-var value
-console.log(value) // undefined
+var value;
+console.log(value); // undefined
 if (condition) {
-  value = "hello"
-  console.log(value) // hello
+  value = "hello";
+  console.log(value); // hello
 }
 ```
 
@@ -93,41 +93,41 @@ let 声明的范围是块作用域，而 var 声明的范围是函数作用域�
 
 ```js
 function hoisting() {
-  var condition = true
-  let value = "world"
+  var condition = true;
+  let value = "world";
   if (condition) {
-    console.log(value) // Uncaught ReferenceError: Cannot access 'value' before initialization
-    let value = "hello"
+    console.log(value); // Uncaught ReferenceError: Cannot access 'value' before initialization
+    let value = "hello";
   }
 }
 ```
 
 ```js
 //暂时性死区
-let result = typeof value // ReferenceError: value is not defined
-let value = "world"
+let result = typeof value; // ReferenceError: value is not defined
+let value = "world";
 ```
 
 ```js
 //不在块级
-var condition = true
-let result = typeof value //不报错，因为不在块级作用域内
+var condition = true;
+let result = typeof value; //不报错，因为不在块级作用域内
 if (condition) {
-  let value = "world"
+  let value = "world";
 }
 ```
 
 ```js
-"use strict"
-var test = 1
-let another = 2
-console.log(window.test) // 1
-console.log(window.another) // undefined
+"use strict";
+var test = 1;
+let another = 2;
+console.log(window.test); // 1
+console.log(window.another); // undefined
 ```
 
 ```js
-var value = "world"
-let value = "hello" // Uncaught SyntaxError: Identifier 'value' has already been declared
+var value = "world";
+let value = "hello"; // Uncaught SyntaxError: Identifier 'value' has already been declared
 ```
 
 ### for
@@ -137,15 +137,15 @@ let value = "hello" // Uncaught SyntaxError: Identifier 'value' has already been
 ```js
 function a() {
   for (let i = 0; i < 5; i++) {
-    this.i = i
+    this.i = i;
     setTimeout(function () {
-      console.log(i)
-    }, 0)
-    console.log(this.i)
+      console.log(i);
+    }, 0);
+    console.log(this.i);
   }
 }
 
-a() // 0 1 2 3 4 0 1 2 3 4
+a(); // 0 1 2 3 4 0 1 2 3 4
 ```
 
 ## const
@@ -158,10 +158,10 @@ const values  // Uncaught SyntaxError: Missing initializer in const declaration
 ```
 
 ```js
-const values = {}
-values = 12 // Uncaught TypeError: Assignment to constant variable.
+const values = {};
+values = 12; // Uncaught TypeError: Assignment to constant variable.
 
-values.name = "hi" // 正常赋值
+values.name = "hi"; // 正常赋值
 ```
 
 ### for

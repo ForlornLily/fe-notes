@@ -10,22 +10,22 @@ exec: RegExp 实例方法，返回匹配的数组
 - 如果**配置了 g 标记**，每次调用 exec()都会在字符串中向前搜索下一个匹配项
 
 ```js
-let text = "cat, bat, sat, fat"
-let pattern = /.at/g
-let matches = pattern.exec(text)
-console.log(matches.index) // 0
-console.log(matches[0]) // cat
-console.log(pattern.lastIndex) // 3
+let text = "cat, bat, sat, fat";
+let pattern = /.at/g;
+let matches = pattern.exec(text);
+console.log(matches.index); // 0
+console.log(matches[0]); // cat
+console.log(pattern.lastIndex); // 3
 
-matches = pattern.exec(text)
-console.log(matches.index) //5
-console.log(matches[0]) // bat
-console.log(pattern.lastIndex) // 8
+matches = pattern.exec(text);
+console.log(matches.index); //5
+console.log(matches[0]); // bat
+console.log(pattern.lastIndex); // 8
 
-matches = pattern.exec(text)
-console.log(matches.index) // 10
-console.log(matches[0]) // sat
-console.log(pattern.lastIndex) // 13
+matches = pattern.exec(text);
+console.log(matches.index); // 10
+console.log(matches[0]); // sat
+console.log(pattern.lastIndex); // 13
 ```
 
 ## 基本组成
@@ -64,9 +64,9 @@ console.log(pattern.lastIndex) // 13
 `[]`表示集合，比如`[123]`，表示匹配 123 里面的任意一个数字
 
 ```js
-var reg = /[123]/
-reg.test("1") //true
-reg.test(1) //true
+var reg = /[123]/;
+reg.test("1"); //true
+reg.test(1); //true
 ```
 
 ### 范围-
@@ -74,8 +74,8 @@ reg.test(1) //true
 `-`表示范围，比如`[0-9]`，表示匹配 0\~9 里面的任意一个数字, [a-z]匹配小写字母
 
 ```js
-var reg = /[1-3]/
-reg.test(1) //true
+var reg = /[1-3]/;
+reg.test(1); //true
 ```
 
 ### 任意字符.
@@ -83,8 +83,8 @@ reg.test(1) //true
 `.` 任意字符，除了换行和回车
 
 ```js
-var reg = /./
-reg.test(123) //true
+var reg = /./;
+reg.test(123); //true
 ```
 
 ### 数字\d
@@ -114,27 +114,27 @@ reg.test(123) //true
   - `u?`表示 u 要么没有，要么只有 1 个，两个就不通过。
 
 ```js
-var reg = /col(ou?)r/ //等价于reg = /colou?r/
-reg.test("colr") //false
-reg.test("color") //true
-reg.test("colour") //true
-reg.test("colouur") //false
+var reg = /col(ou?)r/; //等价于reg = /colou?r/
+reg.test("colr"); //false
+reg.test("color"); //true
+reg.test("colour"); //true
+reg.test("colouur"); //false
 ```
 
 - `*`表示 0 或者无数个。u 可以`>=`0 个
 
 ```js
-var reg = /colou*r/
-reg.test("color") //true
-reg.test("colouur") //true
+var reg = /colou*r/;
+reg.test("color"); //true
+reg.test("colouur"); //true
 ```
 
 - `+`表示至少一个
 
 ```js
-var reg = /colou+r/
-reg.test("color") //false
-reg.test("colour") //true
+var reg = /colou+r/;
+reg.test("color"); //false
+reg.test("colour"); //true
 ```
 
 ### 指定次数{}
@@ -144,9 +144,9 @@ reg.test("colour") //true
 `{x}`: x 次
 
 ```js
-var reg = /r{2}/
-reg.test("Archer") //false
-reg.test("Arrcher") //true
+var reg = /r{2}/;
+reg.test("Archer"); //false
+reg.test("Arrcher"); //true
 ```
 
 `{min, max}`： 介于 min 次到 max 次之间
@@ -154,9 +154,9 @@ reg.test("Arrcher") //true
 `{min, }`: 至少 min 次
 
 ```js
-var reg = /r{2,}/
-reg.test("Arrcher") //true
-reg.test("Arrrcher") //true
+var reg = /r{2,}/;
+reg.test("Arrcher"); //true
+reg.test("Arrrcher"); //true
 ```
 
 `{0, max}`： 至多 max 次
@@ -168,19 +168,19 @@ reg.test("Arrrcher") //true
 `^x` 以 x 为开头。注意\^在集合[]的含义是非
 
 ```js
-var reg = /(^sa)b?/
-reg.test("sber") //false
-reg.test("saber") //true
-reg.test("saer") //true
+var reg = /(^sa)b?/;
+reg.test("sber"); //false
+reg.test("saber"); //true
+reg.test("saer"); //true
 ```
 
 `x$` 以 x 结尾
 
 ```js
-var reg = /(^sa).?(er$)/
-reg.test("saer") //true
-reg.test("saber") //true
-reg.test("sabber") //false
+var reg = /(^sa).?(er$)/;
+reg.test("saer"); //true
+reg.test("saber"); //true
+reg.test("sabber"); //false
 ```
 
 ## 匹配模式
@@ -191,24 +191,24 @@ m: 多行模式，表示查找到一行文本末尾时会继续查找。
 y: sticky，粘附模式，表示只查找从 lastIndex 开始及之后的字符串。
 
 ```js
-let text = "cat, bat, sat, fat"
-let pattern = /.at/y
-let matches = pattern.exec(text)
-console.log(matches.index)
-console.log(matches[0])
-console.log(pattern.lastIndex)
+let text = "cat, bat, sat, fat";
+let pattern = /.at/y;
+let matches = pattern.exec(text);
+console.log(matches.index);
+console.log(matches[0]);
+console.log(pattern.lastIndex);
 
 // 以索引3对应的字符开头找不到匹配项，因此exec()返回 null。exec()没找到匹配项，于是将lastIndex设置为0
-matches = pattern.exec(text)
-console.log(matches) // null
-console.log(pattern.lastIndex) // 0
+matches = pattern.exec(text);
+console.log(matches); // null
+console.log(pattern.lastIndex); // 0
 
 // 向前设置lastIndex可以让粘附的模式通过exec()找到下一个匹配项:
-pattern.lastIndex = 5
-matches = pattern.exec(text)
-console.log(matches.index) // 5
-console.log(matches[0]) // bat
-console.log(pattern.lastIndex) // 8
+pattern.lastIndex = 5;
+matches = pattern.exec(text);
+console.log(matches.index); // 5
+console.log(matches[0]); // bat
+console.log(pattern.lastIndex); // 8
 ```
 
 u: unicode，Unicode 模式，启用 Unicode 匹配。  
@@ -221,8 +221,8 @@ s: dotAll 模式，表示元字符.匹配任何字符(包括\n 或\r)。
 - global：布尔值，表示是否设置了 g 标记
 
 ```js
-const pattern = /.at/g
-pattern.global // true
+const pattern = /.at/g;
+pattern.global; // true
 ```
 
 - ignoreCase，布尔值，是否设置了 i
@@ -249,13 +249,13 @@ pattern.global // true
 比如将字符串 ab 都替换成 abcd
 
 ```js
-str.replace(/(ab)/g, "$1cd") //这里的\$1等于ab
+str.replace(/(ab)/g, "$1cd"); //这里的\$1等于ab
 ```
 
 将字符串 abc 替换成 abd
 
 ```js
-str.replace(/(ab)c/g, "$1d")
+str.replace(/(ab)c/g, "$1d");
 ```
 
 ### 分组不被引用(?:regex)
@@ -297,19 +297,19 @@ str.replace(/(ab)c/g, "$1d")
 - 获取 img 的 src
 
 ```js
-const imgReg = /<img.*?(?:>|\/>)/gi
-const arr = txt.match(imgReg)
+const imgReg = /<img.*?(?:>|\/>)/gi;
+const arr = txt.match(imgReg);
 if (arr == null) {
-  return false
+  return false;
 }
 const srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i,
-  length = arr.length
+  length = arr.length;
 for (let i = 0; i < length; i++) {
-  let src = arr[i].match(srcReg)
+  let src = arr[i].match(srcReg);
   if (src[0]) {
-    let url = src[0].substr(4)
-    const reg = new RegExp('"', "g")
-    return url.replace(reg, "")
+    let url = src[0].substr(4);
+    const reg = new RegExp('"', "g");
+    return url.replace(reg, "");
   }
 }
 ```
@@ -329,10 +329,10 @@ for (let i = 0; i < length; i++) {
 value = value.replace(
   /<img [^>]*data-url=['"]([^'"]+)[^>]*>/gi,
   function (match, capture) {
-    return match.replace(/src=[\'\"]?([^\'\"]*)[\'\"]?/i, `src="${capture}"`) //替换src为data-url里面的值
+    return match.replace(/src=[\'\"]?([^\'\"]*)[\'\"]?/i, `src="${capture}"`); //替换src为data-url里面的值
   }
-)
-return value
+);
+return value;
 ```
 
 - 截取匹配的开头结尾
@@ -340,18 +340,18 @@ return value
 ```js
 // 比如全局匹配，以"%"开头，以"%"结尾的内容
 //const match_reg = /(?<=%).*?(?=%)/g;  // 此种写法会出现浏览器不兼容，改为创建一个正则实例
-const match_reg = new RegExp("(?<=%).*?(?=%)", "g")
-const matched_arr = "1111%123%456".match(match_reg) // ["123"]
+const match_reg = new RegExp("(?<=%).*?(?=%)", "g");
+const matched_arr = "1111%123%456".match(match_reg); // ["123"]
 ```
 
 - 校验是否为 url
 
 ```js
 const validUrl = () => {
-  const regex = /([\w-]+\.)+[\w-]+(\/[\w- .\/?#%&=]*)?$/i
+  const regex = /([\w-]+\.)+[\w-]+(\/[\w- .\/?#%&=]*)?$/i;
   if (!regex.test(url)) {
-    return false
+    return false;
   }
-  return true
-}
+  return true;
+};
 ```

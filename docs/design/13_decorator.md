@@ -10,20 +10,20 @@ Decorator pattern（修饰模式）：给对象动态地增加职责
 ```js
 function Raiden() {}
 Raiden.prototype.fire = function () {
-  console.log("一排子弹")
-}
+  console.log("一排子弹");
+};
 
 function RaidenII(plane) {
-  this.plane = plane
+  this.plane = plane;
 }
 RaidenII.prototype.fire = function () {
-  this.plane.fire()
-  console.log("多了两排子弹")
-}
+  this.plane.fire();
+  console.log("多了两排子弹");
+};
 
-let plane = new Raiden()
-plane = new RaidenII(plane)
-plane.fire()
+let plane = new Raiden();
+plane = new RaidenII(plane);
+plane.fire();
 ```
 
 ## 装饰函数
@@ -37,16 +37,16 @@ plane.fire()
 ```js
 const before = function (fn, hack) {
   return function () {
-    hack.apply(this, arguments)
-    fn.apply(this, arguments)
-  }
-}
+    hack.apply(this, arguments);
+    fn.apply(this, arguments);
+  };
+};
 function original() {
-  console.log("hello")
+  console.log("hello");
 }
 function hack() {
-  console.log("1")
+  console.log("1");
 }
-var test = before(original, hack)
-test()
+var test = before(original, hack);
+test();
 ```

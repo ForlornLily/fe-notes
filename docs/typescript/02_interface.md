@@ -9,18 +9,18 @@
 
 ```ts
 interface Person {
-  name: string
-  age?: number
+  name: string;
+  age?: number;
 }
 
 let tonny: Person = {
   name: "Tony",
-}
+};
 //报错，sex未声明
 let betty: Person = {
   name: "Tony",
   sex: "female",
-}
+};
 ```
 
 ## 只读
@@ -29,14 +29,14 @@ let betty: Person = {
 
 ```ts
 interface Servant {
-  readonly name: string
+  readonly name: string;
 }
 let saber: Servant = {
   name: "Altria",
-}
-saber.name = "Arthur" //报错，不允许再次赋值
-let lancer: Servant = {}
-lancer.name = "Altria" //报错，只能在创建的时候赋值
+};
+saber.name = "Arthur"; //报错，不允许再次赋值
+let lancer: Servant = {};
+lancer.name = "Altria"; //报错，只能在创建的时候赋值
 ```
 
 ## 函数
@@ -46,12 +46,12 @@ lancer.name = "Altria" //报错，只能在创建的时候赋值
 
 ```ts
 interface customFun {
-  (x: string, y: string): void
+  (x: string, y: string): void;
 }
-let myFun: customFun
+let myFun: customFun;
 myFun = (a: string, b: string): void => {
-  console.log(`${a}, ${b}`)
-}
+  console.log(`${a}, ${b}`);
+};
 ```
 
 ## 继承接口
@@ -60,22 +60,22 @@ myFun = (a: string, b: string): void => {
 
 ```ts
 interface Shape {
-  color: string
+  color: string;
 }
 
 interface Another {
-  width: number
+  width: number;
 }
 //同时继承Shape和Another
 interface Square extends Shape, Another {
-  sideLength: number
+  sideLength: number;
 }
 
 let square: Square = {
   color: "hello",
   width: 1,
   sideLength: 1,
-}
+};
 ```
 
 ## 继承类
@@ -84,13 +84,13 @@ let square: Square = {
 
 ```ts
 class Point {
-  x: number
-  y: number
+  x: number;
+  y: number;
 }
 interface Point3d extends Point {
-  z: number
+  z: number;
 }
-let point3d: Point3d = { x: 1, y: 2, z: 3 }
+let point3d: Point3d = { x: 1, y: 2, z: 3 };
 ```
 
 ## 任意属性 propName
@@ -102,30 +102,30 @@ let point3d: Point3d = { x: 1, y: 2, z: 3 }
 ```ts
 //不报错
 interface Person {
-  name: string
-  age?: number
-  [propName: string]: any
+  name: string;
+  age?: number;
+  [propName: string]: any;
 }
 let tom: Person = {
   name: "Tom",
   gender: "male",
-}
+};
 ```
 
 ```ts
 //报错
 interface People {
-  name: string
-  age?: number // propName的值只能是string，但是age给了number，不是string的子集
-  [propName: string]: string
+  name: string;
+  age?: number; // propName的值只能是string，但是age给了number，不是string的子集
+  [propName: string]: string;
 }
 ```
 
 ```ts
 //不报错
 interface People {
-  name: string
-  age?: number // age可选，所以要多个undefined
-  [propName: string]: string | number | undefined
+  name: string;
+  age?: number; // age可选，所以要多个undefined
+  [propName: string]: string | number | undefined;
 }
 ```

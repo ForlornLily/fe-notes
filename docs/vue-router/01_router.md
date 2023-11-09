@@ -11,10 +11,10 @@
 <script>
   const Foo = {
     template: "<div>foo</div>",
-  }
+  };
   const Bar = {
     template: "<div>bar</div>",
-  }
+  };
   const routes = [
     {
       path: "/foo",
@@ -24,13 +24,13 @@
       path: "/bar",
       component: Bar,
     },
-  ]
+  ];
   const router = new VueRouter({
     routes,
-  })
+  });
   const app = new Vue({
     router,
-  }).$mount("#app")
+  }).$mount("#app");
 </script>
 ```
 
@@ -67,10 +67,10 @@
       <div>bottom</div>
     </div>
     `,
-  }
+  };
   const menu = {
     template: `<ul><li>菜单</li></ul>`,
-  }
+  };
   const router = new VueRouter({
     routes: [
       {
@@ -82,10 +82,10 @@
         },
       },
     ],
-  })
+  });
   const app = new Vue({
     router,
-  }).$mount("#app")
+  }).$mount("#app");
 </script>
 ```
 
@@ -103,9 +103,9 @@ const User = {
   mounted() {
     //访问/user/hello
     //params是{name: "hello"}
-    console.log(this.$route.params)
+    console.log(this.$route.params);
   },
-}
+};
 const router = new VueRouter({
   routes: [
     // 动态路径参数 以冒号开头
@@ -114,10 +114,10 @@ const router = new VueRouter({
       component: User,
     },
   ],
-})
+});
 const app = new Vue({
   router,
-}).$mount("#app")
+}).$mount("#app");
 ```
 
 ### \$route.params
@@ -135,7 +135,7 @@ const app = new Vue({
 ```js
 const User = {
   template: "<div>User {{ $route.params.id }}</div>",
-}
+};
 const router = new VueRouter({
   routes: [
     {
@@ -143,12 +143,12 @@ const router = new VueRouter({
       component: User,
     },
   ],
-})
+});
 //等价于
 const User = {
   props: ["id"], //props接受参数
   template: "<div>User {{ id }}</div>",
-}
+};
 const router = new VueRouter({
   routes: [
     {
@@ -157,7 +157,7 @@ const router = new VueRouter({
       props: true,
     },
   ],
-})
+});
 ```
 
 ### 多个路径参数
@@ -193,10 +193,10 @@ params 参数是
 const User = {
   template: "<div>User</div>",
   mounted() {
-    console.log(this.$route.params)
+    console.log(this.$route.params);
   },
   beforeRouteUpdate(to, from, next) {},
-}
+};
 ```
 
 ### 部分匹配
@@ -238,13 +238,13 @@ center 又分为公用的 menu 和动态的内容
       <div>bottom</div>
     </div>
   `,
-  }
+  };
   const UserProfile = {
     template: "<div>UserProfile</div>",
-  }
+  };
   const EmptyComponent = {
     template: "<div>empty</div>",
-  }
+  };
   const router = new VueRouter({
     routes: [
       {
@@ -262,10 +262,10 @@ center 又分为公用的 menu 和动态的内容
         ],
       },
     ],
-  })
+  });
   const app = new Vue({
     router,
-  }).$mount("#app")
+  }).$mount("#app");
 </script>
 ```
 
@@ -277,17 +277,17 @@ center 又分为公用的 menu 和动态的内容
 
 ```js
 // 字符串
-router.push("home")
+router.push("home");
 
 // 带查询参数，变成 /register?plan=private
-router.push({ path: "register", query: { plan: "private" } })
+router.push({ path: "register", query: { plan: "private" } });
 
-const userId = "123"
-router.push({ name: "user", params: { userId } }) // -> /user/123
-router.push({ path: `/user/${userId}` }) // -> /user/123
+const userId = "123";
+router.push({ name: "user", params: { userId } }); // -> /user/123
+router.push({ path: `/user/${userId}` }); // -> /user/123
 
 // 这里的 params 不生效
-router.push({ path: "/user", params: { userId } }) // -> /user
+router.push({ path: "/user", params: { userId } }); // -> /user
 router.push(
   {
     path: "/user/profile",
@@ -295,7 +295,7 @@ router.push(
   () => {
     //onComplete
   }
-)
+);
 ```
 
 ### replace
@@ -329,7 +329,7 @@ const router = new VueRouter({
       component: User,
     },
   ],
-})
+});
 ```
 
 也可以用命名路由 name
@@ -340,8 +340,8 @@ const router = new VueRouter({
 
 ```js
 redirect: (to) => {
-  return "/user"
-}
+  return "/user";
+};
 ```
 
 ### 别名 alias
@@ -359,10 +359,10 @@ redirect: (to) => {
 一定要调用 next()
 
 ```js
-const router = new VueRouter({})
+const router = new VueRouter({});
 router.beforeEach((to, from, next) => {
   // ...
-})
+});
 ```
 
 ### 单个 beforeEnter
@@ -378,7 +378,7 @@ routes: [
       // ...
     },
   },
-]
+];
 ```
 
 ### 组件内
@@ -404,9 +404,9 @@ const router = new VueRouter({
     },
   ],
   scrollBehavior(to, from, savedPosition) {
-    return { x: 0, y: 0 }
+    return { x: 0, y: 0 };
   },
-})
+});
 ```
 
 ## mode

@@ -22,7 +22,7 @@
 setState((prev) => ({
   ...prev,
   newKey: newValue,
-}))
+}));
 ```
 
 以下写法可能在并发时引起崩溃（比如父子状态关联，联动等）
@@ -31,5 +31,5 @@ setState((prev) => ({
 setState({
   ...prev,
   newKey: newValue,
-})
+});
 ```

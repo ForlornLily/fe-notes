@@ -17,9 +17,9 @@ webpack 查找 "lodash" 的方式去做修改
 ### vue.config.js
 
 ```js
-const path = require("path")
+const path = require("path");
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir);
 }
 module.exports = {
   publicPath: "./",
@@ -30,7 +30,7 @@ module.exports = {
     config.resolve.alias
       .set("@", resolve("src"))
       .set("assets", resolve("src/assets"))
-      .set("common", resolve("src/common"))
+      .set("common", resolve("src/common"));
   },
-}
+};
 ```

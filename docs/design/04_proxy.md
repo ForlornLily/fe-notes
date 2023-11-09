@@ -17,25 +17,25 @@ Proxy pattern：为一个对象提供占位符或者代用品。
 
 ```js
 function multi() {
-  const length = arguments.length
-  let a = 1
+  const length = arguments.length;
+  let a = 1;
   for (let i = 0; i < length; i++) {
-    a = a * arguments[i]
+    a = a * arguments[i];
   }
-  return a
+  return a;
 }
 var proxyMulti = (function () {
-  var cache = {}
+  var cache = {};
   return function () {
-    const params = Array.prototype.join(arguments, ",")
+    const params = Array.prototype.join(arguments, ",");
     if (cache[params]) {
-      return cache[params]
+      return cache[params];
     }
-    return (cache[params] = multi.apply(null, arguments))
-  }
-})()
-proxyMulti(1, 4, 5, 6)
-console.log(proxyMulti(1, 4, 5, 6)) //第二次调用的时候值已经缓存
+    return (cache[params] = multi.apply(null, arguments));
+  };
+})();
+proxyMulti(1, 4, 5, 6);
+console.log(proxyMulti(1, 4, 5, 6)); //第二次调用的时候值已经缓存
 ```
 
 更多见 [Proxy](../javascript/045_proxy.md)

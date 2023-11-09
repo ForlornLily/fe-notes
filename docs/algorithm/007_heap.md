@@ -47,67 +47,67 @@
 //堆
 class MaxHeap {
   constructor() {
-    this.heap = []
+    this.heap = [];
   }
   //获取父节点索引
   getParentIndex(index) {
     if (index < 1) {
-      return 0
+      return 0;
     }
-    let result = parseInt((index - 1) / 2)
-    return result
+    let result = parseInt((index - 1) / 2);
+    return result;
   }
   //获取左子节点索引
   getLeftIndex(index) {
-    return 2 * index + 1
+    return 2 * index + 1;
   }
   //获取右节点
   getRightIndex(index) {
-    return 2 * index + 2
+    return 2 * index + 2;
   }
   insert(value) {
     if (!value) {
-      return false
+      return false;
     }
-    this.heap.push(value)
-    this.shiftUp(this.size() - 1)
+    this.heap.push(value);
+    this.shiftUp(this.size() - 1);
   }
   size() {
-    return this.heap.length
+    return this.heap.length;
   }
   shiftUp(index) {
     //如果节点的值比父节点大，交换节点和父节点
     while (this.heap[index] > this.heap[this.getParentIndex(index)]) {
-      let newIndex = this.getParentIndex[index]
-      this.swap(index, newIndex)
-      index = newIndex
+      let newIndex = this.getParentIndex[index];
+      this.swap(index, newIndex);
+      index = newIndex;
     }
   }
   swap(left, right) {
-    const rightValue = this.heap[right]
-    this.heap[right] = this.heap[left]
-    this.heap[left] = rightValue
+    const rightValue = this.heap[right];
+    this.heap[right] = this.heap[left];
+    this.heap[left] = rightValue;
   }
   extract() {
-    const removedNode = this.heap.shift()
+    const removedNode = this.heap.shift();
     //调整
-    this.shiftDown(0)
-    return removedNode
+    this.shiftDown(0);
+    return removedNode;
   }
   shiftDown(index) {
     let currentIndex = index,
       leftIndex = this.getLeftIndex(index),
       rightIndex = leftIndex + 1,
-      size = this.size()
+      size = this.size();
     if (leftIndex < size && this.heap[currentIndex] < this.heap[leftIndex]) {
-      currentIndex = leftIndex
+      currentIndex = leftIndex;
     }
     if (rightIndex < size && this.heap[currentIndex] < this.heap[rightIndex]) {
-      currentIndex = rightIndex
+      currentIndex = rightIndex;
     }
     if (index !== currentIndex) {
-      this.swap(index, currentIndex)
-      this.shiftDown(currentIndex)
+      this.swap(index, currentIndex);
+      this.shiftDown(currentIndex);
     }
   }
 }

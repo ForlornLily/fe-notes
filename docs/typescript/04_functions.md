@@ -13,15 +13,15 @@ let myFun: (baseValue: string, another: string) => void = function (
   x: string,
   y: string
 ): void {
-  console.log(`${x}, ${y}`)
-}
+  console.log(`${x}, ${y}`);
+};
 ```
 
 js 用箭头函数
 
 ```ts
 let mySum: (x: number, y: number) => number = (x: number, y: number): number =>
-  x + y
+  x + y;
 ```
 
 ## 接口表示
@@ -30,12 +30,12 @@ let mySum: (x: number, y: number) => number = (x: number, y: number): number =>
 
 ```ts
 interface customFun {
-  (x: string, y: string): void
+  (x: string, y: string): void;
 }
-let myFun: customFun
+let myFun: customFun;
 myFun = (a: string, b: string): void => {
-  console.log(`${a}, ${b}`)
-}
+  console.log(`${a}, ${b}`);
+};
 ```
 
 ## 可选参数?
@@ -45,9 +45,9 @@ myFun = (a: string, b: string): void => {
 ```ts
 function myCustom(score: number, flag?: boolean): number {
   if (flag) {
-    return score + 1
+    return score + 1;
   }
-  return score
+  return score;
 }
 ```
 
@@ -60,9 +60,9 @@ function myCustom(score: number, flag?: boolean): number {
 ```ts
 function myCustom(score: number, flag: boolean = false): number {
   if (flag) {
-    return score + 1
+    return score + 1;
   }
-  return score
+  return score;
 }
 ```
 
@@ -75,17 +75,17 @@ ES6 中的剩余参数，是放在函数的最后的
 ```ts
 function myCustom(score: number, flag?: boolean, ...items: any[]): number {
   const data: any[] = items,
-    length: number = data.length
-  let total: number = 0
+    length: number = data.length;
+  let total: number = 0;
   for (let i = length; i--; ) {
-    total += data[i]
+    total += data[i];
   }
   if (flag) {
-    return score + total
+    return score + total;
   }
-  return total
+  return total;
 }
-console.log(myCustom(1, true, 1, 2, 3))
+console.log(myCustom(1, true, 1, 2, 3));
 ```
 
 ## 重载
@@ -99,16 +99,16 @@ console.log(myCustom(1, true, 1, 2, 3))
 为了进行精确表达，typescript 内可以重复声明同一个函数
 
 ```ts
-function myCustom(x: number): number
-function myCustom(x: string): string
+function myCustom(x: number): number;
+function myCustom(x: string): string;
 function myCustom(x: number | string): number | string {
   if (typeof x === "number") {
-    return x + 1
+    return x + 1;
   }
-  return x + " world"
+  return x + " world";
 }
-console.log(myCustom(1))
-console.log(myCustom("hello"))
+console.log(myCustom(1));
+console.log(myCustom("hello"));
 ```
 
 前几次都是函数定义，最后一次是函数实现。

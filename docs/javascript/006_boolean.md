@@ -9,11 +9,11 @@ false, null, undefined, 0（+0，-0）, "", NaN
 用 Boolean()的情况下（不是用==等操作符）
 
 ```js
-Boolean("") //false
-Boolean(" ") //true
-Boolean(NaN) //false
-Boolean(0) //false
-Boolean(1) //true
+Boolean(""); //false
+Boolean(" "); //true
+Boolean(NaN); //false
+Boolean(0); //false
+Boolean(1); //true
 ```
 
 - string 类，除了""其他都是 true

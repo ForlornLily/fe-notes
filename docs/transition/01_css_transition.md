@@ -5,7 +5,7 @@
 
 ```js
 function App() {
-  const [inProp, setInProp] = useState(false)
+  const [inProp, setInProp] = useState(false);
   return (
     <div>
       <CSSTransition in={inProp} timeout={200} classNames="my-node">
@@ -15,7 +15,7 @@ function App() {
         Click to Enter
       </button>
     </div>
-  )
+  );
 }
 ```
 

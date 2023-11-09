@@ -1,7 +1,7 @@
 # http
 
 ```js
-const http = require("http")
+const http = require("http");
 ```
 
 ## createServer()
@@ -10,10 +10,10 @@ const http = require("http")
 // 服务端
 http
   .createServer((req, res) => {
-    console.log(req.method) //请求的方式，比如GET, POST
-    res.end("hello, world")
+    console.log(req.method); //请求的方式，比如GET, POST
+    res.end("hello, world");
   })
-  .listen(8888)
+  .listen(8888);
 ```
 
 通过 `curl` 可以查看请求的过程
@@ -70,7 +70,7 @@ req.method
 请求头，比如
 
 ```js
-req.headers["content-type"]
+req.headers["content-type"];
 ```
 
 ### on 方法
@@ -80,21 +80,21 @@ req.headers["content-type"]
 ```js
 http.createServer((req, res) => {
   if (req.method === "POST") {
-    let postData = ""
+    let postData = "";
     req.on("data", (chunk) => {
-      postData += chunk.toString()
-    })
+      postData += chunk.toString();
+    });
     req.on("end", () => {
-      res.end("post数据接收完毕")
-    })
+      res.end("post数据接收完毕");
+    });
   }
-})
+});
 ```
 
 ### pipe 方法
 
 ```js
-req.pipe(res)
+req.pipe(res);
 ```
 
 将 req 的内容写到 res 中，等价于 req.on+req.end。
@@ -126,11 +126,11 @@ end 会先调用 write 并结束响应
 
 ```js
 http.createServer((req, res) => {
-  res.setHeader("Content-Type", "application/json")
+  res.setHeader("Content-Type", "application/json");
   res.end(`{
     hello: "world"
-  }`)
-})
+  }`);
+});
 ```
 
 #### Set-Cookie
@@ -158,7 +158,7 @@ res.setHeader("Set-Cookie", \`username=hello; path=/\`)
 只允许后台修改 cookie
 
 ```js
-res.setHeader("Set-Cookie", `username=hello; httpOnly`)
+res.setHeader("Set-Cookie", `username=hello; httpOnly`);
 ```
 
 前后端都可以设置，设置后 document.cookie 不包含，也无法修改
@@ -168,9 +168,9 @@ res.setHeader("Set-Cookie", `username=hello; httpOnly`)
 过期时间，格式是 GMT 的字符串
 
 ```js
-var date = new Date()
-date.toGMTString()
-res.setHeader("Set-Cookie", `username=hello; expires=${date}`)
+var date = new Date();
+date.toGMTString();
+res.setHeader("Set-Cookie", `username=hello; expires=${date}`);
 ```
 
 ### writeHead
@@ -181,11 +181,11 @@ res.setHeader("Set-Cookie", `username=hello; expires=${date}`)
 res.writeHead(statusCode, {
   key: value,
   key2: value2,
-})
+});
 res.writeHead(200, {
   "Content-Type": "text/plain",
-})
-res.end(`hello, world`)
+});
+res.end(`hello, world`);
 ```
 
 ### end 方法
@@ -195,7 +195,7 @@ res.end(`hello, world`)
 构造客户端以发送请求
 
 ```js
-const http = require("http")
+const http = require("http");
 
 http
   .request(
@@ -206,10 +206,10 @@ http
       method: "GET",
     },
     (res) => {
-      res.on("data", (data) => console.log(data.toString())) // "hello, world"
+      res.on("data", (data) => console.log(data.toString())); // "hello, world"
     }
   )
-  .end()
+  .end();
 ```
 
 请求发送和浏览器一样存在限制，最多发送 5 个。

@@ -15,50 +15,50 @@
 <script>
   class Router {
     constructor() {
-      this.routes = {}
+      this.routes = {};
     }
     add(path, callback) {
-      this.routes[path] = callback
+      this.routes[path] = callback;
     }
     refresh(state) {
-      this.url = "/" + state.name || ""
-      const fun = this.routes[this.url]
+      this.url = "/" + state.name || "";
+      const fun = this.routes[this.url];
       if (Object.prototype.toString.call(fun) === "[object Function]") {
-        fun()
+        fun();
       }
     }
     init() {
       //页面后退才进
       window.addEventListener("popstate", (e) => {
-        this.refresh.call(this, e.state)
-      })
+        this.refresh.call(this, e.state);
+      });
     }
   }
-  const route = new Router()
-  route.init()
-  const doc = document
-  const el = doc.getElementById("view")
+  const route = new Router();
+  route.init();
+  const doc = document;
+  const el = doc.getElementById("view");
   route.add("/unbecoming", () => {
-    el.innerHTML = "unbecoming"
-  })
+    el.innerHTML = "unbecoming";
+  });
   route.add("/monster", () => {
-    el.innerHTML = "monster"
-  })
+    el.innerHTML = "monster";
+  });
   doc.getElementById("link").addEventListener("click", (e) => {
-    const target = e.target
+    const target = e.target;
     if (target.tagName.toLowerCase() !== "a") {
-      return
+      return;
     }
-    e.preventDefault()
+    e.preventDefault();
     history.pushState(
       {
         name: e.target.innerHTML,
       },
       null,
       `?page=${e.target.innerHTML}`
-    )
+    );
     //手动调逻辑，因为此时不会触发popstate
-    route.refresh({ name: e.target.innerHTML })
-  })
+    route.refresh({ name: e.target.innerHTML });
+  });
 </script>
 ```

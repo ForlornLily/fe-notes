@@ -22,59 +22,59 @@ Template method pattern：基于继承的设计模式
 
 ```ts
 abstract class Anime {
-  protected name: string
+  protected name: string;
   protected constructor(name: string) {
-    this.name = name
+    this.name = name;
   }
   public sayName() {
     //不是抽象类，不需要子类实现
-    console.log(this.name)
+    console.log(this.name);
   }
-  protected abstract sayYear(): void //sayNumber必须在子类中被实现
+  protected abstract sayYear(): void; //sayNumber必须在子类中被实现
 }
 class Bangumi extends Anime {
-  public year: number
+  public year: number;
   public constructor(name: string, year: number) {
-    super(name)
-    this.year = year
+    super(name);
+    this.year = year;
   }
   public sayYear() {
-    console.log(this.year)
+    console.log(this.year);
   }
 }
-let child = new Bangumi("The Promised Neverland", 2016)
-child.sayName() //"The Promised Neverland"
-child.sayYear() //2016
+let child = new Bangumi("The Promised Neverland", 2016);
+child.sayName(); //"The Promised Neverland"
+child.sayYear(); //2016
 ```
 
 ES6 模拟，用抛出异常来提示
 
 ```js
-"use strict"
+"use strict";
 class Anime {
   constructor(name) {
     if (new.target === Anime) {
-      throw new Error("不能实例化")
+      throw new Error("不能实例化");
     }
-    this.name = name
+    this.name = name;
   }
   sayName() {
     //不是抽象类，不需要子类实现
-    console.log(this.name)
+    console.log(this.name);
   }
   sayYear() {
-    throw new Error("sayYear未实现")
+    throw new Error("sayYear未实现");
   }
 }
 class Bangumi extends Anime {
   constructor(name, year) {
-    super(name)
-    this.year = year
+    super(name);
+    this.year = year;
   }
 }
-let child = new Bangumi("The Promised Neverland", 2016)
-child.sayName() //"The Promised Neverland"
-child.sayYear() //Uncaught Error: sayYear未实现
+let child = new Bangumi("The Promised Neverland", 2016);
+child.sayName(); //"The Promised Neverland"
+child.sayYear(); //Uncaught Error: sayYear未实现
 ```
 
 ## 好莱坞原则

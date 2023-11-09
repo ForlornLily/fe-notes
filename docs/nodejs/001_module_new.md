@@ -24,12 +24,12 @@ CommonJS 对于模块的定义主要分为三部分：
 // method.js
 exports.add = () => {
   // do sth.
-}
+};
 ```
 
 ```js
 // index.js
-const method = require("./method")
+const method = require("./method");
 // method.add()
 ```
 
@@ -57,23 +57,23 @@ NodeJS 对 CommonJS 的模块规范进行了一定的取舍。
 
 ```js
 // method.js
-let myName = "hello"
+let myName = "hello";
 exports.changeName = (name) => {
-  myName = name
-}
+  myName = name;
+};
 
 exports.getName = () => {
-  console.log(myName)
-}
+  console.log(myName);
+};
 ```
 
 ```js
 // index.js
-const method = require("./method")
-const sameMethod = require("./method")
-method.getName() // "hello"
-sameMethod.changeName("world")
-method.getName() // "world"
+const method = require("./method");
+const sameMethod = require("./method");
+method.getName(); // "hello"
+sameMethod.changeName("world");
+method.getName(); // "world"
 ```
 
 ### 路径分析和文件定位
@@ -97,7 +97,7 @@ method.getName() // "world"
 
 ```js
 // index.js
-console.log(module.paths)
+console.log(module.paths);
 ```
 
 windows 下可能是这样
@@ -125,7 +125,7 @@ windows 下可能是这样
 
 ```js
 // D:\project\typescript\src\index.js
-const method = require("method2.js")
+const method = require("method2.js");
 ```
 
 会往上找 'D:\\project\\typescript\\node_modules\\method2.js'，'D:\\project\\node_modules\\method2.js'，'D:\\node_modules\\method2.js'
@@ -148,10 +148,10 @@ const method = require("method2.js")
 这样可以进行作用域隔离，避免全局变量污染
 
 ```js
-;(function (exports, require, module, __filename, __dirname) {
+(function (exports, require, module, __filename, __dirname) {
   // 源代码内容
   // 比如 console.log(module.paths)
-})
+});
 ```
 
 而 exports、[\_\_dirname](./008_path.md) 这些全局变量的由来也是因为包装而不需要定义就能使用
