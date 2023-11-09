@@ -23,49 +23,49 @@
 ```js
 class Collection {
   constructor() {
-    this.items = {}
-    this.length = 0
+    this.items = {};
+    this.length = 0;
   }
   has(value) {
     //return value in this.items;
-    return this.items.hasOwnProperty(value)
+    return this.items.hasOwnProperty(value);
   }
   add(value) {
     if (!this.has(value)) {
-      this.items[value] = value
-      this.length++
-      return true
+      this.items[value] = value;
+      this.length++;
+      return true;
     }
-    return false
+    return false;
   }
   delete(value) {
     if (this.has(value)) {
-      delete this.items[value]
-      this.length--
-      return true
+      delete this.items[value];
+      this.length--;
+      return true;
     }
-    return false
+    return false;
   }
   clear() {
-    this.items = {}
+    this.items = {};
   }
   size() {
-    return this.length
+    return this.length;
   }
   values() {
-    const items = this.items
-    let arr = []
+    const items = this.items;
+    let arr = [];
     for (let key in items) {
       if (items.hasOwnProperty(key)) {
-        arr.push(items[key])
+        arr.push(items[key]);
       }
     }
-    return arr
+    return arr;
   }
 }
-let set = new Collection()
-set.add("Saber")
-set.add("Archer")
+let set = new Collection();
+set.add("Saber");
+set.add("Archer");
 ```
 
 ## 多个集合常见操作
@@ -85,69 +85,69 @@ set.add("Archer")
 ```js
 class Container extends Collection {
   constructor() {
-    super()
+    super();
   }
   union(oneSet, anotherSet) {
     let totalSet = new Collection(),
-      values = oneSet.values()
+      values = oneSet.values();
     for (let i = 0; i < values.length; i++) {
-      totalSet.add(values[i])
+      totalSet.add(values[i]);
     }
-    values = anotherSet.values()
+    values = anotherSet.values();
     for (let j = 0; j < values.length; j++) {
-      totalSet.add(values[j])
+      totalSet.add(values[j]);
     }
-    return totalSet
+    return totalSet;
   }
   intersection(oneSet, anotherSet) {
     let totalSet = new Collection(),
-      values = oneSet.values()
+      values = oneSet.values();
     for (let i = 0; i < values.length; i++) {
       if (anotherSet.has(values[i])) {
-        totalSet.add(values[i])
+        totalSet.add(values[i]);
       }
     }
-    return totalSet
+    return totalSet;
   }
   difference(oneSet, anotherSet) {
     let totalSet = new Collection(),
-      values = oneSet.values()
+      values = oneSet.values();
     for (let i = 0; i < values.length; i++) {
       if (!anotherSet.has(values[i])) {
-        totalSet.add(values[i])
+        totalSet.add(values[i]);
       }
     }
-    return totalSet
+    return totalSet;
   }
   subset(oneSet, anotherSet) {
-    let isSub = true
+    let isSub = true;
     if (oneSet.size() > anotherSet.size()) {
-      isSub = false
+      isSub = false;
     } else {
-      let values = oneSet.values()
+      let values = oneSet.values();
       for (let i = 0; i < values.length; i++) {
         if (!anotherSet.has(values[i])) {
-          isSub = false
-          break
+          isSub = false;
+          break;
         }
       }
     }
-    return isSub
+    return isSub;
   }
 }
-let first = new Collection()
-first.add("1")
-first.add("2")
-first.add("3")
-let second = new Collection()
-second.add("1")
-second.add("3")
-second.add("4")
-let container = new Container()
-let result = container.union(first, second)
-let result2 = container.intersection(first, second)
-let result3 = container.difference(first, second)
-let result4 = container.subset(first, second)
+let first = new Collection();
+first.add("1");
+first.add("2");
+first.add("3");
+let second = new Collection();
+second.add("1");
+second.add("3");
+second.add("4");
+let container = new Container();
+let result = container.union(first, second);
+let result2 = container.intersection(first, second);
+let result3 = container.difference(first, second);
+let result4 = container.subset(first, second);
 ```
 
 ## 用 ES6 的 Set 创建集合
@@ -155,36 +155,36 @@ let result4 = container.subset(first, second)
 ```js
 class CollectionSet {
   constructor() {
-    this.items = new Set()
+    this.items = new Set();
   }
   has(value) {
-    return this.items.has(value)
+    return this.items.has(value);
   }
   add(value) {
     if (this.has(value)) {
-      return false
+      return false;
     }
-    this.items.add(value)
-    return true
+    this.items.add(value);
+    return true;
   }
   delete(value) {
-    return this.items.delete(value)
+    return this.items.delete(value);
   }
   clear() {
-    this.items.clear()
+    this.items.clear();
   }
   size() {
-    return this.items.size
+    return this.items.size;
   }
   values() {
-    let values = []
+    let values = [];
     this.items.forEach((key, value) => {
-      values.push(value)
-    })
-    return values
+      values.push(value);
+    });
+    return values;
   }
 }
-let set2 = new CollectionSet()
-set2.add("Saber")
-set2.add("Archer")
+let set2 = new CollectionSet();
+set2.add("Saber");
+set2.add("Archer");
 ```

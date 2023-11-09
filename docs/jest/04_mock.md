@@ -7,19 +7,19 @@
 ```ts
 // index.ts
 export function sayHello(str: string, callback: Function) {
-  callback(str)
+  callback(str);
 }
 ```
 
 ```js
 // index.test.js
-import { sayHello } from "./index"
+import { sayHello } from "./index";
 
-const fn = jest.fn((x) => `${x}, world`)
-sayHello("hello", fn)
+const fn = jest.fn((x) => `${x}, world`);
+sayHello("hello", fn);
 test("mock function", () => {
-  expect(fn.mock.results[0].value).toBe("hello, world")
-})
+  expect(fn.mock.results[0].value).toBe("hello, world");
+});
 ```
 
 ## \.mock
@@ -30,35 +30,35 @@ test("mock function", () => {
 - mock.calls：被调用时的参数。也是个数组
 
 ```js
-import { sayHello } from "./index"
+import { sayHello } from "./index";
 
-const fn = jest.fn((x) => x)
-sayHello("hello", fn)
-console.log(fn.mock.calls) // [ [ 'hello' ] ]
+const fn = jest.fn((x) => x);
+sayHello("hello", fn);
+console.log(fn.mock.calls); // [ [ 'hello' ] ]
 test("mock function", () => {
-  expect(fn.mock.calls.length).toBe(1)
-})
+  expect(fn.mock.calls.length).toBe(1);
+});
 ```
 
 - mock.instances：被调用时的 `this`
 
 ```js
-const fn = jest.fn()
+const fn = jest.fn();
 const obj = {
   hello: "world",
-}
-const mockFn = fn.bind(obj)
-mockFn()
-console.log(fn.mock.instances) // [ { hello: 'world' } ]
+};
+const mockFn = fn.bind(obj);
+mockFn();
+console.log(fn.mock.instances); // [ { hello: 'world' } ]
 const obj2 = {
   a: "b",
-}
-const mockFn2 = fn.bind(obj2)
-mockFn2()
-console.log(fn.mock.instances) // [ { hello: 'world' }, { a: 'b' } ]
+};
+const mockFn2 = fn.bind(obj2);
+mockFn2();
+console.log(fn.mock.instances); // [ { hello: 'world' }, { a: 'b' } ]
 test("mock function", () => {
-  expect(fn.mock.calls.length).toBe(2)
-})
+  expect(fn.mock.calls.length).toBe(2);
+});
 ```
 
 ## mock 返回值
@@ -66,32 +66,32 @@ test("mock function", () => {
 `jest.fn` 的返回内容是一个函数
 
 ```js
-const fn = jest.fn()
-console.log(fn()) // undefined
+const fn = jest.fn();
+console.log(fn()); // undefined
 test("mock return value", () => {
-  expect(fn.mock.calls.length).toBe(1)
-})
+  expect(fn.mock.calls.length).toBe(1);
+});
 
-const fn2 = jest.fn((x) => x + 1)
-console.log(fn2(1)) // 2
+const fn2 = jest.fn((x) => x + 1);
+console.log(fn2(1)); // 2
 ```
 
 也可以用 `mockReturnValue` 显示地设置返回值，`mockReturnValueOnce` 只赋值一次
 
 ```js
-const fn = jest.fn()
-console.log(fn()) // undefined
-fn.mockReturnValue("hello", "world") //第二个参数无效
-console.log(fn(), fn(), fn()) // hello hello hello
+const fn = jest.fn();
+console.log(fn()); // undefined
+fn.mockReturnValue("hello", "world"); //第二个参数无效
+console.log(fn(), fn(), fn()); // hello hello hello
 test("mock return value", () => {
-  expect(fn.mock.calls.length).toBe(4)
-})
+  expect(fn.mock.calls.length).toBe(4);
+});
 
-const fn2 = jest.fn((x) => x + 1)
-fn2.mockReturnValueOnce("hello")
-console.log(fn2(), fn2(), fn2()) // hello NaN NaN
+const fn2 = jest.fn((x) => x + 1);
+fn2.mockReturnValueOnce("hello");
+console.log(fn2(), fn2(), fn2()); // hello NaN NaN
 
-const fn3 = jest.fn()
-fn3.mockReturnValueOnce("hello").mockReturnValue("world") // 链式调用
-console.log(fn3(), fn3(), fn3()) //  hello world world
+const fn3 = jest.fn();
+fn3.mockReturnValueOnce("hello").mockReturnValue("world"); // 链式调用
+console.log(fn3(), fn3(), fn3()); //  hello world world
 ```

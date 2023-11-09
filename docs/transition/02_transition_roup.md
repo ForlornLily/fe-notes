@@ -10,7 +10,7 @@ TransitionGroup 本身会形成一个 div
       <CSSTransition timeout={3000} classNames="my-node" key={index}>
         <div>hello</div>
       </CSSTransition>
-    )
+    );
   })}
 </TransitionGroup>
 ```

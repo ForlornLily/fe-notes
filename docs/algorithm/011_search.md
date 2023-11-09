@@ -19,23 +19,23 @@ function binarySearch(item, target) {
   //数组的二分查找
   let end = item.length - 1,
     start = 0,
-    mid = Math.floor((start + end) / 2) //向下取整
+    mid = Math.floor((start + end) / 2); //向下取整
   if (item[mid] == target) {
-    return mid
+    return mid;
   }
   while (start <= end) {
     if (item[mid] < target) {
-      start = mid + 1
+      start = mid + 1;
     } else if (item[mid] > target) {
-      end = mid - 1
+      end = mid - 1;
     } else {
-      return mid
+      return mid;
     }
-    mid = Math.floor((start + end) / 2)
+    mid = Math.floor((start + end) / 2);
   }
-  return -1 //没找到
+  return -1; //没找到
 }
 const arr = [1, 2, 3, 4, 5, 6],
-  target = 7
-binarySearch(arr, target)
+  target = 7;
+binarySearch(arr, target);
 ```

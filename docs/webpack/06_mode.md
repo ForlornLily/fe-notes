@@ -44,7 +44,7 @@ main.js.map
 在 `main.js` 中会存在 sourceMappingURL 指向 map
 
 ```js
-压缩代码略
+压缩代码略;
 //# sourceMappingURL=main.js.map
 ```
 
@@ -225,23 +225,23 @@ if (module.hot) {
 在 node 内使用 webpack 见官网[API](https://webpack.js.org/api/node) Node Interface
 
 ```js
-const express = require("express")
-const webpack = require("webpack")
-const webpackDevMiddleware = require("webpack-dev-middleware")
-const config = require("./webpack.config.js") //引入webpack配置文件
+const express = require("express");
+const webpack = require("webpack");
+const webpackDevMiddleware = require("webpack-dev-middleware");
+const config = require("./webpack.config.js"); //引入webpack配置文件
 // 在node中直接使用webpack
-const compiler = webpack(config)
+const compiler = webpack(config);
 
-const app = express()
+const app = express();
 //使用webpack-dev-middleware中间件
 //第一个参数是webapck打包，第二个是打包的额外配置项
 app.use(
   webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
   })
-)
+);
 
 app.listen(3000, () => {
-  console.log("server is running")
-})
+  console.log("server is running");
+});
 ```

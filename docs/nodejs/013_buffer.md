@@ -5,13 +5,13 @@
 但要处理 TCP 流或者文件流时，必须要用到二进制
 
 ```js
-const buffer = Buffer.from("Hello world") //字符串数据存储入 Buffer 实例
+const buffer = Buffer.from("Hello world"); //字符串数据存储入 Buffer 实例
 
-const base64Str = buffer.toString("base64") //转换为base64格式字符串
+const base64Str = buffer.toString("base64"); //转换为base64格式字符串
 
-const buf = Buffer.from(base64Str, "base64")
+const buf = Buffer.from(base64Str, "base64");
 
-console.log(buf.toString("utf8")) // 转换为 UTF-8 格式, 结果是`Hello world`
+console.log(buf.toString("utf8")); // 转换为 UTF-8 格式, 结果是`Hello world`
 ```
 
 由于 Buffer 太常用，Node 在启用的时候就已经加载了这个模块，并放在全局对象上  
@@ -22,7 +22,7 @@ console.log(buf.toString("utf8")) // 转换为 UTF-8 格式, 结果是`Hello wor
 Buffer 对象类似数组，它的元素是 16 进制的的两位数，即 0~255 的数值
 
 ```js
-Buffer.from("Hello world")
+Buffer.from("Hello world");
 ```
 
 结果
@@ -45,14 +45,14 @@ Buffer.from("Hello world")
 通常处理流拼接，可能是用 `+=` 进行字符串拼接
 
 ```js
-const fs = require("fs")
+const fs = require("fs");
 
-const rs = fs.createReadStream("./hello.md")
+const rs = fs.createReadStream("./hello.md");
 
-let data = ""
-rs.on("data", (chunk) => (data += chunk))
+let data = "";
+rs.on("data", (chunk) => (data += chunk));
 
-rs.on("end", () => console.log(data))
+rs.on("end", () => console.log(data));
 ```
 
 如果遇到少数中文，可能会乱码  
@@ -76,18 +76,18 @@ hello.txt
 需要借助第三方库进行转码，比如 iconv-lite
 
 ```js
-const fs = require("fs")
-const iconv = require("iconv-lite")
+const fs = require("fs");
+const iconv = require("iconv-lite");
 
-const rs = fs.createReadStream("./test/hello.txt")
+const rs = fs.createReadStream("./test/hello.txt");
 
-let data = ""
+let data = "";
 
 rs.on("data", (chunk) => {
-  data += iconv.decode(chunk, "gbk")
-})
+  data += iconv.decode(chunk, "gbk");
+});
 
 rs.on("end", () => {
-  console.log(data)
-})
+  console.log(data);
+});
 ```

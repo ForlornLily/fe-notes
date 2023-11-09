@@ -15,25 +15,25 @@ Vue 的根实例注册 store 属性，所有子组件都可以通过\$store 获�
     },
     mutations: {
       increment(state) {
-        state.count++
+        state.count++;
       },
     },
-  })
+  });
   const UserCount = {
     template: `<div>{{count}}</div>`,
     computed: {
       count() {
-        return this.$store.state.count
+        return this.$store.state.count;
       },
     },
-  }
+  };
   const app = new Vue({
     store: store,
     components: {
       UserCount,
     },
-  }).$mount("#app")
-  store.commit("increment")
+  }).$mount("#app");
+  store.commit("increment");
 </script>
 ```
 
@@ -67,7 +67,7 @@ count() {
 ```
 
 ```js
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 computed: mapState({
   // 箭头函数可使代码更简练
   count: (state) => state.count,
@@ -75,15 +75,15 @@ computed: mapState({
   countAlias: "count",
   // 为了能够使用 `this` 获取局部状态，必须使用常规函数
   countPlusLocalState(state) {
-    return state.count + this.localCount
+    return state.count + this.localCount;
   },
-})
+});
 
 //如果是computed内的所有属性都和mapState的属性重名，也可以简写
 computed: mapState([
   // 映射 this.count 为 store.state.count
   "count",
-])
+]);
 ```
 
 ## store.getters
@@ -120,7 +120,7 @@ computed: {
 mapGetters({
   // 把 `this.doneCount` 映射为 `this.$store.getters.doneTodosCount`
   doneCount: "doneTodosCount",
-})
+});
 ```
 
 ## Mutation 定义修改 state 的方法
@@ -136,10 +136,10 @@ const store = new Vuex.Store({
     increment(state, params) {
       // 变更状态
       //params是个对象，对应commit
-      state.count++
+      state.count++;
     },
   },
-})
+});
 ```
 
 ### store.commit
@@ -151,12 +151,12 @@ const store = new Vuex.Store({
 //第一个是方法名
 store.commit("increment", {
   amount: 10,
-})
+});
 //写法二：全部以对象的形式
 store.commit({
   type: "increment", //type: 方法名
   amount: 10, //其他参数
-})
+});
 ```
 
 ### mapMutations
@@ -242,20 +242,20 @@ const moduleA = {
   mutations: {},
   actions: {},
   getters: {},
-}
+};
 const moduleB = {
   state: {},
   ///省略
-}
+};
 
 const store = new Vuex.Store({
   modules: {
     a: moduleA,
     b: moduleB,
   },
-})
-store.state.a // -> moduleA 的状态
-store.state.b // -> moduleB 的状态
+});
+store.state.a; // -> moduleA 的状态
+store.state.b; // -> moduleB 的状态
 ```
 
 ## 双向绑定 v-model

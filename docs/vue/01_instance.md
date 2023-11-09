@@ -58,7 +58,7 @@ var LIFECYCLE_HOOKS = [
   "errorCaptured", //异常处理
   // v2.6+
   "serverPrefetch", //SSR
-]
+];
 ```
 
 ### 父子间的生命周期

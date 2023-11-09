@@ -11,13 +11,13 @@ $(“#test”).abc()和$.trim()
 IIFE 并不是闭包
 
 ```js
-;(function ($) {
+(function ($) {
   $.fn.myFunction = function () {
     return this.each(function () {
       //逻辑
-    })
-  }
-})
+    });
+  };
+});
 ```
 
 用立即执行函数保证变量不会污染。  
@@ -41,10 +41,10 @@ IIFE 并不是闭包
 调用`noConflict`，让出\$
 
 ```js
-var query = jQuery.noConflict(true)
-;(function ($) {
+var query = jQuery.noConflict(true);
+(function ($) {
   // 用query表示jQuery
-})(query)
+})(query);
 //其他地方用$
 ```
 
@@ -54,17 +54,17 @@ noConflict 内部
 var // Map over jQuery in case of overwrite
   _jQuery = window.jQuery,
   // Map over the $ in case of overwrite
-  _$ = window.$
+  _$ = window.$;
 
 jQuery.noConflict = function (deep) {
   if (window.$ === jQuery) {
-    window.$ = _$
+    window.$ = _$;
   }
 
   if (deep && window.jQuery === jQuery) {
-    window.jQuery = _jQuery
+    window.jQuery = _jQuery;
   }
 
-  return jQuery
-}
+  return jQuery;
+};
 ```

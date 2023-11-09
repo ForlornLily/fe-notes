@@ -7,14 +7,14 @@
 例：分别给出咸水鱼和淡水鱼的列表，两个列表中的鱼名均按字母顺序排列。创建一个包含所有鱼类的列表（鱼名按字母顺序排列）
 
 ```js
-const list = []
-const seaFish = ["a", "d", "m"]
-const freshFish = ["b", "c", "e", "o", "q"]
+const list = [];
+const seaFish = ["a", "d", "m"];
+const freshFish = ["b", "c", "e", "o", "q"];
 while (seaFish.length || freshFish.length) {
   if (!seaFish.length || seaFish[0] > freshFish[0]) {
-    list.push(freshFish.shift())
+    list.push(freshFish.shift());
   } else {
-    list.push(seaFish.shift())
+    list.push(seaFish.shift());
   }
 }
 ```

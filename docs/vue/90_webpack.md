@@ -54,9 +54,9 @@ npm install -g @vue/cli
 vue.config.js 常用配置
 
 ```js
-const path = require("path")
+const path = require("path");
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir);
 }
 module.exports = {
   publicPath: "./",
@@ -65,7 +65,7 @@ module.exports = {
     //alias
     config.resolve.alias
       .set("@", resolve("src"))
-      .set("static", resolve("src/static"))
+      .set("static", resolve("src/static"));
   },
   devServer: {
     proxy: {
@@ -78,7 +78,7 @@ module.exports = {
       },
     },
   },
-}
+};
 ```
 
 ### 关于静态文件：

@@ -22,20 +22,20 @@ React 的数据是单向的，在 Vue 中通过`v-model`可以快速实现双向
 ```js
 class NameForm extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { value: "" }
+    super(props);
+    this.state = { value: "" };
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value })
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
-    alert("A name was submitted: " + this.state.value)
-    event.preventDefault()
+    alert("A name was submitted: " + this.state.value);
+    event.preventDefault();
   }
 
   render() {
@@ -51,7 +51,7 @@ class NameForm extends React.Component {
         </label>
         <input type="submit" value="Submit" />
       </form>
-    )
+    );
   }
 }
 ```
@@ -102,15 +102,15 @@ const [value, setValue] = useState<string| undefined>(undefined)
 - handleSubmit 只是一个函数表达式，直接调用即可，不需要`this`
 
 ```js
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 export function NameForm(props) {
-  const [name, setName] = useState("")
+  const [name, setName] = useState("");
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    alert(`Submitting Name ${name}`)
-  }
+    evt.preventDefault();
+    alert(`Submitting Name ${name}`);
+  };
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -123,7 +123,7 @@ export function NameForm(props) {
       </label>
       <input type="submit" value="Submit" />
     </form>
-  )
+  );
 }
 ```
 
@@ -134,22 +134,22 @@ setState 第一个值可以是对象，也可以 return 一个方法；使用方
 第二个值返回的是 state 更新成功之后的回调
 
 ```js
-const value = e.target.value
-this.setState({ inputValue: value })
+const value = e.target.value;
+this.setState({ inputValue: value });
 
 //等价于
-const value = e.target.value //事先用变量存储异步要用到的内容
+const value = e.target.value; //事先用变量存储异步要用到的内容
 this.setState(() => {
-  return { inputValue: value }
-})
+  return { inputValue: value };
+});
 
 //方法本身会提供state和props，第二个值为回调
 this.setState(
   (state, props) => {
-    return { counter: state.counter + props.step }
+    return { counter: state.counter + props.step };
   },
   () => {
     //callback
   }
-)
+);
 ```

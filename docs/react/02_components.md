@@ -6,12 +6,12 @@
 
 ```js
 function Welcome(props) {
-  return <h1>Hello, {props.name}</h1>
+  return <h1>Hello, {props.name}</h1>;
 }
 //或者
 class Welcome extends React.Component {
   render() {
-    return <h1>Hello, {this.props.name}</h1>
+    return <h1>Hello, {this.props.name}</h1>;
   }
 }
 ```
@@ -24,22 +24,22 @@ class Welcome extends React.Component {
 
 ```js
 //父组件中
-import React, { Component } from "react"
-import TodoItem from "./TodoItem"
+import React, { Component } from "react";
+import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     // 当组件的 state 或者 props 发生改变的时候，render 函数就会重新执行
     this.state = {
       list: [],
-    }
+    };
     // this 的绑定都放在 constructor 处理，性能较好
-    this.handleItemDelete = this.handleItemDelete.bind(this)
+    this.handleItemDelete = this.handleItemDelete.bind(this);
   }
 
   render() {
-    return <ul>{this.getTodoItem()}</ul>
+    return <ul>{this.getTodoItem()}</ul>;
   }
 
   getTodoItem() {
@@ -51,41 +51,41 @@ class TodoList extends Component {
           index={index}
           deleteItem={this.handleItemDelete}
         />
-      )
-    })
+      );
+    });
   }
 
   handleItemDelete(index) {
     this.setState((prevState) => {
-      const list = [...prevState.list]
-      list.splice(index, 1)
-      return { list }
-    })
+      const list = [...prevState.list];
+      list.splice(index, 1);
+      return { list };
+    });
   }
 }
 
-export default TodoList
+export default TodoList;
 ```
 
 ```js
 //子组件中
-import React, { Component } from "react"
+import React, { Component } from "react";
 
 class TodoItem extends Component {
   constructor(props) {
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   render() {
-    return <div onClick={this.handleClick}>{this.props.content}</div>
+    return <div onClick={this.handleClick}>{this.props.content}</div>;
   }
 
   handleClick() {
-    const { deleteItem, index } = this.props
+    const { deleteItem, index } = this.props;
     //this.props.deleteIem = this.handleItemDelete
     //此时的this执行的是父组件，所以传递的时候用bind把this转为父组件的this
-    deleteItem(index)
+    deleteItem(index);
   }
 }
 ```
@@ -107,20 +107,20 @@ class TodoItem extends Component {
 
 ```js
 function App1() {
-  return <Greeting firstName="Ben" lastName="Hector" />
+  return <Greeting firstName="Ben" lastName="Hector" />;
 }
 //等价于
 function App2() {
-  const props = { firstName: "Ben", lastName: "Hector" }
-  return <Greeting {...props} />
+  const props = { firstName: "Ben", lastName: "Hector" };
+  return <Greeting {...props} />;
 }
 
 //进一步
 const Button = (props) => {
-  const { kind, ...other } = props
-  const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton"
-  return <button className={className} {...other} />
-}
+  const { kind, ...other } = props;
+  const className = kind === "primary" ? "PrimaryButton" : "SecondaryButton";
+  return <button className={className} {...other} />;
+};
 ```
 
 ## StrictMode
@@ -138,30 +138,30 @@ const Button = (props) => {
 ```
 
 ```tsx
-let count = 0
+let count = 0;
 function Demo() {
   const [value, setValue] = useState<number | undefined>(() => {
-    count += 1
-    return 1
-  })
+    count += 1;
+    return 1;
+  });
 
   useEffect(() => {
-    console.log("[] mount")
+    console.log("[] mount");
     return () => {
-      console.log("[] unmount")
-    }
-  }, [])
+      console.log("[] unmount");
+    };
+  }, []);
 
   useEffect(() => {
-    console.log("value mount")
+    console.log("value mount");
     return () => {
-      console.log("value unmount")
-    }
-  }, [value])
+      console.log("value unmount");
+    };
+  }, [value]);
 
-  return <>{count}</>
+  return <>{count}</>;
 }
-export default Demo
+export default Demo;
 ```
 
 ```bash
@@ -191,7 +191,7 @@ class CustomButton extends React.Component {
 
 CustomButton.defaultProps = {
   color: "blue",
-}
+};
 ```
 
 ```js
@@ -208,22 +208,22 @@ render() {
 ```js
 class EventsSample extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     //第一种：手动bind
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
   }
   handleClick = (e) => {
     //第一种
-    console.log(e)
-  }
+    console.log(e);
+  };
   secondClick = (e) => {
     //第二种，属于实验性质，直接在class内写
-    console.log(e)
-  }
+    console.log(e);
+  };
   thirdClick = (e) => {
     //第三种
-    console.log(e)
-  }
+    console.log(e);
+  };
   render() {
     return (
       <>
@@ -233,7 +233,7 @@ class EventsSample extends React.Component {
           第三种，使用箭头函数
         </button>
       </>
-    )
+    );
   }
 }
 ```
@@ -394,26 +394,26 @@ shouldComponentUpdate(nextProps, nextState) {
 ```js
 class ErrorBoundary extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = { hasError: false }
+    super(props);
+    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error) {
     //修改state
-    return { hasError: true }
+    return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log(error, errorInfo)
+    console.log(error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
       //错误情况下的展示
-      return <h1>Something went wrong.</h1>
+      return <h1>Something went wrong.</h1>;
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }
 ```
@@ -442,7 +442,7 @@ Suspense 只在特定场景使用，Effect 或者事件里边异步拉取数据�
 - 使用 React.lazy（React.lazy 不支持 ssr）
 
 ```js
-const HelloWorld = React.lazy(() => import("./HelloWorld"))
+const HelloWorld = React.lazy(() => import("./HelloWorld"));
 ```
 
 ```jsx
@@ -458,7 +458,7 @@ const HelloWorld = React.lazy(() => import("./HelloWorld"))
 
 ```tsx
 function App() {
-  const [render, setRender] = useState<boolean>(false)
+  const [render, setRender] = useState<boolean>(false);
 
   return (
     <>
@@ -470,7 +470,7 @@ function App() {
         </Suspense>
       </Suspense>
     </>
-  )
+  );
 }
 ```
 

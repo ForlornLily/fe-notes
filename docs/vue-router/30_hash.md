@@ -17,35 +17,35 @@
 <script>
   class Router {
     constructor() {
-      this.routes = {}
-      this.url = ""
+      this.routes = {};
+      this.url = "";
     }
     add(path, callback) {
-      this.routes[path] = callback
+      this.routes[path] = callback;
     }
     refresh() {
-      this.url = location.hash.slice(1) || "/"
-      const fun = this.routes[this.url]
+      this.url = location.hash.slice(1) || "/";
+      const fun = this.routes[this.url];
       if (Object.prototype.toString.call(fun) === "[object Function]") {
-        fun()
+        fun();
       }
     }
     init() {
-      const win = window
+      const win = window;
       //点击超链接触发
-      win.addEventListener("hashchange", this.refresh.bind(this))
+      win.addEventListener("hashchange", this.refresh.bind(this));
       //F5刷新触发
-      win.addEventListener("load", this.refresh.bind(this))
+      win.addEventListener("load", this.refresh.bind(this));
     }
   }
-  const route = new Router()
-  route.init()
-  const el = document.getElementById("view")
+  const route = new Router();
+  route.init();
+  const el = document.getElementById("view");
   route.add("/unbecoming", () => {
-    el.innerHTML = "unbecoming"
-  })
+    el.innerHTML = "unbecoming";
+  });
   route.add("/monster", () => {
-    el.innerHTML = "monster"
-  })
+    el.innerHTML = "monster";
+  });
 </script>
 ```

@@ -21,21 +21,21 @@ JS 是动态类型语言，没有这个限制，可以理解为具有相同的�
   <button>提交</button>
 </form>
 <script>
-  const formEle = document.getElementById("userForm")
+  const formEle = document.getElementById("userForm");
   formEle.addEventListener("submit", (e) => {
-    const username = formEle.username
+    const username = formEle.username;
     if (!username.value) {
-      console.log("用户名必输")
-      e.preventDefault()
-      return false
+      console.log("用户名必输");
+      e.preventDefault();
+      return false;
     }
-    const password = formEle.password
+    const password = formEle.password;
     if (password.value.length < 6) {
-      console.log("密码长度不能小于6位")
-      e.preventDefault()
-      return false
+      console.log("密码长度不能小于6位");
+      e.preventDefault();
+      return false;
     }
-  })
+  });
 </script>
 ```
 
@@ -49,51 +49,51 @@ JS 是动态类型语言，没有这个限制，可以理解为具有相同的�
 const strategies = {
   isNotEmpty(value, errMsg) {
     if (!value) {
-      return errMsg
+      return errMsg;
     }
   },
   minLength(value, length, errMsg) {
     if (value.length < length) {
-      return errMsg
+      return errMsg;
     }
   },
-}
+};
 //添加规则
 function Validator() {
-  this.rules = []
+  this.rules = [];
 }
 Validator.prototype.add = function (dom, rule, errMsg) {
-  let arr = rule.split(":") //拆分"minLength: 6" 这种校验类型和值都需要的情况
-  const strategy = arr.shift() //获取校验类型，比如"isNotEmpty"
-  arr.unshift(dom.value) //第一个参数是value
-  arr.push(errMsg) //最后一个参数是错误提示
-  this.rules.push(() => strategies[strategy].apply(null, arr))
-}
+  let arr = rule.split(":"); //拆分"minLength: 6" 这种校验类型和值都需要的情况
+  const strategy = arr.shift(); //获取校验类型，比如"isNotEmpty"
+  arr.unshift(dom.value); //第一个参数是value
+  arr.push(errMsg); //最后一个参数是错误提示
+  this.rules.push(() => strategies[strategy].apply(null, arr));
+};
 Validator.prototype.start = function () {
   const rules = this.rules,
-    length = rules.length
+    length = rules.length;
   for (let i = 0; i < length; i++) {
-    const msg = rules[i]()
+    const msg = rules[i]();
     if (msg) {
-      return msg
+      return msg;
     }
   }
-}
+};
 
 //用户调用
-const formEle = document.getElementById("userForm")
+const formEle = document.getElementById("userForm");
 formEle.addEventListener("submit", (e) => {
-  const username = formEle.username
-  const password = formEle.password
-  const validator = new Validator()
-  validator.add(username, "isNotEmpty", "用户名必输")
-  validator.add(password, "minLength: 6", "密码不能小于6位数")
-  const msg = validator.start()
+  const username = formEle.username;
+  const password = formEle.password;
+  const validator = new Validator();
+  validator.add(username, "isNotEmpty", "用户名必输");
+  validator.add(password, "minLength: 6", "密码不能小于6位数");
+  const msg = validator.start();
   if (msg) {
-    console.log(msg)
-    e.preventDefault()
+    console.log(msg);
+    e.preventDefault();
   }
-})
+});
 ```
 
 如果同个输入框，需要多个校验逻辑，那么调用 `add` 的时候是个数组  
@@ -109,5 +109,5 @@ validator.add(password, [
     strategy: "minLength: 6",
     errMsg: "密码不能小于6位数",
   },
-])
+]);
 ```

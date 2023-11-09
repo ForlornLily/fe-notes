@@ -15,19 +15,19 @@
 //src\core\instance\init.js
 Vue.prototype._init = function (options) {
   //...
-  initLifecycle(vm) //初始化生命周期
-  initEvents(vm) //事件
-  initRender(vm)
-  callHook(vm, "beforeCreate") //调用钩子
-  initInjections(vm)
-  initState(vm)
-  initProvide(vm)
-  callHook(vm, "created")
+  initLifecycle(vm); //初始化生命周期
+  initEvents(vm); //事件
+  initRender(vm);
+  callHook(vm, "beforeCreate"); //调用钩子
+  initInjections(vm);
+  initState(vm);
+  initProvide(vm);
+  callHook(vm, "created");
   //...
   if (vm.$options.el) {
-    vm.$mount(vm.$options.el)
+    vm.$mount(vm.$options.el);
   }
-}
+};
 ```
 
 ## mount
@@ -39,8 +39,8 @@ Vue.prototype._init = function (options) {
 //runtime only下
 //src\platforms\web\runtime\index.js
 Vue.prototype.$mount = function (el, hydrating) {
-  return mountComponent(this, el && query(el, this.$document), hydrating)
-}
+  return mountComponent(this, el && query(el, this.$document), hydrating);
+};
 ```
 
 如果是运行时编译，即不存在 render function 但是存在 template 的情况，需要进行「编译」(compile)步骤
@@ -51,15 +51,15 @@ Vue.prototype.$mount = function (el, hydrating) {
 //src\platforms\web\entry-runtime-with-compiler.js
 Vue.prototype.$mount = function (el, hydrating) {
   //...
-  const options = this.$options
+  const options = this.$options;
   // 如果render不存在，处理template
   if (!options.render) {
-    let template = options.template
+    let template = options.template;
     if (template) {
       //如果存在template，那么把template转成DOM对象
     } else if (el) {
       //如果不存在template，那么直接拿el的父元素作为template
-      template = getOuterHTML(el)
+      template = getOuterHTML(el);
     }
     if (template) {
       //...
@@ -73,15 +73,15 @@ Vue.prototype.$mount = function (el, hydrating) {
           comments: options.comments,
         },
         this
-      )
-      options.render = render
-      options.staticRenderFns = staticRenderFns
+      );
+      options.render = render;
+      options.staticRenderFns = staticRenderFns;
       //...
     }
   }
   //...
-  return mount.call(this, el, hydrating)
-}
+  return mount.call(this, el, hydrating);
+};
 ```
 
 ### Runtime Only 和 Runtime + Compiler
@@ -92,14 +92,14 @@ Vue 的渲染最终都是通过`render`函数进行的，可以用户自定义�
 // 需要编译器
 new Vue({
   template: "<div>{{ hi }}</div>",
-})
+});
 
 // 不需要编译器
 new Vue({
   render(h) {
-    return h("div", this.hi)
+    return h("div", this.hi);
   },
-})
+});
 ```
 
 ### mountComponent
@@ -112,19 +112,19 @@ mount 的核心方法
 //部分代码，省略静态类型检查
 //src\core\instance\lifecycle.js
 export function mountComponent(vm, el, hydrating) {
-  vm.$el = el
+  vm.$el = el;
   if (!vm.$options.render) {
-    vm.$options.render = createEmptyVNode //生成空的虚拟节点
+    vm.$options.render = createEmptyVNode; //生成空的虚拟节点
     //...
   }
-  callHook(vm, "beforeMount")
-  let updateComponent
+  callHook(vm, "beforeMount");
+  let updateComponent;
   if (process.env.NODE_ENV !== "production" && config.performance && mark) {
     //...
   } else {
     updateComponent = () => {
-      vm._update(vm._render(), hydrating)
-    }
+      vm._update(vm._render(), hydrating);
+    };
   }
   new Watcher(
     vm,
@@ -133,21 +133,21 @@ export function mountComponent(vm, el, hydrating) {
     {
       before() {
         if (vm._isMounted && !vm._isDestroyed) {
-          callHook(vm, "beforeUpdate")
+          callHook(vm, "beforeUpdate");
         }
       },
     },
     true
-  )
-  hydrating = false
+  );
+  hydrating = false;
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
   if (vm.$vnode == null) {
-    vm._isMounted = true
-    callHook(vm, "mounted")
+    vm._isMounted = true;
+    callHook(vm, "mounted");
   }
-  return vm
+  return vm;
 }
 ```
 
@@ -165,11 +165,11 @@ Vue 的源码在[src\core\vdom\vnode.js](https://github.com/vuejs/vue/blob/dev/s
 <span class="demo" v-show="isShow" id="test"> This is a span. </span>
 <script>
   function VNode(tag, data, children, text, el) {
-    this.tag = tag //标签名，比如span, div
-    this.data = data //节点的信息，比如props, directives，如v-if
-    this.children = children //节点的子节点，是个数组
-    this.text = text //节点的text
-    this.el = el //节点的DOM对象
+    this.tag = tag; //标签名，比如span, div
+    this.data = data; //节点的信息，比如props, directives，如v-if
+    this.children = children; //节点的子节点，是个数组
+    this.text = text; //节点的text
+    this.el = el; //节点的DOM对象
   }
   function render() {
     return new VNode(
@@ -191,7 +191,7 @@ Vue 的源码在[src\core\vdom\vnode.js](https://github.com/vuejs/vue/blob/dev/s
       [new VNode(undefined, undefined, undefined, "This is a span.")],
       undefined,
       document.getElementById("test")
-    )
+    );
   }
 </script>
 ```

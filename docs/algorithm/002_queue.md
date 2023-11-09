@@ -23,26 +23,26 @@
 ```js
 class Queue {
   constructor() {
-    this.items = []
+    this.items = [];
   }
   enqueue(element) {
-    this.items.push(element)
+    this.items.push(element);
   }
   dequeue() {
-    return this.items.shift()
+    return this.items.shift();
   }
   front() {
-    return this.items[0]
+    return this.items[0];
   }
   isEmpty() {
-    return this.items.length == 0
+    return this.items.length == 0;
   }
   size() {
-    return this.items.length
+    return this.items.length;
   }
 }
-let queue = new Queue()
-queue.size()
+let queue = new Queue();
+queue.size();
 ```
 
 ## 优先队列
@@ -60,34 +60,34 @@ queue.size()
 ```js
 class PriorityQueue extends Queue {
   constructor() {
-    super()
+    super();
   }
   enqueue(element, priority) {
     let added = false,
-      items = this.items
-    let length = items.length
+      items = this.items;
+    let length = items.length;
     for (let i = 0; i < length; i++) {
       if (priority < items[i].priority) {
         items.splice(i, 0, {
           element,
           priority,
-        })
-        added = true
-        break
+        });
+        added = true;
+        break;
       }
     }
     if (!added) {
       items.push({
         element,
         priority,
-      })
+      });
     }
   }
 }
-let priority = new PriorityQueue()
-priority.enqueue("Archer", 2)
-priority.enqueue("Saber", 1)
-priority.enqueue("Lancer", 3)
+let priority = new PriorityQueue();
+priority.enqueue("Archer", 2);
+priority.enqueue("Saber", 1);
+priority.enqueue("Lancer", 3);
 ```
 
 ## 双端队列
@@ -145,19 +145,19 @@ deque / double-ended que
 ```js
 function cycleQue(list, number) {
   let items = new Queue(),
-    length = list.length
+    length = list.length;
   for (let i = 0; i < length; i++) {
-    items.enqueue(list[i])
+    items.enqueue(list[i]);
   }
-  let size = items.size()
+  let size = items.size();
   while (size > 1) {
     for (let j = 0; j < number; j++) {
-      items.enqueue(items.dequeue())
+      items.enqueue(items.dequeue());
     }
-    items.dequeue()
-    size = items.size()
+    items.dequeue();
+    size = items.size();
   }
-  return items.dequeue()
+  return items.dequeue();
 }
 let name = [
   "Saber",
@@ -167,8 +167,8 @@ let name = [
   "Caster",
   "Assassin",
   "Berserker",
-]
-console.log(cycleQue(name, 10))
+];
+console.log(cycleQue(name, 10));
 ```
 
 ## 时间复杂度

@@ -24,30 +24,30 @@
 
 ```js
 function Stack() {
-  let items = []
+  let items = [];
   this.push = function (element) {
-    items.push(element)
-  }
+    items.push(element);
+  };
   this.pop = function () {
-    return items.pop()
-  }
+    return items.pop();
+  };
   this.peek = function () {
-    return items[items.length - 1]
-  }
+    return items[items.length - 1];
+  };
   this.size = function () {
-    return items.length
-  }
+    return items.length;
+  };
 
   this.isEmpty = function () {
-    return items.length == 0
-  }
+    return items.length == 0;
+  };
   this.clear = function () {
-    items = []
-  }
+    items = [];
+  };
 }
-let stack = new Stack()
+let stack = new Stack();
 //给stack新增元素
-stack.push(2)
+stack.push(2);
 ```
 
 ### 用 ES6 的 class
@@ -55,10 +55,10 @@ stack.push(2)
 ```js
 class Stack {
   constructor() {
-    this.items = []
+    this.items = [];
   }
   push(element) {
-    this.element.push(element)
+    this.element.push(element);
   }
   //其他省略
 }
@@ -67,34 +67,34 @@ class Stack {
 ### WeakMap 实现数组私有
 
 ```js
-const items = new WeakMap()
+const items = new WeakMap();
 class PrivateStack {
   constructor() {
-    items.set(this, [])
+    items.set(this, []);
   }
   push(element) {
-    let arr = items.get(this)
-    arr.push(element)
+    let arr = items.get(this);
+    arr.push(element);
   }
   //其他内容同上，多了一步items.get(this);
 }
 
 //最后将上面的代码用IIFE锁定作用域
 let PrivateStack = (function () {
-  const items = new WeakMap()
+  const items = new WeakMap();
   class Stack {
     constructor() {
-      items.set(this, [])
+      items.set(this, []);
     }
     push(element) {
-      let arr = items.get(this)
-      arr.push(element)
+      let arr = items.get(this);
+      arr.push(element);
     }
     //其他内容同上，多了一步items.get(this);
   }
-  return Stack
-})()
-var privateStack = new PrivateStack()
+  return Stack;
+})();
+var privateStack = new PrivateStack();
 ```
 
 ### 单调栈
@@ -116,16 +116,16 @@ Monotone Stack：一种特殊的栈，要求元素依次递增或递减
 function tranfer(number) {
   let stack = new Stack(),
     rem,
-    binaryString = ""
+    binaryString = "";
   while (number > 0) {
-    rem = parseInt(number % 2)
-    stack.push(rem)
-    number = parseInt(number / 2)
+    rem = parseInt(number % 2);
+    stack.push(rem);
+    number = parseInt(number / 2);
   }
   while (!stack.isEmpty()) {
-    binaryString += stack.pop().toString()
+    binaryString += stack.pop().toString();
   }
-  return binaryString
+  return binaryString;
 }
 ```
 
@@ -155,21 +155,21 @@ A 柱子上放着 n 个盘（最底的盘最大，依次往上，最顶的盘最
 let a = new Stack(),
   c = new Stack(),
   b = new Stack(),
-  count = 0
-a.push("big")
-a.push("middle")
-a.push("small")
+  count = 0;
+a.push("big");
+a.push("middle");
+a.push("small");
 
 function move(size, source, dest, helper) {
   if (size > 0) {
-    count++
-    move(size - 1, source, helper, dest)
-    dest.push(source.pop())
-    move(size - 1, helper, dest, source)
+    count++;
+    move(size - 1, source, helper, dest);
+    dest.push(source.pop());
+    move(size - 1, helper, dest, source);
   }
 }
-move(a.size(), a, c, b)
-console.log(count)
+move(a.size(), a, c, b);
+console.log(count);
 ```
 
 ## 时间复杂度
