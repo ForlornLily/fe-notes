@@ -1,4 +1,5 @@
 # 错误处理
+
 ## throw 和 try catch
 
 throw 用来抛出异常，try/catch 捕获异常
@@ -40,28 +41,31 @@ function f2() {
   }
 }
 ```
+
 ### finally
+
 try catch 一定会执行 finally，哪怕 return
+
 ```js
 function testFinally() {
-    try {
-        return "try"
-    } catch (error) {
-        return "error"
-    } finally {
-        return "finally"
-    }
+  try {
+    return "try"
+  } catch (error) {
+    return "error"
+  } finally {
+    return "finally"
+  }
 }
-testFinally()  // 'finally'
+testFinally() // 'finally'
 ```
 
-## 错误类型  
+## 错误类型
 
 - Error：其他错误类型都继承 Error
-- InternalError：浏览器抛出（比如堆栈溢出），业务不会主动用 
+- InternalError：浏览器抛出（比如堆栈溢出），业务不会主动用
 - EvalError：eval() 异常，但一般都抛出 TypeError
 - RangeError：几乎用不到
-- ReferenceError：找不到对象， xx is not defined 
+- ReferenceError：找不到对象， xx is not defined
 - SyntaxError
 - TypeError
 - URIError：encodeURI()或 decodeURI() 异常，几乎用不到
@@ -71,15 +75,17 @@ testFinally()  // 'finally'
 即 throw，可以是任意值（基本类型、引用类型都可以）  
 常用的错误类型是 Error、ReferenceError 和 TypeError
 
-## error 事件  
+## error 事件
+
 try catch 了就不会触发 error  
-image 也支持 error   
+image 也支持 error
+
 ```js
-const image = new Image();
+const image = new Image()
 image.addEventListener("load", (event) => {
-  console.log("Image loaded!");
-});
+  console.log("Image loaded!")
+})
 image.addEventListener("error", (event) => {
-  console.log("Image not loaded!");
-});
+  console.log("Image not loaded!")
+})
 ```

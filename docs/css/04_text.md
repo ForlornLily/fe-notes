@@ -91,9 +91,7 @@ font-family 和 src 都是必填的，另外的 font-style 和 font-weight 可�
 ```css
 @font-face {
   font-family: "Times New Roman", Times, serif;
-  src:
-    url("xxx.woff") format("woff"),
-    url("xxx.woff2") format("woff2");
+  src: url("xxx.woff") format("woff"), url("xxx.woff2") format("woff2");
 }
 ```
 
@@ -110,9 +108,7 @@ font-family 和 src 都是必填的，另外的 font-style 和 font-weight 可�
 模糊距离为 0 表示完全不模糊，很大(比如 100px)几乎看不清
 
 ```css
-text-shadow:
-  -5px 15px 8px red,
-  15px -15px 1px blue;
+text-shadow: -5px 15px 8px red, 15px -15px 1px blue;
 ```
 
 ![效果图](../images/7341416679dd659226e7e222a56d7eaa.png)

@@ -121,7 +121,7 @@ Set-Cookie: hello=world; Secure; HttpOnly
 只能存字符串。存在硬盘中
 
 各个浏览器支持情况可以看<http://dev-test.nemikor.com/web-storage/support-test/>
-会触发 `storage` 事件，但无法区分是 sessionStorage 还是 localStorage   
+会触发 `storage` 事件，但无法区分是 sessionStorage 还是 localStorage
 
 ### 共有属性/方法
 

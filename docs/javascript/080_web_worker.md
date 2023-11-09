@@ -5,10 +5,11 @@
 当页面关闭时，该页面新建的 Web Worker 也会随之关闭，不会常驻在浏览器中
 
 由来见[起源](../nodejs/015_child_process.md#起源)  
-分为三类  
+分为三类
+
 - Worker：只能单页
-- SharedWorker：适合多个页面间互相通信  
-- serviceWorker：一般用来拦截网络请求或者消息推送    
+- SharedWorker：适合多个页面间互相通信
+- serviceWorker：一般用来拦截网络请求或者消息推送
 
 ## PWA(Progressive web apps)
 

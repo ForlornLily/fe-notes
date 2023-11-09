@@ -366,7 +366,8 @@ const server = http
 只能传送简单的文本，JSON 要转成字符串
 
 事件有 open, close, error, message。不支持 addEventListener  
-手动调用 close() 关闭  
+手动调用 close() 关闭
+
 ```js
 let socket = new WebSocket("ws:35.201.238.65")
 const message = {
@@ -379,6 +380,7 @@ socket.onmessage((msg) => {
 ```
 
 ## XMLHttpRequest
+
 尽可能用 fetch 代替 XMLHttpRequest  
 Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）
 
@@ -794,13 +796,14 @@ promise
     console.log(value)
   })
 ```
-### promise.finally   
 
-全部 settled 就会进，没有入参  
+### promise.finally
+
+全部 settled 就会进，没有入参
 
 ## Fetch
 
-请求资源的接口，一定是异步的  
+请求资源的接口，一定是异步的
 
 Fetch 提供了对 Request 和 Response（以及其他与网络请求有关的）对象的通用定义，除了 window 对象外还可以用在`service workers`、`Cache API`、又或者是其他处理请求和响应的方式
 
@@ -862,12 +865,15 @@ let myHeaders = new Headers({
 ```js
 myHeaders.append("Content-Type", "text/plain")
 ```
-append 同一个 key 多次，相当于 set，会用逗号分割多个值 
+
+append 同一个 key 多次，相当于 set，会用逗号分割多个值
+
 ```js
 myHeaders.append("hello", "world")
 myHeaders.append("hello", "world2")
 myHeaders.get("hello") // 'world, world2'
 ```
+
 - 修改：set(key, value)
 
 - 删除：delete(key)
@@ -884,7 +890,9 @@ options 不传, 默认 method 是"GET",
 const myRequest = new Request("http://localhost/flowers.jpg")
 fetch(myRequest).then((response) => response.json())
 ```
-可以调用 clone 复制 `myRequest.close()` 
+
+可以调用 clone 复制 `myRequest.close()`
+
 #### options
 
 完整属性见[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Request)
@@ -919,7 +927,7 @@ new Response("<h1>Service Unavailable</h1>", {
 - statusText: 和状态码关联的状态消息, 例如: OK.
 
 - headers: Headers 对象，对应 HTTP 的 header
-- redirected：布尔值，是否重定向 
+- redirected：布尔值，是否重定向
 
 #### response.headers
 
@@ -967,12 +975,15 @@ fetch(url, {
   // TODO
 })
 ```
+
 ### 中断
+
 用 AbortController 构造函数，fetch 中用 signal 绑定
+
 ```js
-const abortController = new AbortController();
+const abortController = new AbortController()
 fetch(url, {
-  signal: abortController.signal
+  signal: abortController.signal,
 })
 
 // 中断：abortController.abort()

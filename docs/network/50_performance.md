@@ -411,8 +411,10 @@ lighthouse https://www.baidu.com
 
 `window.performance`  
 参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance)
+
 - performance.now()：相对时间，距离打开页面的时间
 - performance.timeOrigin：打开页面的时间
+
 ### 常见指标
 
 - FP：[First paint](https://developer.mozilla.org/en-US/docs/Glossary/First_paint)：渲染出第一个像素点。FP 一般在 HTML 解析完成或者解析一部分时候触发。

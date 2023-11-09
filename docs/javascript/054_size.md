@@ -56,14 +56,16 @@ scrollHeight 也就是被实际内容撑出来的高度
   <p class="content child">hello</p>
 </div>
 ```
+
 ```js
-document.querySelector(".wrapper").clientHeight  // 200
-document.querySelector(".wrapper").scrollHeight  // 300
+document.querySelector(".wrapper").clientHeight // 200
+document.querySelector(".wrapper").scrollHeight // 300
 ```
 
 ## getBoundingClientRect()
 
 获取完整的尺寸信息。但是会忽略缩放。比如 windows 文本放大 125%，浏览器内获取到值实际上是 100%时候的
 
-## scrollIntoView  
-见 [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)  
+## scrollIntoView
+
+见 [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)

@@ -103,7 +103,7 @@ servant.unshift("Lancer", "Rider") //3
 `sort`不传参，把每一项都调用 String()方法，根据字符串编码排序。最小的在最前面
 
 ```js
-[2, 11, 3].sort() //[11, 2, 3]
+;[2, 11, 3].sort() //[11, 2, 3]
 ```
 
 传参的情况下：必须是一个函数。函数接受两个参数，分别是相邻的值。
@@ -136,7 +136,7 @@ arr.fill(1) // arr变成[1, 1, 1]
 - fill(params, start, end)
 
 不包括 end(end**大于**start 才有效)，不写 end 一直到数组最后一项  
-start 或者 end 超出范围则不生效    
+start 或者 end 超出范围则不生效
 
 ```js
 var arr = [4, 5, 6, 7]
@@ -145,11 +145,13 @@ arr.fill(666, 2) //arr变成[4, 5, 666, 666]
 var arr2 = [4, 5, 6, 7]
 arr2.fill(666, 2, 3) //arr变成[4, 5, 666, 7]
 ```
+
 ```js
 var arr = [2, 3, 4]
-arr.fill(1, 100, 101)  //  [2, 3, 4]
-arr.fill(1, 100)  //  [2, 3, 4]
+arr.fill(1, 100, 101) //  [2, 3, 4]
+arr.fill(1, 100) //  [2, 3, 4]
 ```
+
 ### copyWithin(start, index, end)
 
 用数组内的值填充
@@ -275,8 +277,10 @@ function filter() {
   })
 }
 ```
+
 结果
-``` js
+
+```js
 {
     "i": 4,
     "result": [
@@ -537,19 +541,21 @@ let numbers = translate(1, 2, 3)
 console.log(numbers) // 2,3,4
 ```
 
-## 迭代器方法  
+## 迭代器方法
 
 - keys：索引
-``` js
-const iterator = ["1", 2, "3"].keys()   // Array Iterator {}
-iterator.next()  // {value: 0, done: false}
-```
-- values
-- entries  
 
-``` js
+```js
+const iterator = ["1", 2, "3"].keys() // Array Iterator {}
+iterator.next() // {value: 0, done: false}
+```
+
+- values
+- entries
+
+```js
 const array = ["hello", "world", "js"]
-for(const key of array) {
+for (const key of array) {
   console.log(key)
 } // "hello" "world" "js"
 ```

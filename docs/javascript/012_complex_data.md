@@ -91,7 +91,7 @@ Symbol 用 getOwnPropertySymbols
 ## 枚举顺序
 
 - for-in 循环和 Object.keys() 顺序不固定
-- Object.getOwnPropertyNames()、Object.getOwnPropertySymbols()和 Object.assign() 固定  
+- Object.getOwnPropertyNames()、Object.getOwnPropertySymbols()和 Object.assign() 固定
 
 ## hasOwnproperty
 

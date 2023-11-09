@@ -5,7 +5,7 @@ Regular expression
 
 test 方法：返回 true/false
 
-exec: RegExp实例方法，返回匹配的数组
+exec: RegExp 实例方法，返回匹配的数组
 
 - 如果**配置了 g 标记**，每次调用 exec()都会在字符串中向前搜索下一个匹配项
 
@@ -213,13 +213,18 @@ console.log(pattern.lastIndex) // 8
 
 u: unicode，Unicode 模式，启用 Unicode 匹配。  
 s: dotAll 模式，表示元字符.匹配任何字符(包括\n 或\r)。
+
 ## 实例属性
-每个 RegExp 实例都有下列属性  
+
+每个 RegExp 实例都有下列属性
+
 - global：布尔值，表示是否设置了 g 标记
-``` js
+
+```js
 const pattern = /.at/g
-pattern.global  // true
+pattern.global // true
 ```
+
 - ignoreCase，布尔值，是否设置了 i
 - unicode，对应 u
 - sticky：对应 y

@@ -31,7 +31,7 @@ module.exports = {
 filename 默认就是"index.html"。上面的配置生成的代码如下:
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />

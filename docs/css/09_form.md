@@ -34,16 +34,17 @@ fieldset 用来分组, legend 表示分组的标题
 
 ## 提交
 
-input 设置 type="button"或者 submit，也可以手动 `form.submit()`  
+input 设置 type="button"或者 submit，也可以手动 `form.submit()`
 
 button 设置 type="submit"，放在 form 内才能提交，在 form 内是默认 type 是 submit
 
 建议用 button，方便放入其他 html
 
-可以用 form.addEventListener 监听 "submit" 事件，通过 preventDefault 阻止提交。但 `form.submit()` 时不会触发  
+可以用 form.addEventListener 监听 "submit" 事件，通过 preventDefault 阻止提交。但 `form.submit()` 时不会触发
 
-## 重置  
-设置 type="reset" 或者 `form.reset()`，reset 方法会触发 reset 事件  
+## 重置
+
+设置 type="reset" 或者 `form.reset()`，reset 方法会触发 reset 事件
 
 ## name 属性
 
@@ -57,9 +58,11 @@ PC 设置 height 和 line-height 一样
 
 移动端设置 line-height: normal
 
-## document.forms  
-获取页面上所有的表单元素  
+## document.forms
 
-## 选择文本  
-- select() 方法，会触发 select 事件    
-- setSelectionRange：选中部分文本  
+获取页面上所有的表单元素
+
+## 选择文本
+
+- select() 方法，会触发 select 事件
+- setSelectionRange：选中部分文本

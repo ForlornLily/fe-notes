@@ -60,10 +60,7 @@ body {
 }
 .logo {
   color: #fff;
-  font-family:
-    Helvetica Neue,
-    Arial,
-    sans-serif;
+  font-family: Helvetica Neue, Arial, sans-serif;
   font-size: 2em;
   margin: 1em 0;
 }

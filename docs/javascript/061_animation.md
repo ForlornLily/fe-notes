@@ -1,8 +1,9 @@
 # 动画
 
 ## 函数 requestAnimationFrame(function)
+
 原本用 setTimeout / setInterval 执行动画的下一帧，缺点是时间间隔不稳定  
-requestAnimationFrame 同样会返回一个 ID，可以用 cancelAnimationFrame 取消   
+requestAnimationFrame 同样会返回一个 ID，可以用 cancelAnimationFrame 取消
 
 ## Canvas
 
@@ -90,16 +91,17 @@ ctx.fillRect(70, 0, 100, 30)
 ```
 
 ![](../images/186a9d87445d1050d0d202329d80232c.png)
+
 - scale
 - translate
 - transform
-- setTransform  
+- setTransform
 
-### 暂存  
+### 暂存
+
 - save
-- restore：恢复到 save 的内容    
-但只针对变换，其他如 fillStyle、fillText 无效
-
+- restore：恢复到 save 的内容  
+  但只针对变换，其他如 fillStyle、fillText 无效
 
 ### addColorStop(stop, color)
 
@@ -117,9 +119,12 @@ grd.addColorStop(1, "white")
 ctx.fillStyle = grd
 ctx.fillRect(20, 20, 150, 100)
 ```
-### 绘制路径 
-绘制路径，必须首先调用 beginPath()方法，通过以下创建路径（没有具体的图形，用 stroke 等创建图形）   
-closePath 结束本次路径  
+
+### 绘制路径
+
+绘制路径，必须首先调用 beginPath()方法，通过以下创建路径（没有具体的图形，用 stroke 等创建图形）  
+closePath 结束本次路径
+
 - arc
 - arcTo
 - bezierCurveTo
@@ -129,6 +134,7 @@ closePath 结束本次路径
 - rect：矩阵
 
 ### 绘制圆 arc((x,y,r,sAngle,eAngle,counterclockwise)
+
 用 stroke() 或 fill() 方法在画布上绘制实际的弧
 
 ```js
@@ -138,18 +144,22 @@ ctx.beginPath()
 ctx.arc(100, 75, 50, 0, 2 * Math.PI)
 ctx.stroke()
 ```
+
 ### clip
-剪切当前路径  
+
+剪切当前路径
+
 ```js
-const c = document.getElementById("myCanvas");
-const ctx = c.getContext("2d");
-ctx.rect(50, 20, 200, 120);
-ctx.stroke();
+const c = document.getElementById("myCanvas")
+const ctx = c.getContext("2d")
+ctx.rect(50, 20, 200, 120)
+ctx.stroke()
 // ctx.clip();
-ctx.fillStyle = "red";
-ctx.fillRect(0, 0, 150, 100);
-```  
-没有 clip    
+ctx.fillStyle = "red"
+ctx.fillRect(0, 0, 150, 100)
+```
+
+没有 clip  
 ![no_clip](../images/no_clip.png)  
 加了 clip  
 ![clip](../images/clip.png)
@@ -182,15 +192,17 @@ canvas 对象生成的图像
 var canvas = document.getElementById("canvas")
 var dataURL = canvas.toDataURL()
 ```
-### 图案 createPattern  
 
-用来复制，有点像 background 的 repeat  
+### 图案 createPattern
 
-### 阴影  
+用来复制，有点像 background 的 repeat
+
+### 阴影
+
 - shadowColor
 - shadowOffsetX
 - shadowOffsetY
-- shadowBlur  
+- shadowBlur
 
 ### 绘制渐变 createLinearGradient(x0,y0,x1,y1)
 
@@ -200,20 +212,23 @@ var dataURL = canvas.toDataURL()
 ### 获取部分图像
 
 getImageData，putImageData
-``` js
+
+```js
 const test = document.getElementById("test")
 const context = test.getContext("2d")
 context.fillText("hello", 50, 50)
-context.fillStyle = "red";
+context.fillStyle = "red"
 
-context.fillRect(0, 0, 100, 200);
+context.fillRect(0, 0, 100, 200)
 
 const imageData = context.getImageData(0, 0, 100, 200)
-context.putImageData(imageData, 200, 200);
+context.putImageData(imageData, 200, 200)
 ```
+
 ### 合成
 
 - globalAlpha：透明度，0 ~ 1
+
 ```js
 context.globalAlpha = 0.1
 ```
