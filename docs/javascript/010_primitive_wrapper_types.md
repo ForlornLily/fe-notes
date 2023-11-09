@@ -128,6 +128,7 @@ function trim(str) {
   return str.replace(/(^\s*)|(\s*$)/g, "")
 }
 ```
+ES2019 新增 trimStart()和 trimEnd()，只去开头或结尾  
 
 ### 大小写转换
 

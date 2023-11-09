@@ -133,7 +133,7 @@ window.addEventListener("load", function () {
 
 ### type="module"
 
-[ES module](./032_modules.md) 在 script 内可以通过`type="module"`直接使用
+[ES module](./075_modules.md) 在 script 内可以通过`type="module"`直接使用
 
 ```html
 <script type="module">

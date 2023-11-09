@@ -121,26 +121,17 @@ Set-Cookie: hello=world; Secure; HttpOnly
 只能存字符串。存在硬盘中
 
 各个浏览器支持情况可以看<http://dev-test.nemikor.com/web-storage/support-test/>
+会触发 `storage` 事件，但无法区分是 sessionStorage 还是 localStorage   
 
 ### 共有属性/方法
 
-- clear()
+- localStorage.clear()：清除所有内容
 
-清除所有内容
-
-![](../images/26a154f22aad962adf2ccbcd9bc0260b.png)
-
-- getItem(key)
-
-也可以直接 storage.key 来获取
-
-![](../images/fbc544c5b1b61842d4516560919a1867.png)
+- getItem(key)，也可以直接 storage.key 来获取
 
 - removeItem(key)
 
-- setItem(key)
-
-也可以直接 storage.key 赋值
+- setItem(key)，也可以直接 storage.key 赋值
 
 ### sessionStorage
 
@@ -193,7 +184,7 @@ request.onsuccess = (event) => {
 
 不存在，则创建；已存在，直接打开
 
-第二个参数用来指定数据库版本号。
+第二个参数用来指定数据库版本号，必须是整数。
 
 如果再次 open 的时候版本号大于之前，会触发 upgradeneeded 事件
 

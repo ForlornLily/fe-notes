@@ -144,7 +144,7 @@ Array.prototype.pushAll = function () {}
 
 ## html 内引入模块
 
-设置 type="module"，默认总是异步的（defer）
+设置 type="module"，默认总是异步的（defer）：立即下载，文档解析后执行 
 
 ```html
 <!-- 跨域 -->

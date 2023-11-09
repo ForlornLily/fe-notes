@@ -161,7 +161,7 @@ res.setHeader("Set-Cookie", \`username=hello; path=/\`)
 res.setHeader("Set-Cookie", `username=hello; httpOnly`)
 ```
 
-设置后 document.cookie 为空，也无法修改
+前后端都可以设置，设置后 document.cookie 不包含，也无法修改
 
 3.expires
 
