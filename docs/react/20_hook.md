@@ -101,7 +101,7 @@ useLayoutEffect 和原来 componentDidMount&componentDidUpdate 一致，在 reac
 
 使用方式和`useEffect`一致。讨论[Library Upgrade Guide](https://github.com/reactwg/react-18/discussions/110)
 
-一般用在动态插入标签上，比如 CSS-in-JS。例子：[cssinjs](https://github.com/ant-design/cssinjs/blob/master/src/hooks/useCompatibleInsertionEffect.tsx)   
+一般用在动态插入标签上，比如 CSS-in-JS。例子：[cssinjs](https://github.com/ant-design/cssinjs/blob/master/src/hooks/useCompatibleInsertionEffect.tsx)  
 不要在 useInsertionEffect 内更新状态，此时 ref 也拿不到。
 
 ```js
