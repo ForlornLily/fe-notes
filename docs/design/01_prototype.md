@@ -8,19 +8,19 @@
 const mama = {
   name: "Isabella",
   job: "sister",
-}
+};
 function factory(o) {
   function plant() {}
-  plant.prototype = o
-  return new plant()
+  plant.prototype = o;
+  return new plant();
 }
-const base = factory(mama)
+const base = factory(mama);
 
 //改用 create
-const base2 = Object.create(mama)
+const base2 = Object.create(mama);
 ```
 
 ## 原型链
 
 当对象本身无法完成响应某个请求时，会把该请求委托给自己的构造器原型  
-更多原型链的内容参考[原型](../js/006_complex_data.md#原型)
+更多原型链的内容参考[原型](../javascript/012_complex_data.md#原型)

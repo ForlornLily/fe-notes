@@ -8,21 +8,21 @@
 
 ```ts
 function swapList(list: number[], left: number, right: number) {
-  const tmp = list[left]
-  list[left] = list[right]
-  list[right] = tmp
+  const tmp = list[left];
+  list[left] = list[right];
+  list[right] = tmp;
 }
 
 function bubbleSort(list: number[]) {
-  const length = list.length
+  const length = list.length;
   for (let i = 0; i < length; i += 1) {
     for (let j = 0; j < length - 1; j += 1) {
       if (list[j] > list[j + 1]) {
-        swapList(list, j, j + 1)
+        swapList(list, j, j + 1);
       }
     }
   }
-  console.log("list", list)
+  console.log("list", list);
 }
 ```
 
@@ -37,21 +37,21 @@ function bubbleSort(list: number[]) {
 
 ```ts
 function selectionSort(list: number[]) {
-  const length = list.length
+  const length = list.length;
   for (let i = 0; i < length; i += 1) {
-    let min = i // 假设第一个值是最小值
+    let min = i; // 假设第一个值是最小值
     for (let j = i + 1; j < length; j += 1) {
       if (list[j] < list[min]) {
         // 如果存在更小的值
-        min = j
+        min = j;
       }
     }
     if (i !== min) {
       // 将i的位置替换成最小值
-      swapList(list, i, min)
+      swapList(list, i, min);
     }
   }
-  console.log("list", list)
+  console.log("list", list);
 }
 ```
 
@@ -81,18 +81,18 @@ function selectionSort(list: number[]) {
 
 ```ts
 function insertSort(list: number[]) {
-  const length = list.length
-  let minValue
+  const length = list.length;
+  let minValue;
   for (let i = 1; i < length; i += 1) {
-    minValue = list[i]
-    let j = i
+    minValue = list[i];
+    let j = i;
     while (j > 0 && list[j - 1] > minValue) {
-      list[j] = list[j - 1]
-      j -= 1
+      list[j] = list[j - 1];
+      j -= 1;
     }
-    list[j] = minValue
+    list[j] = minValue;
   }
-  console.log("list", list)
+  console.log("list", list);
 }
 ```
 
@@ -110,22 +110,22 @@ function insertSort(list: number[]) {
 
 ```ts
 function shellSort(list: number[]) {
-  const length = list.length
-  let gap = Math.floor(length / 2)
+  const length = list.length;
+  let gap = Math.floor(length / 2);
   while (gap > 0) {
-    let minValue
+    let minValue;
     for (let i = gap; i < length; i += 1) {
-      minValue = list[i]
-      let j = i
+      minValue = list[i];
+      let j = i;
       while (j > 0 && list[j - gap] > minValue) {
-        list[j] = list[j - gap]
-        j -= gap
+        list[j] = list[j - gap];
+        j -= gap;
       }
-      list[j] = minValue
+      list[j] = minValue;
     }
-    gap = Math.floor(gap / 2)
+    gap = Math.floor(gap / 2);
   }
-  console.log("list", list)
+  console.log("list", list);
 }
 ```
 
@@ -142,23 +142,23 @@ function shellSort(list: number[]) {
 ```ts
 //将数组分开
 function mergeSort(list: number[]): number[] {
-  const length = list.length
+  const length = list.length;
   if (length < 2) {
-    return list
+    return list;
   }
-  const middle = Math.floor(length / 2)
-  const left = list.slice(0, middle)
-  const right = list.slice(middle)
-  return merge(mergeSort(left), mergeSort(right))
+  const middle = Math.floor(length / 2);
+  const left = list.slice(0, middle);
+  const right = list.slice(middle);
+  return merge(mergeSort(left), mergeSort(right));
 }
 //合并
 function merge(left: number[], right: number[]) {
-  const newList: number[] = []
+  const newList: number[] = [];
   while (left.length > 0 && right.length > 0) {
-    let minValue = left[0] > right[0] ? right.shift() : left.shift()
-    newList.push(minValue!)
+    let minValue = left[0] > right[0] ? right.shift() : left.shift();
+    newList.push(minValue!);
   }
-  return newList.concat(left, right)
+  return newList.concat(left, right);
 }
 ```
 
@@ -178,21 +178,21 @@ function merge(left: number[], right: number[]) {
 
 ```ts
 function quickSort(list: number[]): number[] {
-  const length = list.length
+  const length = list.length;
   if (length < 2) {
-    return list
+    return list;
   }
-  const base = list[0]
-  const left: number[] = []
-  const right: number[] = []
+  const base = list[0];
+  const left: number[] = [];
+  const right: number[] = [];
   for (let i = 1; i < length; i += 1) {
     if (list[i] < base) {
-      left.push(list[i])
+      left.push(list[i]);
     } else {
-      right.push(list[i])
+      right.push(list[i]);
     }
   }
-  return quickSort(left).concat([base], quickSort(right))
+  return quickSort(left).concat([base], quickSort(right));
 }
 ```
 
@@ -209,25 +209,25 @@ function quickSort(list: number[]): number[] {
 ```js
 function betterQuick(arr, left = 0, right = arr.length - 1) {
   if (left < right) {
-    let baseIndex = Math.floor((left + right) / 2) //基准值为中间值
-    let newBase = divide(arr, baseIndex, left, right)
-    betterQuick(arr, left, newBase - 1)
-    betterQuick(arr, newBase + 1, right)
+    let baseIndex = Math.floor((left + right) / 2); //基准值为中间值
+    let newBase = divide(arr, baseIndex, left, right);
+    betterQuick(arr, left, newBase - 1);
+    betterQuick(arr, newBase + 1, right);
   }
-  return arr
+  return arr;
 }
 function divide(arr, baseIndex, left, right) {
-  let baseValue = arr[baseIndex]
-  let newBase = left
-  swap(arr, baseIndex, right)
+  let baseValue = arr[baseIndex];
+  let newBase = left;
+  swap(arr, baseIndex, right);
   for (let i = left; i < right; i++) {
     if (arr[i] < baseValue) {
-      swap(arr, i, newBase)
-      newBase++
+      swap(arr, i, newBase);
+      newBase++;
     }
   }
-  swap(arr, right, newBase)
-  return newBase
+  swap(arr, right, newBase);
+  return newBase;
 }
 ```
 
@@ -247,30 +247,30 @@ function divide(arr, baseIndex, left, right) {
 
 ```js
 function heapSort(arr) {
-  let length = arr.length
+  let length = arr.length;
   //把数组变成最大堆
   for (let i = Math.floor(length / 2); i--; ) {
-    heapify(arr, i, length)
+    heapify(arr, i, length);
   }
   while (length > 1) {
-    length--
-    swap(arr, 0, length)
-    heapify(arr, 0, length)
+    length--;
+    swap(arr, 0, length);
+    heapify(arr, 0, length);
   }
 }
 function heapify(arr, index, size) {
   let currentIndex = index,
     left = 2 * index + 1,
-    right = left + 1
+    right = left + 1;
   if (left < size && arr[currentIndex] < arr[left]) {
-    currentIndex = left
+    currentIndex = left;
   }
   if (right < size && arr[currentIndex] < arr[right]) {
-    currentIndex = right
+    currentIndex = right;
   }
   if (currentIndex != index) {
-    swap(arr, index, currentIndex)
-    heapify(arr, currentIndex, size)
+    swap(arr, index, currentIndex);
+    heapify(arr, currentIndex, size);
   }
 }
 ```

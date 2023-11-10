@@ -11,17 +11,17 @@ Matchers：Jest 主要利用“匹配器”测试代码
 ```ts
 // index.ts
 export function add(x: number, y: number): number {
-  return x + y
+  return x + y;
 }
 ```
 
 ```js
 // index.test.js
-import { add } from "./index"
+import { add } from "./index";
 
 test("add", () => {
-  expect(add(1, 2)).toBe(3)
-})
+  expect(add(1, 2)).toBe(3);
+});
 ```
 
 上述的 `expect` 表示期望的内容，`toBe` 代表期望的结果，`toBe` 用 `Object.is` 进行等价比价
@@ -32,10 +32,10 @@ test("add", () => {
 
 ```js
 test("object is equal", () => {
-  const data = { hello: "world" }
-  expect(data).toEqual({ hello: "world" }) // 通过
-  expect(data).toBe({ hello: "world" }) // 不通过，对象不相等
-})
+  const data = { hello: "world" };
+  expect(data).toEqual({ hello: "world" }); // 通过
+  expect(data).toBe({ hello: "world" }); // 不通过，对象不相等
+});
 ```
 
 ## not
@@ -44,8 +44,8 @@ test("object is equal", () => {
 
 ```js
 test("add", () => {
-  expect(add(1, 2)).not.toBe(4)
-})
+  expect(add(1, 2)).not.toBe(4);
+});
 ```
 
 ## falsy
@@ -58,16 +58,16 @@ test("add", () => {
 
 ```ts
 // index.ts
-export const zero = 0
+export const zero = 0;
 ```
 
 ```js
-import { zero } from "./index"
+import { zero } from "./index";
 
 test("object is falsy", () => {
-  expect(zero).toBeFalsy() //测试通过
-  expect(zero).toBeNull() //不通过
-})
+  expect(zero).toBeFalsy(); //测试通过
+  expect(zero).toBeNull(); //不通过
+});
 ```
 
 ## 数字
@@ -78,8 +78,8 @@ test("object is falsy", () => {
 
 ```js
 test("number is equal", () => {
-  expect(0.1 + 0.2).toBeCloseTo(0.3)
-})
+  expect(0.1 + 0.2).toBeCloseTo(0.3);
+});
 ```
 
 ## 比较
@@ -88,8 +88,8 @@ test("number is equal", () => {
 
 ```js
 test("number is equal", () => {
-  expect(0.1 + 0.2).toBeGreaterThan(0.3) // 通过
-})
+  expect(0.1 + 0.2).toBeGreaterThan(0.3); // 通过
+});
 ```
 
 - toBeGreaterThanOrEqual
@@ -105,8 +105,8 @@ test("number is equal", () => {
 
 ```js
 test("string match", () => {
-  expect("hello world").toMatch("hello") // 通过
-})
+  expect("hello world").toMatch("hello"); // 通过
+});
 ```
 
 ## 迭代器
@@ -115,8 +115,8 @@ test("string match", () => {
 
 ```js
 test("iterables", () => {
-  expect(["hello", "world"]).toContain("hello")
-})
+  expect(["hello", "world"]).toContain("hello");
+});
 ```
 
 ## 异常
@@ -126,18 +126,18 @@ test("iterables", () => {
 ```ts
 // index.ts
 export function errorCatch() {
-  throw new Error("error msg")
+  throw new Error("error msg");
 }
 ```
 
 ```js
 // index.test.js
-import { errorCatch } from "./index"
+import { errorCatch } from "./index";
 
 test("catch errors", () => {
-  expect(errorCatch).toThrow("error msg") // 通过
-  expect(errorCatch).toThrow("hello") // 不通过，抛出的内容不对
-})
+  expect(errorCatch).toThrow("error msg"); // 通过
+  expect(errorCatch).toThrow("hello"); // 不通过，抛出的内容不对
+});
 ```
 
 ## 其他

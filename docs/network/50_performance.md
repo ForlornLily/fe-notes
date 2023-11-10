@@ -109,7 +109,7 @@
 
 ### webpack 打包优化
 
-见[优化：optimization](../webpack4/07_optimization.md)或者官网[Build Performance](https://webpack.js.org/guides/build-performance/)  
+见[优化：optimization](../webpack/07_optimization.md)或者官网[Build Performance](https://webpack.js.org/guides/build-performance/)  
 常用的有
 
 - tree shaking
@@ -172,17 +172,17 @@ Gzip 本质上是在一个文本文件中找出一些重复出现的字符串、
 比如
 
 ```js
-var name = "hello"
+var name = "hello";
 function sayName() {
-  console.log(name) //用到了全局变量name
+  console.log(name); //用到了全局变量name
 }
 //修改为
 var nameObj = {
   name: "hello",
   sayName() {
-    console.log(this.name)
+    console.log(this.name);
   },
-}
+};
 ```
 
 ### 避免和 null 比较
@@ -196,7 +196,7 @@ var nameObj = {
 ```js
 const Constants = {
   INVALID_MESSAGE: "错误",
-}
+};
 ```
 
 适用场景
@@ -228,27 +228,27 @@ const Constants = {
 单条语句多个操作快，避免多个语句，每个语句只有一个操作。
 
 ```js
-var foo = 5
-var bar = true
+var foo = 5;
+var bar = true;
 //改成
 var foo = 5,
-  bar = true
+  bar = true;
 ```
 
 #### 迭代值（自增、自减）
 
 ```js
-var name = foo[i]
-i++
+var name = foo[i];
+i++;
 //改成
-var name = foo[i++]
+var name = foo[i++];
 ```
 
 ### 用数组和对象字面量代替构造函数
 
 ### 节流与防抖
 
-见[函数防抖与节流](../js/022_bom.md#函数防抖与节流)
+见[函数防抖与节流](../javascript/053_dom.md#函数防抖与节流)
 
 ## 浏览器加载过程
 
@@ -411,6 +411,9 @@ lighthouse https://www.baidu.com
 
 `window.performance`  
 参考[MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance)
+
+- performance.now()：相对时间，距离打开页面的时间
+- performance.timeOrigin：打开页面的时间
 
 ### 常见指标
 

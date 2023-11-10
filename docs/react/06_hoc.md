@@ -7,34 +7,34 @@ HOC(Higher-Order Components): 本质上是个函数，函数内部返回的是�
 HOC 是一个纯函数，不会有副作用。不应该修改原本的组件，也不会有特殊的业务逻辑
 
 ```js
-HOC
+HOC;
 function logProps(WrappedComponent) {
   //返回新组件
   return class extends React.Component {
     componentWillReceiveProps(nextProps) {
-      console.log("Current props: ", this.props)
-      console.log("Next props: ", nextProps)
+      console.log("Current props: ", this.props);
+      console.log("Next props: ", nextProps);
     }
     render() {
       //渲染传入的组件
-      return <WrappedComponent {...this.props} />
+      return <WrappedComponent {...this.props} />;
     }
-  }
+  };
 }
 //调用
-const EnhancedComponent = logProps(InputComponent)
+const EnhancedComponent = logProps(InputComponent);
 ```
 
 常见有 Redux，例
 
 ```js
 // React Redux 的 `connect` 函数
-const ConnectedComment = connect(commentSelector, commentActions)(CommentList)
+const ConnectedComment = connect(commentSelector, commentActions)(CommentList);
 //等价于
 // connect 是一个函数，它的返回值为另外一个函数。
-const enhance = connect(commentListSelector, commentListActions)
+const enhance = connect(commentListSelector, commentListActions);
 // 返回值为 HOC，它会返回已经连接 Redux store 的组件
-const ConnectedComment = enhance(CommentList)
+const ConnectedComment = enhance(CommentList);
 ```
 
 ## 注意事项
@@ -62,37 +62,37 @@ render() {
 - 避免太深的嵌套对象
 
 ```js
-import React, { Component, memo } from "react"
-import ReactDOM from "react-dom"
+import React, { Component, memo } from "react";
+import ReactDOM from "react-dom";
 const CustomInput = memo(function CustomInput(props) {
-  console.log("111")
-  return <input defaultValue={props.value} />
-}, areEqual)
+  console.log("111");
+  return <input defaultValue={props.value} />;
+}, areEqual);
 function areEqual(prevProps, nextProps) {
   //返回true后不会更新CustomInput
-  return true
+  return true;
 }
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: "1",
       test: "111",
-    }
+    };
   }
   changeValue = () => {
     this.setState({
       value: "2",
-    })
-  }
+    });
+  };
   render() {
     return (
       <div>
         <CustomInput type="text" value={this.state.value} />
         <button onClick={() => this.changeValue()}></button>
       </div>
-    )
+    );
   }
 }
-ReactDOM.render(<App />, document.getElementById("root"))
+ReactDOM.render(<App />, document.getElementById("root"));
 ```

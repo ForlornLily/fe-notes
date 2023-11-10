@@ -15,7 +15,7 @@
 
 ```js
 function increament(num) {
-  return num + 1
+  return num + 1;
 }
 ```
 
@@ -27,15 +27,15 @@ function increament(num) {
 
 ```js
 function searArr(arr, num) {
-  const length = arr.length
+  const length = arr.length;
   for (let i = 0; i < length; i++) {
     if (arr[i] === num) {
-      return i
+      return i;
     }
   }
 }
-const tmp = [1, 2, 3, 4, 5, 6]
-searArr(tmp, 6)
+const tmp = [1, 2, 3, 4, 5, 6];
+searArr(tmp, 6);
 ```
 
 那么最差的情况下，if 语句要判断 arr.length 次。
@@ -49,7 +49,7 @@ n 的平方。比如冒泡排序
 ```js
 for (let i = 0; i < length; i++) {
   for (let j = 0; j < length - 1; j++) {
-    if (arrs[j] > arrs[j + 1]) swap(arrs, j, j + 1)
+    if (arrs[j] > arrs[j + 1]) swap(arrs, j, j + 1);
   }
 }
 ```

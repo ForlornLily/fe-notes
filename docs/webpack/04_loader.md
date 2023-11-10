@@ -100,7 +100,7 @@ module.exports = {
       },
     ],
   },
-}
+};
 ```
 
 ### file-loader
@@ -115,7 +115,7 @@ file-loader 本质上把文件挪到打包后的目录，并返回 webpack 一�
 更多 options 见官网
 
 ```js
-const path = require("path")
+const path = require("path");
 module.exports = {
   entry: {
     main: "./src/index.js",
@@ -135,7 +135,7 @@ module.exports = {
       },
     ],
   },
-}
+};
 ```
 
 入口文件内容
@@ -218,17 +218,17 @@ SCSS 源代码会先交给 sass-loader 把 SCSS 转换成 CSS；
 以 create-react-app 为例
 
 ```js
-const path = require("path")
+const path = require("path");
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // style files regexes
-const cssRegex = /\.css$/
-const cssModuleRegex = /\.module\.css$/
-const sassRegex = /\.(scss|sass)$/
-const sassModuleRegex = /\.module\.(scss|sass)$/
-const isEnvDevelopment = webpackEnv === "development"
-const isEnvProduction = webpackEnv === "production"
+const cssRegex = /\.css$/;
+const cssModuleRegex = /\.module\.css$/;
+const sassRegex = /\.(scss|sass)$/;
+const sassModuleRegex = /\.module\.(scss|sass)$/;
+const isEnvDevelopment = webpackEnv === "development";
+const isEnvProduction = webpackEnv === "production";
 
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -291,7 +291,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       },
     },
-  ].filter(Boolean)
+  ].filter(Boolean);
   if (preProcessor) {
     loaders.push(
       {
@@ -307,14 +307,14 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
           sourceMap: true,
         },
       }
-    )
+    );
   }
-  return loaders
-}
+  return loaders;
+};
 ```
 
 ```js
-;[
+[
   // "postcss" loader applies autoprefixer to our CSS.
   // "css" loader resolves paths in CSS and adds assets as dependencies.
   // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -389,7 +389,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       "sass-loader"
     ),
   },
-]
+];
 ```
 
 ### 加前缀
@@ -468,7 +468,7 @@ npm i @babel/plugin-proposal-class-properties @babel/plugin-transform-block-scop
 在需要兼容的页面的 JS 顶部引入
 
 ```js
-import "@babel/polyfill"
+import "@babel/polyfill";
 ```
 
 ![](../images/c9f03d94b0a9c0f0f4bb38dc79a23251.png)
@@ -535,7 +535,7 @@ options: {
         useBuiltIns: "usage",
       },
     ],
-  ]
+  ];
 }
 ```
 
@@ -557,7 +557,7 @@ options: {
         },
       },
     ],
-  ]
+  ];
 }
 ```
 

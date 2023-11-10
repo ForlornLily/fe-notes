@@ -5,7 +5,7 @@ webpack 默认只能识别 js 文件，其他文件的打包需要配置 loader 
 ## webpack.config.js
 
 ```js
-const path = require("path")
+const path = require("path");
 module.exports = {
   mode: "production",
   entry: {
@@ -25,7 +25,7 @@ module.exports = {
     filename: "index.min.js",
     path: path.resolve(__dirname, "dist"), //必须是绝对路径
   },
-}
+};
 ```
 
 ## [命令](https://webpack.js.org/api/cli)

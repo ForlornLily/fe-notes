@@ -11,32 +11,32 @@
 export function asynceDemo() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve("hello")
-    }, 1000)
-  })
+      resolve("hello");
+    }, 1000);
+  });
 }
 ```
 
 ```js
 // index.test.js
-import { asynceDemo } from "./index"
+import { asynceDemo } from "./index";
 
 test("promise", () => {
   return asynceDemo().then((data) => {
-    expect(data).toBe("hello")
-  })
-})
+    expect(data).toBe("hello");
+  });
+});
 ```
 
 用 `.resolves` / `.rejects` 改写
 
 ```js
 // 上面等价于
-import { asynceDemo } from "./index"
+import { asynceDemo } from "./index";
 
 test("promise", () => {
-  return expect(asynceDemo()).resolves.toBe("hello")
-})
+  return expect(asynceDemo()).resolves.toBe("hello");
+});
 ```
 
 ## async
@@ -45,9 +45,9 @@ test("promise", () => {
 
 ```js
 // 上面等价于
-import { asynceDemo } from "./index"
+import { asynceDemo } from "./index";
 
 test("promise", async () => {
-  await expect(asynceDemo()).resolves.toBe("hello")
-})
+  await expect(asynceDemo()).resolves.toBe("hello");
+});
 ```

@@ -13,23 +13,23 @@
 比如下方，访问`http://localhost:666/`后, 页面的`Response Header`里面可以看到`Content-Encoding：gzip`
 
 ```js
-const fs = require("fs")
-const http = require("http")
-const zlib = require("zlib")
-const filepath = "./src/index.html"
+const fs = require("fs");
+const http = require("http");
+const zlib = require("zlib");
+const filepath = "./src/index.html";
 
 const server = http.createServer((req, res) => {
-  const acceptEncoding = req.headers["accept-encoding"]
+  const acceptEncoding = req.headers["accept-encoding"];
   if (acceptEncoding.includes("gzip")) {
-    const gzip = zlib.createGzip()
+    const gzip = zlib.createGzip();
     res.writeHead(200, {
       "Content-Encoding": "gzip",
-    })
-    fs.createReadStream(filepath).pipe(gzip).pipe(res)
+    });
+    fs.createReadStream(filepath).pipe(gzip).pipe(res);
   } else {
-    fs.createReadStream(filepath).pipe(res)
+    fs.createReadStream(filepath).pipe(res);
   }
-})
+});
 
-server.listen(666)
+server.listen(666);
 ```

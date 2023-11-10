@@ -12,8 +12,8 @@
 
 ```js
 items = items.filter(function (item) {
-  return item.message.match(/Foo/)
-})
+  return item.message.match(/Foo/);
+});
 ```
 
 - 直接修改数组的索引，比如 item[1] = "123"
@@ -44,7 +44,7 @@ items = items.filter(function (item) {
 userProfile = Object.assign({}, userProfile, {
   age: 27,
   favoriteColor: "Vue Green",
-})
+});
 ```
 
 ### 原因

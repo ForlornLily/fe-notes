@@ -25,9 +25,9 @@ Vue.directive("focus", {
   // 当被绑定的元素插入到 DOM 中时……
   inserted: function (el) {
     // 聚焦元素
-    el.focus()
+    el.focus();
   },
-})
+});
 ```
 
 3.  mixin 混入公用方法
@@ -43,17 +43,17 @@ Vue.directive("focus", {
 用第四种方式
 
 ```js
-var Toast = {}
+var Toast = {};
 Toast.install = function (Vue, options) {
-  Vue.prototype.$msg = "Hello World"
-}
-Vue.use(Toast) // 注册
+  Vue.prototype.$msg = "Hello World";
+};
+Vue.use(Toast); // 注册
 let app = new Vue({
   el: "#app",
   mounted() {
-    console.log(this.$msg) // Hello World
+    console.log(this.$msg); // Hello World
   },
-})
+});
 ```
 
 ## 私有方法处理

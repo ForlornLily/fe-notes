@@ -14,38 +14,38 @@ command pattern：执行某些特定事情的指令
 ```js
 const openWechat = {
   excute() {
-    console.log("打开微信")
+    console.log("打开微信");
   },
-}
+};
 const openBrowser = {
   excute() {
-    console.log("打开浏览器")
+    console.log("打开浏览器");
   },
-}
+};
 const openSteam = {
   excute() {
-    console.log("打开steam")
+    console.log("打开steam");
   },
-}
+};
 
 function MacroCommand() {
-  this.list = []
+  this.list = [];
 }
 MacroCommand.prototype.add = function (fn) {
-  this.list.push(fn)
-}
+  this.list.push(fn);
+};
 MacroCommand.prototype.excute = function () {
   const list = this.list,
-    length = list.length
+    length = list.length;
   for (let i = 0; i < length; i++) {
-    list[i].excute()
+    list[i].excute();
   }
-}
+};
 
-const command = new MacroCommand()
-command.add(openWechat)
-command.add(openBrowser)
-command.add(openSteam)
+const command = new MacroCommand();
+command.add(openWechat);
+command.add(openBrowser);
+command.add(openSteam);
 
-command.excute(openSteam)
+command.excute(openSteam);
 ```

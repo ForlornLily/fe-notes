@@ -6,25 +6,25 @@
 
 ```jsx
 // 废弃
-import { render } from "react-dom"
+import { render } from "react-dom";
 
-const domNode = document.getElementById("root")
-render(<App />, domNode)
+const domNode = document.getElementById("root");
+render(<App />, domNode);
 ```
 
 ```jsx
-import { createRoot } from "react-dom/client"
+import { createRoot } from "react-dom/client";
 
-const domNode = document.getElementById("root")
-const root = createRoot(domNode)
+const domNode = document.getElementById("root");
+const root = createRoot(domNode);
 ```
 
 ```jsx
 // 渲染
-root.render(<App />)
+root.render(<App />);
 
 // 卸载
-root.unmount()
+root.unmount();
 ```
 
 如果 root 的元素由 React 服务端渲染生成，用 [hydrateRoot](#hydrateRoot)  
@@ -49,6 +49,6 @@ export default function App() {
     <h1 suppressHydrationWarning={true}>
       Current Date: {new Date().toLocaleDateString()}
     </h1>
-  )
+  );
 }
 ```

@@ -31,7 +31,7 @@ function onRender(
   // Aggregate or log render timings...
 }
 
-;<Profiler id="App" onRender={onRender}>
+<Profiler id="App" onRender={onRender}>
   <App />
-</Profiler>
+</Profiler>;
 ```

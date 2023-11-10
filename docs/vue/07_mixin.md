@@ -8,14 +8,14 @@
   var myMix = {
     methods: {
       sayHello() {
-        console.log("hello")
+        console.log("hello");
       },
     },
-  }
+  };
   const app = new Vue({
     el: "#app",
     mixins: [myMix],
-  })
+  });
 </script>
 ```
 
@@ -36,23 +36,23 @@
   var myMix = {
     methods: {
       sayHello() {
-        console.log("hello")
+        console.log("hello");
       },
       sayWorld() {
-        console.log("world")
+        console.log("world");
       },
     },
-  }
+  };
   const app = new Vue({
     el: "#app",
     mixins: [myMix],
     methods: {
       sayHello() {
         //以此为优先
-        console.log("Hi!")
+        console.log("Hi!");
       },
     },
-  })
+  });
 </script>
 ```
 
@@ -70,17 +70,17 @@
 var myMix = {
   methods: {
     sayHello() {
-      console.log("hello")
+      console.log("hello");
     },
     sayWorld() {
-      console.log("world")
+      console.log("world");
     },
   },
   mounted() {
-    console.log("myMix mounted")
+    console.log("myMix mounted");
   },
-}
-Vue.mixin(myMix)
+};
+Vue.mixin(myMix);
 ```
 
 ## 自定义配置 optionMergeStrategies
@@ -92,17 +92,17 @@ Vue.mixin(myMix)
 ```js
 Vue.config.optionMergeStrategies.methods = function (toVal, fromVal) {
   // 先配置再new 实例。 返回合并后的值
-  debugger
-}
+  debugger;
+};
 var myMix = {
   methods: {
     sayHello() {
-      console.log("hello")
+      console.log("hello");
     },
   },
-}
-Vue.mixin(myMix)
+};
+Vue.mixin(myMix);
 const app = new Vue({
   el: "#app",
-})
+});
 ```

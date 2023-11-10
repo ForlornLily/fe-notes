@@ -18,9 +18,9 @@ useState()只有一个参数，值是初始值
 
 ```js
 const [state, setState] = useState(() => {
-  const initialState = someExpensiveComputation(props)
-  return initialState
-})
+  const initialState = someExpensiveComputation(props);
+  return initialState;
+});
 ```
 
 ## effect
@@ -35,14 +35,14 @@ const [state, setState] = useState(() => {
 ```js
 useEffect(() => {
   function handleStatusChange(status) {
-    setIsOnline(status.isOnline)
+    setIsOnline(status.isOnline);
   }
 
-  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange)
+  ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
   return () => {
-    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange)
-  }
-}, [props.friend.id]) // 仅在 props.friend.id 发生变化时，重新订阅
+    ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+  };
+}, [props.friend.id]); // 仅在 props.friend.id 发生变化时，重新订阅
 ```
 
 如果只想初始化调一次，而不是每次更新都调，传入空数组`[]`即可  
@@ -55,35 +55,35 @@ useEffect(() => {
 function Child(props) {
   const {
     data = [], // 对象不相等，每次生成的 `[]` 都不等，导致 useEffect 依赖每次都会更新
-  } = props
-  const [map, setMap] = useState({})
+  } = props;
+  const [map, setMap] = useState({});
   useEffect(() => {
-    let tmp_map = {}
+    let tmp_map = {};
     data.forEach((item) => {
-      tmp_map[1] = "hello"
-    })
-    setMap(tmp_map)
-  }, [data])
-  console.log(111)
-  return <div className="modal">11</div>
+      tmp_map[1] = "hello";
+    });
+    setMap(tmp_map);
+  }, [data]);
+  console.log(111);
+  return <div className="modal">11</div>;
 }
 ```
 
 ```js
 // 正常
-const empty_arr = []
+const empty_arr = [];
 function Child(props) {
-  const { data = empty_arr } = props
-  const [map, setMap] = useState({})
+  const { data = empty_arr } = props;
+  const [map, setMap] = useState({});
   useEffect(() => {
-    let tmp_map = {}
+    let tmp_map = {};
     data.forEach((item) => {
-      tmp_map[1] = "hello"
-    })
-    setMap(tmp_map)
-  }, [data])
-  console.log(111)
-  return <div className="modal">11</div>
+      tmp_map[1] = "hello";
+    });
+    setMap(tmp_map);
+  }, [data]);
+  console.log(111);
+  return <div className="modal">11</div>;
 }
 ```
 
@@ -105,14 +105,14 @@ useLayoutEffect 和原来 componentDidMount&componentDidUpdate 一致，在 reac
 不要在 useInsertionEffect 内更新状态，此时 ref 也拿不到。
 
 ```js
-import { useInsertionEffect } from "react"
+import { useInsertionEffect } from "react";
 
 // Inside your CSS-in-JS library
 function useCSS(rule) {
   useInsertionEffect(() => {
     // ... inject <style> tags here ...
-  })
-  return rule
+  });
+  return rule;
 }
 ```
 
@@ -129,30 +129,30 @@ useContext 的参数必须是`context`对象本身
 //第三个值也是一个函数
 //初始化的值是`init(initialArg)`
 //不传init函数，初始值是`initialArg`
-const [state, dispatch] = useReducer(reducer, initialArg, init)
+const [state, dispatch] = useReducer(reducer, initialArg, init);
 ```
 
 ```js
-const initialState = { count: 0 }
+const initialState = { count: 0 };
 function reducer(state, action) {
   switch (action.type) {
     case "increment":
-      return { count: state.count + 1 }
+      return { count: state.count + 1 };
     case "decrement":
-      return { count: state.count - 1 }
+      return { count: state.count - 1 };
     default:
-      throw new Error()
+      throw new Error();
   }
 }
 function Counter() {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
       Count: {state.count}
       <button onClick={() => dispatch({ type: "decrement" })}>-</button>
       <button onClick={() => dispatch({ type: "increment" })}>+</button>
     </>
-  )
+  );
 }
 ```
 
@@ -169,8 +169,8 @@ function Counter() {
 
 ```js
 const memoizedCallback = useCallback(() => {
-  doSomething(a, b)
-}, [a, b])
+  doSomething(a, b);
+}, [a, b]);
 ```
 
 ## useMemo
@@ -179,7 +179,7 @@ const memoizedCallback = useCallback(() => {
 避免使用具有副作用的函数，副作用的函数都应该在`effect`的 hook 里面
 
 ```js
-const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 ```
 
 ## useRef
@@ -205,13 +205,13 @@ const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b])
 
 ```jsx
 function TabContainer() {
-  const [isPending, startTransition] = useTransition()
-  const [tab, setTab] = useState("about")
+  const [isPending, startTransition] = useTransition();
+  const [tab, setTab] = useState("about");
 
   function selectTab(nextTab) {
     startTransition(() => {
-      setTab(nextTab)
-    })
+      setTab(nextTab);
+    });
   }
   // ...
 }
@@ -221,9 +221,9 @@ function TabContainer() {
 startTransition(() => {
   // ❌ Setting state *after* startTransition call
   setTimeout(() => {
-    setPage("/about")
-  }, 1000)
-})
+    setPage("/about");
+  }, 1000);
+});
 ```
 
 反例：Input 的 value，输入和回显应该是所见即所得，不应该用 useTransition
@@ -233,15 +233,15 @@ startTransition(() => {
 和 useTransition 很像，只不过没有提供 `isPending`，没有 hooks 的限制
 
 ```jsx
-import { startTransition } from "react"
+import { startTransition } from "react";
 
 function TabContainer() {
-  const [tab, setTab] = useState("about")
+  const [tab, setTab] = useState("about");
 
   function selectTab(nextTab) {
     startTransition(() => {
-      setTab(nextTab)
-    })
+      setTab(nextTab);
+    });
   }
   // ...
 }
@@ -258,7 +258,7 @@ function TabContainer() {
 
 ```js
 if (!list.length) {
-  return ""
+  return "";
 }
-const [page_num, setNum] = useState(1)
+const [page_num, setNum] = useState(1);
 ```

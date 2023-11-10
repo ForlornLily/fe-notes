@@ -9,9 +9,9 @@ div > p，是先找所有 p，再找 p 的父元素是不是 div
 
 ```js
 //未优化的
-$("div.data .gonzalez")
+$("div.data .gonzalez");
 //优化后
-$(".data td.gonzalez")
+$(".data td.gonzalez");
 ```
 
 ### 变量名
@@ -44,8 +44,8 @@ on 可以进行事件委托 ，除此以外没什么区别
 这个时候的 namespace 就是 click 的命名空间，解绑的时候就
 
 ```js
-$().unbind("click.namespace") //解绑click
-$().unbind(".namespace") // 取消这个命名空间中所有事件的绑定
+$().unbind("click.namespace"); //解绑click
+$().unbind(".namespace"); // 取消这个命名空间中所有事件的绑定
 ```
 
 ## \$.fn.hover
@@ -55,12 +55,12 @@ $().unbind(".namespace") // 取消这个命名空间中所有事件的绑定
 ```js
 $("p").hover(
   function () {
-    $("p").css("background-color", "yellow")
+    $("p").css("background-color", "yellow");
   },
   function () {
-    $("p").css("background-color", "pink")
+    $("p").css("background-color", "pink");
   }
-)
+);
 ```
 
 ## \$.fn.toggle
@@ -77,10 +77,10 @@ $("p").hover(
 ```js
 $.widget("nmk.progressbar", {
   _create: function () {
-    var progress = this.options.value + "%"
-    this.element.addClass("progressbar").text(progress)
+    var progress = this.options.value + "%";
+    this.element.addClass("progressbar").text(progress);
   },
-})
+});
 ```
 
 nmk 是插件的命名空间，只允许一层，也就是不能 nmk.xxx.progressbar  

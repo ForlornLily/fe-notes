@@ -30,7 +30,7 @@ localStorage
 
 ### 日期 NaN
 
-见[Date](../js/010_date.md);
+见[Date](../javascript/024_date.md);
 
 ### fixed 定位
 
@@ -41,9 +41,9 @@ localStorage
 ```js
 setTimeout(function () {
   var scrollHeight =
-    document.documentElement.scrollTop || document.body.scrollTop || 0
-  window.scrollTo(0, Math.max(scrollHeight - 1, 0))
-}, 100)
+    document.documentElement.scrollTop || document.body.scrollTop || 0;
+  window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+}, 100);
 ```
 
 2. 最外层 div fixed 定位，输入框靠近底部，IOS 可以聚焦，但无法输入。  
@@ -79,25 +79,25 @@ setTimeout(function () {
 function selectText(textbox, startIndex, stopIndex) {
   if (textbox.createTextRange) {
     //ie
-    const range = textbox.createTextRange()
-    range.collapse(true)
-    range.moveStart("character", startIndex) //起始光标
-    range.moveEnd("character", stopIndex - startIndex) //结束光标
-    range.select() //不兼容苹果
+    const range = textbox.createTextRange();
+    range.collapse(true);
+    range.moveStart("character", startIndex); //起始光标
+    range.moveEnd("character", stopIndex - startIndex); //结束光标
+    range.select(); //不兼容苹果
   } else {
     //firefox/chrome
-    textbox.setSelectionRange(startIndex, stopIndex)
-    textbox.focus()
+    textbox.setSelectionRange(startIndex, stopIndex);
+    textbox.focus();
   }
 }
-const input = this.$refs.input
-selectText(input, 0, this.url.length)
+const input = this.$refs.input;
+selectText(input, 0, this.url.length);
 if (document.execCommand("copy")) {
-  document.execCommand("copy")
-  console.log("复制成功")
-  input.blur()
+  document.execCommand("copy");
+  console.log("复制成功");
+  input.blur();
 } else {
-  console.log("浏览器不支持，请手动复制")
+  console.log("浏览器不支持，请手动复制");
 }
 ```
 

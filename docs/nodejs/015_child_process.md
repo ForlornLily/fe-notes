@@ -30,23 +30,23 @@ NodeJS 采用了和 Web Worker 相同的思路来解决大计算量的问题：c
 比如在一个 js 文件内允许 `npm run dev`
 
 ```js
-const childProcess = require("child_process")
+const childProcess = require("child_process");
 
-const { spawn } = childProcess
+const { spawn } = childProcess;
 
-const projectPath = "D:\\filetest\\rocket-test"
+const projectPath = "D:\\filetest\\rocket-test";
 const child = spawn(
   process.platform === "win32" ? "npm.cmd" : "npm", //兼容windows
   ["run", "dev"],
   {
     cwd: projectPath, //执行命令所在的文件路径
   }
-)
+);
 
-child.stdout.setEncoding("utf8") //输出成字符串，默认是 buffer
+child.stdout.setEncoding("utf8"); //输出成字符串，默认是 buffer
 child.stdout.on("data", function (data) {
-  console.log(data)
-})
+  console.log(data);
+});
 ```
 
 ## exec
@@ -61,10 +61,10 @@ node start.js
 
 ```js
 //start.js
-const child_process = require("child_process")
+const child_process = require("child_process");
 child_process.exec("npm run dev", function (err, stdout, stderr) {
-  console.log(stdout)
-})
+  console.log(stdout);
+});
 ```
 
 `execSync` 是同步版
@@ -82,16 +82,16 @@ child_process.exec("npm run dev", function (err, stdout, stderr) {
 
 ```js
 //dist/index.js
-process.send({ hello: "world" })
+process.send({ hello: "world" });
 ```
 
 ```js
-const childProcess = require("child_process")
+const childProcess = require("child_process");
 
-const { fork } = childProcess
+const { fork } = childProcess;
 
-const child = fork("./dist/index.js")
+const child = fork("./dist/index.js");
 child.on("message", (data) => {
-  console.log(data) // { hello: "world" }
-})
+  console.log(data); // { hello: "world" }
+});
 ```

@@ -7,13 +7,13 @@
 不关心书写顺序
 
 ```js
-const template = Handlebars.compile("{{who}} {{greet}}")
+const template = Handlebars.compile("{{who}} {{greet}}");
 
 const result = template({
   greet: "hello",
   who: "world",
-})
-console.log(result) // "world hello"
+});
+console.log(result); // "world hello"
 ```
 
 ### 路径表达式
@@ -21,15 +21,15 @@ console.log(result) // "world hello"
 可以用 `/` 代替 `.`
 
 ```js
-const template2 = Handlebars.compile("{{obj.greet}} {{obj.who}}")
+const template2 = Handlebars.compile("{{obj.greet}} {{obj.who}}");
 
 const result2 = template2({
   obj: {
     greet: "hello",
     who: "world",
   },
-})
-console.log(result2) // "hello world"
+});
+console.log(result2); // "hello world"
 ```
 
 ### 中括号
@@ -37,10 +37,10 @@ console.log(result2) // "hello world"
 用于包裹不是字符串（`string`）类型的内容
 
 ```js
-const template = Handlebars.compile(`{{ people.[0] }} `)
+const template = Handlebars.compile(`{{ people.[0] }} `);
 const result = template({
   people: ["Saber", "Lancer"],
-}) // Saber
+}); // Saber
 ```
 
 ## 更改上下文
@@ -52,15 +52,15 @@ const template = Handlebars.compile(
   `{{#each people}}
     {{firstname}} 
   {{/each}}`
-)
+);
 const result = template({
   people: [
     { firstname: "Saber" },
     { firstname: "Lancer" },
     { secondname: "Alter" },
   ],
-})
-console.log(result)
+});
+console.log(result);
 /* 
   result 结果：
     Saber 
@@ -89,12 +89,12 @@ const template = Handlebars.compile(
   `{{#each people}}
     {{../prefix}}  {{firstname}} 
   {{/each}}`
-)
+);
 const result = template({
   people: [{ firstname: "Saber" }, { firstname: "Lancer" }],
   prefix: "Hello",
-})
-console.log(result)
+});
+console.log(result);
 /* 
   result 结果：
     Hello  Saber 
@@ -108,10 +108,10 @@ console.log(result)
 - 三括号 不会
 
 ```js
-const template = Handlebars.compile(`{{people}}`)
+const template = Handlebars.compile(`{{people}}`);
 const result = template({
   people: "You & me",
-}) // "You &amp; me"
+}); // "You &amp; me"
 ```
 
 ## 删除空格
@@ -123,7 +123,7 @@ const template = Handlebars.compile(
   `{{#each people}}
     {{~firstname}} 
   {{/each}}`
-)
+);
 ```
 
 ## 注释

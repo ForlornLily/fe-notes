@@ -9,38 +9,38 @@
 
 ```js
 // 方法名是 `myPartial`
-Handlebars.registerPartial("myPartial", "{{name}}")
+Handlebars.registerPartial("myPartial", "{{name}}");
 
 // 调用
-const template = Handlebars.compile(`{{> myPartial}}`)
+const template = Handlebars.compile(`{{> myPartial}}`);
 const result = template({
   name: "hello",
-}) // hello
+}); // hello
 ```
 
 或者是一个函数
 
 ```js
 Handlebars.registerPartial("myPartial", (params) => {
-  return params.name
-})
-const template = Handlebars.compile(`{{> myPartial}}`)
+  return params.name;
+});
+const template = Handlebars.compile(`{{> myPartial}}`);
 const result = template({
   name: "hello",
-}) // hello
+}); // hello
 ```
 
 ## 传参
 
 ```js
 Handlebars.registerPartial("myPartial", (params) => {
-  return params
-})
-const template = Handlebars.compile(`{{> myPartial job}}`)
+  return params;
+});
+const template = Handlebars.compile(`{{> myPartial job}}`);
 const result = template({
   name: "hello", // 该参数无效
   job: "developer",
-}) // developer
+}); // developer
 ```
 
 代码片段后面只能带一个参数，不能多个  
@@ -53,19 +53,19 @@ const result = template({
 ```js
 Handlebars.registerPartial("myPartial", (params, options) => {
   // params.parent 值是 `people`，params.hello 值是 "world"
-})
+});
 const template = Handlebars.compile(
   `{{#each people}}
     {{> myPartial parent=../people hello="world"}} 
   {{/each}}`
-)
+);
 const result = template({
   people: [
     { firstname: "Saber" },
     { firstname: "Lancer" },
     { secondname: "Alter" },
   ],
-})
+});
 ```
 
 ## 异常处理
@@ -78,8 +78,8 @@ const template = Handlebars.compile(
   `{{#> layout }}
     出错了
   {{/layout}}`
-)
-const result = template() // 出错了
+);
+const result = template(); // 出错了
 ```
 
 ## 嵌套
@@ -88,13 +88,13 @@ const result = template() // 出错了
 `@partial-block` 是内置的代码片段
 
 ```js
-Handlebars.registerPartial("layout", "hello {{> @partial-block }}")
+Handlebars.registerPartial("layout", "hello {{> @partial-block }}");
 const template = Handlebars.compile(
   `{{#> layout }}
     出错了
   {{/layout}}`
-)
-const result = template() // hello     出错了
+);
+const result = template(); // hello     出错了
 ```
 
 ## inline
@@ -109,14 +109,14 @@ const template = Handlebars.compile(
   {{#each people}}
     {{> myPartial}} 
   {{/each}}`
-)
+);
 const result = template({
   people: [
     { firstname: "Saber" },
     { firstname: "Lancer" },
     { secondname: "Alter" },
   ],
-})
+});
 /* 
   结果
         My Content
@@ -130,7 +130,7 @@ const result = template({
 代码片段内嵌套代码片段
 
 ```js
-Handlebars.registerPartial("layout", "hello {{> @partial-block }}")
+Handlebars.registerPartial("layout", "hello {{> @partial-block }}");
 const template = Handlebars.compile(
   `{{#> layout}}
     {{#*inline "myPartial"}}
@@ -140,14 +140,14 @@ const template = Handlebars.compile(
       {{> myPartial}} 
     {{/each}}
   {{/layout}}`
-)
+);
 const result = template({
   people: [
     { firstname: "Saber" },
     { firstname: "Lancer" },
     { secondname: "Alter" },
   ],
-})
+});
 /* 
   结果
   hello             My Content

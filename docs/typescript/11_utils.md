@@ -12,20 +12,20 @@
 传入的类型属性全都是可选的，等价于
 
 ```ts
-type Partial<T> = { [P in keyof T]?: T[P] }
+type Partial<T> = { [P in keyof T]?: T[P] };
 ```
 
 ```ts
 interface Todo {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 function updateTodo(fieldsToUpdate: Partial<Todo>) {
-  return { ...fieldsToUpdate }
+  return { ...fieldsToUpdate };
 }
 const todo2 = updateTodo({
   title: "hello", //description可以不传
-})
+});
 ```
 
 ## Required&lt;T>
@@ -34,17 +34,17 @@ const todo2 = updateTodo({
 
 ```ts
 interface Todo {
-  title: string
-  description?: string
+  title: string;
+  description?: string;
 }
 function updateTodo(fieldsToUpdate: Required<Todo>) {
-  return { ...fieldsToUpdate }
+  return { ...fieldsToUpdate };
 }
 //属性必须都传
 const todo2 = updateTodo({
   title: "hello",
   description: "world",
-})
+});
 ```
 
 ## Readonly&lt;T>
@@ -53,16 +53,16 @@ const todo2 = updateTodo({
 等价于
 
 ```ts
-type Readonly<T> = { readonly [P in keyof T]: T[P] }
+type Readonly<T> = { readonly [P in keyof T]: T[P] };
 ```
 
 ```ts
 interface servant {
-  name: string
+  name: string;
 }
 const saber: Readonly<servant> = {
   name: "Saber",
-}
+};
 ```
 
 ## Record&lt;K,T>
@@ -71,16 +71,16 @@ const saber: Readonly<servant> = {
 
 ```ts
 interface PageInfo {
-  title: string
+  title: string;
 }
 
-type Page = "home" | "about" | "contact"
+type Page = "home" | "about" | "contact";
 
 const x: Record<Page, PageInfo> = {
   about: { title: "1" },
   contact: { title: "2" },
   home: { title: "3" },
-}
+};
 ```
 
 ## Pick&lt;T,K>
@@ -89,17 +89,17 @@ const x: Record<Page, PageInfo> = {
 
 ```ts
 interface Todo {
-  title: string
-  description: string
-  completed: boolean
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
-type TodoPreview = Pick<Todo, "title" | "completed">
+type TodoPreview = Pick<Todo, "title" | "completed">;
 //title和completed都要有
 const todo: TodoPreview = {
   title: "Clean room",
   completed: false,
-}
+};
 ```
 
 ## Omit&lt;T,K>
@@ -108,17 +108,17 @@ const todo: TodoPreview = {
 
 ```ts
 interface Todo {
-  title: string
-  description: string
-  completed: boolean
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
-type TodoPreview = Omit<Todo, "description">
+type TodoPreview = Omit<Todo, "description">;
 //title和completed都要有
 const todo: TodoPreview = {
   title: "Clean room",
   completed: false,
-}
+};
 ```
 
 ## Exclude&lt;T,U>
@@ -126,9 +126,9 @@ const todo: TodoPreview = {
 从 T 中排除 U
 
 ```ts
-type T0 = Exclude<"a" | "b" | "c", "a"> // "b" | "c"
-type T1 = Exclude<"a" | "b" | "c", "a" | "b"> // "c"
-type T = Exclude<1 | 2, 1 | 3> // 2
+type T0 = Exclude<"a" | "b" | "c", "a">; // "b" | "c"
+type T1 = Exclude<"a" | "b" | "c", "a" | "b">; // "c"
+type T = Exclude<1 | 2, 1 | 3>; // 2
 ```
 
 ## Extract&lt;T,U>
@@ -140,7 +140,7 @@ type T = Exclude<1 | 2, 1 | 3> // 2
 从类型 T 中剔除 null 和 undefined，然后构造一个类型
 
 ```ts
-type T1 = NonNullable<string[] | null | undefined> // string[]
+type T1 = NonNullable<string[] | null | undefined>; // string[]
 ```
 
 ## ReturnType&lt;T>
@@ -148,12 +148,12 @@ type T1 = NonNullable<string[] | null | undefined> // string[]
 `T`是一个函数类型，把 T 的返回类型作为类型
 
 ```ts
-type T0 = ReturnType<() => string> // string
+type T0 = ReturnType<() => string>; // string
 ```
 
 ```ts
 //ReturnType等价于
-type ReturnType<T> = T extends (...args: any[]) => infer P ? P : any
+type ReturnType<T> = T extends (...args: any[]) => infer P ? P : any;
 ```
 
 ## 嵌套
@@ -162,15 +162,15 @@ type ReturnType<T> = T extends (...args: any[]) => infer P ? P : any
 
 ```ts
 interface Company {
-  id: number
-  department: string
+  id: number;
+  department: string;
 }
 interface Member {
-  id: number
-  name: string
-  company: Company
+  id: number;
+  name: string;
+  company: Company;
 }
-type member = Readonly<Member>
+type member = Readonly<Member>;
 
 const data: member = {
   id: 1,
@@ -179,7 +179,7 @@ const data: member = {
     id: 1,
     department: "hello",
   },
-}
-data.company.id = 2 //不报错，无法解析嵌套
-data.company = 2 //报错，因为只读
+};
+data.company.id = 2; //不报错，无法解析嵌套
+data.company = 2; //报错，因为只读
 ```

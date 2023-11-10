@@ -5,7 +5,7 @@ Vue3.x 中的[reactive.ts](https://github.com/vuejs/vue-next/blob/master/package
 
 ## proxy
 
-基础内容见[proxy](../js/031_proxy.md)
+基础内容见[proxy](../javascript/045_proxy.md)
 
 ## reactive.ts
 
@@ -14,23 +14,23 @@ Vue3.x 中的[reactive.ts](https://github.com/vuejs/vue-next/blob/master/package
 ```js
 //记录日期为2019‎年‎10‎月‎10‎日
 
-const rawToReactive = new WeakMap() //原始数据
-const reactiveToRaw = new WeakMap() //响应式数据
+const rawToReactive = new WeakMap(); //原始数据
+const reactiveToRaw = new WeakMap(); //响应式数据
 
 //处理只读和非响应式
-const rawToReadonly = new WeakMap()
-const readonlyToRaw = new WeakMap()
-const readonlyValues = new WeakSet()
-const nonReactiveValues = new WeakSet()
+const rawToReadonly = new WeakMap();
+const readonlyToRaw = new WeakMap();
+const readonlyValues = new WeakSet();
+const nonReactiveValues = new WeakSet();
 
 //判断是否是对象
-export const isObject = (val) => val !== null && typeof val === "object"
+export const isObject = (val) => val !== null && typeof val === "object";
 
 //toString判断对象的具体数据类型
 const observableValueRE =
-  /^\[object (?:Object|Array|Map|Set|WeakMap|WeakSet)\]$/
-export const objectToString = Object.prototype.toString
-export const toTypeString = (value) => objectToString.call(value)
+  /^\[object (?:Object|Array|Map|Set|WeakMap|WeakSet)\]$/;
+export const objectToString = Object.prototype.toString;
+export const toTypeString = (value) => objectToString.call(value);
 
 //是否为观察对象
 const canObserve = (value) => {
@@ -39,18 +39,18 @@ const canObserve = (value) => {
     !value._isVNode &&
     observableValueRE.test(toTypeString(value)) &&
     !nonReactiveValues.has(value)
-  )
-}
+  );
+};
 
 //入口
 export function reactive(target) {
   // if trying to observe a readonly proxy, return the readonly version.
   if (readonlyToRaw.has(target)) {
-    return target
+    return target;
   }
   // target is explicitly marked as readonly by user
   if (readonlyValues.has(target)) {
-    return readonly(target)
+    return readonly(target);
   }
   return createReactiveObject(
     target,
@@ -58,13 +58,13 @@ export function reactive(target) {
     reactiveToRaw,
     mutableHandlers,
     mutableCollectionHandlers
-  )
+  );
 }
 export function readonly(target) {
   // value is a mutable observable, retrieve its original and return
   // a readonly version.
   if (reactiveToRaw.has(target)) {
-    target = reactiveToRaw.get(target)
+    target = reactiveToRaw.get(target);
   }
   return createReactiveObject(
     target,
@@ -72,7 +72,7 @@ export function readonly(target) {
     readonlyToRaw,
     readonlyHandlers,
     readonlyCollectionHandlers
-  )
+  );
 }
 
 function createReactiveObject(
@@ -84,28 +84,28 @@ function createReactiveObject(
 ) {
   if (!isObject(target)) {
     //...
-    return target
+    return target;
   }
   // 原数据已经有相应的可响应数据, 返回可响应数据
-  let observed = toProxy.get(target)
+  let observed = toProxy.get(target);
   if (observed !== void 0) {
-    return observed
+    return observed;
   }
   // target is already a Proxy
   if (toRaw.has(target)) {
-    return target
+    return target;
   }
   // only a whitelist of value types can be observed.
   if (!canObserve(target)) {
-    return target
+    return target;
   }
   const handlers = collectionTypes.has(target.constructor)
     ? collectionHandlers
-    : baseHandlers
-  observed = new Proxy(target, handlers)
-  toProxy.set(target, observed)
-  toRaw.set(observed, target)
+    : baseHandlers;
+  observed = new Proxy(target, handlers);
+  toProxy.set(target, observed);
+  toRaw.set(observed, target);
   //...
-  return observed
+  return observed;
 }
 ```

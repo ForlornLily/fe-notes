@@ -7,9 +7,9 @@ React 的专用语法，一定要引入 React 才能编译
 ```js
 function getGreeting(user) {
   if (user) {
-    return <h1>Hello, {formatName(user)}!</h1>
+    return <h1>Hello, {formatName(user)}!</h1>;
   }
-  return <h1>Hello, Stranger.</h1>
+  return <h1>Hello, Stranger.</h1>;
 }
 ```
 
@@ -25,14 +25,14 @@ function getGreeting(user) {
 占位符，类似 vue 的`template`，不会被渲染成真实 DOM，通常用来充当包裹的父元素
 
 ```js
-import React, { Fragment } from "react"
+import React, { Fragment } from "react";
 
 return (
   <Fragment>
     <ChildA />
     <ChildB />
   </Fragment>
-)
+);
 ```
 
 ### 简写
@@ -46,7 +46,7 @@ return (
     <ChildA />
     <ChildB />
   </>
-)
+);
 ```
 
 ### 传递 key
@@ -65,7 +65,7 @@ function Glossary(props) {
         </React.Fragment>
       ))}
     </dl>
-  )
+  );
 }
 ```
 
@@ -87,10 +87,10 @@ function Glossary(props) {
 
 ```js
 function createMarkup() {
-  return { __html: "First &middot; Second" }
+  return { __html: "First &middot; Second" };
 }
 function MyComponent() {
-  return <div dangerouslySetInnerHTML={createMarkup()} />
+  return <div dangerouslySetInnerHTML={createMarkup()} />;
 }
 ```
 
@@ -107,13 +107,13 @@ function MyComponent() {
 style 内的 css 属性，在 JSX 中都以驼峰式的命名来书写（首字母小写），对应于 JS 的 API
 
 ```js
-const logo = require(`../../assets/img/header.png`)
+const logo = require(`../../assets/img/header.png`);
 return (
   <div
     className="banner-wrapper"
     style={{ backgroundImage: "url(" + backgroudUrl + ")" }}
   ></div>
-)
+);
 ```
 
 注意的是对于 css 前缀（比如`webkit`等）也要自己加进去
@@ -122,23 +122,23 @@ return (
 const divStyle = {
   WebkitTransition: "all", // note the capital 'W' here
   msTransition: "all", // 'ms' is the only lowercase vendor prefix
-}
+};
 
 function ComponentWithTransition() {
-  return <div style={divStyle}>This should work cross-browser</div>
+  return <div style={divStyle}>This should work cross-browser</div>;
 }
 ```
 
 ### 注释
 
 ```js
-return `{/*注释的内容*/}`
+return `{/*注释的内容*/}`;
 ```
 
 ```js
 return {
   //换行注释。换行是为了避免`}`成为注释的一部分
-}
+};
 ```
 
 ## 关于 falsy
@@ -165,7 +165,7 @@ return {
 
 ```jsx
 {
-  list.length > 0 && <input />
+  list.length > 0 && <input />;
 }
 ```
 
@@ -175,18 +175,18 @@ return {
 [React18 源码解析之 fiber 等几个重要的数据结构](https://www.xiabingbao.com/post/react/react-element-jsx-rfl0yh.html)
 
 ```js
-import React from "react"
+import React from "react";
 
 function App() {
   const handleClick = () => {
-    console.log("click")
-  }
+    console.log("click");
+  };
 
   return (
     <div onClick={handleClick}>
       <p>hello world</p>
     </div>
-  )
+  );
 }
 ```
 
@@ -194,14 +194,14 @@ React 16 需要引入 React，本质上是用 createElement 转成 js
 children 做为第三个参数传入
 
 ```js
-import React from "react"
+import React from "react";
 
 function App() {
   return React.createElement(
     "div",
     { onClick: handleClick },
     React.createElement("p", null, "hello world")
-  )
+  );
 }
 ```
 
@@ -209,7 +209,7 @@ function App() {
 
 ```js
 // Inserted by a compiler (don't import it yourself!)
-import { jsx as _jsx } from "react/jsx-runtime"
+import { jsx as _jsx } from "react/jsx-runtime";
 
 function App() {
   return jsx("div", {
@@ -224,7 +224,7 @@ function App() {
         }),
       ],
     }),
-  })
+  });
 }
 ```
 
@@ -257,10 +257,10 @@ function ReactElement(type, key, ref, self, source, owner, props) {
 
     // Record the component responsible for creating this element.
     _owner: owner,
-  }
+  };
 
   // 省略其他内容
 
-  return element
+  return element;
 }
 ```

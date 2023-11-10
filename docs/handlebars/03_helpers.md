@@ -6,17 +6,17 @@
 
 ```js
 Handlebars.registerHelper("loop", (arr) => {
-  let result = ""
+  let result = "";
   arr.forEach((value) => {
-    result += " " + value
-  })
-  return result
+    result += " " + value;
+  });
+  return result;
   // return new Handlebars.SafeString(result)
-})
-const template = Handlebars.compile(`{{loop people }}`)
+});
+const template = Handlebars.compile(`{{loop people }}`);
 const result = template({
   people: ["Saber & ", "Lancer", "Archer"],
-}) // Saber &amp;  Lancer Archer
+}); // Saber &amp;  Lancer Archer
 ```
 
 ### SafeString
@@ -29,13 +29,13 @@ const result = template({
 
 ```js
 Handlebars.registerHelper("introduce", (str, name) => {
-  return `${str} ${name}`
-})
+  return `${str} ${name}`;
+});
 
-const template = Handlebars.compile(`{{introduce "Her name is" name}}`)
+const template = Handlebars.compile(`{{introduce "Her name is" name}}`);
 const result = template({
   name: "Saber",
-}) // Her name is Saber
+}); // Her name is Saber
 ```
 
 ## 最后一个参数
@@ -45,15 +45,15 @@ const result = template({
 ```js
 Handlebars.registerHelper("introduce", (target, options) => {
   // options 会包含额外的内容
-})
+});
 
-const template = Handlebars.compile(`{{introduce servant}}`)
+const template = Handlebars.compile(`{{introduce servant}}`);
 const result = template({
   servant: {
     type: "Saber",
     name: "Altria",
   },
-})
+});
 ```
 
 ## 重名
@@ -63,14 +63,14 @@ const result = template({
 
 ```js
 Handlebars.registerHelper("introduce", (str, name, options) => {
-  return `${str}`
-})
+  return `${str}`;
+});
 
-const template = Handlebars.compile(`{{introduce ./introduce}}`)
+const template = Handlebars.compile(`{{introduce ./introduce}}`);
 // 等价于 const template = Handlebars.compile(`{{introduce this.introduce}}`);
 const result = template({
   introduce: "Saber",
-}) // Saber
+}); // Saber
 ```
 
 ## 括号
@@ -79,15 +79,15 @@ const result = template({
 
 ```js
 Handlebars.registerHelper("outer", (str, name) => {
-  return `${str} ${name}`
-})
+  return `${str} ${name}`;
+});
 Handlebars.registerHelper("inner", (str, options) => {
-  return `${str} name is`
-})
-const template = Handlebars.compile(`{{outer (inner "Her") name}}`)
+  return `${str} name is`;
+});
+const template = Handlebars.compile(`{{outer (inner "Her") name}}`);
 const result = template({
   name: "Saber",
-}) // Her name is Saber
+}); // Her name is Saber
 ```
 
 ## this
@@ -97,16 +97,16 @@ Handlebars.registerHelper("bold", function (options) {
   // this 是 { body: "hello" }
   return new Handlebars.SafeString(
     '<div class="mybold">' + options.fn(this) + "</div>"
-  )
-})
+  );
+});
 const template = Handlebars.compile(
   `<div>
     {{#bold}}{{content}}{{/bold}}
   </div>`
-)
+);
 const result = template({
   body: "hello",
-})
+});
 ```
 
 ## 内置助手代码
@@ -121,13 +121,13 @@ const template = Handlebars.compile(
     name: {{name}}
     class: {{class}}
   {{/with}}`
-)
+);
 const result = template({
   servant: {
     name: "Altria",
     class: "Saber",
   },
-})
+});
 /* 
   结果
     name: Altria
@@ -150,10 +150,10 @@ const template = Handlebars.compile(
     {{else}}
       empty 
   {{/each}}`
-)
+);
 const result = template({
   people: [],
-}) // empty
+}); // empty
 ```
 
 ### if
@@ -168,10 +168,10 @@ const template = Handlebars.compile(
     {{else}}
     hello
   {{/if}}`
-)
+);
 const result = template({
   result: false,
-}) // hello
+}); // hello
 ```
 
 ### unless
@@ -186,11 +186,11 @@ const template = Handlebars.compile(
     {{else if nest}}
       hello
   {{/unless}}`
-)
+);
 const result = template({
   result: true,
   nest: true,
-}) // hello
+}); // hello
 ```
 
 ### lookup
@@ -204,11 +204,11 @@ const template = Handlebars.compile(
     id: {{id}}
     {{lookup ../infos @index}}
   {{/each}}`
-)
+);
 const result = template({
   users: [{ id: 11 }, { id: 22 }, { id: 33 }],
   infos: ["a", "b", "c"],
-})
+});
 /* 
   结果
   id: 11
@@ -227,7 +227,7 @@ const template = Handlebars.compile(
     {{name}} ({{country}})
   {{/with}}
 {{/each}}`
-)
+);
 const result = template({
   persons: [
     {
@@ -249,7 +249,7 @@ const result = template({
       country: "USA",
     },
   },
-})
+});
 /* 
   结果
   Nils lives in Darmstadt (Germany)
@@ -268,14 +268,14 @@ const template = Handlebars.compile(
   `{{#each array}}
     {{@index}}. {{firstname}}
   {{/each}}`
-)
+);
 const result = template({
   array: [
     { firstname: "Saber" },
     { firstname: "Lancer" },
     { secondname: "Alter" },
   ],
-})
+});
 /* 
   结果
     0. Saber
@@ -298,7 +298,7 @@ const template = Handlebars.compile(
     {{userContent.userId}}
     {{userContent.userName}}
   {{/each}}`
-)
+);
 const result = template({
   user: [
     {
@@ -306,7 +306,7 @@ const result = template({
       userName: "hello",
     },
   ],
-})
+});
 /* 
   结果
     1

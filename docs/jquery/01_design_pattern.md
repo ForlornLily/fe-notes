@@ -9,13 +9,13 @@
 
 ```js
 // 单一节点
-$("#singleItem").addClass("active")
-$("#container").addClass("active")
+$("#singleItem").addClass("active");
+$("#container").addClass("active");
 
 // 一组节点
-$("div").addClass("active")
-$(".item").addClass("active")
-$("input").addClass("active")
+$("div").addClass("active");
+$(".item").addClass("active");
+$("input").addClass("active");
 ```
 
 ## 适配器模式（hook）

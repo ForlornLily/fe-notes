@@ -20,55 +20,55 @@ Composite Pattern：树形结构
 
 ```js
 function MacroCommand() {
-  this.list = []
+  this.list = [];
 }
 MacroCommand.prototype.add = function (fn) {
-  this.list.push(fn)
-}
+  this.list.push(fn);
+};
 MacroCommand.prototype.excute = function () {
   const list = this.list,
-    length = list.length
+    length = list.length;
   for (let i = 0; i < length; i++) {
-    list[i].excute()
+    list[i].excute();
   }
-}
+};
 
 //浏览器
 const openBrowser = {
   excute() {
-    console.log("打开浏览器")
+    console.log("打开浏览器");
   },
-}
+};
 const visitGithub = {
   excute() {
-    console.log("访问github")
+    console.log("访问github");
   },
-}
-const browserCommand = new MacroCommand()
-browserCommand.add(openBrowser)
-browserCommand.add(visitGithub)
+};
+const browserCommand = new MacroCommand();
+browserCommand.add(openBrowser);
+browserCommand.add(visitGithub);
 
 //steam
 const openSteam = {
   excute() {
-    console.log("打开steam")
+    console.log("打开steam");
   },
-}
+};
 const playOri = {
   excute() {
-    console.log("打开Ori and the Blind Forest")
+    console.log("打开Ori and the Blind Forest");
   },
-}
+};
 
-const steamCommand = new MacroCommand()
-steamCommand.add(openSteam)
-steamCommand.add(playOri)
+const steamCommand = new MacroCommand();
+steamCommand.add(openSteam);
+steamCommand.add(playOri);
 
-const command = new MacroCommand()
-command.add(browserCommand)
-command.add(steamCommand)
+const command = new MacroCommand();
+command.add(browserCommand);
+command.add(steamCommand);
 
-command.excute()
+command.excute();
 ```
 
 ## 注意点

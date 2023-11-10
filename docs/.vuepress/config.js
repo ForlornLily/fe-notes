@@ -26,7 +26,7 @@ module.exports = {
         text: "基础",
         items: [
           { text: "HTML&CSS", link: "/css/" },
-          { text: "JavaScript", link: "/js/" },
+          { text: "JavaScript", link: "/javascript/" },
         ],
       },
       { text: "jQuery", link: "/jquery/" },
