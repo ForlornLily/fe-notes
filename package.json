@@ -10,8 +10,7 @@
     "dev": "set NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs",
     "lint": "lint-staged",
-    "lint:all": "prettier --write \"docs/**/*.md\"",
-    "release": "node scripts/release.js"
+    "lint:all": "prettier --write \"docs/**/*.md\""
   },
   "lint-staged": {
     "*.{js,json,css,md}": [
