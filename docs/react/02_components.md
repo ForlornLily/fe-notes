@@ -250,8 +250,8 @@ class EventsSample extends React.Component {
 
 ::: warning
 注意以下方法即将弃用，要避免使用
-:::
-
+:::  
+[Update on Async Rendering](https://legacy.reactjs.org/blog/2018/03/27/update-on-async-rendering.html)
 - componentWillMount  
   即将被挂载，但没有挂载（通常只会执行一次）
 - componentWillUpdate  
