@@ -52,6 +52,7 @@ Number.MAX_VALUE + Number.MAX_VALUE; //Infinity
 Not a Number：对 NaN 进行任何加减乘除都返回 NaN
 
 ```js
+typeof NaN // 'number'
 NaN == NaN; //false
 NaN === NaN; //false
 ```
@@ -136,8 +137,9 @@ parseFloat("a16"); //NaN
 
 ## Number.isInteger
 
-判断是不是整型
-
+判断是不是整型  
+另外还有 Number.isSafeInteger，表示安全整数（Number.MAX_SAFE_INTEGER：最大安全整数，比 Number.MAX_VALUE 小）  
+安全整数的情况下，才能进行精确的整数运算  
 ```js
 Number.isInteger(25); //true
 

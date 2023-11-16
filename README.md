@@ -1,26 +1,22 @@
-Based on [vuepress](https://vuepress.vuejs.org/)
+Based on [vuepress](https://vuepress.vuejs.org/)，特别感谢 [PanJiaChen](https://github.com/PanJiaChen) 的项目模板
 
 短域名地址：[https://git.io/JegFf](https://git.io/JegFf)，来自 [github 生成短域名](https://git.io/)
 
 本项目为个人在前端路上的一些笔记
 
-**特别感谢大佬[PanJiaChen](https://github.com/PanJiaChen)的项目模板**
-
 ## 主要内容
 
 - HTML, CSS, JavaScript
 - jQuery
-- Vue 2.x, Vue-Router, Vuex
-- webpack 4.x
-- HTTP
+- Vue
+- webpack
+- 网络
 - 算法与数据结构
 - React
 - TypeScript
 - 设计模式
-- Handlebars
-- Linux
-- 踩坑  
-  Node 服务端内容较多，见 [server-notes](https://github.com/ForlornLily/server-notes)
+- 踩坑    
+- NodeJS，服务端内容较多，见 [server-notes](https://github.com/ForlornLily/server-notes)
 
 ## 开发环境
 
@@ -39,6 +35,6 @@ npm v6
 - ~~测试工具 jest~~
 - 学习 Electron 开发
 - PWA 项目实战
-- Professional JavaScript for Web Developers 4th
+- ~~Professional JavaScript for Web Developers 4th~~
 - [Playwright](https://github.com/microsoft/playwright), [end-to-end-testing](https://www.browserstack.com/guide/end-to-end-testing)
 

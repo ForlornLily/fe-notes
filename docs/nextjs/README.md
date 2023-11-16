@@ -17,3 +17,8 @@ yarn add next react react-dom
   "start": "next start"
 }
 ````
+
+## App Router vs Pages Router
+
+- App Router：支持 Server Components 和流
+- Pages Router：历史版本
